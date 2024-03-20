@@ -53,4 +53,8 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 
+	@Override
+	public boolean CanDefend() {
+		return false;
+	}
 }

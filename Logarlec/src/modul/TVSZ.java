@@ -34,6 +34,10 @@ public class TVSZ extends Item implements Defendable{
 	/** */
 	public void Thrown(Person p) {
 	}
-	
 
+
+	@Override
+	public boolean CanDefend() {
+		return false;
+	}
 }

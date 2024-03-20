@@ -50,6 +50,10 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	/** */
 	public void UsedByInstructor(Instructor i) {
 	}
-	
 
+
+	@Override
+	public boolean CanDefend() {
+		return false;
+	}
 }
