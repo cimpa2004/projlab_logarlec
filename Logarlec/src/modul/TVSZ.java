@@ -13,7 +13,7 @@ package modul;//
 
 
 /** */
-public class TVSZ extends Item {
+public class TVSZ extends Item implements Defendable{
 	/** */
 	private int usesLeft;
 	

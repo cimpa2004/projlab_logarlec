@@ -13,7 +13,7 @@ package modul;//
 
 
 /** */
-public class HolyBeerCup extends Item implements Usable {
+public class HolyBeerCup extends Item implements Usable, Defendable {
 	/** */
 	private int effectDuration;
 	

@@ -13,7 +13,7 @@ package modul;//
 
 
 /** */
-public class FFP2Mask extends Item implements Usable {
+public class FFP2Mask extends Item implements Usable, Defendable {
 	/** */
 	private int durability;
 	
