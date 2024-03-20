@@ -42,18 +42,23 @@ public class DoorSide {
 	
 	/** */
 	public DoorSide GetPair() {
-	}
+        return null;
+    }
 	
 	/** */
 	public DoorSide SetPair() {
-	}
+
+        return null;
+    }
 	
 	/** */
 	public Room GetRoom() {
-	}
+        return null;
+    }
 	
 	/** */
 	public void SetRoom(Room r) {
+
 	}
 	
 	/** */
@@ -66,9 +71,11 @@ public class DoorSide {
 	
 	/** */
 	public boolean GetCanBeOpened() {
-	}
+        return false;
+    }
 	
 	/** */
 	public boolean GetIsVisible() {
-	}
+        return false;
+    }
 }

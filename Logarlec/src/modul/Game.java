@@ -18,16 +18,14 @@ public class Game {
 	private int gameTimer;
 	
 	/** */
-	private bool isEndGame;
+	private boolean isEndGame;
 	
 	/** */
 	private Person turnOrder;
 	
 	/** */
 	private Person currentTurn;
-	
-	/** */
-	private Person currentTurn;
+
 	
 	/** */
 	private Room rooms;
@@ -37,7 +35,7 @@ public class Game {
 	}
 	
 	/** */
-	public void EndGame(bool winSide) {
+	public void EndGame(boolean winSide) {
 	}
 	
 	/** */
@@ -45,7 +43,8 @@ public class Game {
 	}
 	
 	/** */
-	public bool AnyStudentsAlive() {
+	public boolean AnyStudentsAlive() {
+		return false;
 	}
 	
 	/** */

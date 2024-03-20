@@ -15,18 +15,21 @@ package modul;//
 /** */
 public class Camembert extends Item implements Usable {
 	/** */
-	private bool isActivated;
+	private boolean isActivated;
 	
 	/** */
-	public bool Activate() {
+	public boolean Activate() {
+        return false;
+    }
+	
+	/** */
+	public boolean PickedUpStudent(Student st) {
+		return false;
 	}
 	
 	/** */
-	public bool PickedUpStudent(Student st) {
-	}
-	
-	/** */
-	public bool PickedUpInstructor(Instructor i) {
+	public boolean PickedUpInstructor(Instructor i) {
+		return false;
 	}
 	
 	/** */
@@ -41,15 +44,6 @@ public class Camembert extends Item implements Usable {
 	public void UsedByInstructor(Instructor i) {
 	}
 	
-	/** */
-	public bool PickedUpStudent(Student st) {
-	}
-	
-	/** */
-	public bool PickedUpInstructor(Instructor i) {
-	}
-	
-	/** */
-	public void Thrown(Person p) {
-	}
+
+
 }

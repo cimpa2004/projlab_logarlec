@@ -10,7 +10,7 @@ package modul;//
 //
 
 
-
+import java.util.List;
 
 /** */
 public class Room {
@@ -24,7 +24,7 @@ public class Room {
 	private int currentCapacity;
 	
 	/** */
-	private bool isCursed;
+	private boolean isCursed;
 	
 	/** */
 	private DoorSide rooms;
@@ -46,9 +46,7 @@ public class Room {
 	
 	/** */
 	private Instructor instructors;
-	
-	/** */
-	private Room neighbors;
+
 	
 	/** */
 	public void DecrementPoison() {
@@ -67,23 +65,28 @@ public class Room {
 	}
 	
 	/** */
-	public Item* GetItems() {
+	public List<Item> GetItems() {
+		return null;
 	}
 	
 	/** */
-	public Student* GetStudents() {
+	public List<Student> GetStudents() {
+		return null;
 	}
 	
 	/** */
 	public int GetCurrentCapacity() {
+		return 0;
 	}
 	
 	/** */
 	public int GetMaxCapacity() {
+		return 0;
 	}
 	
 	/** */
-	public Room* GetNeighbors() {
+	public List<Room> GetNeighbors() {
+		return null;
 	}
 	
 	/** */
@@ -92,6 +95,7 @@ public class Room {
 	
 	/** */
 	public int GetPoisonDuration() {
+		return 0;
 	}
 	
 	/** */
@@ -103,7 +107,8 @@ public class Room {
 	}
 	
 	/** */
-	public DoorSide* GetDoors() {
+	public List<DoorSide> GetDoors() {
+		return null;
 	}
 	
 	/** */
@@ -111,11 +116,12 @@ public class Room {
 	}
 	
 	/** */
-	public void SetNeighbors(Room* n) {
+	public void SetNeighbors(Room n) {
 	}
 	
 	/** */
-	public bool MergeRooms(Room r2) {
+	public boolean MergeRooms(Room r2) {
+		return false;
 	}
 	
 	/** */
@@ -139,11 +145,13 @@ public class Room {
 	}
 	
 	/** */
-	public bool RandomBool() {
+	public boolean RandomBool() {
+		return false;
 	}
 	
 	/** */
-	public Room SelectRoom(Room* r) {
+	public Room SelectRoom(Room  r) {
+		return null;
 	}
 	
 	/** */
@@ -151,10 +159,11 @@ public class Room {
 	}
 	
 	/** */
-	public void SetIsCursed(bool isc) {
+	public void SetIsCursed(boolean isc) {
 	}
 	
 	/** */
-	public bool GetIsCursed() {
+	public boolean GetIsCursed() {
+		return false;
 	}
 }

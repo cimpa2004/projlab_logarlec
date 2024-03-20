@@ -15,10 +15,11 @@ package modul;//
 /** */
 public class Transistor extends Item implements Usable {
 	/** */
-	private bool isActive;
+	private boolean isActive;
 	
 	/** */
-	public bool Activate() {
+	public boolean Activate() {
+		return false;
 	}
 	
 	/** */
@@ -31,14 +32,17 @@ public class Transistor extends Item implements Usable {
 	
 	/** */
 	public Transistor GetPair() {
+		return null;
 	}
 	
 	/** */
-	public bool PickedUpStudent(Student st) {
+	public boolean PickedUpStudent(Student st) {
+		return false;
 	}
 	
 	/** */
-	public bool PickedUpInstructor(Instructor i) {
+	public boolean PickedUpInstructor(Instructor i) {
+		return false;
 	}
 	
 	/** */
@@ -53,15 +57,5 @@ public class Transistor extends Item implements Usable {
 	public void UsedByInstructor(Instructor i) {
 	}
 	
-	/** */
-	public bool PickedUpStudent(Student st) {
-	}
-	
-	/** */
-	public bool PickedUpInstructor(Instructor i) {
-	}
-	
-	/** */
-	public void Thrown(Person p) {
-	}
+
 }

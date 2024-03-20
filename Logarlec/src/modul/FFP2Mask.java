@@ -18,10 +18,11 @@ public class FFP2Mask extends Item implements Usable {
 	private int durability;
 	
 	/** */
-	private bool isActivated;
+	private boolean isActivated;
 	
 	/** */
-	public bool Activate() {
+	public boolean Activate() {
+		return false;
 	}
 	
 	/** */
@@ -29,11 +30,13 @@ public class FFP2Mask extends Item implements Usable {
 	}
 	
 	/** */
-	public bool PickedUpStudent(Student st) {
+	public boolean PickedUpStudent(Student st) {
+		return false;
 	}
 	
 	/** */
-	public bool PickedUpInstructor(Instructor i) {
+	public boolean PickedUpInstructor(Instructor i) {
+		return false;
 	}
 	
 	/** */
@@ -47,16 +50,9 @@ public class FFP2Mask extends Item implements Usable {
 	/** */
 	public void UsedByInstructor(Instructor i) {
 	}
+
 	
-	/** */
-	public bool PickedUpStudent(Student st) {
-	}
+
 	
-	/** */
-	public bool PickedUpInstructor(Instructor i) {
-	}
-	
-	/** */
-	public void Thrown(Person p) {
-	}
+
 }

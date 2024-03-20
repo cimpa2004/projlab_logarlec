@@ -26,13 +26,14 @@ public abstract class Item {
 	
 	/** */
 	public Room GetRoom() {
+		return null;
 	}
 	
 	/** */
-	public abstract bool PickedUpStudent(Student st);
+	public abstract boolean PickedUpStudent(Student st);
 	
 	/** */
-	public abstract bool PickedUpInstructor(Instructor i);
+	public abstract boolean PickedUpInstructor(Instructor i);
 	
 	/** */
 	public abstract void Thrown(Person p);

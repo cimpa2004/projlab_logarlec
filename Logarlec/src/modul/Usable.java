@@ -13,16 +13,13 @@ package modul;//
 
 
 /** */
-public class Usable {
+public interface Usable {
 	/** */
-	public bool Activate() {
-	}
+	public boolean Activate();
 	
 	/** */
-	public void UsedByStudent(Student s) {
-	}
+	public void UsedByStudent(Student s);
 	
 	/** */
-	public void UsedByInstructor(Instructor i) {
-	}
+	public void UsedByInstructor(Instructor i);
 }

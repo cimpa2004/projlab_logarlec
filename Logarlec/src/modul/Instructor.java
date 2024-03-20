@@ -21,7 +21,7 @@ public class Instructor extends Person {
 	private Room room;
 	
 	/** */
-	public bool AppearInRoom(Room r) {
+	public void AppearInRoom(Room r) {
 	}
 	
 	/** */
@@ -49,30 +49,17 @@ public class Instructor extends Person {
 	}
 	
 	/** */
-	public bool Pickup(Item i) {
+	@Override
+	public boolean Pickup(Item i) {
+		return false;
 	}
 	
 	/** */
 	public void SetRoom(Room r) {
 	}
+
 	
-	/** */
-	public void AppearInRoom(Room r) {
-	}
+
 	
-	/** */
-	public bool Pickup(Item i) {
-	}
-	
-	/** */
-	public void UseItem(Usable u) {
-	}
-	
-	/** */
-	public void StartTurn() {
-	}
-	
-	/** */
-	public void EndTurn() {
-	}
+
 }

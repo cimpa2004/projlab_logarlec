@@ -10,33 +10,31 @@ package modul;//
 //
 
 
-
+import java.util.List;
 
 /** */
 public abstract class Person {
 	/** */
-	private bool isFainted;
+	private boolean isFainted;
 	
 	/** */
-	private bool activeTurn;
+	private boolean activeTurn;
 	
 	/** */
-	private bool hasWetTableCloth;
+	private boolean hasWetTableCloth;
 	
 	/** */
-	private bool hasTVSZ;
+	private boolean hasTVSZ;
 	
 	/** */
-	private bool hasFFP2Mask;
+	private boolean hasFFP2Mask;
 	
 	/** */
-	public bool hasHolyBeerCup;
-	
-	/** */
-	private Item inventory;
+	public boolean hasHolyBeerCup;
 	
 	/** */
 	private Item inventory;
+
 	
 	/** */
 	private Room room;
@@ -54,7 +52,7 @@ public abstract class Person {
 	private FFP2Mask ffp2Masks;
 	
 	/** */
-	public void SetIsFainted(bool b) {
+	public void SetIsFainted(boolean b) {
 	}
 	
 	/** */
@@ -69,7 +67,7 @@ public abstract class Person {
 	}
 	
 	/** */
-	public abstract bool Pickup(Item i);
+	public abstract boolean Pickup(Item i);
 	
 	/** */
 	public void Throw(Item i) {
@@ -97,11 +95,13 @@ public abstract class Person {
 	}
 	
 	/** */
-	public bool DefendFromKill() {
+	public boolean DefendFromKill() {
+		return false;
 	}
 	
 	/** */
-	public bool DefendFromGas() {
+	public boolean DefendFromGas() {
+		return false;
 	}
 	
 	/** */
@@ -137,6 +137,7 @@ public abstract class Person {
 	}
 	
 	/** */
-	public Item GetRandomActive(Item* iList) {
+	public Item GetRandomActive(List<Item> list) {
+		return null;
 	}
 }

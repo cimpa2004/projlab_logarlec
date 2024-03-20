@@ -15,10 +15,7 @@ package modul;//
 /** */
 public class Student extends Person {
 	/** */
-	private bool isAlive;
-	
-	/** */
-	private Game game;
+	private boolean isAlive;
 	
 	/** */
 	private Game game;
@@ -27,13 +24,7 @@ public class Student extends Person {
 	private Room room;
 	
 	/** */
-	private Game game;
-	
-	/** */
-	private Game game;
-	
-	/** */
-	public bool AppearInRoom(Room r) {
+	public void AppearInRoom(Room r) {
 	}
 	
 	/** */
@@ -45,7 +36,8 @@ public class Student extends Person {
 	}
 	
 	/** */
-	public bool Die() {
+	public boolean Die() {
+		return false;
 	}
 	
 	/** */
@@ -57,30 +49,13 @@ public class Student extends Person {
 	}
 	
 	/** */
-	public bool Pickup(Item i) {
+	public boolean Pickup(Item i) {
+		return false;
 	}
 	
 	/** */
 	public void SetRoom(Room r) {
 	}
-	
-	/** */
-	public void AppearInRoom(Room r) {
-	}
-	
-	/** */
-	public bool Pickup(Item i) {
-	}
-	
-	/** */
-	public void UseItem(Usable u) {
-	}
-	
-	/** */
-	public void StartTurn() {
-	}
-	
-	/** */
-	public void EndTurn() {
-	}
+
+
 }

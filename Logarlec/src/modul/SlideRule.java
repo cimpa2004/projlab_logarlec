@@ -15,11 +15,13 @@ package modul;//
 /** */
 public class SlideRule extends Item {
 	/** */
-	public bool PickedUpStudent(Student st) {
+	public boolean PickedUpStudent(Student st) {
+		return false;
 	}
 	
 	/** */
-	public bool PickedUpInstructor(Instructor i) {
+	public boolean PickedUpInstructor(Instructor i) {
+		return false;
 	}
 	
 	/** */
@@ -29,16 +31,5 @@ public class SlideRule extends Item {
 	/** */
 	public void UsedItem(Person p) {
 	}
-	
-	/** */
-	public bool PickedUpStudent(Student st) {
-	}
-	
-	/** */
-	public bool PickedUpInstructor(Instructor i) {
-	}
-	
-	/** */
-	public void Thrown(Person p) {
-	}
+
 }
