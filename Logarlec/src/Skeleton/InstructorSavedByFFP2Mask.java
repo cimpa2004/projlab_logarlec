@@ -11,11 +11,12 @@ public class InstructorSavedByFFP2Mask {
     private DoorSide d1, d2;
     private FFP2Mask f;
 
-    private void InitTest(){
+    private static void initTest(){
         // Fuggvenyhivasok a kommunikacios diagrammon
 
     }
     public static void Run(){
+        initTest();
         // Fuggvenyhivasok a szekvencia diagrammon
     }
 }
