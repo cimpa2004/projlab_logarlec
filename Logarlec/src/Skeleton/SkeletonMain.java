@@ -11,6 +11,7 @@ public class SkeletonMain {
         // input: 1
         // switch
         int input = 1;
+        
         if(input == 1) InstructorSavedByFFP2Mask.Run();
     }
 }
