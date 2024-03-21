@@ -1,5 +1,6 @@
 package modul;
 
+import util.Logger;
 import util.Reader;
 
 /**
@@ -26,9 +27,9 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public boolean Activate() {
-		System.out.println("STARTED: " + this + ".Activate()");
+		Logger.started(this, "Activate");
 		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
-		System.out.println("FINISHED: " + this + ".Activate()");
+		Logger.finished(this, "Activate");
 		return returnValue;
 	}
 
@@ -39,9 +40,8 @@ public class Transistor extends Item implements Usable {
 	 * @param t2 a másik transistor
 	 */
 	public void SetPairs(Transistor t1, Transistor t2) {
-		System.out.println("STARTED: " + this + ".SetPairs(" + t1 + ", " + t2 +")");
-
-		System.out.println("FINISHED: " + this + ".SetPairs(" + t1 + ", " + t2 +")");
+		Logger.started(this, "SetPairs", t1, t2);
+		Logger.finished(this, "SetPairs", t1, t2);
 	}
 
 	/**
@@ -49,9 +49,8 @@ public class Transistor extends Item implements Usable {
 	 * @param t a transistor új párja
 	 */
 	public void SetPair(Transistor t) {
-		System.out.println("STARTED: " + this + ".SetPair(" + t +")");
-
-		System.out.println("FINISHED: " + this + ".SetPair(" + t +")");
+		Logger.started(this, "SetPair", t);
+		Logger.finished(this, "SetPair", t);
 	}
 
 	/**
@@ -59,8 +58,8 @@ public class Transistor extends Item implements Usable {
 	 * @return Pair értéke, null ha nincs párja
 	 */
 	public Transistor GetPair() {
-		System.out.println("STARTED: " + this + ".GetPair()");
-		System.out.println("FINISHED: " + this + ".GetPair()");
+		Logger.started(this, "GetPair");
+		Logger.finished(this, "GetPair");
 		return this.pair;
 	}
 
@@ -71,9 +70,9 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public boolean PickedUpStudent(Student st) {
-		System.out.println("STARTED: " + this + ".PickedUpStudent(" + st +")");
+		Logger.started(this, "PickedUpStudent", st);
 		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
-		System.out.println("FINISHED: " + this + ".PickedUpStudent(" + st +")");
+		Logger.finished(this, "PickedUpStudent", st);
 		return returnValue;
 	}
 
@@ -84,9 +83,9 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".PickedUpInstructor(" + i +")");
+		Logger.started(this, "PickedUpInstructor", i);
 		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
-		System.out.println("FINISHED: " + this + ".PickedUpInstructor(" + i +")");
+		Logger.finished(this, "PickedUpInstructor", i);
 		return returnValue;
 	}
 
@@ -96,9 +95,8 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public void Thrown(Person p) {
-		System.out.println("STARTED: " + this + ".Thrown(" + p +")");
-
-		System.out.println("FINISHED: " + this + ".Thrown(" + p +")");
+		Logger.started(this, "Thrown", p);
+		Logger.finished(this, "Thrown", p);
 	}
 
 	/**
@@ -107,9 +105,8 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public void UsedByStudent(Student s) {
-		System.out.println("STARTED: " + this + ".UsedByStudent(" + s +")");
-
-		System.out.println("FINISHED: " + this + ".UsedByStudent(" + s +")");
+		Logger.started(this, "UsedByStudent", s);
+		Logger.finished(this, "UsedByStudent", s);
 	}
 
 	/**
@@ -118,9 +115,8 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".UsedByInstructor(" + i +")");
-
-		System.out.println("FINISHED: " + this + ".UsedByInstructor(" + i +")");
+		Logger.started(this, "UsedByInstructor", i);
+		Logger.finished(this, "UsedByInstructor", i);
 	}
 	
 

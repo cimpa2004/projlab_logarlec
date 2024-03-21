@@ -1,6 +1,6 @@
 package modul;
 
-
+import util.Logger;
 import util.Reader;
 
 /** */
@@ -10,70 +10,71 @@ public class Instructor extends Person {
 
 	/** */
 	public void AppearInRoom(Room r) {
-		System.out.println("STARTED: " + this + ".AppearInRoom(" + r + ")");
+		Logger.started(this, "AppearInRoom", r);
 		r.AddInstructor(this);
-		System.out.println("FINISHED: " + this + ".AppearInRoom(" + r + ")");
+		Logger.finished(this, "AppearInRoom", r);
 	}
 
 	/** */
 	public void StealSoul(Student st) {
-		System.out.println("STARTED: " + this + ".StealSoul(" + st + ")");
+		Logger.started(this, "StealSoul", st);
 		// existing code
-		System.out.println("FINISHED: " + this + ".StealSoul(" + st + ")");
+		Logger.finished(this, "StealSoul", st);
 	}
 
 	/** */
 	public void Stun(int duration) {
-		System.out.println("STARTED: " + this + ".Stun(" + duration + ")");
+		Logger.started(this, "Stun", duration);
 		// existing code
-		System.out.println("FINISHED: " + this + ".Stun(" + duration + ")");
+		Logger.finished(this, "Stun", duration);
 	}
 
 	/** */
 	public void DecrementStun() {
-		System.out.println("STARTED: " + this + ".DecrementStun()");
+		Logger.started(this, "DecrementStun");
 		// existing code
-		System.out.println("FINISHED: " + this + ".DecrementStun()");
+		Logger.finished(this, "DecrementStun");
 	}
 
 	/** */
 	public void StartTurn() {
-		System.out.println("STARTED: " + this + ".StartTurn()");
+		Logger.started(this, "StartTurn");
 		// existing code
-		System.out.println("FINISHED: " + this + ".StartTurn()");
+		Logger.finished(this, "StartTurn");
 	}
 
 	/** */
 	public void EndTurn() {
-		System.out.println("STARTED: " + this + ".EndTurn()");
+
+		Logger.started(this, "EndTurn");
 		// existing code
-		System.out.println("FINISHED: " + this + ".EndTurn()");
+		Logger.finished(this, "EndTurn");
 	}
 
 	/** */
 	public void UseItem(Usable u) {
-		System.out.println("STARTED: " + this + ".UseItem(" + u + ")");
+		Logger.started(this, "UseItem", u);
 		u.UsedByInstructor(this);
-		System.out.println("FINISHED: " + this + ".UseItem(" + u + ")");
+		Logger.finished(this, "UseItem", u);
 	}
 
 	/** */
 	@Override
 	public boolean Pickup(Item i) {
-		System.out.println("STARTED: " + this + ".Pickup(" + i + ")");
+		Logger.started(this, "Pickup", i);
 		boolean isPickedUp = i.PickedUpInstructor(this);
-		System.out.println("FINISHED: " + this + ".Pickup(" + i + ")");
+		Logger.finished(this, "Pickup", i);
 		return isPickedUp;
 	}
 
 	/** */
 	@Override
 	public void Move(DoorSide d) {
-		System.out.println("STARTED: " + this + ".Move(" + d + ")");
+		Logger.started(this, "Move", d);
 		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
 		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
 		if(!canBeOpened || !isVisible){
-			System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+			Logger.finished(this, "Move", d);
 			return;
 		}
 		DoorSide d2 = d.GetPair();
@@ -81,12 +82,12 @@ public class Instructor extends Person {
 		int maxCapacity = r2.GetMaxCapacity();
 		int currCapacity = r2.GetCurrentCapacity();
 		if(!(currCapacity<maxCapacity)){
-			System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+			Logger.finished(this, "Move", d);
 			return;
 		}
 		room.RemoveInstructor(this);
 		AppearInRoom(r2);
-		System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+		Logger.finished(this, "Move", d);
 	}
 
 }

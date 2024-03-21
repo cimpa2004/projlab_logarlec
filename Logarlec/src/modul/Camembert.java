@@ -1,4 +1,5 @@
 package modul;
+import util.Logger;
 import util.Reader;
 
 /**
@@ -19,11 +20,11 @@ public class Camembert extends Item implements Usable {
 	 */
 	@Override
 	public boolean Activate() {
-		System.out.println("STARTED: " + this + ".Activate()");
+		Logger.started(this, "Activate");
 		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a Camembert?");
-		System.out.println("FINISHED: " + this + ".Activate()");
-        return isActivated;
-    }
+		Logger.finished(this, "Activate");
+		return isActivated;
+	}
 
 	/**
 	 * Kezeli a felvételt, elhelyezi magát az st inventoryában
@@ -32,9 +33,9 @@ public class Camembert extends Item implements Usable {
 	 */
 	@Override
 	public boolean PickedUpStudent(Student st) {
-		System.out.println("STARTED: " + this + ".PickedUpStudent(" + st +")");
+		Logger.started(this, "PickedUpStudent", st);
 		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
-		System.out.println("FINISHED: " + this + ".PickedUpStudent(" + st +")");
+		Logger.finished(this, "PickedUpStudent", st);
 		return returnValue;
 	}
 
@@ -45,9 +46,9 @@ public class Camembert extends Item implements Usable {
 	 */
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".PickedUpInstructor(" + i +")");
+		Logger.started(this, "PickedUpInstructor", i);
 		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
-		System.out.println("FINISHED: " + this + ".PickedUpInstructor(" + i +")");
+		Logger.finished(this, "PickedUpInstructor", i);
 		return returnValue;
 	}
 
@@ -57,8 +58,8 @@ public class Camembert extends Item implements Usable {
 	 */
 	@Override
 	public void Thrown(Person p) {
-		System.out.println("STARTED: " + this + ".Thrown(" + p +")");
-		System.out.println("FINISHED: " + this + ".Thrown(" + p +")");
+		Logger.started(this, "Thrown", p);
+		Logger.finished(this, "Thrown", p);
 	}
 
 	/**
@@ -67,14 +68,14 @@ public class Camembert extends Item implements Usable {
 	 */
 	@Override
 	public void UsedByStudent(Student s) {
-		System.out.println("STARTED: " + this + ".UsedByStudent(" + s +")");
+		Logger.started(this, "UsedByStudent", s);
 		boolean isActivated = Activate();
 		if(isActivated){
 			Room roomToPosion = s.GetRoom();
 			int duration = Reader.GetIntInput("Mennyi ideig legyen gázos a szoba?");
 			roomToPosion.SetPoisonDuration(duration);
 		}
-		System.out.println("FINISHED: " + this + ".UsedByStudent(" + s +")");
+		Logger.finished(this, "UsedByStudent", s);
 	}
 
 	/**
@@ -83,16 +84,13 @@ public class Camembert extends Item implements Usable {
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".UsedByInstructor(" + i +")");
+		Logger.started(this, "UsedByInstructor", i);
 		boolean isActivated = Activate();
 		if(isActivated){
 			Room roomToPosion = i.GetRoom();
 			int duration = Reader.GetIntInput("Mennyi ideig legyen gázos a szoba?");
 			roomToPosion.SetPoisonDuration(duration);
 		}
-		System.out.println("FINISHED: " + this + ".UsedByInstructor(" + i +")");
+		Logger.finished(this, "UsedByInstructor", i);
 	}
-	
-
-
 }

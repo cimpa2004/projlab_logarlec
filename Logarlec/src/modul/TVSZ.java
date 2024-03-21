@@ -1,6 +1,7 @@
 package modul;
 
 
+import util.Logger;
 import util.Reader;
 
 /** */
@@ -15,38 +16,39 @@ public class TVSZ extends Item implements Defendable{
 	/** */
 	@Override
 	public void Decrement() {
-		System.out.println("STARTED: " + this + ".Decrement()");
-		if(usesLeft>0) usesLeft = usesLeft - 1;
-		System.out.println("FINISHED: " + this + ".Decrement()");
+		Logger.started(this, "Decrement");
+		if (usesLeft > 0) usesLeft = usesLeft - 1;
+		Logger.finished(this, "Decrement");
 	}
 
 	/** */
 	public boolean PickedUpStudent(Student st) {
-		System.out.println("STARTED: " + this + ".PickedUpStudent(" + st + ")");
-		if(usesLeft>0) st.AddTVSZ(this);
+		Logger.started(this, "PickedUpStudent", st);
+		if (usesLeft > 0) st.AddTVSZ(this);
 		boolean isAdded = st.AddToInventory(this);
-		System.out.println("FINISHED: " + this + ".PickedUpStudent(" + st + ")");
+		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
 	/** */
 	public boolean PickedUpInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".PickedUpInstructor(" + i + ")");
+		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		System.out.println("FINISHED: " + this + ".PickedUpInstructor(" + i + ")");
+		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
 	/** */
 	public void Thrown(Person p) {
-		System.out.println("STARTED: " + this + ".Thrown(" + p + ")");
-		System.out.println("FINISHED: " + this + ".Thrown(" + p + ")");
+		Logger.started(this, "Thrown", p);
+		Logger.finished(this, "Thrown", p);
 	}
 
+	/** */
 	@Override
 	public boolean CanDefend() {
-		System.out.println("STARTED: " + this + ".CanDefend()");
-		System.out.println("FINISHED: " + this + ".CanDefend()");
+		Logger.started(this, "CanDefend");
+		Logger.finished(this, "CanDefend");
 		return usesLeft > 0;
 	}
 }

@@ -1,12 +1,12 @@
 package modul;
 
 
-import Skeleton.SkeletonMain;
+
+import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
@@ -105,9 +105,9 @@ public abstract class Person {
 	 * @param  b  Egy boolean típusú változó, mely az adja meg, hogy az isFainted értéke mire változzon.
 	 */
 	public void SetIsFainted(boolean b) {
-		System.out.println("STARTED: " + this + ".SetIsFainted(" + b + ")");
+		Logger.started(this, "SetIsFainted", b);
 
-		System.out.println("FINISHED: " + this + ".SetIsFainted(" + b + ")");
+		Logger.finished(this, "SetIsFainted", b);
 	}
 		
 	/** 
@@ -146,9 +146,9 @@ public abstract class Person {
 	 *  @param  i  A válaszott Item, melyet a Person eldob 
 	*/
 	public void Throw(Item i) {
-		System.out.println("STARTED: " + this + ".Throw(" + i + ")");
+		Logger.started(this, "Throw", i);
 
-		System.out.println("FINISHED: " + this + ".Throw(" + i + ")");
+		Logger.finished(this, "Throw", i);
 	}
 	
 	/** 
@@ -156,11 +156,11 @@ public abstract class Person {
 	 * kiürül az adott Person inventoryja.
 	*/
 	public void ThrowAllItems() {
-		System.out.println("STARTED: " + this + ".ThrowAllItems()");
+		Logger.started(this, "ThrowAllItems");
 
-		System.out.println("FINISHED: " + this + ".ThrowAllItems()");
+		Logger.finished(this, "ThrowAllItems");
 	}
-	
+
 	/** 
 	 * Egy absract függvény, mely a kiválasztott Usable-t aktiválja. Ez a származott osztályokban van leimplementálva, mert
 	 * attól függően változik egy Usable használata, hogy ki használja.
@@ -173,9 +173,9 @@ public abstract class Person {
 	 *  @param  r  Az a szoba, amely szobában a Person tartózkodni fog
 	*/
 	public void SetRoom(Room r) {
-		System.out.println("STARTED: " + this + ".SetRoom(" + r + ")");
+		Logger.started(this, "SetRoom", r);
 		room = r;
-		System.out.println("FINISHED: " + this + ".SetRoom(" + r + ")");
+		Logger.finished(this, "SetRoom", r);
 	}
 
 	/**
@@ -184,8 +184,8 @@ public abstract class Person {
 	 *  @return  Az a szoba ahol jenleg tartózkodik
 	 */
 	public Room GetRoom() {
-		System.out.println("STARTED: " + this + ".GetRoom()");
-		System.out.println("FINISHED: " + this + ".GetRoom()");
+		Logger.started(this, "GetRoom");
+		Logger.finished(this, "GetRoom");
 		return room;
 	}
 	
@@ -209,9 +209,9 @@ public abstract class Person {
 	 *  @return    A visszatérési érték, ami mutatja, hogy sikerült-e hozzáadni a paraméterként megadott Itemet az inventoryhoz
 	*/
 	public boolean AddToInventory(Item i) {
-		System.out.println("STARTED: " + this + ".AddToInventory(" + i + ")");
+		Logger.started(this, "AddToInventory", i);
 		boolean canAdd = Reader.GetBooleanInput("Van hely az inventoryban?");
-		System.out.println("FINISHED: " + this + ".AddToInventory(" + i + ")");
+		Logger.finished(this, "AddToInventory", i);
 		return canAdd;
 	}
 	
@@ -223,9 +223,9 @@ public abstract class Person {
 	 *  @return    A visszatérési érték, ami mutatja, hogy sikerült-e törölni az i Itemet az inventoryból
 	*/
 	public boolean RemoveFromInventory(Item i) {
-		System.out.println("STARTED: " + this + ".RemoveFromInventory(" + i + ")");
+		Logger.started(this, "RemoveFromInventory", i);
 
-		System.out.println("FINISHED: " + this + ".RemoveFromInventory(" + i + ")");
+		Logger.finished(this, "RemoveFromInventory", i);
 		return false;
 	}
 	
@@ -236,9 +236,9 @@ public abstract class Person {
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a gyilkosságtól.
 	*/
 	public boolean DefendFromKill() {
-		System.out.println("STARTED: " + this + ".DefendFromKill()");
+		Logger.started(this, "DefendFromKill");
 
-		System.out.println("FINISHED: " + this + ".DefendFromKill()");
+		Logger.finished(this, "DefendFromKill");
 		return false;
 	}
 	
@@ -249,14 +249,14 @@ public abstract class Person {
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a kábulástól.
 	*/
 	public boolean DefendFromGas() {
-		System.out.println("STARTED: " + this + ".DefendFromGas()");
+		Logger.started(this, "DefendFromGas");
 		Defendable randActive = GetRandomActive(ffp2Masks);
-		if(randActive != null){
+		if (randActive != null) {
 			randActive.Decrement();
-			System.out.println("FINISHED: " + this + ".DefendFromGas()");
+			Logger.finished(this, "DefendFromGas");
 			return true;
 		}
-		System.out.println("FINISHED: " + this + ".DefendFromGas()");
+		Logger.finished(this, "DefendFromGas");
 		return false;
 	}
 	
@@ -266,9 +266,9 @@ public abstract class Person {
 	 *  @param  w  A WetTableCloth melyet hozzá ad a listához
 	*/
 	public void AddWetTableCloth(Defendable w) {
-		System.out.println("STARTED: " + this + ".AddWetTableCloth(" + w + ")");
+		Logger.started(this, "AddWetTableCloth", w);
 
-		System.out.println("FINISHED: " + this + ".AddWetTableCloth(" + w + ")");
+		Logger.finished(this, "AddWetTableCloth", w);
 	}
 	
 	/** 
@@ -277,9 +277,9 @@ public abstract class Person {
 	 *  @param  t  A TVSZ melyet hozzá ad a listához
 	*/
 	public void AddTVSZ(Defendable t) {
-		System.out.println("STARTED: " + this + ".AddTVSZ(" + t + ")");
+		Logger.started(this, "AddTVSZ", t);
 
-		System.out.println("FINISHED: " + this + ".AddTVSZ(" + t + ")");
+		Logger.finished(this, "AddTVSZ", t);
 	}
 	
 	/** 
@@ -288,9 +288,9 @@ public abstract class Person {
 	 *  @param  f  Az FFP2Mask melyet hozzá ad a listához
 	*/
 	public void AddFFP2Mask(Defendable f) {
-		System.out.println("STARTED: " + this + ".AddFFP2Mask(" + f + ")");
+		Logger.started(this, "AddFFP2Mask", f);
 		ffp2Masks.add(f);
-		System.out.println("FINISHED: " + this + ".AddFFP2Mask(" + f + ")");
+		Logger.finished(this, "AddFFP2Mask", f);
 	}
 	
 	/** 
@@ -299,9 +299,9 @@ public abstract class Person {
 	 *  @param  h  A HolyBeerCup melyet hozzá ad a listához
 	*/
 	public void AddHolyBeerCup(Defendable h) {
-		System.out.println("STARTED: " + this + ".AddHolyBeerCup(" + h + ")");
+		Logger.started(this, "AddHolyBeerCup", h);
 
-		System.out.println("FINISHED: " + this + ".AddHolyBeerCup(" + h + ")");
+		Logger.finished(this, "AddHolyBeerCup", h);
 	}
 	
 	/** 
@@ -310,9 +310,9 @@ public abstract class Person {
 	 *  @param  w  A WetTableCloth melyet kivesz a listából
 	*/
 	public void RemoveWetTableCloth(Defendable w) {
-		System.out.println("STARTED: " + this + ".RemoveWetTableCloth(" + w + ")");
+		Logger.started(this, "RemoveWetTableCloth", w);
 
-		System.out.println("FINISHED: " + this + ".RemoveWetTableCloth(" + w + ")");
+		Logger.finished(this, "RemoveWetTableCloth", w);
 	}
 	
 	/** 
@@ -321,20 +321,21 @@ public abstract class Person {
 	 *  @param  t  A TVSZ melyet kivesz a listából
 	*/
 	public void RemoveTVSZ(Defendable t) {
-		System.out.println("STARTED: " + this + ".RemoveTVSZ(" + t + ")");
+		Logger.started(this, "RemoveTVSZ", t);
 
-		System.out.println("FINISHED: " + this + ".RemoveTVSZ(" + t + ")");
+		Logger.finished(this, "RemoveTVSZ", t);
 	}
-	
+
+
 	/** 
 	 * A paraméterként megadott FFP2Maskot kiveszi a Person ffp2Masks listájából.
 	 * 
 	 *  @param  f  Az FFP2Mask melyet kivesz a listából
 	*/
 	public void RemoveFFP2Mask(Defendable f) {
-		System.out.println("STARTED: " + this + ".RemoveFFP2Mask(" + f + ")");
+		Logger.started(this, "RemoveFFP2Mask", f);
 
-		System.out.println("FINISHED: " + this + ".RemoveFFP2Mask(" + f + ")");
+		Logger.finished(this, "RemoveFFP2Mask", f);
 	}
 	
 	/** 
@@ -343,9 +344,9 @@ public abstract class Person {
 	 *  @param  h  A HolyBeerCup melyet kivesz a listából
 	*/
 	public void RemoveHolyBeerCup(Defendable h) {
-		System.out.println("STARTED: " + this + ".RemoveHolyBeerCup(" + h + ")");
+		Logger.started(this, "RemoveHolyBeerCup", h);
 
-		System.out.println("FINISHED: " + this + ".RemoveHolyBeerCup(" + h + ")");
+		Logger.finished(this, "RemoveHolyBeerCup", h);
 	}
 	
 	/** 
@@ -355,14 +356,14 @@ public abstract class Person {
 	 *  @param  list  Az a lista amelyből kiválasz egy olyan Defendable, ami még képes megvédeni.
 	*/
 	public Defendable GetRandomActive(List<Defendable> list) {
-		System.out.println("STARTED: " + this + ".GetRandomActive(" + list + ")");
-		for (Defendable d : list){
-			if(d.CanDefend()){
-				System.out.println("FINISHED: " + this + ".GetRandomActive(" + list + ")");
+		Logger.started(this, "GetRandomActive", list);
+		for (Defendable d : list) {
+			if (d.CanDefend()) {
+				Logger.finished(this, "GetRandomActive", list);
 				return d;
 			}
 		}
-		System.out.println("FINISHED: " + this + ".GetRandomActive(" + list + ")");
+		Logger.finished(this, "GetRandomActive", list);
 		return null;
 	}
 }
