@@ -2,8 +2,8 @@ package Skeleton;
 
 import modul.*;
 
-public class StudentTriesUsingUsedItems {
-    private static Student s;
+public class InstructorTriesUsingUsedOrNotAllowedItems {
+    private static Instructor i;
     private static Camembert c;
     private static FFP2Mask f;
     private static WetTableCloth w;
@@ -13,7 +13,7 @@ public class StudentTriesUsingUsedItems {
 
 
     private static void initTest(){
-        s = new Student();
+        i = new Instructor();
         c = new Camembert();
         f = new FFP2Mask();
         w = new WetTableCloth();
@@ -27,15 +27,15 @@ public class StudentTriesUsingUsedItems {
         r.AddItem(t);
 
         // Hallgato, targyak hozzadasa
-        s.SetRoom(r);
-        r.AddStudent(s);
-        s.AddFFP2Mask(f);
-        s.AddToInventory(f);
-        s.AddWetTableCloth(w);
-        s.AddToInventory(w);
-        s.AddHolyBeerCup(h);
-        s.AddToInventory(h);
-        s.AddToInventory(c);
+        i.SetRoom(r);
+        r.AddInstructor(i);
+        i.AddFFP2Mask(f);
+        i.AddToInventory(f);
+        i.AddWetTableCloth(w);
+        i.AddToInventory(w);
+        i.AddHolyBeerCup(h);
+        i.AddToInventory(h);
+        i.AddToInventory(c);
     }
 
     public static void Run(){
@@ -44,11 +44,11 @@ public class StudentTriesUsingUsedItems {
         System.out.println("--------");
         System.out.println("Run");
 
-        s.UseItem(c);
-        s.UseItem(f);
-        s.UseItem(w);
-        s.UseItem(h);
-        s.Pickup(t);
+        i.UseItem(c);
+        i.UseItem(f);
+        i.UseItem(w);
+        i.UseItem(h);
+        i.Pickup(t);
 
 
         System.out.println("--------");

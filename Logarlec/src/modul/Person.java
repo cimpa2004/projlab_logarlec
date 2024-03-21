@@ -177,6 +177,17 @@ public abstract class Person {
 		room = r;
 		System.out.println("FINISHED: " + this + ".SetRoom(" + r + ")");
 	}
+
+	/**
+	 * Vissza adja azt a szobát amiben a Person jelenleg tartózkodik.
+	 *
+	 *  @return  Az a szoba ahol jenleg tartózkodik
+	 */
+	public Room GetRoom() {
+		System.out.println("STARTED: " + this + ".GetRoom()");
+		System.out.println("FINISHED: " + this + ".GetRoom()");
+		return room;
+	}
 	
 	/** 
 	 * Ez az a függvény amelyet a Game hív meg, és ezen belül implementálhatja az adott származott, hogy milyen lépéseket

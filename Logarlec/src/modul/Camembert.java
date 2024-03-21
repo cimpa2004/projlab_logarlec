@@ -20,9 +20,9 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public boolean Activate() {
 		System.out.println("STARTED: " + this + ".Activate()");
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a Camembert?");
 		System.out.println("FINISHED: " + this + ".Activate()");
-        return returnValue;
+        return isActivated;
     }
 
 	/**
@@ -68,6 +68,12 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public void UsedByStudent(Student s) {
 		System.out.println("STARTED: " + this + ".UsedByStudent(" + s +")");
+		boolean isActivated = Activate();
+		if(isActivated){
+			Room roomToPosion = s.GetRoom();
+			int duration = Reader.GetIntInput("Mennyi ideig legyen gázos a szoba?");
+			roomToPosion.SetPoisonDuration(duration);
+		}
 		System.out.println("FINISHED: " + this + ".UsedByStudent(" + s +")");
 	}
 
@@ -78,6 +84,12 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		System.out.println("STARTED: " + this + ".UsedByInstructor(" + i +")");
+		boolean isActivated = Activate();
+		if(isActivated){
+			Room roomToPosion = i.GetRoom();
+			int duration = Reader.GetIntInput("Mennyi ideig legyen gázos a szoba?");
+			roomToPosion.SetPoisonDuration(duration);
+		}
 		System.out.println("FINISHED: " + this + ".UsedByInstructor(" + i +")");
 	}
 	

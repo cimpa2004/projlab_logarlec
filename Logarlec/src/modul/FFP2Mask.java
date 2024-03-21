@@ -53,9 +53,9 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 */
 	public boolean PickedUpStudent(Student st) {
 		System.out.println("STARTED: " + this + ".PickedUpStudent(" + st +")");
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		boolean isAdded = st.AddToInventory(this);
 		System.out.println("FINISHED: " + this + ".PickedUpStudent(" + st +")");
-		return returnValue;
+		return isAdded;
 	}
 
 	/**
@@ -86,7 +86,8 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 */
 	public void UsedByStudent(Student s) {
 		System.out.println("STARTED: " + this + ".UsedByStudent(" + s +")");
-
+		Activate();
+		if (isActivated) s.AddFFP2Mask(this);
 		System.out.println("FINISHED: " + this + ".UsedByStudent(" + s +")");
 	}
 
@@ -96,10 +97,8 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 */
 	public void UsedByInstructor(Instructor i) {
 		System.out.println("STARTED: " + this + ".UsedByInstructor(" + i + ")");
-		boolean _isActivated = Activate();
-		if (_isActivated) {
-			i.AddFFP2Mask(this);
-		}
+		Activate();
+		if (isActivated) i.AddFFP2Mask(this);
 		System.out.println("FINISHED: " + this + ".UsedByInstructor(" + i + ")");
 	}
 

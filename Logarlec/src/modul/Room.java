@@ -62,7 +62,7 @@ public class Room {
 	/** */
 	public void AddItem(Item i) {
 		System.out.println("STARTED: " + this + ".AddItem(" + i + ")");
-		// existing code
+		items.add(i);
 		System.out.println("FINISHED: " + this + ".AddItem(" + i + ")");
 	}
 
@@ -139,6 +139,10 @@ public class Room {
 	public void SetPoisonDuration(int pd) {
 		System.out.println("STARTED: " + this + ".SetPoisonDuration(" + pd + ")");
 		poisonDuration = pd;
+		for (Person p : people){
+			boolean isPersonDefended = p.DefendFromGas();
+			if(!isPersonDefended) p.SetIsFainted(true);
+		}
 		System.out.println("FINISHED: " + this + ".SetPoisonDuration(" + pd + ")");
 	}
 
@@ -197,6 +201,8 @@ public class Room {
 				i.SetIsFainted(true);
 			}
 		}
+		instructors.add(i);
+		people.add(i);
 		System.out.println("FINISHED: " + this + ".AddInstructor(" + i + ")");
 	}
 
@@ -210,7 +216,15 @@ public class Room {
 	/** */
 	public void AddStudent(Student s) {
 		System.out.println("STARTED: " + this + ".AddStudent(" + s + ")");
-		// existing code
+		s.SetRoom(this);
+		if(poisonDuration>0){
+			boolean defended = s.DefendFromGas();
+			if(!defended){
+				s.SetIsFainted(true);
+			}
+		}
+		students.add(s);
+		people.add(s);
 		System.out.println("FINISHED: " + this + ".AddStudent(" + s + ")");
 	}
 
