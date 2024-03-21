@@ -92,6 +92,9 @@ public abstract class Person {
 	 * @param  b  Egy boolean típusú változó, mely az adja meg, hogy az isFainted értéke mire változzon.
 	 */
 	public void SetIsFainted(boolean b) {
+		System.out.println("STARTED: " + this + ".SetIsFainted(" + b + ")");
+
+		System.out.println("FINISHED: " + this + ".SetIsFainted(" + b + ")");
 	}
 		
 	/** 
@@ -130,6 +133,9 @@ public abstract class Person {
 	 *  @param  i  A válaszott Item, melyet a Person eldob 
 	*/
 	public void Throw(Item i) {
+		System.out.println("STARTED: " + this + ".Throw(" + i + ")");
+
+		System.out.println("FINISHED: " + this + ".Throw(" + i + ")");
 	}
 	
 	/** 
@@ -137,6 +143,9 @@ public abstract class Person {
 	 * kiürül az adott Person inventoryja.
 	*/
 	public void ThrowAllItems() {
+		System.out.println("STARTED: " + this + ".ThrowAllItems()");
+
+		System.out.println("FINISHED: " + this + ".ThrowAllItems()");
 	}
 	
 	/** 
@@ -151,6 +160,9 @@ public abstract class Person {
 	 *  @param  r  Az a szoba, amely szobában a Person tartózkodni fog
 	*/
 	public void SetRoom(Room r) {
+		System.out.println("STARTED: " + this + ".SetRoom(" + r + ")");
+
+		System.out.println("FINISHED: " + this + ".SetRoom(" + r + ")");
 	}
 	
 	/** 
@@ -173,6 +185,9 @@ public abstract class Person {
 	 *  @return    A visszatérési érték, ami mutatja, hogy sikerült-e hozzáadni a paraméterként megadott Itemet az inventoryhoz
 	*/
 	public boolean AddToInventory(Item i) {
+		System.out.println("STARTED: " + this + ".AddToInventory(" + i + ")");
+
+		System.out.println("FINISHED: " + this + ".AddToInventory(" + i + ")");
 		return false;
 	}
 	
@@ -184,6 +199,9 @@ public abstract class Person {
 	 *  @return    A visszatérési érték, ami mutatja, hogy sikerült-e törölni az i Itemet az inventoryból
 	*/
 	public boolean RemoveFromInventory(Item i) {
+		System.out.println("STARTED: " + this + ".RemoveFromInventory(" + i + ")");
+
+		System.out.println("FINISHED: " + this + ".RemoveFromInventory(" + i + ")");
 		return false;
 	}
 	
@@ -194,6 +212,9 @@ public abstract class Person {
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a gyilkosságtól.
 	*/
 	public boolean DefendFromKill() {
+		System.out.println("STARTED: " + this + ".DefendFromKill()");
+
+		System.out.println("FINISHED: " + this + ".DefendFromKill()");
 		return false;
 	}
 	
@@ -204,6 +225,9 @@ public abstract class Person {
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a kábulástól.
 	*/
 	public boolean DefendFromGas() {
+		System.out.println("STARTED: " + this + ".DefendFromGas()");
+
+		System.out.println("FINISHED: " + this + ".DefendFromGas()");
 		return false;
 	}
 	
@@ -213,30 +237,42 @@ public abstract class Person {
 	 *  @param  w  A WetTableCloth melyet hozzá ad a listához
 	*/
 	public void AddWetTableCloth(Defendable w) {
+		System.out.println("STARTED: " + this + ".AddWetTableCloth(" + w + ")");
+
+		System.out.println("FINISHED: " + this + ".AddWetTableCloth(" + w + ")");
 	}
 	
 	/** 
 	 * A paraméterként megadott TVSZ-t hozzáveszi a Person tvszs listájához.
 	 * 
-	 *  @param  w  A TVSZ melyet hozzá ad a listához
+	 *  @param  t  A TVSZ melyet hozzá ad a listához
 	*/
 	public void AddTVSZ(Defendable t) {
+		System.out.println("STARTED: " + this + ".AddTVSZ(" + t + ")");
+
+		System.out.println("FINISHED: " + this + ".AddTVSZ(" + t + ")");
 	}
 	
 	/** 
 	 * A paraméterként megadott FFP2Maskot hozzáveszi a Person ffp2Masks listájához.
 	 * 
-	 *  @param  w  Az FFP2Mask melyet hozzá ad a listához
+	 *  @param  f  Az FFP2Mask melyet hozzá ad a listához
 	*/
 	public void AddFFP2Mask(Defendable f) {
+		System.out.println("STARTED: " + this + ".AddFFP2Mask(" + f + ")");
+
+		System.out.println("FINISHED: " + this + ".AddFFP2Mask(" + f + ")");
 	}
 	
 	/** 
 	 * A paraméterként megadott HolyBeerCupot hozzáveszi a Person holyBeerCups listájához.
 	 * 
-	 *  @param  w  A HolyBeerCup melyet hozzá ad a listához
+	 *  @param  h  A HolyBeerCup melyet hozzá ad a listához
 	*/
 	public void AddHolyBeerCup(Defendable h) {
+		System.out.println("STARTED: " + this + ".AddHolyBeerCup(" + h + ")");
+
+		System.out.println("FINISHED: " + this + ".AddHolyBeerCup(" + h + ")");
 	}
 	
 	/** 
@@ -245,30 +281,42 @@ public abstract class Person {
 	 *  @param  w  A WetTableCloth melyet kivesz a listából
 	*/
 	public void RemoveWetTableCloth(Defendable w) {
+		System.out.println("STARTED: " + this + ".RemoveWetTableCloth(" + w + ")");
+
+		System.out.println("FINISHED: " + this + ".RemoveWetTableCloth(" + w + ")");
 	}
 	
 	/** 
 	 * A paraméterként megadott TVSZ-t kiveszi a Person tvszs listájából.
 	 * 
-	 *  @param  w  A TVSZ melyet kivesz a listából
+	 *  @param  t  A TVSZ melyet kivesz a listából
 	*/
 	public void RemoveTVSZ(Defendable t) {
+		System.out.println("STARTED: " + this + ".RemoveTVSZ(" + t + ")");
+
+		System.out.println("FINISHED: " + this + ".RemoveTVSZ(" + t + ")");
 	}
 	
 	/** 
 	 * A paraméterként megadott FFP2Maskot kiveszi a Person ffp2Masks listájából.
 	 * 
-	 *  @param  w  Az FFP2Mask melyet kivesz a listából
+	 *  @param  f  Az FFP2Mask melyet kivesz a listából
 	*/
 	public void RemoveFFP2Mask(Defendable f) {
+		System.out.println("STARTED: " + this + ".RemoveFFP2Mask(" + f + ")");
+
+		System.out.println("FINISHED: " + this + ".RemoveFFP2Mask(" + f + ")");
 	}
 	
 	/** 
 	 * A paraméterként megadott HolyBeerCupot kiveszi a Person holyBeerCups listájából.
 	 * 
-	 *  @param  w  A HolyBeerCup melyet kivesz a listából
+	 *  @param  h  A HolyBeerCup melyet kivesz a listából
 	*/
 	public void RemoveHolyBeerCup(Defendable h) {
+		System.out.println("STARTED: " + this + ".RemoveHolyBeerCup(" + h + ")");
+
+		System.out.println("FINISHED: " + this + ".RemoveHolyBeerCup(" + h + ")");
 	}
 	
 	/** 
@@ -278,6 +326,9 @@ public abstract class Person {
 	 *  @param  list  Az a lista amelyből kiválasz egy olyan Defendable, ami még képes megvédeni.
 	*/
 	public Defendable GetRandomActive(List<Defendable> list) {
+		System.out.println("STARTED: " + this + ".GetRandomActive(" + list + ")");
+
+		System.out.println("FINISHED: " + this + ".GetRandomActive(" + list + ")");
 		return null;
 	}
 }
