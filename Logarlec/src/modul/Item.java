@@ -13,6 +13,7 @@ public abstract class Item {
 	
 	/** */
 	public void SetRoom(Room r) {
+		room = r;
 	}
 	
 	/** */

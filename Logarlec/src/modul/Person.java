@@ -1,7 +1,12 @@
 package modul;
 
 
+import Skeleton.SkeletonMain;
+import util.Reader;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
@@ -12,32 +17,32 @@ public abstract class Person {
 	 * Hz az adott Person egy gázos szobában tartózkodik, akkor ez a változó mutatja, hogy
 	 * el van kábulva. 
 	*/
-	private boolean isFainted;
+	protected boolean isFainted;
 	
 	/**
 	 * Ez a változó mutatja, hogy az adott Personnak jelenleg aktív egy a köre. Amikor a Person
 	 * köre megkezdődik, akor ez a változó true lesz, amikor vége a köre, akkor false. 
 	*/
-	private boolean activeTurn;
+	protected boolean activeTurn;
 	
 	/** 
 	 * Ez mutatja, hogy az adott Person rendelkezik-e WetTableCloth-tal. Ennek segítségével bizonyos
 	 * helyzetekben ez hatással lehet az adott személyre (megvédheti), vagy más személyre a szobában
 	 * ahol a Person tartózkodik. 
 	*/
-	private boolean hasWetTableCloth;
+	protected boolean hasWetTableCloth;
 	
 	/** 
 	 * Ez mutatja, hogy az adott Person rendelkezik-e TVSZ-szel. Ezzel bizonyos helyzetekben hatással lehet
 	 * lehet a bizonyos akciókra, példáúl megvédheti az adott Person-t.
 	*/
-	private boolean hasTVSZ;
+	protected boolean hasTVSZ;
 	
 	/** 
 	 * Azt mutatja, hogy az adott Person rendelkezik-e FFP2Mask-kal. Ez megvédheti a kábulástól 
 	 * olyan helyzetekben, amikor gázos szobába lép, vagy a szobában ahol tartózkodik gázos lesz.
 	*/
-	private boolean hasFFP2Mask;
+	protected boolean hasFFP2Mask;
 	
 	/** 
 	 * Mutatja, hogy az adott Person rendelkezik-e HolyBeerCup-pal. Ez az Item megvédheti az
@@ -49,40 +54,48 @@ public abstract class Person {
 	 * Item-ek listája. Ez a lista tartalmazza az adott Person-nél lévő Itemeket. Egy Personnél
 	 * maximum csak 5 Item lehet egyszerre.
 	*/
-	private List<Item> inventory;
+	protected List<Item> inventory;
 
 	/** 
 	 * Ez mutatja, hogy az adott Person épp melyik szobába helyezkedik el.
 	*/
-	private Room room;
+	protected Room room;
 	
 	/** 
 	 * Egy lista ami tartalmazza az adott Personnél lévő WetTableCloth tárgyakat. Amennyiben van ebben
 	 * a listában, akkor bizonyos helyzetekben hatással lehet a személyre, vagy más személyre a szobában, 
 	 * illetve a hasWetTableCloth true. Minden itt lévő tárgy benne van a Person inventory-jában is.
 	*/
-	private List<Defendable> wetTableClothes;
+	protected List<Defendable> wetTableClothes;
 	
 	/** 
 	 * Egy lista ami tárolja az adott Person-nál lévő TVSZ-eket. A TVSZ bizonyos helyzetben hatással lehet
 	 * a Person-re, megvédheti azt. Minden TVSZ ami ebben a listában benne van, a Person inventory-jában is 
 	 * szerepel. Másrészt a hasTVSZ ekkor true.
 	*/
-	private List<Defendable> tvszs;
+	protected List<Defendable> tvszs;
 	
 	/** 
 	 * Egy lista ami a Person-nél lévő HolyBeerCup-okat tárolja, ez a tárgy is megvédheti a Person-t bizonyos
 	 * helyzetekben. Minden HolyBeerCup ami ebben a listában benne van, a Person inventory-jában is szerepel. 
 	 * Másrészt a hasHolyBeerCup ekkor true.
 	*/
-	private List<Defendable> holyBeerCups;
+	protected List<Defendable> holyBeerCups;
 	
 	/** 
 	 * Egy lista ami tartalmazza a Person-nél lévő FFP2Mask-okat. Minden tárgy ami ebben a listában van az
 	 * szerepel a Person inventoryjában is. Ekkor a hasFFP2Mask true. Ez megvédheti a kábulástól olyan helyzetekben, 
 	 * amikor gázos szobába lép, vagy a szobában ahol tartózkodik gázos lesz.
 	*/
-	private List<Defendable> ffp2Masks;
+	protected List<Defendable> ffp2Masks;
+
+	public Person(){
+		inventory = new ArrayList<>();
+		wetTableClothes = new ArrayList<>();;
+		tvszs = new ArrayList<>();
+		holyBeerCups = new ArrayList<>();
+		ffp2Masks = new ArrayList<>();
+	}
 	
 	/**
 	 * Ez a függvény arra szolgál, hogy beállítsa az adott Person isFainted változójának értékét a paraméterként
@@ -161,7 +174,7 @@ public abstract class Person {
 	*/
 	public void SetRoom(Room r) {
 		System.out.println("STARTED: " + this + ".SetRoom(" + r + ")");
-
+		room = r;
 		System.out.println("FINISHED: " + this + ".SetRoom(" + r + ")");
 	}
 	
@@ -186,9 +199,9 @@ public abstract class Person {
 	*/
 	public boolean AddToInventory(Item i) {
 		System.out.println("STARTED: " + this + ".AddToInventory(" + i + ")");
-
+		boolean canAdd = Reader.GetBooleanInput("Van hely az inventoryban?");
 		System.out.println("FINISHED: " + this + ".AddToInventory(" + i + ")");
-		return false;
+		return canAdd;
 	}
 	
 	/** 
@@ -226,7 +239,12 @@ public abstract class Person {
 	*/
 	public boolean DefendFromGas() {
 		System.out.println("STARTED: " + this + ".DefendFromGas()");
-
+		Defendable randActive = GetRandomActive(ffp2Masks);
+		if(randActive != null){
+			randActive.Decrement();
+			System.out.println("FINISHED: " + this + ".DefendFromGas()");
+			return true;
+		}
 		System.out.println("FINISHED: " + this + ".DefendFromGas()");
 		return false;
 	}
@@ -260,7 +278,7 @@ public abstract class Person {
 	*/
 	public void AddFFP2Mask(Defendable f) {
 		System.out.println("STARTED: " + this + ".AddFFP2Mask(" + f + ")");
-
+		ffp2Masks.add(f);
 		System.out.println("FINISHED: " + this + ".AddFFP2Mask(" + f + ")");
 	}
 	
@@ -327,7 +345,12 @@ public abstract class Person {
 	*/
 	public Defendable GetRandomActive(List<Defendable> list) {
 		System.out.println("STARTED: " + this + ".GetRandomActive(" + list + ")");
-
+		for (Defendable d : list){
+			if(d.CanDefend()){
+				System.out.println("FINISHED: " + this + ".GetRandomActive(" + list + ")");
+				return d;
+			}
+		}
 		System.out.println("FINISHED: " + this + ".GetRandomActive(" + list + ")");
 		return null;
 	}

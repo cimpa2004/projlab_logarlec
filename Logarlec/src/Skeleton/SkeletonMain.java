@@ -2,7 +2,10 @@ package Skeleton;
 
 import modul.*;
 
+import java.util.Scanner;
+
 public class SkeletonMain {
+
     public static void main(String[] args) {
         // Tesztek listazasa
         System.out.println("1. Oktatót megvédi FFP2 maszk");

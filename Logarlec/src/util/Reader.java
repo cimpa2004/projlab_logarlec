@@ -3,18 +3,13 @@ package util;
 import java.util.Scanner;
 
 public class Reader {
+    static Scanner scanner = new Scanner(System.in);
     static public boolean GetBooleanInput(String message){
-        Scanner scanner = new Scanner(System.in);
         System.out.println(message + ": 'true' / 'false'");
-        boolean canAdd = scanner.nextBoolean();
-        scanner.close();
-        return canAdd;
+        return scanner.nextBoolean();
     }
     static public int GetIntInput(String message){
-        Scanner scanner = new Scanner(System.in);
         System.out.println(message + ": Integer: ");
-        int gotInt = scanner.nextInt();
-        scanner.close();
-        return gotInt;
+        return scanner.nextInt();
     }
 }
