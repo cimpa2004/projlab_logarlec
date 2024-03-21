@@ -1,6 +1,7 @@
 package modul;
 
 
+import util.Logger;
 import util.Reader;
 
 /** */
@@ -13,64 +14,66 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 
 	/** */
 	public boolean Activate() {
-		System.out.println("STARTED: " + this + ".Activate()");
+		Logger.started(this, "Activate");
 		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a WetTableClothot?");
-		System.out.println("FINISHED: " + this + ".Activate()");
+		Logger.finished(this, "Activate");
 		return isActivated;
 	}
 
 	/** */
 	public boolean PickedUpStudent(Student st) {
-		System.out.println("STARTED: " + this + ".PickedUpStudent(" + st + ")");
+		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		System.out.println("FINISHED: " + this + ".PickedUpStudent(" + st + ")");
+		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
 	/** */
 	public boolean PickedUpInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".PickedUpInstructor(" + i + ")");
+		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		System.out.println("FINISHED: " + this + ".PickedUpInstructor(" + i + ")");
+		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
 	/** */
 	public void Thrown(Person p) {
-		System.out.println("STARTED: " + this + ".Thrown(" + p + ")");
-		System.out.println("FINISHED: " + this + ".Thrown(" + p + ")");
+		Logger.started(this, "Thrown", p);
+		Logger.finished(this, "Thrown", p);
 	}
 
 	/** */
 	@Override
 	public void Decrement() {
-		System.out.println("STARTED: " + this + ".Decrement()");
-		if(effectDuration>0) effectDuration = effectDuration - 1;
-		System.out.println("FINISHED: " + this + ".Decrement()");
+		Logger.started(this, "Decrement");
+		if (effectDuration > 0) effectDuration = effectDuration - 1;
+		Logger.finished(this, "Decrement");
 	}
-	
+
 	/** */
 	public void UsedByStudent(Student s) {
-		System.out.println("STARTED: " + this + ".UsedByStudent(" + s + ")");
+		Logger.started(this, "UsedByStudent", s);
 		Activate();
-		if(isActivated){
+		if (isActivated) {
 			s.AddWetTableCloth(this);
 		}
 		// TODO stun Instructors in Student's Room
-		System.out.println("FINISHED: " + this + ".UsedByStudent(" + s + ")");
+		Logger.finished(this, "UsedByStudent", s);
 	}
+
 
 	/** */
 	public void UsedByInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".UsedByInstructor(" + i + ")");
-		System.out.println("FINISHED: " + this + ".UsedByInstructor(" + i + ")");
+		Logger.started(this, "UsedByInstructor", i);
+		Logger.finished(this, "UsedByInstructor", i);
 	}
 
+	/** */
 	@Override
 	public boolean CanDefend() {
-		System.out.println("STARTED: " + this + ".CanDefend()");
-		System.out.println("FINISHED: " + this + ".CanDefend()");
+		Logger.started(this, "CanDefend");
 		effectDuration = Reader.GetIntInput("Mennyi ideig hatásos még a WetTableCloth?");
+		Logger.finished(this, "CanDefend");
 		return isActivated && effectDuration > 0;
 	}
 }

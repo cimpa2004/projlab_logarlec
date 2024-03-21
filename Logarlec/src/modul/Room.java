@@ -1,6 +1,7 @@
 package modul;
 
 
+import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
@@ -54,223 +55,221 @@ public class Room {
 
 	/** */
 	public void DecrementPoison() {
-		System.out.println("STARTED: " + this + ".DecrementPoison()");
+		Logger.started(this, "DecrementPoison");
 		// existing code
-		System.out.println("FINISHED: " + this + ".DecrementPoison()");
+		Logger.finished(this, "DecrementPoison");
 	}
 
 	/** */
 	public void AddItem(Item i) {
-		System.out.println("STARTED: " + this + ".AddItem(" + i + ")");
+		Logger.started(this, "AddItem", i);
 		items.add(i);
-		System.out.println("FINISHED: " + this + ".AddItem(" + i + ")");
+		Logger.finished(this, "AddItem", i);
 	}
 
 	/** */
 	public void RemoveItem(Item i) {
-		System.out.println("STARTED: " + this + ".RemoveItem(" + i + ")");
+		Logger.started(this, "RemoveItem", i);
 		// existing code
-		System.out.println("FINISHED: " + this + ".RemoveItem(" + i + ")");
+		Logger.finished(this, "RemoveItem", i);
 	}
 
 	/** */
 	public void CloneAttributes(Room r) {
-		System.out.println("STARTED: " + this + ".CloneAttributes(" + r + ")");
+		Logger.started(this, "CloneAttributes", r);
 		// existing code
-		System.out.println("FINISHED: " + this + ".CloneAttributes(" + r + ")");
+		Logger.finished(this, "CloneAttributes", r);
 	}
 
 	/** */
 	public List<Item> GetItems() {
-		System.out.println("STARTED: " + this + ".GetItems()");
+		Logger.started(this, "GetItems");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetItems()");
+		Logger.finished(this, "GetItems");
 		return null;
 	}
 
 	/** */
 	public List<Student> GetStudents() {
-		System.out.println("STARTED: " + this + ".GetStudents()");
+		Logger.started(this, "GetStudents");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetStudents()");
+		Logger.finished(this, "GetStudents");
 		return null;
 	}
 
 	/** */
 	public int GetCurrentCapacity() {
-		System.out.println("STARTED: " + this + ".GetCurrentCapacity()");
+		Logger.started(this, "GetCurrentCapacity");
 		int _currentCapacity = Reader.GetIntInput("Mekkora a szoba jelenlegi kapacitasa?");
-		System.out.println("FINISHED: " + this + ".GetCurrentCapacity()");
+		Logger.finished(this, "GetCurrentCapacity");
 		return _currentCapacity;
 	}
 
 	/** */
 	public int GetMaxCapacity() {
-		System.out.println("STARTED: " + this + ".GetMaxCapacity()");
+		Logger.started(this, "GetMaxCapacity");
 		int _maxCapacity = Reader.GetIntInput("Mekkora a szoba maximum kapacitasa?");
-		System.out.println("FINISHED: " + this + ".GetMaxCapacity()");
+		Logger.finished(this, "GetMaxCapacity");
 		return _maxCapacity;
 	}
 
 	/** */
 	public List<Room> GetNeighbors() {
-		System.out.println("STARTED: " + this + ".GetNeighbors()");
+		Logger.started(this, "GetNeighbors");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetNeighbors()");
+		Logger.finished(this, "GetNeighbors");
 		return null;
 	}
 
 	/** */
 	public void SetMaxCapacity(int mc) {
-		System.out.println("STARTED: " + this + ".SetMaxCapacity(" + mc + ")");
+		Logger.started(this, "SetMaxCapacity", mc);
 		// existing code
-		System.out.println("FINISHED: " + this + ".SetMaxCapacity(" + mc + ")");
+		Logger.finished(this, "SetMaxCapacity", mc);
 	}
 
 	/** */
 	public int GetPoisonDuration() {
-		System.out.println("STARTED: " + this + ".GetPoisonDuration()");
+		Logger.started(this, "GetPoisonDuration");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetPoisonDuration()");
+		Logger.finished(this, "GetPoisonDuration");
 		return 0;
 	}
 
 	/** */
 	public void SetPoisonDuration(int pd) {
-		System.out.println("STARTED: " + this + ".SetPoisonDuration(" + pd + ")");
+		Logger.started(this, "SetPoisonDuration", pd);
 		poisonDuration = pd;
-		for (Person p : people){
+		for (Person p : people) {
 			boolean isPersonDefended = p.DefendFromGas();
-			if(!isPersonDefended) p.SetIsFainted(true);
+			if (!isPersonDefended) p.SetIsFainted(true);
 		}
-		System.out.println("FINISHED: " + this + ".SetPoisonDuration(" + pd + ")");
+		Logger.finished(this, "SetPoisonDuration", pd);
 	}
 
 	/** */
 	public void AddDoor(DoorSide d) {
-		System.out.println("STARTED: " + this + ".AddDoor(" + d + ")");
+		Logger.started(this, "AddDoor", d);
 		doors.add(d);
-		System.out.println("FINISHED: " + this + ".AddDoor(" + d + ")");
+		Logger.finished(this, "AddDoor", d);
 	}
 
 	/** */
 	public List<DoorSide> GetDoors() {
-
-		System.out.println("STARTED: " + this + ".GetDoors()");
+		Logger.started(this, "GetDoors");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetDoors()");
+		Logger.finished(this, "GetDoors");
 		return null;
 	}
 
 	/** */
 	public void AddNeighbor(Room r) {
-		System.out.println("STARTED: " + this + ".AddNeighbor(" + r + ")");
+		Logger.started(this, "AddNeighbor", r);
 		// existing code
-		System.out.println("FINISHED: " + this + ".AddNeighbor(" + r + ")");
+		Logger.finished(this, "AddNeighbor", r);
 	}
 
 	/** */
 	public void SetNeighbors(Room n) {
-		System.out.println("STARTED: " + this + ".SetNeighbors(" + n + ")");
+		Logger.started(this, "SetNeighbors", n);
 		// existing code
-		System.out.println("FINISHED: " + this + ".SetNeighbors(" + n + ")");
+		Logger.finished(this, "SetNeighbors", n);
 	}
 
 	/** */
 	public boolean MergeRooms(Room r2) {
-		System.out.println("STARTED: " + this + ".MergeRooms(" + r2 + ")");
+		Logger.started(this, "MergeRooms", r2);
 		// existing code
-		System.out.println("FINISHED: " + this + ".MergeRooms(" + r2 + ")");
+		Logger.finished(this, "MergeRooms", r2);
 		return false;
 	}
 
 	/** */
 	public void SeparateRoom() {
-		System.out.println("STARTED: " + this + ".SeparateRoom()");
+		Logger.started(this, "SeparateRoom");
 		// existing code
-		System.out.println("FINISHED: " + this + ".SeparateRoom()");
+		Logger.finished(this, "SeparateRoom");
 	}
 
 	/** */
 	public void AddInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".AddInstructor(" + i + ")");
+		Logger.started(this, "AddInstructor", i);
 		i.SetRoom(this);
-		if(poisonDuration>0){
+		if (poisonDuration > 0) {
 			boolean defended = i.DefendFromGas();
-			if(!defended){
+			if (!defended) {
 				i.SetIsFainted(true);
 			}
 		}
 		instructors.add(i);
 		people.add(i);
-		System.out.println("FINISHED: " + this + ".AddInstructor(" + i + ")");
+		Logger.finished(this, "AddInstructor", i);
 	}
 
 	/** */
 	public void RemoveInstructor(Instructor i) {
-		System.out.println("STARTED: " + this + ".RemoveInstructor(" + i + ")");
+		Logger.started(this, "RemoveInstructor", i);
 		// existing code
-		System.out.println("FINISHED: " + this + ".RemoveInstructor(" + i + ")");
+		Logger.finished(this, "RemoveInstructor", i);
 	}
 
 	/** */
 	public void AddStudent(Student s) {
-		System.out.println("STARTED: " + this + ".AddStudent(" + s + ")");
+		Logger.started(this, "AddStudent", s);
 		s.SetRoom(this);
-		if(poisonDuration>0){
+		if (poisonDuration > 0) {
 			boolean defended = s.DefendFromGas();
-			if(!defended){
+			if (!defended) {
 				s.SetIsFainted(true);
 			}
 		}
 		students.add(s);
 		people.add(s);
-		System.out.println("FINISHED: " + this + ".AddStudent(" + s + ")");
+		Logger.finished(this, "AddStudent", s);
 	}
 
 	/** */
 	public void RemoveStudent(Student s) {
-		System.out.println("STARTED: " + this + ".RemoveStudent(" + s + ")");
+		Logger.started(this, "RemoveStudent", s);
 		// existing code
-		System.out.println("FINISHED: " + this + ".RemoveStudent(" + s + ")");
+		Logger.finished(this, "RemoveStudent", s);
 	}
 
 	/** */
 	public boolean RandomBool() {
-		System.out.println("STARTED: " + this + ".RandomBool()");
+		Logger.started(this, "RandomBool");
 		// existing code
-		System.out.println("FINISHED: " + this + ".RandomBool()");
+		Logger.finished(this, "RandomBool");
 		return false;
 	}
 
 	/** */
 	public Room SelectRoom(Room r) {
-		System.out.println("STARTED: " + this + ".SelectRoom(" + r + ")");
+		Logger.started(this, "SelectRoom", r);
 		// existing code
-		System.out.println("FINISHED: " + this + ".SelectRoom(" + r + ")");
+		Logger.finished(this, "SelectRoom", r);
 		return null;
 	}
 
 	/** */
 	public void ToggleDoorsVisible() {
-		System.out.println("STARTED: " + this + ".ToggleDoorsVisible()");
-
-// existing code
-		System.out.println("FINISHED: " + this + ".ToggleDoorsVisible()");
+		Logger.started(this, "ToggleDoorsVisible");
+		// existing code
+		Logger.finished(this, "ToggleDoorsVisible");
 	}
 
 	/** */
 	public void SetIsCursed(boolean isc) {
-		System.out.println("STARTED: " + this + ".SetIsCursed(" + isc + ")");
+		Logger.started(this, "SetIsCursed", isc);
 		// existing code
-		System.out.println("FINISHED: " + this + ".SetIsCursed(" + isc + ")");
+		Logger.finished(this, "SetIsCursed", isc);
 	}
 
 	/** */
 	public boolean GetIsCursed() {
-		System.out.println("STARTED: " + this + ".GetIsCursed()");
+		Logger.started(this, "GetIsCursed");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetIsCursed()");
+		Logger.finished(this, "GetIsCursed");
 		return false;
 	}
 }
