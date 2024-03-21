@@ -1,6 +1,8 @@
 package modul;
 
-/** 
+import util.Reader;
+
+/**
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat
  * irányítják a játék során.
 */
@@ -23,7 +25,7 @@ public class Student extends Person {
 	*/
 	public void AppearInRoom(Room r) {
 		System.out.println("STARTED: " + this + ".AppearInRoom(" + r + ")");
-
+		room = r;
 		System.out.println("FINISHED: " + this + ".AppearInRoom(" + r + ")");
 	}
 	
@@ -70,7 +72,7 @@ public class Student extends Person {
 	*/
 	public void UseItem(Usable u) {
 		System.out.println("STARTED: " + this + ".UseItem(" + u + ")");
-
+		u.UsedByStudent(this);
 		System.out.println("FINISHED: " + this + ".UseItem(" + u + ")");
 	}
 	
@@ -97,9 +99,9 @@ public class Student extends Person {
 	*/
 	public boolean Pickup(Item i) {
 		System.out.println("STARTED: " + this + ".Pickup(" + i + ")");
-
+		boolean isPickedUp = i.PickedUpStudent(this);
 		System.out.println("FINISHED: " + this + ".Pickup(" + i + ")");
-		return false;
+		return isPickedUp;
 	}
 
 
@@ -113,7 +115,22 @@ public class Student extends Person {
 	@Override
 	public void Move(DoorSide d) {
 		System.out.println("STARTED: " + this + ".Move(" + d + ")");
-
+		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
+		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
+		if(!canBeOpened || !isVisible){
+			System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+			return;
+		}
+		DoorSide d2 = d.GetPair();
+		Room r2 = d2.GetRoom();
+		int maxCapacity = r2.GetMaxCapacity();
+		int currCapacity = r2.GetCurrentCapacity();
+		if(!(currCapacity<maxCapacity)){
+			System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+			return;
+		}
+		room.RemoveStudent(this);
+		AppearInRoom(r2);
 		System.out.println("FINISHED: " + this + ".Move(" + d + ")");
 	}
 
