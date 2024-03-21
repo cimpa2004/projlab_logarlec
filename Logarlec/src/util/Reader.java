@@ -7,16 +7,17 @@ import java.util.Scanner;
  */
 public class Reader {
     /**
+     * Ez a object végzi késöbb a felhasználótól kért inputok beolvasását
+     */
+    static Scanner scanner = new Scanner(System.in);
+    /**
      * Függvény a boolean beolvasásokhoz
      * @param message a kiirandó kérdés
      * @return válasz a felhasználtótól
      */
     static public boolean GetBooleanInput(String message){
-        Scanner scanner = new Scanner(System.in);
         System.out.println(message + ": 'true' / 'false'");
-        boolean canAdd = scanner.nextBoolean();
-        scanner.close();
-        return canAdd;
+        return scanner.nextBoolean();
     }
 
     /**
@@ -25,10 +26,7 @@ public class Reader {
      * @return válasz a felhasználtótól
      */
     static public int GetIntInput(String message){
-        Scanner scanner = new Scanner(System.in);
         System.out.println(message + ": Integer: ");
-        int gotInt = scanner.nextInt();
-        scanner.close();
-        return gotInt;
+        return scanner.nextInt();
     }
 }
