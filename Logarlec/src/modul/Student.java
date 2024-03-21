@@ -22,6 +22,9 @@ public class Student extends Person {
 	 *  @param  r  Az a szoba ahol megjelenik a Student
 	*/
 	public void AppearInRoom(Room r) {
+		System.out.println("STARTED: " + this + ".AppearInRoom(" + r + ")");
+
+		System.out.println("FINISHED: " + this + ".AppearInRoom(" + r + ")");
 	}
 	
 	/** 
@@ -29,12 +32,18 @@ public class Student extends Person {
 	 * ezen belül adhatja meg a lépéseit. Ekkor az activeTurn true értékre változik.
 	*/
 	public void StartTurn() {
+		System.out.println("STARTED: " + this + ".StartTurn()");
+
+		System.out.println("FINISHED: " + this + ".StartTurn()");
 	}
 	
 	/** 
 	 * A Student ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor a activeTurn értékre false-ra vált.
 	*/
 	public void EndTurn() {
+		System.out.println("STARTED: " + this + ".EndTurn()");
+
+		System.out.println("FINISHED: " + this + ".EndTurn()");
 	}
 	
 	/** 
@@ -45,6 +54,9 @@ public class Student extends Person {
 	 *  @return    Egy boolean érték, amely azt jelzi, hogy a hallgató meghalt, vagy sikerült valahogy túlélni
 	*/
 	public boolean Die() {
+		System.out.println("STARTED: " + this + ".Die()");
+
+		System.out.println("FINISHED: " + this + ".Die()");
 		return false;
 	}
 	
@@ -53,15 +65,26 @@ public class Student extends Person {
 	 * a Usable-n a UsedByStudent(this) függvényét, magát átadva paraméterként. Ennek hatására az adott 
 	 * Usable-t aktiválja amennyiben az még nem volt aktiválva, és képes lesz használni az adott Usable
 	 * képességeit.
+	 * 
+	 *  @param  u  A Usable amit a Student használni szeretne
 	*/
 	public void UseItem(Usable u) {
+		System.out.println("STARTED: " + this + ".UseItem(" + u + ")");
+
+		System.out.println("FINISHED: " + this + ".UseItem(" + u + ")");
 	}
 	
 	/** 
 	 * A Student a két paraméterként megadott Transistor-t összekapcsolja. Ez után már képes lesz használni a
 	 * két Transistor-t arra, hogy szobák között teleportáljon.
+	 * 
+	 *  @param t1  Az egyik transzisztor amit csatlakoztatni akar a másikhoz
+	 *  @param t2  A másik tranzisztor amit a t1-hez szeretne csatlakoztatni
 	*/
 	public void ConnectTransistors(Transistor t1, Transistor t2) {
+		System.out.println("STARTED: " + this + ".ConnectTransistors(" + t1 + ", " + t2 + ")");
+
+		System.out.println("FINISHED: " + this + ".ConnectTransistors(" + t1 + ", " + t2 + ")");
 	}
 	
 	/** 
@@ -73,6 +96,9 @@ public class Student extends Person {
 	 * @return    Visszatérési érték egy boolean, ami jelzi, hogy sikerült-e felvenni az i Itemet vagy sem
 	*/
 	public boolean Pickup(Item i) {
+		System.out.println("STARTED: " + this + ".Pickup(" + i + ")");
+
+		System.out.println("FINISHED: " + this + ".Pickup(" + i + ")");
 		return false;
 	}
 
@@ -86,6 +112,9 @@ public class Student extends Person {
 	*/
 	@Override
 	public void Move(DoorSide d) {
+		System.out.println("STARTED: " + this + ".Move(" + d + ")");
+
+		System.out.println("FINISHED: " + this + ".Move(" + d + ")");
 	}
 
 
