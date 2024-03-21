@@ -67,8 +67,8 @@ public class Camembert extends Item implements Usable {
 	}
 
 	/**
-	 * Kezeli a használatot (nem engedi)
-	 * @param i A Camembert-t használni kívánó oktató
+	 * Kezeli a használatot
+	 * @param i A Camembert-t használő oktató
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
