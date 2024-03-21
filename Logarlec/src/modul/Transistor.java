@@ -1,11 +1,11 @@
 package modul;
 
-
+import util.Reader;
 
 /**
+ * A tranzisztorok reprezentálása
  * Nyilvántartja, hogy ki a párja (ha van) és hogy, be van e kapcsolva.
  * Elhelyezi magát az őt felvevők inventoryába, és megvalósítja a használatot.
- *
  *  {@inheritDoc}
  */
 public class Transistor extends Item implements Usable {
@@ -26,25 +26,42 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public boolean Activate() {
-		return false;
+		System.out.println("STARTED: " + this + ".Activate()");
+		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		System.out.println("FINISHED: " + this + ".Activate()");
+		return returnValue;
 	}
 
 
-	
-	/** */
+	/**
+	 * A két transistor párosítja, mindekettőn meghívja a SetPair-t
+	 * @param t1 az egyik transistor
+	 * @param t2 a másik transistor
+	 */
 	public void SetPairs(Transistor t1, Transistor t2) {
+		System.out.println("STARTED: " + this + ".SetPairs(" + t1 + ", " + t2 +")");
+
+		System.out.println("FINISHED: " + this + ".SetPairs(" + t1 + ", " + t2 +")");
 	}
-	
-	/** */
+
+	/**
+	 * Beállítja a paramétert a transistor párjának
+	 * @param t a transistor új párja
+	 */
 	public void SetPair(Transistor t) {
+		System.out.println("STARTED: " + this + ".SetPair(" + t +")");
+
+		System.out.println("FINISHED: " + this + ".SetPair(" + t +")");
 	}
 
 	/**
 	 * Megadja a párját
-	 * @return Pair értéke
+	 * @return Pair értéke, null ha nincs párja
 	 */
 	public Transistor GetPair() {
-		return null;
+		System.out.println("STARTED: " + this + ".GetPair()");
+		System.out.println("FINISHED: " + this + ".GetPair()");
+		return this.pair;
 	}
 
 	/**
@@ -54,7 +71,10 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public boolean PickedUpStudent(Student st) {
-		return false;
+		System.out.println("STARTED: " + this + ".PickedUpStudent(" + st +")");
+		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		System.out.println("FINISHED: " + this + ".PickedUpStudent(" + st +")");
+		return returnValue;
 	}
 
 	/**
@@ -64,7 +84,10 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
-		return false;
+		System.out.println("STARTED: " + this + ".PickedUpInstructor(" + i +")");
+		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		System.out.println("FINISHED: " + this + ".PickedUpInstructor(" + i +")");
+		return returnValue;
 	}
 
 	/**
@@ -73,6 +96,9 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public void Thrown(Person p) {
+		System.out.println("STARTED: " + this + ".Thrown(" + p +")");
+
+		System.out.println("FINISHED: " + this + ".Thrown(" + p +")");
 	}
 
 	/**
@@ -81,6 +107,9 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public void UsedByStudent(Student s) {
+		System.out.println("STARTED: " + this + ".UsedByStudent(" + s +")");
+
+		System.out.println("FINISHED: " + this + ".UsedByStudent(" + s +")");
 	}
 
 	/**
@@ -89,6 +118,9 @@ public class Transistor extends Item implements Usable {
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
+		System.out.println("STARTED: " + this + ".UsedByInstructor(" + i +")");
+
+		System.out.println("FINISHED: " + this + ".UsedByInstructor(" + i +")");
 	}
 	
 

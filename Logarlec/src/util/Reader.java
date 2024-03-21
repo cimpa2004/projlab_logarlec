@@ -2,7 +2,15 @@ package util;
 
 import java.util.Scanner;
 
+/**
+ * Beolvasást végző osztály
+ */
 public class Reader {
+    /**
+     * Függvény a boolean beolvasásokhoz
+     * @param message a kiirandó kérdés
+     * @return válasz a felhasználtótól
+     */
     static public boolean GetBooleanInput(String message){
         Scanner scanner = new Scanner(System.in);
         System.out.println(message + ": 'true' / 'false'");
@@ -10,6 +18,12 @@ public class Reader {
         scanner.close();
         return canAdd;
     }
+
+    /**
+     *Függvény az int beolvasásokhoz
+     * @param message a kiirandó kérdés
+     * @return válasz a felhasználtótól
+     */
     static public int GetIntInput(String message){
         Scanner scanner = new Scanner(System.in);
         System.out.println(message + ": Integer: ");
