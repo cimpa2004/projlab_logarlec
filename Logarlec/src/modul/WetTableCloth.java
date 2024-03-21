@@ -13,7 +13,7 @@ package modul;//
 
 
 /** */
-public class WetTableCloth extends Item implements Usable {
+public class WetTableCloth extends Item implements Usable, Defendable {
 	/** */
 	private int effectDuration;
 	
@@ -50,6 +50,10 @@ public class WetTableCloth extends Item implements Usable {
 	/** */
 	public void UsedByInstructor(Instructor i) {
 	}
-	
 
+
+	@Override
+	public boolean CanDefend() {
+		return false;
+	}
 }

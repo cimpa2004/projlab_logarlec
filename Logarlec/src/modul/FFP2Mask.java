@@ -13,7 +13,7 @@ package modul;//
 
 
 /** */
-public class FFP2Mask extends Item implements Usable {
+public class FFP2Mask extends Item implements Usable, Defendable {
 	/** */
 	private int durability;
 	
@@ -51,8 +51,9 @@ public class FFP2Mask extends Item implements Usable {
 	public void UsedByInstructor(Instructor i) {
 	}
 
-	
 
-	
-
+	@Override
+	public boolean CanDefend() {
+		return false;
+	}
 }

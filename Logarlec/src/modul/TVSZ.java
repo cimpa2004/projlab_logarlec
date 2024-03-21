@@ -13,7 +13,7 @@ package modul;//
 
 
 /** */
-public class TVSZ extends Item {
+public class TVSZ extends Item implements Defendable{
 	/** */
 	private int usesLeft;
 	
@@ -34,6 +34,10 @@ public class TVSZ extends Item {
 	/** */
 	public void Thrown(Person p) {
 	}
-	
 
+
+	@Override
+	public boolean CanDefend() {
+		return false;
+	}
 }
