@@ -52,9 +52,11 @@ public class Instructor extends Person {
 
 	/** */
 	public void UseItem(Usable u) {
-		System.out.println("STARTED: " + this + ".UseItem(" + u + ")");
-		u.UsedByInstructor(this);
-		System.out.println("FINISHED: " + this + ".UseItem(" + u + ")");
+		System.out.println("STARTED: " + this + ".Usable(" + u + ")");
+		// Any Usable must be an Item as well
+		Item item = (Item)u;
+		if(inventory.contains(item)) u.UsedByInstructor(this);
+		System.out.println("FINISHED: " + this + ".Usable(" + u + ")");
 	}
 
 	/** */

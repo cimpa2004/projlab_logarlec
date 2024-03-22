@@ -72,7 +72,9 @@ public class Student extends Person {
 	*/
 	public void UseItem(Usable u) {
 		System.out.println("STARTED: " + this + ".UseItem(" + u + ")");
-		u.UsedByStudent(this);
+		// Any Usable must be an Item as well
+		Item item = (Item)u;
+		if(inventory.contains(item)) u.UsedByStudent(this);
 		System.out.println("FINISHED: " + this + ".UseItem(" + u + ")");
 	}
 	

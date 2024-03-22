@@ -211,6 +211,7 @@ public abstract class Person {
 	public boolean AddToInventory(Item i) {
 		System.out.println("STARTED: " + this + ".AddToInventory(" + i + ")");
 		boolean canAdd = Reader.GetBooleanInput("Van hely az inventoryban?");
+		if(canAdd) inventory.add(i);
 		System.out.println("FINISHED: " + this + ".AddToInventory(" + i + ")");
 		return canAdd;
 	}
