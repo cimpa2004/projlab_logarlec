@@ -1,20 +1,19 @@
 package modul;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import util.Logger;
 
 /** */
 public class DoorSide {
 	/** */
 	private boolean canBeOpened;
-	
+
 	/** */
 	private boolean isVisible;
-	
+
 	/** */
 	private Room room;
-	
+
 	/** */
 	private DoorSide pair;
 
@@ -23,74 +22,74 @@ public class DoorSide {
 
 	/** */
 	public void CloneAttributes(DoorSide d) {
-		System.out.println("STARTED: " + this + ".CloneAttributes(" + d + ")");
+		Logger.started(this, "CloneAttributes", d);
 		// existing code
-		System.out.println("FINISHED: " + this + ".CloneAttributes(" + d + ")");
+		Logger.finished(this, "CloneAttributes", d);
 	}
 
 	/** */
 	public void ConnectDoors(DoorSide d) {
-		System.out.println("STARTED: " + this + ".ConnectDoors(" + d + ")");
+		Logger.started(this, "ConnectDoors", d);
 		// existing code
-		System.out.println("FINISHED: " + this + ".ConnectDoors(" + d + ")");
+		Logger.finished(this, "ConnectDoors", d);
 	}
 
 	/** */
 	public DoorSide GetPair() {
-		System.out.println("STARTED: " + this + ".GetPair()");
-		System.out.println("FINISHED: " + this + ".GetPair()");
+		Logger.started(this, "GetPair");
+		Logger.finished(this, "GetPair");
 		return pair;
 	}
 
 	/** */
 	public void SetPair(DoorSide d) {
-		System.out.println("STARTED: " + this + ".SetPair()");
+		Logger.started(this, "SetPair", d);
 		pair = d;
-		System.out.println("FINISHED: " + this + ".SetPair()");
+		Logger.finished(this, "SetPair", d);
 	}
 
 	/** */
 	public Room GetRoom() {
-		System.out.println("STARTED: " + this + ".GetRoom()");
-		System.out.println("FINISHED: " + this + ".GetRoom()");
+		Logger.started(this, "GetRoom");
+		Logger.finished(this, "GetRoom");
 		return room;
 	}
 
 	/** */
 	public void SetRoom(Room r) {
-		System.out.println("STARTED: " + this + ".SetRoom(" + r + ")");
+		Logger.started(this, "SetRoom", r);
 		room = r;
 		r.AddDoor(this);
-		System.out.println("FINISHED: " + this + ".SetRoom(" + r + ")");
+		Logger.finished(this, "SetRoom", r);
 	}
 
 	/** */
 	public void SetCanBeOpened(boolean b) {
-		System.out.println("STARTED: " + this + ".SetCanBeOpened(" + b + ")");
+		Logger.started(this, "SetCanBeOpened", b);
 		// existing code
-		System.out.println("FINISHED: " + this + ".SetCanBeOpened(" + b + ")");
+		Logger.finished(this, "SetCanBeOpened", b);
 	}
 
 	/** */
 	public void SetIsVisible(boolean b) {
-		System.out.println("STARTED: " + this + ".SetIsVisible(" + b + ")");
+		Logger.started(this, "SetIsVisible", b);
 		// existing code
-		System.out.println("FINISHED: " + this + ".SetIsVisible(" + b + ")");
+		Logger.finished(this, "SetIsVisible", b);
 	}
 
 	/** */
 	public boolean GetCanBeOpened() {
-		System.out.println("STARTED: " + this + ".GetCanBeOpened()");
+		Logger.started(this, "GetCanBeOpened");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetCanBeOpened()");
+		Logger.finished(this, "GetCanBeOpened");
 		return false;
 	}
 
 	/** */
 	public boolean GetIsVisible() {
-		System.out.println("STARTED: " + this + ".GetIsVisible()");
+		Logger.started(this, "GetIsVisible");
 		// existing code
-		System.out.println("FINISHED: " + this + ".GetIsVisible()");
+		Logger.finished(this, "GetIsVisible");
 		return false;
 	}
 }

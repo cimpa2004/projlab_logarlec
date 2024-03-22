@@ -1,5 +1,6 @@
 package modul;
 
+import util.Logger;
 import util.Reader;
 
 /**
@@ -24,9 +25,9 @@ public class Student extends Person {
 	 *  @param  r  Az a szoba ahol megjelenik a Student
 	*/
 	public void AppearInRoom(Room r) {
-		System.out.println("STARTED: " + this + ".AppearInRoom(" + r + ")");
+		Logger.started(this, "AppearInRoom", r);
 		room = r;
-		System.out.println("FINISHED: " + this + ".AppearInRoom(" + r + ")");
+		Logger.finished(this, "AppearInRoom", r);
 	}
 	
 	/** 
@@ -34,18 +35,17 @@ public class Student extends Person {
 	 * ezen belül adhatja meg a lépéseit. Ekkor az activeTurn true értékre változik.
 	*/
 	public void StartTurn() {
-		System.out.println("STARTED: " + this + ".StartTurn()");
-
-		System.out.println("FINISHED: " + this + ".StartTurn()");
+		Logger.started(this, "StartTurn");
+		Logger.finished(this, "StartTurn");
 	}
-	
+
+
 	/** 
 	 * A Student ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor a activeTurn értékre false-ra vált.
 	*/
 	public void EndTurn() {
-		System.out.println("STARTED: " + this + ".EndTurn()");
-
-		System.out.println("FINISHED: " + this + ".EndTurn()");
+		Logger.started(this, "EndTurn");
+		Logger.finished(this, "EndTurn");
 	}
 	
 	/** 
@@ -56,9 +56,8 @@ public class Student extends Person {
 	 *  @return    Egy boolean érték, amely azt jelzi, hogy a hallgató meghalt, vagy sikerült valahogy túlélni
 	*/
 	public boolean Die() {
-		System.out.println("STARTED: " + this + ".Die()");
-
-		System.out.println("FINISHED: " + this + ".Die()");
+		Logger.started(this, "Die");
+		Logger.finished(this, "Die");
 		return false;
 	}
 	
@@ -71,11 +70,11 @@ public class Student extends Person {
 	 *  @param  u  A Usable amit a Student használni szeretne
 	*/
 	public void UseItem(Usable u) {
-		System.out.println("STARTED: " + this + ".UseItem(" + u + ")");
+		Logger.started(this, "UseItem", u);
 		// Any Usable must be an Item as well
 		Item item = (Item)u;
 		if(inventory.contains(item)) u.UsedByStudent(this);
-		System.out.println("FINISHED: " + this + ".UseItem(" + u + ")");
+		Logger.finished(this, "UseItem", u);
 	}
 	
 	/** 
@@ -86,9 +85,8 @@ public class Student extends Person {
 	 *  @param t2  A másik tranzisztor amit a t1-hez szeretne csatlakoztatni
 	*/
 	public void ConnectTransistors(Transistor t1, Transistor t2) {
-		System.out.println("STARTED: " + this + ".ConnectTransistors(" + t1 + ", " + t2 + ")");
-
-		System.out.println("FINISHED: " + this + ".ConnectTransistors(" + t1 + ", " + t2 + ")");
+		Logger.started(this, "ConnectTransistors", t1, t2);
+		Logger.finished(this, "ConnectTransistors", t1, t2);
 	}
 	
 	/** 
@@ -100,9 +98,9 @@ public class Student extends Person {
 	 * @return    Visszatérési érték egy boolean, ami jelzi, hogy sikerült-e felvenni az i Itemet vagy sem
 	*/
 	public boolean Pickup(Item i) {
-		System.out.println("STARTED: " + this + ".Pickup(" + i + ")");
+		Logger.started(this, "Pickup", i);
 		boolean isPickedUp = i.PickedUpStudent(this);
-		System.out.println("FINISHED: " + this + ".Pickup(" + i + ")");
+		Logger.finished(this, "Pickup", i);
 		return isPickedUp;
 	}
 
@@ -116,24 +114,24 @@ public class Student extends Person {
 	*/
 	@Override
 	public void Move(DoorSide d) {
-		System.out.println("STARTED: " + this + ".Move(" + d + ")");
+		Logger.started(this, "Move", d);
 		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
 		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
-		if(!canBeOpened || !isVisible){
-			System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+		if (!canBeOpened || !isVisible) {
+			Logger.finished(this, "Move", d);
 			return;
 		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		int maxCapacity = r2.GetMaxCapacity();
 		int currCapacity = r2.GetCurrentCapacity();
-		if(!(currCapacity<maxCapacity)){
-			System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+		if (!(currCapacity < maxCapacity)) {
+			Logger.finished(this, "Move", d);
 			return;
 		}
 		room.RemoveStudent(this);
 		AppearInRoom(r2);
-		System.out.println("FINISHED: " + this + ".Move(" + d + ")");
+		Logger.finished(this, "Move", d);
 	}
 
 
