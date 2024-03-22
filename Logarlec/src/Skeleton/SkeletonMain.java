@@ -14,19 +14,29 @@ public class SkeletonMain {
         // ..
 
 
-        int input = scanner.nextInt();
-        switch (input){
-            case 1:
-                InstructorSavedByFFP2Mask.Run();
-                break;
-            case 14:
-                StudentTriesUsingUsedItems.Run();
-                break;
-            case 15:
-                InstructorTriesUsingUsedOrNotAllowedItems.Run();
-                break;
-            default:
-                System.out.println("Kérlek adj meg egy olyan sorszámot ami létezik a listában!");
+        Scanner scanner = new Scanner(System.in);
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("Adj meg egy sorszámot a felsoroltak közül:");
+            int input = scanner.nextInt();
+
+            switch (input){
+                case 1:
+                    InstructorSavedByFFP2Mask.Run();
+                    validInput = true;
+                    break;
+                case 14:
+                    StudentTriesUsingUsedItems.Run();
+                    validInput = true;
+                    break;
+                case 15:
+                    InstructorTriesUsingUsedOrNotAllowedItems.Run();
+                    validInput = true;
+                    break;
+                default:
+                    System.out.println("Kérlek adj meg egy olyan sorszámot ami létezik a listában!");
+            }
         }
     }
 }

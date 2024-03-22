@@ -44,8 +44,8 @@ public class InstructorTriesUsingUsedOrNotAllowedItems {
         System.out.println("--------");
         System.out.println("Run");
 
-        i.UseItem(c);
         i.UseItem(f);
+        i.UseItem(c);
         i.UseItem(w);
         i.UseItem(h);
         i.Pickup(t);
