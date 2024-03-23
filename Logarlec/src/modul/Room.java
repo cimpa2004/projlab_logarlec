@@ -97,6 +97,13 @@ public class Room {
 		return null;
 	}
 
+	public List<Instructor> GetInstructors() {
+		Logger.started(this, "GetStudents");
+		// existing code
+		Logger.finished(this, "GetStudents");
+		return this.instructors;
+	}
+
 	/** */
 	public int GetCurrentCapacity() {
 		Logger.started(this, "GetCurrentCapacity");
