@@ -98,9 +98,9 @@ public class Room {
 	}
 
 	public List<Instructor> GetInstructors() {
-		Logger.started(this, "GetStudents");
+		Logger.started(this, "GetInstructors");
 		// existing code
-		Logger.finished(this, "GetStudents");
+		Logger.finished(this, "GetInstructors");
 		return this.instructors;
 	}
 
