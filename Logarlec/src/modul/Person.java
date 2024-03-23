@@ -238,7 +238,6 @@ public abstract class Person {
 	*/
 	public boolean DefendFromKill() {
 		Logger.started(this, "DefendFromKill");
-
 		Logger.finished(this, "DefendFromKill");
 		return false;
 	}
@@ -301,7 +300,7 @@ public abstract class Person {
 	*/
 	public void AddHolyBeerCup(Defendable h) {
 		Logger.started(this, "AddHolyBeerCup", h);
-
+		this.holyBeerCups.add(h);
 		Logger.finished(this, "AddHolyBeerCup", h);
 	}
 	
