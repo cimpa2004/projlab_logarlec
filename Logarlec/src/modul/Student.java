@@ -45,6 +45,9 @@ public class Student extends Person {
 	*/
 	public void EndTurn() {
 		Logger.started(this, "EndTurn");
+		for (Defendable h : this.holyBeerCups) {
+			h.Decrement();
+		}
 		Logger.finished(this, "EndTurn");
 	}
 	

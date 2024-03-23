@@ -19,6 +19,10 @@ public class Instructor extends Person {
 	public void StealSoul(Student st) {
 		Logger.started(this, "StealSoul", st);
 		// existing code
+		boolean protected_ = Reader.GetBooleanInput("Van a hallgatót megvédő tárgy? ");
+		if (protected_)
+			st.DefendFromKill();
+		st.Die();
 		Logger.finished(this, "StealSoul", st);
 	}
 
