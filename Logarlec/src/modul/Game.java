@@ -1,6 +1,11 @@
 package modul;
 
 
+import util.Logger;
+import util.Reader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** */
 public class Game {
@@ -25,10 +30,11 @@ public class Game {
 	private Person currentTurn;
 
 	
+
 	/**
 	 * Itt vannak eltárolva a játékban található szobák.
 	 * */
-	private Room rooms;
+	private List<Room> rooms = new ArrayList<>();
 	
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
@@ -52,7 +58,15 @@ public class Game {
 	 * Átlépteti a játékot a következő körre.
 	 * */
 	public void NextTurn() {
+
 		Logger.started(this, "NextTurn");
+		
+
+		boolean toUse = Reader.GetBooleanInput("Legyen e elátkozott minden szoba? ");
+		if (toUse && !rooms.isEmpty())
+			for (Room r : this.rooms){
+				r.SetIsCursed(true);
+			}
 		Logger.finished(this, "NextTurn");
 	}
 	
@@ -63,8 +77,11 @@ public class Game {
 	 * */
 	public boolean AnyStudentsAlive() {
 		Logger.started(this, "AnyStudentsAlive");
+		boolean toReturn = Reader.GetBooleanInput("Van még élő Student? ");
+		if (!toReturn)
+			this.EndGame(false);
 		Logger.finished(this, "AnyStudentsAlive");
-		return false;
+		return toReturn;
 	}
 	
 	/**
@@ -84,6 +101,8 @@ public class Game {
 	 * */
 	public void AddRoom(Room r) {
 		Logger.started(this, "AddRoom", r);
+		if (r != null)
+			this.rooms.add(r);
 		Logger.finished(this, "AddRoom", r);
 	}
 	
