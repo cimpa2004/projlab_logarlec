@@ -40,9 +40,7 @@ public class StudentSavedByHolyBeerCup {
         System.out.println("Futás:");
         st.Pickup(hbc);
         st.UseItem(hbc);
-        Room temp = st.GetRoom();
-        d1.GetPair().GetRoom().AddStudent(st);
-        temp.RemoveStudent(st);
+        st.Move(d1);
         if (st.GetRoom().GetInstructors() != null)
             st.GetRoom().GetInstructors().get(0).StealSoul(st);
         st.EndTurn();
