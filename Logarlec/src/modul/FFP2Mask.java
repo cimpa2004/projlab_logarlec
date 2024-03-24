@@ -5,7 +5,7 @@ import util.Reader;
 
 /**
  * Az FFP2 maszk reprezentációja
- *Tárolja hogy hány körig használható még és, hogy aktív e.
+ * Tárolja hogy hány körig használható még és, hogy aktív e.
  * Ha nem aktív vagy már nem használható akkor nem engedi a használatot.
  * Elhelyezi magát az őt felvevők inventoryába, és megvalósítja a használatot.
  * {@inheritDoc}
