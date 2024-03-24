@@ -77,7 +77,8 @@ public abstract class Item {
 	/**
 	 * Ez egy absztrakt függvény, amelyet a leszármazott osztályok majd külön-külön implementálnak.
 	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a tárgy szemszögéből
+	 * Kezeli az eldobást a tárgy szemszögéből, az Itemtől függően törli a Person
+	 * védelmi Itemjei közül is a megadott Itemet.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
