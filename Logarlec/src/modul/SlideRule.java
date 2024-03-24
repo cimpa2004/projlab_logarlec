@@ -1,5 +1,5 @@
 package modul;
-
+import util.*;
 /**
  * A SlideRule egy olyan osztály ami a Tárgy osztályból van leszármaztatva.
  * Felvételével a játékos megnyeri a játékot.

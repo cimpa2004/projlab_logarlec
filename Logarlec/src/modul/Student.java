@@ -36,7 +36,7 @@ public class Student extends Person {
 			r.SetCurrentCapacity(++currentC);
 			ArrayList<Instructor> instructors = room.GetInstructors();
 			if (!instructors.isEmpty()) {
-				instructors.getFirst().StealSoul(this);
+				instructors.get(0).StealSoul(this);
 			}
 		}
 		Logger.finished(this, "AppearInRoom", r);
