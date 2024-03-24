@@ -5,6 +5,7 @@ import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /** */
@@ -97,6 +98,7 @@ public class Room {
 	public void AddItem(Item i) {
 		Logger.started(this, "AddItem", i);
 		items.add(i);
+		i.SetRoom(this);
 		Logger.finished(this, "AddItem", i);
 	}
 
@@ -105,7 +107,8 @@ public class Room {
 	 * */
 	public void RemoveItem(Item i) {
 		Logger.started(this, "RemoveItem", i);
-		// existing code
+		items.remove(i);
+		i.SetRoom(null);
 		Logger.finished(this, "RemoveItem", i);
 	}
 
@@ -124,9 +127,8 @@ public class Room {
 	 * */
 	public ArrayList<Item> GetItems() {
 		Logger.started(this, "GetItems");
-		// existing code
 		Logger.finished(this, "GetItems");
-		return null;
+		return items;
 	}
 
 	/**
@@ -138,7 +140,7 @@ public class Room {
 		Logger.finished(this, "GetStudents");
 		return null;
 	}
-
+  
 	public ArrayList<Instructor> GetInstructors() {
 		Logger.started(this, "GetInstructors");
 		// existing code
@@ -180,9 +182,8 @@ public class Room {
 	 * */
 	public ArrayList<Room> GetNeighbors() {
 		Logger.started(this, "GetNeighbors");
-		// existing code
 		Logger.finished(this, "GetNeighbors");
-		return null;
+		return neighbors;
 	}
 
 	/**
@@ -224,14 +225,19 @@ public class Room {
 		Logger.finished(this, "AddDoor", d);
 	}
 
-	/**
+	public void RemoveDoor(DoorSide d){
+		Logger.started(this, "RemoveDoor", d);
+		doors.remove(d);
+		Logger.finished(this, "RemoveDoor", d);
+	}
+
+		/**
 	 * Visszaadja a szobából kivezető ajtók szoba felé néző oldalait.
 	 * */
 	public ArrayList<DoorSide> GetDoors() {
 		Logger.started(this, "GetDoors");
-		// existing code
 		Logger.finished(this, "GetDoors");
-		return null;
+		return doors;
 	}
 
 	/**
@@ -262,7 +268,71 @@ public class Room {
 	 * */
 	public boolean MergeRooms(Room r2) {
 		Logger.started(this, "MergeRooms", r2);
-		// existing code
+
+		// Csak akkor egyesíthetünk két szobát, ha egyikben sem tartózkodik egy Person sem.
+		if(this.GetCurrentCapacity() == 0 && r2.GetCurrentCapacity() == 0){
+
+			// Az egyesült szoba maximális kapacitása a két szoba
+			// maximális kapacitása közül a nagyobbik lesz.
+			if(r2.GetMaxCapacity() > this.GetMaxCapacity()){
+				this.SetMaxCapacity(r2.GetMaxCapacity());
+			}
+
+			// Ha az egyik szoba is elátkozott, akkor
+			// az egyesült szoba is az lesz.
+			if(r2.GetIsCursed()){
+				this.SetIsCursed(r2.GetIsCursed());
+			}
+
+			// Az egyesült szoba poisonDuration változója a két szoba
+			// poisonDuration -je közül a nagyobbik lesz.
+			if(r2.GetPoisonDuration() > this.GetPoisonDuration()){
+				this.SetPoisonDuration(r2.GetPoisonDuration());
+			}
+
+			// Minden az r2 -ben lévő tárgyat áthelyezünk az r1 -be.
+			for(Item item : r2.GetItems()){
+				r2.RemoveItem(item);
+				this.AddItem(item);
+			}
+
+			// Az ajtók közti összeköttetéseket frissíteni kell
+			// Végigmegyünk a beolvasztandó (r2) szoba összes DoorSide -ján.
+			// Iterátort érdemes használnunk, mivel a ciklus futása közben szeretnénk
+			// változtatni a listán.
+
+			Iterator<DoorSide> iter = r2.GetDoors().iterator();
+
+			while(iter.hasNext()){
+				DoorSide doorSide = iter.next();
+
+				// Ha egy DoorSide az r1 -el köti össze az r2 -t, akkor
+				// már nem lesz szükség ezekre a félajtókra, hiszen az r2 -t
+				// az r1 -be olvasztjuk.
+				if(doorSide.GetPair().GetRoom() == this){
+					this.RemoveDoor(doorSide.GetPair());
+					doorSide.SetRoom(null);
+					doorSide.SetRoom(null);
+					iter.remove();
+				}else{
+					// Ha egy DoorSide egy másik szobával köti össze az r2 -t,
+					// akkor azt át kell alakítanunk, hogy a másik szoba az r1 -el
+					// legyen összeköttetésben
+					doorSide.SetRoom(this);
+					iter.remove();
+				}
+			}
+
+			// Legvégül kivesszük a szobákat egymás szomszédai közül.
+			this.GetNeighbors().remove(r2);
+			r2.GetNeighbors().remove(this);
+
+			Logger.finished(this, "MergeRooms", r2);
+			return true;
+		}
+
+		// Ha van bárki is az egyik szobában, akkor nem hajtódik
+		// végre az egyesítés.
 		Logger.finished(this, "MergeRooms", r2);
 		return false;
 	}

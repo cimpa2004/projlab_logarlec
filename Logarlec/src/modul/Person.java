@@ -107,6 +107,10 @@ public abstract class Person {
 	public void SetIsFainted(boolean b) {
 		Logger.started(this, "SetIsFainted", b);
 
+		if(b){
+			ThrowAllItems();
+		}
+
 		Logger.finished(this, "SetIsFainted", b);
 	}
 		
@@ -148,6 +152,11 @@ public abstract class Person {
 	public void Throw(Item i) {
 		Logger.started(this, "Throw", i);
 
+		if(inventory.contains(i)){
+			i.Thrown(this);
+			this.GetRoom().AddItem(i);
+		}
+
 		Logger.finished(this, "Throw", i);
 	}
 	
@@ -157,6 +166,10 @@ public abstract class Person {
 	*/
 	public void ThrowAllItems() {
 		Logger.started(this, "ThrowAllItems");
+
+		for(Item item : inventory){
+			Throw(item);
+		}
 
 		Logger.finished(this, "ThrowAllItems");
 	}
@@ -238,7 +251,6 @@ public abstract class Person {
 	*/
 	public boolean DefendFromKill() {
 		Logger.started(this, "DefendFromKill");
-
 		Logger.finished(this, "DefendFromKill");
 		return false;
 	}
@@ -301,7 +313,7 @@ public abstract class Person {
 	*/
 	public void AddHolyBeerCup(Defendable h) {
 		Logger.started(this, "AddHolyBeerCup", h);
-
+		this.holyBeerCups.add(h);
 		Logger.finished(this, "AddHolyBeerCup", h);
 	}
 	

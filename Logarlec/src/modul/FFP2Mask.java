@@ -5,7 +5,7 @@ import util.Reader;
 
 /**
  * Az FFP2 maszk reprezentációja
- *Tárolja hogy hány körig használható még és, hogy aktív e.
+ * Tárolja hogy hány körig használható még és, hogy aktív e.
  * Ha nem aktív vagy már nem használható akkor nem engedi a használatot.
  * Elhelyezi magát az őt felvevők inventoryába, és megvalósítja a használatot.
  * {@inheritDoc}
@@ -72,6 +72,9 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
+
+		p.ffp2Masks.remove(this);
+
 		Logger.finished(this, "Thrown", p);
 	}
 
