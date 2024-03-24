@@ -48,6 +48,9 @@ public class Student extends Person {
 		for (Defendable h : this.holyBeerCups) {
 			h.Decrement();
 		}
+		for (Defendable h : this.tvszs) {
+			h.Decrement();
+		}
 		Logger.finished(this, "EndTurn");
 	}
 	
