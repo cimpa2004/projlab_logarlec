@@ -84,9 +84,7 @@ public class TVSZ extends Item implements Defendable{
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.tvszs.remove(this);
-
+		p.RemoveTVSZ(this);
 		Logger.finished(this, "Thrown", p);
 	}
 

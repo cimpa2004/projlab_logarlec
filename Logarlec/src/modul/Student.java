@@ -38,11 +38,15 @@ public class Student extends Person {
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
-			room = r;
-			r.SetCurrentCapacity(++currentC);
+			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
+			room = r; // atlepes a masik szobaba
+			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
+
 			ArrayList<Instructor> instructors = room.GetInstructors();
-			if (!instructors.isEmpty()) {
-				instructors.get(0).StealSoul(this);
+			// belep a szobaba es minden oktato megprobalja elvenni a lelket, de vedekezhet
+			for(Instructor instructor : instructors){
+				instructor.StealSoul(this);
+				if(!isAlive) break;
 			}
 		}
 		Logger.finished(this, "AppearInRoom", r);
@@ -54,6 +58,28 @@ public class Student extends Person {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
+		activeTurn = true;
+		// ha kor kezdetekor gazos szobaban van akkor elkabul
+		if(room.GetPoisonDuration() > 0){
+					if(!ffp2Masks.isEmpty()){
+						Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+						if(ffp2Mask != null){
+							ffp2Mask.Decrement();
+							// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+							if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+						}else{
+							SetIsFainted(true);
+						}
+					}// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
+				}else{
+			SetIsFainted(false);
+		}
+		// ha el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
+		if(isFainted) EndTurn();
+
+		// itt kezdheti meg a hallgato a lepeseit
+
+
 		Logger.finished(this, "StartTurn");
 	}
 
@@ -63,12 +89,13 @@ public class Student extends Person {
 	*/
 	public void EndTurn() {
 		Logger.started(this, "EndTurn");
-		for (Defendable h : this.holyBeerCups) {
+		ArrayList<Defendable> holyBeerCupsCopy = new ArrayList<>(this.holyBeerCups);
+		for (Defendable h : holyBeerCupsCopy) {
 			h.Decrement();
+			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
+			if(!h.CanDefend()) this.holyBeerCups.remove(h);
 		}
-		for (Defendable h : this.tvszs) {
-			h.Decrement();
-		}
+		activeTurn = false;
 		Logger.finished(this, "EndTurn");
 	}
 	
@@ -81,24 +108,9 @@ public class Student extends Person {
 	*/
 	public boolean Die() {
 		Logger.started(this, "Die");
-		boolean defendSuccess = false;
-		if(hasWetTableCloth) {
-			WetTableCloth wtc = (WetTableCloth) GetRandomActive(wetTableClothes);
-			wtc.Activate();
-			defendSuccess = true;
-		}
-		else if(hasHolyBeerCup) {
-			defendSuccess = true;
-		}
-		else if(hasTVSZ) {
-			TVSZ tvsz = (TVSZ) GetRandomActive(tvszs);
-			tvsz.Decrement();
-			defendSuccess = true;
-		}
-		if(!defendSuccess) {
-			game.RemoveFromGame(this);
-			isAlive = false;
-		}
+		isAlive = false;
+		game.RemoveFromGame(this);
+		EndTurn();
 		Logger.finished(this, "Die");
 		return isAlive;
 	}

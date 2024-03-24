@@ -23,7 +23,6 @@ public class InstructorTriesUsingUsedOrNotAllowedItems {
 
         // TVSZ
         t.Decrement();
-        t.SetRoom(r);
         r.AddItem(t);
 
         // Hallgato, targyak hozzadasa

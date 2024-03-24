@@ -25,7 +25,7 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 		isActivated = false;
 	}
 
-	/** */
+	/** Aktivalja az FFP2Mask-ot. Ezutan minden korben amit egy gazos szobaban tolt, csokkenti az FFP2 maszk durabilityjat*/
 	public boolean Activate() {
 		Logger.started(this, "Activate");
 		isActivated = Reader.GetBooleanInput("Sikerült aktiválni az FFP2Mask-ot?");
@@ -34,11 +34,21 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	}
 
 	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
+		return isActivated;
+	}
+
+	/**
 	 * Csökkenti a durability értékét 1-el
 	 */
 	public void Decrement() {
 		Logger.started(this, "Decrement");
-		if(durability > 0) durability = durability - 1;
+		if(isActivated && durability > 0) durability = durability - 1;
+		else isActivated = false;
 		Logger.finished(this, "Decrement");
 	}
 
@@ -72,9 +82,7 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.ffp2Masks.remove(this);
-
+		p.RemoveFFP2Mask(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -104,7 +112,6 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
 		Logger.finished(this, "CanDefend");
-		durability = Reader.GetIntInput("Hanyszor hasznalhato meg az FFP2 maszk?");
 		return isActivated && durability > 0;
 	}
 

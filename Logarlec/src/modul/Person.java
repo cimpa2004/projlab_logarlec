@@ -154,6 +154,7 @@ public abstract class Person {
 
 		if(inventory.contains(i)){
 			i.Thrown(this);
+			RemoveFromInventory(i);
 			this.GetRoom().AddItem(i);
 		}
 
@@ -167,7 +168,8 @@ public abstract class Person {
 	public void ThrowAllItems() {
 		Logger.started(this, "ThrowAllItems");
 
-		for(Item item : inventory){
+		ArrayList<Item> inventoryCopy = new ArrayList<>(inventory);
+		for(Item item : inventoryCopy){
 			Throw(item);
 		}
 
@@ -238,9 +240,8 @@ public abstract class Person {
 	*/
 	public boolean RemoveFromInventory(Item i) {
 		Logger.started(this, "RemoveFromInventory", i);
-
 		Logger.finished(this, "RemoveFromInventory", i);
-		return false;
+		return inventory.remove(i);
 	}
 	
 	/** 
@@ -249,8 +250,27 @@ public abstract class Person {
 	 * 
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a gyilkosságtól.
 	*/
-	public boolean DefendFromKill() {
+	public boolean DefendFromKill(Instructor instructor) {
 		Logger.started(this, "DefendFromKill");
+		if(hasWetTableCloth) {
+			Defendable wtc = GetRandomActive(wetTableClothes);
+			int stunDuration = Reader.GetIntInput("Hatasosan megvedte a hallgatot egy TVSZ. Mennyire idore benuljon meg az oktato?");
+			instructor.Stun(stunDuration);
+			wtc.Decrement();
+			Logger.finished(this, "DefendFromKill");
+			return true;
+		}
+		else if(hasHolyBeerCup) {
+			Logger.finished(this, "DefendFromKill");
+			return true;
+		}
+		else if(hasTVSZ) {
+			Defendable tvsz = GetRandomActive(tvszs);
+			tvsz.Decrement();
+			Logger.finished(this, "DefendFromKill");
+			return true;
+		}
+
 		Logger.finished(this, "DefendFromKill");
 		return false;
 	}
@@ -280,7 +300,8 @@ public abstract class Person {
 	*/
 	public void AddWetTableCloth(Defendable w) {
 		Logger.started(this, "AddWetTableCloth", w);
-
+		wetTableClothes.add(w);
+		hasWetTableCloth = true;
 		Logger.finished(this, "AddWetTableCloth", w);
 	}
 	
@@ -291,7 +312,8 @@ public abstract class Person {
 	*/
 	public void AddTVSZ(Defendable t) {
 		Logger.started(this, "AddTVSZ", t);
-
+		tvszs.add(t);
+		hasTVSZ = true;
 		Logger.finished(this, "AddTVSZ", t);
 	}
 	
@@ -303,6 +325,7 @@ public abstract class Person {
 	public void AddFFP2Mask(Defendable f) {
 		Logger.started(this, "AddFFP2Mask", f);
 		ffp2Masks.add(f);
+		hasFFP2Mask = true;
 		Logger.finished(this, "AddFFP2Mask", f);
 	}
 	
@@ -314,6 +337,7 @@ public abstract class Person {
 	public void AddHolyBeerCup(Defendable h) {
 		Logger.started(this, "AddHolyBeerCup", h);
 		this.holyBeerCups.add(h);
+		hasHolyBeerCup = true;
 		Logger.finished(this, "AddHolyBeerCup", h);
 	}
 	
@@ -324,7 +348,8 @@ public abstract class Person {
 	*/
 	public void RemoveWetTableCloth(Defendable w) {
 		Logger.started(this, "RemoveWetTableCloth", w);
-
+		wetTableClothes.remove(w);
+		if(wetTableClothes.isEmpty()) hasWetTableCloth = false;
 		Logger.finished(this, "RemoveWetTableCloth", w);
 	}
 	
@@ -335,7 +360,8 @@ public abstract class Person {
 	*/
 	public void RemoveTVSZ(Defendable t) {
 		Logger.started(this, "RemoveTVSZ", t);
-
+		tvszs.remove(t);
+		if(tvszs.isEmpty()) hasTVSZ = false;
 		Logger.finished(this, "RemoveTVSZ", t);
 	}
 
@@ -347,7 +373,8 @@ public abstract class Person {
 	*/
 	public void RemoveFFP2Mask(Defendable f) {
 		Logger.started(this, "RemoveFFP2Mask", f);
-
+		ffp2Masks.remove(f);
+		if(ffp2Masks.isEmpty()) hasFFP2Mask = false;
 		Logger.finished(this, "RemoveFFP2Mask", f);
 	}
 	
@@ -358,7 +385,8 @@ public abstract class Person {
 	*/
 	public void RemoveHolyBeerCup(Defendable h) {
 		Logger.started(this, "RemoveHolyBeerCup", h);
-
+		holyBeerCups.remove(h);
+		if(holyBeerCups.isEmpty()) hasHolyBeerCup = false;
 		Logger.finished(this, "RemoveHolyBeerCup", h);
 	}
 	
