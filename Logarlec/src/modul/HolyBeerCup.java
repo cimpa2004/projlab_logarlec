@@ -87,12 +87,16 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 
 	/**
 	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a HolyBeerCup szemszögéből
+	 * Kezeli az eldobást a HolyBeerCup szemszögéből, törli magát a
+	 * Person HolyBeerCups listájából.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
+
+		p.holyBeerCups.remove(this);
+
 		Logger.finished(this, "Thrown", p);
 	}
 

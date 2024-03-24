@@ -77,14 +77,16 @@ public class TVSZ extends Item implements Defendable{
 
 	/**
 	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a TVSZ szemszögéből
+	 * Kezeli az eldobást a TVSZ szemszögéből, törli magát a
+	 * Person tvszs listájából.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-			p.RemoveTVSZ(this);
-			p.GetRoom().AddItem(this);
+
+		p.tvszs.remove(this);
+
 		Logger.finished(this, "Thrown", p);
 	}
 

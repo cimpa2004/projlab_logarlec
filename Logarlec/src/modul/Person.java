@@ -107,6 +107,10 @@ public abstract class Person {
 	public void SetIsFainted(boolean b) {
 		Logger.started(this, "SetIsFainted", b);
 
+		if(b){
+			ThrowAllItems();
+		}
+
 		Logger.finished(this, "SetIsFainted", b);
 	}
 		
@@ -148,6 +152,11 @@ public abstract class Person {
 	public void Throw(Item i) {
 		Logger.started(this, "Throw", i);
 
+		if(inventory.contains(i)){
+			i.Thrown(this);
+			this.GetRoom().AddItem(i);
+		}
+
 		Logger.finished(this, "Throw", i);
 	}
 	
@@ -157,9 +166,11 @@ public abstract class Person {
 	*/
 	public void ThrowAllItems() {
 		Logger.started(this, "ThrowAllItems");
-		for (Item i:inventory) {
-			i.Thrown(this);
+
+		for(Item item : inventory){
+			Throw(item);
 		}
+
 		Logger.finished(this, "ThrowAllItems");
 	}
 

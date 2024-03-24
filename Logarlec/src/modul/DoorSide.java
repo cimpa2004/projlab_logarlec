@@ -59,7 +59,9 @@ public class DoorSide {
 	public void SetRoom(Room r) {
 		Logger.started(this, "SetRoom", r);
 		room = r;
-		r.AddDoor(this);
+		if(r != null){
+			r.AddDoor(this);
+		}
 		Logger.finished(this, "SetRoom", r);
 	}
 

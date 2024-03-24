@@ -75,14 +75,16 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 
 	/**
 	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a WetTableCloth szemszögéből
+	 * Kezeli az eldobást a WetTableCloth szemszögéből, törli magát a
+	 * Person WetTableClothes listájából.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-			p.RemoveWetTableCloth(this);
-			p.GetRoom().AddItem(this);
+
+		p.wetTableClothes.remove(this);
+
 		Logger.finished(this, "Thrown", p);
 	}
 
