@@ -1,6 +1,5 @@
 package modul;
 
-
 import util.Logger;
 import util.Reader;
 
@@ -22,14 +21,12 @@ public class Game {
 	/**
 	 * A játékban szereplő Hallgatók és Oktatók sorrendjét tároló attribútum.
 	 * */
-	private Person turnOrder;
+	private ArrayList<Person> turnOrder;
 	
 	/**
 	 * A soronkövetkező Személy található meg benne.
 	 * */
 	private Person currentTurn;
-
-	
 
 	/**
 	 * Itt vannak eltárolva a játékban található szobák.
@@ -58,6 +55,18 @@ public class Game {
 	 * Átlépteti a játékot a következő körre.
 	 * */
 	public void NextTurn() {
+		/*currentTurn.EndTurn();
+		boolean anyStudentsAlive = AnyStudentsAlive();
+		if(!anyStudentsAlive){
+			EndGame(false);
+		}
+		int currentIndex = turnOrder.indexOf(currentTurn);
+		currentIndex++;
+		if(currentIndex > turnOrder.size()){
+			currentIndex = 0;
+		}
+		currentTurn = turnOrder.get(currentIndex);
+		currentTurn.StartTurn();*/
 
 		Logger.started(this, "NextTurn");
 		

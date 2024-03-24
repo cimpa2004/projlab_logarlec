@@ -12,7 +12,10 @@ public class SkeletonMain {
         System.out.println("2. Hallgatót megvédi az FFP2 maszk");
         System.out.println("3. Hallgató használja a nedves táblatörlő rongyot egy oktatóval szemben");
         System.out.println("4. Oktató camembert által eszméletét veszíti");
+        System.out.println("5. Hallgatót megvédi a TVSZ");
         System.out.println("6. Hallgatót megvédi a Szent Sörös pohár");
+        System.out.println("7. Kiürül a gáz egy szobából");
+        System.out.println("8. Tranzisztor használat");
         System.out.println("9. Az oktató inventorya megtelik a játék véget ér, mert nincs több hallgató");
         System.out.println("10. Hallgató tárgyfelvétel");
         System.out.println("11. Hallgató önelgázosítás");
@@ -47,8 +50,20 @@ public class SkeletonMain {
                     InstructorFaintedByCamembert.Run();
                     validInput = true;
                     break;
+                case 5:
+                    StudentSavedByTVSZ.Run();
+                    validInput = true;
+                    break;
                 case 6:
                     StudentSavedByHolyBeerCup.Run();
+                    validInput = true;
+                    break;
+                case 7:
+                    GasClearsFromRoom.Run();
+                    validInput = true;
+                    break;
+                case 8:
+                    UseTransistor.Run();
                     validInput = true;
                     break;
                 case 9:

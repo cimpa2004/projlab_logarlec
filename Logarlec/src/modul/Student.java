@@ -3,6 +3,9 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat
  * irányítják a játék során.
@@ -26,7 +29,16 @@ public class Student extends Person {
 	*/
 	public void AppearInRoom(Room r) {
 		Logger.started(this, "AppearInRoom", r);
-		room = r;
+		int currentC = r.GetCurrentCapacity();
+		int maxC = r.GetMaxCapacity();
+		if(currentC < maxC) {
+			room = r;
+			r.SetCurrentCapacity(++currentC);
+			ArrayList<Instructor> instructors = room.GetInstructors();
+			if (!instructors.isEmpty()) {
+				instructors.getFirst().StealSoul(this);
+			}
+		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
 	
@@ -63,8 +75,26 @@ public class Student extends Person {
 	*/
 	public boolean Die() {
 		Logger.started(this, "Die");
+		boolean defendSuccess = false;
+		if(hasWetTableCloth) {
+			WetTableCloth wtc = (WetTableCloth) GetRandomActive(wetTableClothes);
+			wtc.Activate();
+			defendSuccess = true;
+		}
+		else if(hasHolyBeerCup) {
+			defendSuccess = true;
+		}
+		else if(hasTVSZ) {
+			TVSZ tvsz = (TVSZ) GetRandomActive(tvszs);
+			tvsz.Decrement();
+			defendSuccess = true;
+		}
+		if(!defendSuccess) {
+			game.RemoveFromGame(this);
+			isAlive = false;
+		}
 		Logger.finished(this, "Die");
-		return false;
+		return isAlive;
 	}
 	
 	/** 
