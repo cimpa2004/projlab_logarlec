@@ -4,6 +4,9 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** */
 public class Game {
 	/** */
@@ -20,7 +23,7 @@ public class Game {
 
 	
 	/** */
-	private Room rooms;
+	private List<Room> rooms = new ArrayList<>();
 	
 	/** */
 	public void StartGame() {
@@ -35,6 +38,11 @@ public class Game {
 	
 	/** */
 	public void NextTurn() {
+		boolean toUse = Reader.GetBooleanInput("Legyen e elátkozott minden szoba? ");
+		if (toUse && !rooms.isEmpty())
+			for (Room r : this.rooms){
+				r.SetIsCursed(true);
+			}
 	}
 	
 	/** */
@@ -53,6 +61,8 @@ public class Game {
 	
 	/** */
 	public void AddRoom(Room r) {
+		if (r != null)
+			this.rooms.add(r);
 	}
 	
 	/** */

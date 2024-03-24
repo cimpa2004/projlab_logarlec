@@ -11,6 +11,7 @@ public class SkeletonMain {
         System.out.println("1. Oktatót megvédi FFP2 maszk");
         System.out.println("6. Hallgatót megvédi a Szent Sörös pohár");
         System.out.println("9. Az oktató inventorya megtelik a játék véget ér, mert nincs több hallgató");
+        System.out.println("13. Egy hallgató beragad egy szobába, amit elátkozódik");
         System.out.println("14. Hallgató használt tárgyakat használna");
         System.out.println("15. Oktató használt, vagy nem használható tárgyat használna");
         // ..
@@ -34,6 +35,10 @@ public class SkeletonMain {
                     break;
                 case 9:
                     InstructosInventoryGetsFullTheGameEnds.Run();
+                    validInput = true;
+                    break;
+                case 13:
+                    StudentGetsStuckInARoom.Run();
                     validInput = true;
                     break;
                 case 14:
