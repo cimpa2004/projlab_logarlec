@@ -1,6 +1,8 @@
 package modul;
 
 
+import util.Logger;
+import util.Reader;
 
 /** */
 public class Game {
@@ -26,6 +28,9 @@ public class Game {
 	
 	/** */
 	public void EndGame(boolean winSide) {
+		Logger.started(this, "EndGame", winSide);
+
+		Logger.finished(this, "EndGame", winSide);
 	}
 	
 	/** */
@@ -34,7 +39,12 @@ public class Game {
 	
 	/** */
 	public boolean AnyStudentsAlive() {
-		return false;
+		Logger.started(this, "AnyStudentsAlive");
+		boolean toReturn = Reader.GetBooleanInput("Van még élő Student? ");
+		if (!toReturn)
+			this.EndGame(false);
+		Logger.finished(this, "AnyStudentsAlive");
+		return toReturn;
 	}
 	
 	/** */
