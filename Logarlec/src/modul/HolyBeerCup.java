@@ -32,10 +32,21 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	@Override
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a HolyBeerCupot?");
+//		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a HolyBeerCupot?");
+		if(!isActivated) isActivated = true;
 		Logger.finished(this, "Activate");
 		return isActivated;
 	}
+
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
+		return isActivated;
+	}
+
 
 	/**
 	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
@@ -45,7 +56,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	@Override
 	public void Decrement() {
 		Logger.started(this, "Decrement");
-		if(effectDuration>0) effectDuration = effectDuration - 1;
+		// csak akkor csokken a durationje ha mar aktivalva van
+		if(isActivated){
+			if(effectDuration>0) effectDuration = effectDuration - 1;
+			else isActivated = false; // ha mar nincs tobb durationje akkor deaktivalodik
+		}
 		Logger.finished(this, "Decrement");
 	}
 
@@ -94,9 +109,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.holyBeerCups.remove(this);
-
+		p.RemoveHolyBeerCup(this);
 		Logger.finished(this, "Thrown", p);
 	}
 

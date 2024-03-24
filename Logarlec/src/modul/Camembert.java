@@ -26,6 +26,16 @@ public class Camembert extends Item implements Usable {
 		return isActivated;
 	}
 
+
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
+		return isActivated;
+	}
+
 	/**
 	 * Kezeli a felvételt, elhelyezi magát az st inventoryában
 	 * @param st A felvevő hallgató

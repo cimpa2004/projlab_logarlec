@@ -17,6 +17,11 @@ public class Game {
 	 * Tárolja, hogy a játék végetért-e.
 	 * */
 	private boolean isEndGame;
+
+	/**
+	 * Miutan vege a jateknak, ez mutatja, hogy melyik oldal nyert. 1 ha a hallgatok, 0 ha az oktatok
+	 * */
+	private boolean winSide;
 	
 	/**
 	 * A játékban szereplő Hallgatók és Oktatók sorrendjét tároló attribútum.
@@ -48,6 +53,8 @@ public class Game {
 	 * */
 	public void EndGame(boolean winSide) {
 		Logger.started(this, "EndGame", winSide);
+		isEndGame = true;
+		this.winSide = winSide;
 		Logger.finished(this, "EndGame", winSide);
 	}
 	
@@ -55,7 +62,8 @@ public class Game {
 	 * Átlépteti a játékot a következő körre.
 	 * */
 	public void NextTurn() {
-		/*currentTurn.EndTurn();
+		Logger.started(this, "NextTurn");
+		currentTurn.EndTurn();
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
@@ -66,10 +74,8 @@ public class Game {
 			currentIndex = 0;
 		}
 		currentTurn = turnOrder.get(currentIndex);
-		currentTurn.StartTurn();*/
+		currentTurn.StartTurn();
 
-		Logger.started(this, "NextTurn");
-		
 
 		boolean toUse = Reader.GetBooleanInput("Legyen e elátkozott minden szoba? ");
 		if (toUse && !rooms.isEmpty())
