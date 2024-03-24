@@ -9,6 +9,9 @@ public class SkeletonMain {
     public static void main(String[] args) {
         // Tesztek listazasa
         System.out.println("1. Oktatót megvédi FFP2 maszk");
+        System.out.println("2. Hallgatót megvédi az FFP2 maszk");
+        System.out.println("3. Hallgató használja a nedves táblatörlő rongyot egy oktatóval szemben");
+        System.out.println("4. Oktató camembert által eszméletét veszíti");
         System.out.println("6. Hallgatót megvédi a Szent Sörös pohár");
         System.out.println("9. Az oktató inventorya megtelik a játék véget ér, mert nincs több hallgató");
         System.out.println("13. Egy hallgató beragad egy szobába, amit elátkozódik");
@@ -27,6 +30,18 @@ public class SkeletonMain {
             switch (input){
                 case 1:
                     InstructorSavedByFFP2Mask.Run();
+                    validInput = true;
+                    break;
+                case 2:
+                    StudentSavedByFFP2Mask.Run();
+                    validInput = true;
+                    break;
+                case 3:
+                    StudentUsesWetTableClothOnInstructor.Run();
+                    validInput = true;
+                    break;
+                case 4:
+                    InstructorFaintedByCamembert.Run();
                     validInput = true;
                     break;
                 case 6:

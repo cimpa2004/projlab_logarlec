@@ -157,7 +157,9 @@ public abstract class Person {
 	*/
 	public void ThrowAllItems() {
 		Logger.started(this, "ThrowAllItems");
-
+		for (Item i:inventory) {
+			i.Thrown(this);
+		}
 		Logger.finished(this, "ThrowAllItems");
 	}
 

@@ -59,6 +59,7 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
+
 		Logger.finished(this, "Thrown", p);
 	}
 

@@ -83,6 +83,8 @@ public class TVSZ extends Item implements Defendable{
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
+			p.RemoveTVSZ(this);
+			p.GetRoom().AddItem(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
