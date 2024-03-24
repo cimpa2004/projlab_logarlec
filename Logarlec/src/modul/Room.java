@@ -118,7 +118,12 @@ public class Room {
 	 * */
 	public void CloneAttributes(Room r) {
 		Logger.started(this, "CloneAttributes", r);
-		// existing code
+		this.poisonDuration = r.poisonDuration;
+		this.isCursed = r.isCursed;
+		this.maxCapacity = r.maxCapacity;
+		this.neighbors = r.neighbors;
+		r.AddNeighbor(this);
+		this.AddNeighbor(r);
 		Logger.finished(this, "CloneAttributes", r);
 	}
 
@@ -345,7 +350,28 @@ public class Room {
 	 * */
 	public void SeparateRoom() {
 		Logger.started(this, "SeparateRoom");
-		// existing code
+		if(currentCapacity == 0)
+		{
+			Room r2 = new Room();
+			r2.CloneAttributes(this);
+			for (DoorSide d : doors)
+			{
+				DoorSide dCopy = new DoorSide();
+				dCopy.CloneAttributes(d);
+				DoorSide d2 = d.GetPair();
+				DoorSide d2Copy = new DoorSide();
+				d2Copy.CloneAttributes(d2);
+				dCopy.ConnectDoors(d2Copy);
+			}
+			ArrayList<Item> itemsCopy = new ArrayList<Item>(items);
+			for (Item i: itemsCopy){
+				boolean trueorfalse = Reader.GetBooleanInput("Melyik szobába kerüljön a tárgy (false: az eredeti szobába, true: az új szobába)");
+				if(trueorfalse){
+					r2.AddItem(i);
+					RemoveItem(i);
+				}
+			}
+		}
 		Logger.finished(this, "SeparateRoom");
 	}
 

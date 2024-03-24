@@ -37,7 +37,9 @@ public class DoorSide {
 	 * */
 	public void CloneAttributes(DoorSide d) {
 		Logger.started(this, "CloneAttributes", d);
-		// existing code
+		this.canBeOpened = d.canBeOpened;
+		this.isVisible = d.isVisible;
+		this.room = d.room;
 		Logger.finished(this, "CloneAttributes", d);
 	}
 
@@ -47,7 +49,8 @@ public class DoorSide {
 	 * */
 	public void ConnectDoors(DoorSide d) {
 		Logger.started(this, "ConnectDoors", d);
-		// existing code
+		this.SetPair(d);
+		d.SetPair(this);
 		Logger.finished(this, "ConnectDoors", d);
 	}
 
