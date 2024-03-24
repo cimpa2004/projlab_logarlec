@@ -28,20 +28,24 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		if(!isActive)
+			isActive = true;
+		else
+			isActive = false;
 		Logger.finished(this, "Activate");
-		return returnValue;
+		return isActive;
 	}
 
 
 	/**
 	 * A két transistor párosítja, mindekettőn meghívja a SetPair-t
-	 * @param t1 az egyik transistor
-	 * @param t2 a másik transistor
+	 * @param t a másik transistor
 	 */
-	public void SetPairs(Transistor t1, Transistor t2) {
-		Logger.started(this, "SetPairs", t1, t2);
-		Logger.finished(this, "SetPairs", t1, t2);
+	public void SetPairs(Transistor t) {
+		Logger.started(this, "SetPairs", t);
+		this.SetPair(t);
+		t.SetPair(this);
+		Logger.finished(this, "SetPairs", t);
 	}
 
 	/**
@@ -71,9 +75,9 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		boolean isAdded = st.AddToInventory(this);
 		Logger.finished(this, "PickedUpStudent", st);
-		return returnValue;
+		return isAdded;
 	}
 
 	/**
@@ -96,6 +100,13 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
+		if(isActive && pair.isActive){
+			if(this.GetRoom() != null && pair.GetRoom() != null){
+				p.AppearInRoom(pair.GetRoom());
+				this.Activate();
+				pair.Activate();
+			}
+		}
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -106,6 +117,7 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.started(this, "UsedByStudent", s);
+		this.Activate();
 		Logger.finished(this, "UsedByStudent", s);
 	}
 

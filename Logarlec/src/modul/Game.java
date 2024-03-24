@@ -1,6 +1,7 @@
 package modul;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 /** */
 public class Game {
@@ -11,14 +12,14 @@ public class Game {
 	private boolean isEndGame;
 	
 	/** */
-	private Person turnOrder;
+	private ArrayList<Person> turnOrder;
 	
 	/** */
 	private Person currentTurn;
 
 	
 	/** */
-	private Room rooms;
+	private ArrayList<Room> rooms;
 	
 	/** */
 	public void StartGame() {
@@ -30,6 +31,18 @@ public class Game {
 	
 	/** */
 	public void NextTurn() {
+		currentTurn.EndTurn();
+		boolean anyStudentsAlive = AnyStudentsAlive();
+		if(!anyStudentsAlive){
+			EndGame(false);
+		}
+		int currentIndex = turnOrder.indexOf(currentTurn);
+		currentIndex++;
+		if(currentIndex > turnOrder.size()){
+			currentIndex = 0;
+		}
+		currentTurn = turnOrder.get(currentIndex);
+		currentTurn.StartTurn();
 	}
 	
 	/** */

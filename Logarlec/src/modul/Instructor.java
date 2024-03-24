@@ -18,7 +18,7 @@ public class Instructor extends Person {
 	/** */
 	public void StealSoul(Student st) {
 		Logger.started(this, "StealSoul", st);
-		// existing code
+		st.Die();
 		Logger.finished(this, "StealSoul", st);
 	}
 
