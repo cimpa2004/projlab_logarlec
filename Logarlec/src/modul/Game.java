@@ -92,6 +92,17 @@ public class Game {
 		Logger.finished(this, "AnyStudentsAlive");
 		return toReturn;
 	}
+
+	/**
+	 * Hozzáadja azt a Személyt a turnOrder attribútumhoz, akit paraméterként kap.
+	 *
+	 * @param p Az hozzáadandó Személy.
+	 * */
+	public void AddToGame(Person p) {
+		Logger.started(this, "AddToGame", p);
+		turnOrder.add(p);
+		Logger.finished(this, "AddToGame", p);
+	}
 	
 	/**
 	 * Eltávolítja azt a Személyt a turnOrder attribútumból, akit paraméterként kap.
@@ -100,6 +111,7 @@ public class Game {
 	 * */
 	public void RemoveFromGame(Person p) {
 		Logger.started(this, "RemoveFromGame", p);
+		turnOrder.remove(p);
 		Logger.finished(this, "RemoveFromGame", p);
 	}
 	

@@ -54,6 +54,7 @@ public class Transistor extends Item implements Usable {
 	 */
 	public void SetPair(Transistor t) {
 		Logger.started(this, "SetPair", t);
+		pair = t;
 		Logger.finished(this, "SetPair", t);
 	}
 
@@ -100,7 +101,7 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-		if(isActive && pair.isActive){
+		if(pair != null && isActive && pair.isActive){
 			if(this.GetRoom() != null && pair.GetRoom() != null){
 				p.AppearInRoom(pair.GetRoom());
 				this.Activate();

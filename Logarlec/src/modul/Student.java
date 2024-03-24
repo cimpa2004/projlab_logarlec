@@ -11,6 +11,12 @@ import java.util.List;
  * irányítják a játék során.
 */
 public class Student extends Person {
+
+	public Student(Game g){
+		this.game = g;
+	}
+	public Student(){}
+
 	/** 
 	 * Ez a változó jelzi, hogy az adott Student az még él e.
 	*/
@@ -159,12 +165,6 @@ public class Student extends Person {
 		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
-		int maxCapacity = r2.GetMaxCapacity();
-		int currCapacity = r2.GetCurrentCapacity();
-		if (!(currCapacity < maxCapacity)) {
-			Logger.finished(this, "Move", d);
-			return;
-		}
 		room.RemoveStudent(this);
 		AppearInRoom(r2);
 		Logger.finished(this, "Move", d);
