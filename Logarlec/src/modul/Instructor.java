@@ -28,11 +28,14 @@ public class Instructor extends Person {
 			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
 			room = r; // atlepes a masik szobaba
 			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
+			room.AddInstructor(this);
 
+			
 			ArrayList<Student> students = room.GetStudents();
 			for(Student student : students) {
 				StealSoul(student);
 			}
+			
 		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
@@ -44,8 +47,10 @@ public class Instructor extends Person {
 	 */
 	public void StealSoul(Student st) {
 		Logger.started(this, "StealSoul", st);
-		if (!st.DefendFromKill(this)){
-			st.Die();
+		if(!isFainted && !(stunDuration > 0)){
+			if (!st.DefendFromKill(this)){
+				st.Die();
+			}
 		}
 		Logger.finished(this, "StealSoul", st);
 	}

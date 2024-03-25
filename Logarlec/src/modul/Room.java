@@ -429,7 +429,7 @@ public class Room {
 	 * */
 	public void RemoveStudent(Student s) {
 		Logger.started(this, "RemoveStudent", s);
-		// existing code
+		students.remove(s);
 		Logger.finished(this, "RemoveStudent", s);
 	}
 
