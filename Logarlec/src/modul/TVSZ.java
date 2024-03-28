@@ -19,6 +19,11 @@ public class TVSZ extends Item implements Defendable{
 	private int usesLeft;
 
 	/**
+	 * Ezen változó tárolja, hogy az adott TVSZ igazi-e.
+	 * */
+	private boolean isFake;
+
+	/**
 	 * A TVSZ osztály konstruktora, amiben meg lehet adni, hogy hányszor
 	 * legyen képes megvédeni a Student -et.
 	 * */
@@ -96,6 +101,7 @@ public class TVSZ extends Item implements Defendable{
 	@Override
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
+		// TODO ne tudjon védeni ha isFake
 		Logger.finished(this, "CanDefend");
 		return usesLeft > 0;
 	}
