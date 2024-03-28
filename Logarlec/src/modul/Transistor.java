@@ -36,6 +36,15 @@ public class Transistor extends Item implements Usable {
 		return isActive;
 	}
 
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
+		return isActive;
+	}
+
 
 	/**
 	 * A két transistor párosítja, mindekettőn meghívja a SetPair-t

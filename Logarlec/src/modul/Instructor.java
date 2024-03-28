@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.ArrayList;
+
 /**
  * Az Instructor class valósítja meg a játékban az oktatókat.
  * Ezek az entitások a program által vannak vezérelve.
@@ -20,7 +22,21 @@ public class Instructor extends Person {
 	 */
 	public void AppearInRoom(Room r) {
 		Logger.started(this, "AppearInRoom", r);
-		r.AddInstructor(this);
+		int currentC = r.GetCurrentCapacity();
+		int maxC = r.GetMaxCapacity();
+		if(currentC < maxC) {
+			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
+			room = r; // atlepes a masik szobaba
+			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
+			room.AddInstructor(this);
+
+			
+			ArrayList<Student> students = room.GetStudents();
+			for(Student student : students) {
+				StealSoul(student);
+			}
+			
+		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
 
@@ -31,11 +47,11 @@ public class Instructor extends Person {
 	 */
 	public void StealSoul(Student st) {
 		Logger.started(this, "StealSoul", st);
-		boolean protected_ = Reader.GetBooleanInput("Van a hallgatót megvédő tárgy? ");
-		if (protected_)
-			st.DefendFromKill();
-    else
-		  st.Die();
+		if(!isFainted && !(stunDuration > 0)){
+			if (!st.DefendFromKill(this)){
+				st.Die();
+			}
+		}
 		Logger.finished(this, "StealSoul", st);
 	}
 
@@ -64,7 +80,33 @@ public class Instructor extends Person {
 	 */
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
-		// existing code
+		activeTurn = true;
+		// ha kor kezdetekor gazos szobaban van akkor elkabul
+		if(room.GetPoisonDuration() > 0){
+			if(!ffp2Masks.isEmpty()){
+				Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+				if(ffp2Mask != null){
+					ffp2Mask.Decrement();
+					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+					if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+				}else{
+					SetIsFainted(true);
+				}
+			}
+		}
+		// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
+		else{
+			SetIsFainted(false);
+		}
+		// ha az oktato meg van benulva vagy el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
+		if(stunDuration > 0 || isFainted) EndTurn();
+
+		// oktato minden kore elejen megprobalja elvenni minden hallgato lelket a jelenlegi szobajaban
+		for(Student student : room.GetStudents()){
+			StealSoul(student);
+		}
+
+
 		Logger.finished(this, "StartTurn");
 	}
 
@@ -72,7 +114,6 @@ public class Instructor extends Person {
 	 * Az Oktató ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor az activeTurn false értéket vesz fel.
 	 */
 	public void EndTurn() {
-
 		Logger.started(this, "EndTurn");
 		// existing code
 		Logger.finished(this, "EndTurn");
@@ -125,12 +166,6 @@ public class Instructor extends Person {
 		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
-		int maxCapacity = r2.GetMaxCapacity();
-		int currCapacity = r2.GetCurrentCapacity();
-		if(!(currCapacity<maxCapacity)){
-			Logger.finished(this, "Move", d);
-			return;
-		}
 		room.RemoveInstructor(this);
 		AppearInRoom(r2);
 		Logger.finished(this, "Move", d);

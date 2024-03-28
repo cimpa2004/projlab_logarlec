@@ -143,7 +143,7 @@ public class Room {
 		Logger.started(this, "GetStudents");
 		// existing code
 		Logger.finished(this, "GetStudents");
-		return null;
+		return students;
 	}
   
 	public ArrayList<Instructor> GetInstructors() {
@@ -196,7 +196,7 @@ public class Room {
 	 * */
 	public void SetMaxCapacity(int mc) {
 		Logger.started(this, "SetMaxCapacity", mc);
-		// existing code
+		maxCapacity = mc;
 		Logger.finished(this, "SetMaxCapacity", mc);
 	}
 
@@ -205,9 +205,8 @@ public class Room {
 	 * */
 	public int GetPoisonDuration() {
 		Logger.started(this, "GetPoisonDuration");
-		// existing code
 		Logger.finished(this, "GetPoisonDuration");
-		return 0;
+		return poisonDuration;
 	}
 
 	/** Beállítja azt, hogy a szobában hány körön keresztül tart még a mérgesgáz hatása.*/
@@ -227,6 +226,12 @@ public class Room {
 	public void AddDoor(DoorSide d) {
 		Logger.started(this, "AddDoor", d);
 		doors.add(d);
+		// Set neighboors
+		if(d.GetPair() != null && d.GetPair().GetRoom() != null){
+			Room connectedRoom = d.GetPair().GetRoom();
+			this.AddNeighbor(connectedRoom);
+			if(!connectedRoom.GetNeighbors().contains(this)) connectedRoom.GetNeighbors().add(this);
+		}
 		Logger.finished(this, "AddDoor", d);
 	}
 
@@ -252,6 +257,7 @@ public class Room {
 	public void AddNeighbor(Room r) {
 		Logger.started(this, "AddNeighbor", r);
 		// existing code
+		neighbors.add(r);
 		Logger.finished(this, "AddNeighbor", r);
 	}
 
@@ -397,7 +403,7 @@ public class Room {
 	 * */
 	public void RemoveInstructor(Instructor i) {
 		Logger.started(this, "RemoveInstructor", i);
-		// existing code
+		instructors.remove(i);
 		Logger.finished(this, "RemoveInstructor", i);
 	}
 
@@ -423,7 +429,7 @@ public class Room {
 	 * */
 	public void RemoveStudent(Student s) {
 		Logger.started(this, "RemoveStudent", s);
-		// existing code
+		students.remove(s);
 		Logger.finished(this, "RemoveStudent", s);
 	}
 

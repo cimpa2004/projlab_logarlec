@@ -26,11 +26,9 @@ public class InstructorSavedByFFP2Mask {
 
 
         f = new FFP2Mask();
-        f.SetRoom(r1);
         r1.AddItem(f);
         i = new Instructor();
         r1.AddInstructor(i);
-        i.SetRoom(r1);
     }
 
     public static void Run(){

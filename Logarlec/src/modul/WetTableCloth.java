@@ -38,6 +38,15 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	}
 
 	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
+		return isActivated;
+	}
+
+	/**
 	 * Ezen metódus meghívásakor a paraméterként megkapott
 	 * Student inventárjában elhelyezi magát a WetTableCloth
 	 * és átállítja az owner változóját a paraméterként kapott Student -re.
@@ -82,9 +91,7 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.wetTableClothes.remove(this);
-
+		p.RemoveWetTableCloth(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -96,7 +103,7 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	@Override
 	public void Decrement() {
 		Logger.started(this, "Decrement");
-		if (effectDuration > 0) effectDuration = effectDuration - 1;
+		if (isActivated && effectDuration > 0) effectDuration = effectDuration - 1;
 		Logger.finished(this, "Decrement");
 	}
 
