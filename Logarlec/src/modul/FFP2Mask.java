@@ -21,6 +21,11 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 */
 	private boolean isActivated;
 
+	/**
+	 * Ezen változó tárolja, hogy az adott FFP2Mask igazi-e.
+	 * */
+	private boolean isFake;
+
 	public FFP2Mask(){
 		isActivated = false;
 	}
@@ -28,6 +33,7 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	/** Aktivalja az FFP2Mask-ot. Ezutan minden korben amit egy gazos szobaban tolt, csokkenti az FFP2 maszk durabilityjat*/
 	public boolean Activate() {
 		Logger.started(this, "Activate");
+		// TODO ne lehessen aktiválni ha isFake
 		isActivated = Reader.GetBooleanInput("Sikerült aktiválni az FFP2Mask-ot?");
 		Logger.finished(this, "Activate");
 		return isActivated;

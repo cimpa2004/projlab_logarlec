@@ -47,12 +47,7 @@ public class Room {
 	 * vagy bezárt legyen, de a másik irányból nem)
 	 * */
 	private ArrayList<DoorSide> doors;
-	
-	/**
-	 * Minden olyan személy, aki jelenleg a szobában tartózkodik.
-	 * */
-	private ArrayList<Person> people;
-	
+
 	/**
 	 * A személyek közül azok a hellgatók, akik a szobában vannak.
 	 * */
@@ -63,13 +58,39 @@ public class Room {
 	 * */
 	private ArrayList<Instructor> instructors;
 
+	/**
+	 * A személyek közül azok az takarítók, akik a szobában vannak.
+	 * */
+	private ArrayList<Janitor> janitors;
+
+	/**
+	 * Jelzi, hogy a szoba ragacsos-e.
+	 */
+	private boolean isSticky;
+
+	/**
+	 * Jelzi, hogy hány ember volt már a szobában. Ha a Janitor kitakaritja a szobát, akkor ez nullázodik, mert olyan
+	 * tiszta lesz a szoba, hogy nem lehet megállapítani, hogy voltak-e benne.
+	 */
+	private int numberOfPeopleBeenToRoom;
+
 	public Room(){
 		neighbors = new ArrayList<>();
 		items = new ArrayList<>();
 		doors = new ArrayList<>();
-		people = new ArrayList<>();
+		janitors = new ArrayList<>();
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
+	}
+
+	/**
+	 * Vissza adja, hogy az adott szoba ragacsos-e.
+	 * @return Az érték, ami jelzi, hogy ragacsos-e a szoba
+	 */
+	public boolean GetIsSticky(){
+		Logger.started(this, "DecrementPoison");
+		Logger.finished(this, "DecrementPoison");
+		return isSticky;
 	}
 
 
@@ -213,9 +234,17 @@ public class Room {
 	public void SetPoisonDuration(int pd) {
 		Logger.started(this, "SetPoisonDuration", pd);
 		poisonDuration = pd;
-		for (Person p : people) {
-			boolean isPersonDefended = p.DefendFromGas();
-			if (!isPersonDefended) p.SetIsFainted(true);
+		for (Student s : students) {
+			boolean isPersonDefended = s.DefendFromGas();
+			if (!isPersonDefended) s.SetIsFainted(true);
+		}
+		for (Instructor i : instructors) {
+			boolean isPersonDefended = i.DefendFromGas();
+			if (!isPersonDefended) i.SetIsFainted(true);
+		}
+		for (Janitor j : janitors) {
+			boolean isPersonDefended = j.DefendFromGas();
+			if (!isPersonDefended) j.SetIsFainted(true);
 		}
 		Logger.finished(this, "SetPoisonDuration", pd);
 	}
@@ -394,7 +423,6 @@ public class Room {
 			}
 		}
 		instructors.add(i);
-		people.add(i);
 		Logger.finished(this, "AddInstructor", i);
 	}
 
@@ -420,7 +448,6 @@ public class Room {
 			}
 		}
 		students.add(s);
-		people.add(s);
 		Logger.finished(this, "AddStudent", s);
 	}
 
@@ -431,6 +458,26 @@ public class Room {
 		Logger.started(this, "RemoveStudent", s);
 		students.remove(s);
 		Logger.finished(this, "RemoveStudent", s);
+	}
+
+	/**
+	 * Hozzáad egy takarítót a szobához (amikor belép), és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 * */
+	public void AddJanitor(Janitor j) {
+		Logger.started(this, "AddJanitor", j);
+		j.SetRoom(this);
+		// TODO szoba tisztitása itt
+		janitors.add(j);
+		Logger.finished(this, "AddJanitor", j);
+	}
+
+	/**
+	 * Elvesz egy takarítót a szobából (átment egy másik szobába)
+	 * */
+	public void RemoveJanitor(Janitor j) {
+		Logger.started(this, "RemoveJanitor", j);
+		janitors.remove(j);
+		Logger.finished(this, "RemoveJanitor", j);
 	}
 
 	/**

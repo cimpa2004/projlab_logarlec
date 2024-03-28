@@ -9,6 +9,11 @@ public class SlideRule extends Item {
 	 * A változón keresztül éri el a logarléc a játékot.
 	 * */
 	private Game game;
+
+	/**
+	 * Ezen változó tárolja, hogy az adott SlideRule igazi-e.
+	 * */
+	private boolean isFake;
 	
 	/**
 	 * A függvény a paraméterben kapott Hallgató inventoryába rakja a logarlécet,
@@ -20,6 +25,7 @@ public class SlideRule extends Item {
 	 * */
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
+		// TODO ha isFake akkor nem nyeri meg a játékot
 		Logger.finished(this, "PickedUpStudent", st);
 		return false;
 	}

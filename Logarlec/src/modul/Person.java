@@ -261,6 +261,7 @@ public abstract class Person {
 			return true;
 		}
 		else if(hasHolyBeerCup) {
+			// TODO ekkor kene valszeg eldobni egy random itemet
 			Logger.finished(this, "DefendFromKill");
 			return true;
 		}
