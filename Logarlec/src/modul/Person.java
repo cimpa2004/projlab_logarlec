@@ -12,7 +12,7 @@ import java.util.List;
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
  * összefoglalja azokat a funkciókat, attribútumokat amiket a Hallgatók és Oktatók is hordoznak.
 */
-public abstract class Person {
+public abstract class Person implements IPerson{
 	/**
 	 * Hz az adott Person egy gázos szobában tartózkodik, akkor ez a változó mutatja, hogy
 	 * el van kábulva. 
@@ -121,34 +121,8 @@ public abstract class Person {
 	 *  @param  r  Az a szoba, amelyben a Person meg szeretne jelenni
 	*/
 	public abstract void AppearInRoom(Room r);
-	
-	/** 
-	 * Ennek segítségével lehet az adott Person-nal a szobák között mozogni. A kiválaszott ajtóba megpróbál belépni.
-	 * Lehetséges, hogy az adott ajtón nem lehet belépni valamiért, de amennyiben tud, akkor a Person megjelenhet
-	 * az ajtó által definiált másik szobában.
-	 * 
-	 *  @param  d  Egy ajtó, amelyen a Person megpróbál átlépni egy másik szobába
-	*/
-	public abstract void Move(DoorSide d);
-	
-	/**
-	 * A Person felszed egy tárgyat. Ez egy abstract függvény, mely a származott osztályokban van implementálva úgy, 
-	 * ha az adott Person képes felvenni a tárgyat, van hely az inventoryjában, akkor ez belekerül az inventoryjába.
-	 * Előfordulhat, hogy nem kerül benne az inventoryjába, ha nincs több helye, ekkor false-al tér vissza más esetben true-val.
-	 *
-	 * @param  i  Az az Item, amelyet a Person fel szeretne venni.
-	 * @return    Visszatérési érték egy boolean, ami jelzi, hogy sikerült-e felvenni az i Itemet vagy sem
-	*/
-	public abstract boolean Pickup(Item i);
-	
-	/** 
-	 * A Person a kiválasztott Item-et eldobja. Ha a paraméterként megadott Item nem szerepel a Person inventoryjában, 
-	 * akkor nem történik semmi. Ellenkező esetben az Item törlődik a Person inventoryjából és abba a szobába kerül ahol
-	 * épp tartózkodik. Az itemen minden esetben meghívódik az Item Thrown függvénye, mely az Itemtől függően törli a Person
-	 * védelmi Itemjei közül is a megadott Itemet.
-	 * 
-	 *  @param  i  A válaszott Item, melyet a Person eldob 
-	*/
+
+
 	public void Throw(Item i) {
 		Logger.started(this, "Throw", i);
 
@@ -176,11 +150,6 @@ public abstract class Person {
 		Logger.finished(this, "ThrowAllItems");
 	}
 
-	/** 
-	 * Egy absract függvény, mely a kiválasztott Usable-t aktiválja. Ez a származott osztályokban van leimplementálva, mert
-	 * attól függően változik egy Usable használata, hogy ki használja.
-	*/
-	public abstract void UseItem(Usable u);
 
 	/** 
 	 * Beállítja, hogy az adott Person melyik szobában tartózkodjon.
@@ -203,18 +172,7 @@ public abstract class Person {
 		Logger.finished(this, "GetRoom");
 		return room;
 	}
-	
-	/** 
-	 * Ez az a függvény amelyet a Game hív meg, és ezen belül implementálhatja az adott származott, hogy milyen lépéseket
-	 * tesz az aktív körében. Ekkor az activeTurn true értékre is változik.
-	*/
-	public abstract void StartTurn();
-	
-	/** 
-	 * Egy származott osztály implementálja, és ezzel jelzi, hogy az adott köre véget ért. Ekkor az activeTurn értékre false
-	 * lesz.
-	*/
-	public abstract void EndTurn();
+
 	
 	/** 
 	 * A paraméterként megadott Item-et hozzáadja a Person inventoryjába. Attól függően, hogy van-e több hely az inventoryjában,

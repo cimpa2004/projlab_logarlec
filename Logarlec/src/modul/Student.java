@@ -62,17 +62,17 @@ public class Student extends Person {
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){
-					if(!ffp2Masks.isEmpty()){
-						Defendable ffp2Mask = GetRandomActive(ffp2Masks);
-						if(ffp2Mask != null){
-							ffp2Mask.Decrement();
-							// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
-							if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
-						}else{
-							SetIsFainted(true);
-						}
-					}// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
+			if(!ffp2Masks.isEmpty()){
+				Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+				if(ffp2Mask != null){
+					ffp2Mask.Decrement();
+					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+					if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
 				}else{
+					SetIsFainted(true);
+				}
+			}// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
+		}else{
 			SetIsFainted(false);
 		}
 		// ha el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
