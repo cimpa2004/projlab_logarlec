@@ -1,5 +1,9 @@
-package modul;
+package controller;
 
+import modul.IPerson;
+import modul.IRoom;
+import modul.Person;
+import modul.Room;
 import util.Logger;
 import util.Reader;
 
@@ -26,17 +30,17 @@ public class Game {
 	/**
 	 * A játékban szereplő Hallgatók és Oktatók sorrendjét tároló attribútum.
 	 * */
-	private ArrayList<Person> turnOrder;
+	private ArrayList<IPerson> turnOrder;
 	
 	/**
 	 * A soronkövetkező Személy található meg benne.
 	 * */
-	private Person currentTurn;
+	private IPerson currentTurn;
 
 	/**
 	 * Itt vannak eltárolva a játékban található szobák.
 	 * */
-	private List<Room> rooms = new ArrayList<>();
+	private List<IRoom> rooms = new ArrayList<>();
 	
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
@@ -79,7 +83,7 @@ public class Game {
 
 		boolean toUse = Reader.GetBooleanInput("Legyen e elátkozott minden szoba? ");
 		if (toUse && !rooms.isEmpty())
-			for (Room r : this.rooms){
+			for (IRoom r : this.rooms){
 				r.SetIsCursed(true);
 			}
 		Logger.finished(this, "NextTurn");

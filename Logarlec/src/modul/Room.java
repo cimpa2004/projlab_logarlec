@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /** */
-public class Room {
+public class Room implements IRoom {
 	/**
 	 * Azt mutatja, hogy a szobának hány körig tart még a mérgesgáz-effektje. Ha eléri a 0-t a szobában minden
 	 * hallgató és oktató felébred.
@@ -383,7 +383,7 @@ public class Room {
 	 * kerül egy ajtó. Csak akkor hívódik meg, ha a szoba aktuális kapacitása jelenleg 0.
 	 * A szobában lévő tárgyak a két szoba között véletlenszerűen lesznek elszórva.
 	 * */
-	public void SeparateRoom() {
+	public boolean SeparateRoom() {
 		Logger.started(this, "SeparateRoom");
 		if(currentCapacity == 0)
 		{
@@ -406,8 +406,10 @@ public class Room {
 					RemoveItem(i);
 				}
 			}
+			return true;
 		}
 		Logger.finished(this, "SeparateRoom");
+		return false;
 	}
 
 	/**
