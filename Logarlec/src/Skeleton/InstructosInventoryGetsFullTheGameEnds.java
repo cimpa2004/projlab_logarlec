@@ -1,4 +1,5 @@
 package Skeleton;
+import controller.Game;
 import modul.*;
 
 /**

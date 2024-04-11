@@ -5,7 +5,7 @@ import modul.WetTableCloth;
 import modul.DoorSide;
 import modul.Room;
 import modul.Instructor;
-import modul.Game;
+import controller.Game;
 
 public class StudentUsesWetTableClothOnInstructor {
     private static Student s;

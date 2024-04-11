@@ -1,10 +1,10 @@
 package modul;
 
+import controller.Game;
 import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat

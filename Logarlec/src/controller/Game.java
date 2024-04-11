@@ -1,5 +1,9 @@
-package modul;
+package controller;
 
+import modul.IPerson;
+import modul.IRoom;
+import modul.Person;
+import modul.Room;
 import util.Logger;
 import util.Reader;
 
