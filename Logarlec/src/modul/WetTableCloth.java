@@ -91,6 +91,7 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
+		p.RemoveFromInventory(this);
 		p.RemoveWetTableCloth(this);
 		Logger.finished(this, "Thrown", p);
 	}

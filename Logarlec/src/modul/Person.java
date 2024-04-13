@@ -183,8 +183,12 @@ public abstract class Person implements IPerson{
 	*/
 	public boolean AddToInventory(Item i) {
 		Logger.started(this, "AddToInventory", i);
-		boolean canAdd = Reader.GetBooleanInput("Van hely az inventoryban?");
-		if(canAdd) inventory.add(i);
+		boolean canAdd = inventory.size() < 5;
+		if(canAdd) {
+			inventory.add(i);
+			i.SetRoom(null);
+			i.SetOwner(this);
+		}
 		Logger.finished(this, "AddToInventory", i);
 		return canAdd;
 	}
@@ -198,8 +202,13 @@ public abstract class Person implements IPerson{
 	*/
 	public boolean RemoveFromInventory(Item i) {
 		Logger.started(this, "RemoveFromInventory", i);
+		boolean canRemove = inventory.remove(i);
+		if(canRemove){
+			i.SetRoom(room);
+			i.SetOwner(null);
+		}
 		Logger.finished(this, "RemoveFromInventory", i);
-		return inventory.remove(i);
+		return canRemove;
 	}
 	
 	/** 
