@@ -20,7 +20,22 @@ public abstract class Item {
 	 * Amennyiben nem tartozik senkihez, akkor üresen marad a változó.
 	 * */
 	private Person owner;
-	
+
+	public  void SetOwner(Person p){
+		Logger.started(this, "SetOwner");
+
+		owner = p;
+
+		Logger.finished(this, "SetOwner");
+	}
+
+	public Person GetOwner(){
+		Logger.started(this, "GetOwner");
+
+		Logger.finished(this, "GetOwner");
+		return owner;
+	}
+
 	/**
 	 * Ez a metódus az Item room változójának megadja azt a szobát, amelyeket az r paraméterében kap.
 	 * Ez a metódus tipikusan, akkor hívódik meg, ha egy Person eldob egy Item -et.
@@ -44,7 +59,7 @@ public abstract class Item {
 		Logger.started(this, "GetRoom");
 
 		Logger.finished(this, "GetRoom");
-		return null;
+		return room;
 	}
 	
 	/**

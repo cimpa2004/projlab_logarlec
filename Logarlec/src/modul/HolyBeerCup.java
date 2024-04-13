@@ -25,6 +25,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	 * */
 	private boolean isActivated;
 
+	public HolyBeerCup(){
+		isActivated = false;
+		effectDuration = 3;
+	}
+
 	/**
 	 * Ezen metódus meghívásakor a HolyBeerCup, amire ezt a függvényt meghívták,
 	 * aktivált állapotba kerül, azaz igazra állítódik az isActivated változója.
@@ -32,10 +37,14 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	@Override
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-//		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a HolyBeerCupot?");
-		if(!isActivated) isActivated = true;
+
 		Logger.finished(this, "Activate");
-		return isActivated;
+		if(isActivated){
+			return false;
+		}else{
+			isActivated = true;
+			return  true;
+		}
 	}
 
 	/**
@@ -110,6 +119,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
 		p.RemoveHolyBeerCup(this);
+		p.RemoveFromInventory(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -124,9 +134,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public void UsedByStudent(Student s) {
 		Logger.started(this, "UsedByStudent", s);
 		Activate();
-		if(isActivated){
-			s.AddHolyBeerCup(this);
-		}
+		if(isActivated)	s.AddHolyBeerCup(this);
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -153,7 +161,6 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
 		Logger.finished(this, "CanDefend");
-		effectDuration = Reader.GetIntInput("Mennyi ideig hatásos még a HolyBeerCup?");
 		return isActivated && effectDuration > 0;
 	}
 }
