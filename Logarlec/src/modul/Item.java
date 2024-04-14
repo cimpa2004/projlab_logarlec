@@ -37,6 +37,14 @@ public abstract class Item {
 
 	public abstract boolean GetIsFake();
 
+	/**
+	 * Vissza adja a tárgyhoz tartozó egyedi id-t.
+	 * @return A tárgyhoz tartozó egyedi id.
+	 */
+	public String GetId(){
+		return id;
+	}
+
 	public void SetOwner(Person p){
 		Logger.started(this, "SetOwner");
 
