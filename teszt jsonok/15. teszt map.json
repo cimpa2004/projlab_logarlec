@@ -1,0 +1,339 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "doors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "canBeOpened": {
+              "type": "boolean"
+            },
+            "pair": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "canBeOpened",
+            "pair"
+          ]
+        }
+      },
+      "rooms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "gasy" :{
+                "type" : "integer"
+            },
+            "maxCap" :{
+                "type" :"integer"
+            },
+            "curentCap" :{
+                "type" :"integer"
+            },
+            "Instructors": {
+              "type": "array",
+              "items":{
+                  "properties": {
+                    "id":{
+                      "type" : "string"
+                    }
+                  }
+              }
+            },
+            "Students": {
+              "type": "array",
+              "items":{
+                  "properties": {
+                    "id":{
+                      "type" : "string"
+                    }
+                  }
+              }
+            },
+            "Janitors": {
+              "type": "array",
+              "items":{
+                  "properties": {
+                    "id":{
+                      "type" : "string"
+                    }
+                  }
+              }
+            },
+            "SlideRules": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id" :{
+                    "type" :"string"
+                  },
+                  "fake":{
+                    "type" : "boolean"
+                  }
+                }
+              }
+            },
+            "TVSZs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "durability": {
+                    "type": "number"
+                  },
+                  "id":{
+                    "type" :"string"
+                  },
+                  "fake":{
+                    "type" : "boolean"
+                  }
+                },
+                "required": [
+                  "durability",
+                  "id",
+                  "fake"
+                ]
+              }
+            },
+            "FFP2Masks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "durability": {
+                    "type": "number"
+                  },
+                  "id":{
+                    "type" :"string"
+                  },
+                  "fake":{
+                    "type" : "boolean"
+                  }
+                },
+                "required": [
+                  "durability",
+                  "id",
+                  "fake"
+                ]
+              }
+            },
+            "wetTableClothes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "durability": {
+                    "type": "number"
+                  },
+                  "id":{
+                    "type" :"string"
+                  }
+                },
+                "required": [
+                  "durability",
+                  "id"
+                ]
+              }
+            },
+            "holyBeerCups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "durability": {
+                    "type": "number"
+                  },
+                  "id":{
+                    "type" :"string"
+                  }
+                },
+                "required": [
+                  "durability",
+                  "id"
+                ]
+              }
+            },
+            "airFresheners": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "isActivated": {
+                    "type": "boolean"
+                  },
+                  "id":{
+                    "type" :"string"
+                  }
+                },
+                "required": [
+                  "isActivated",
+                  "id"
+                ]
+              }
+            },
+            "camemberts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "isActivated": {
+                    "type": "boolean"
+                  },
+                  "id":{
+                    "type" :"string"
+                  }
+                },
+                "required": [
+                  "isActivated",
+                  "id"
+                ]
+              }
+            },
+            "Transistors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type" : "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            },
+            "doors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "numberOfInstructors",
+            "numberOfStudents",
+            "numberOfJanitors",
+            "numberOfSlideRules",
+            "TVSZs",
+            "FFP2Masks",
+            "wetTableClothes",
+            "holyBeerCups",
+            "airFresheners",
+            "camemberts",
+            "numberOfTransistors",
+            "numberOfFakeTVSZz",
+            "numberOfFakeFFP2Masks",
+            "numberOfFakeSlideRules",
+            "doors"
+          ]
+        }
+      }
+    },
+    "required": [
+      "doors",
+      "rooms"
+    ], 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      "data": {
+        "doors": [
+          {
+            "id": "Door1",
+            "canBeOpened": true,
+            "pair": "Door2"
+          },
+          {
+            "id": "Door2",
+            "canBeOpened": true,
+            "pair": "Door1"
+          }
+        ],
+        "rooms": [
+          {
+            "id": "Room1",
+            "Instructors": [
+            ],
+            "Students" :[
+                {
+                    "id" : "Student1"
+                }
+                
+            ],
+            "Janitors":[
+            ],
+            "SlideRules":[
+            ],
+            "TVSZs": [
+            ],
+            "FFP2Masks": [
+            ],
+            "wetTableClothes": [
+                {
+                    "id" : "WetTableCloth1",
+                    "durability" : 3
+                }
+            ],
+            "holyBeerCups": [
+            ],
+            "airFresheners": [
+            ],
+            "camemberts": [
+            ],
+            "Transistors": [],
+            "doors": ["Door1"]
+          },
+          {
+            "id": "Room2",
+            "Instructors": [
+                {
+                    "id" : "Instructor1"
+                }
+            ],
+            "Students" :[
+               
+            ],
+            "Janitors":[],
+            "SlideRules":[
+            ],
+            "TVSZs": [
+            ],
+            "FFP2Masks": [
+            ],
+            "wetTableClothes": [
+            ],
+            "holyBeerCups": [
+            ],
+            "airFresheners": [
+            ],
+            "camemberts": [
+            ],
+            "Transistors": [],
+            "doors": ["Door2"]
+          }
+         
+        ]
+      }
+    }
+    
