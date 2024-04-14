@@ -2,21 +2,33 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A camebert-t reprezentációja
  * Tárolja, hogy aktív e. Ha nem aktív akkor nem engedi a használatot.
  * Elhelyezi magát az őt felvevők inventoryába, és megvalósítja a használatot.
  * {@inheritDoc}
  */
-public class Camembert extends
-		Item implements Usable {
+public class Camembert extends Item implements Usable {
 	/**
 	 * Tárolja hogy aktív e
 	 */
 	private boolean isActivated;
 
-	public Camembert(){
+	public Camembert(String id){
+		super(id);
 		isActivated = false;
+	}
+
+	public Camembert(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
 	}
 
 	/**

@@ -4,6 +4,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A TVSZ osztály a TVSZ reprezentációja.
  * A TVSZ a tárgyak egyike, amelyeket a játékosok
@@ -27,8 +29,19 @@ public class TVSZ extends Item implements Defendable{
 	 * A TVSZ osztály konstruktora, amiben meg lehet adni, hogy hányszor
 	 * legyen képes megvédeni a Student -et.
 	 * */
-	public TVSZ(){
+	public TVSZ(String id){
+		super(id);
 		usesLeft = 3;
+	}
+
+	public TVSZ(){
+		super(UUID.randomUUID().toString());
+		usesLeft = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return isFake;
 	}
 
 	public void SetIsFake(boolean b){
@@ -45,6 +58,11 @@ public class TVSZ extends Item implements Defendable{
 		Logger.started(this, "Decrement");
 		if (usesLeft > 0) usesLeft = usesLeft - 1;
 		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return usesLeft;
 	}
 
 	/**

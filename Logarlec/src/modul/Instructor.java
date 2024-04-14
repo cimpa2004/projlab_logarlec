@@ -4,6 +4,7 @@ import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Az Instructor class valósítja meg a játékban az oktatókat.
@@ -14,6 +15,14 @@ public class Instructor extends Person {
 	 * Ez a változó tárolja az oktató bénulásának idejét.
 	 * */
 	private int stunDuration;
+
+	public Instructor(String id) {
+		super(id);
+	}
+
+	public Instructor() {
+		super(UUID.randomUUID().toString());
+	}
 
 	/**
 	 * A függvény által megjelenik az Oktató a paraméterként megadott szobában.
@@ -119,6 +128,21 @@ public class Instructor extends Person {
 		Logger.started(this, "EndTurn");
 		// existing code
 		Logger.finished(this, "EndTurn");
+	}
+
+	@Override
+	public boolean GetIsFainted() {
+		return isFainted;
+	}
+
+	@Override
+	public boolean GetIsStunned() {
+		return stunDuration > 0;
+	}
+
+	@Override
+	public boolean GetIsActiveTurn() {
+		return activeTurn;
 	}
 
 	/**

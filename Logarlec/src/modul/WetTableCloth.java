@@ -4,6 +4,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A WetTableCloth osztály a Nedves Táblatörlő Rongy reprezentációja.
  * A WetTableCloth a tárgyak egyike, amelyeket a játékosok
@@ -26,9 +28,21 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	 * */
 	private boolean isActivated;
 
-	public WetTableCloth(){
+	public WetTableCloth(String id){
+		super(id);
 		isActivated = false;
 		effectDuration = 3;
+	}
+
+	public WetTableCloth(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+		effectDuration = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
 	}
 
 	/**
@@ -68,6 +82,11 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 			else isActivated = false;
 		}
 		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return effectDuration;
 	}
 
 	/**

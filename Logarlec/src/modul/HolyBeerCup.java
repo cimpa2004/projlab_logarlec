@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A HolyBeerCup osztály a Szent Söröspohár reprezentációja.
  * A HolyBeerCup a tárgyak egyike, amelyeket a játékosok
@@ -25,9 +27,21 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	 * */
 	private boolean isActivated;
 
-	public HolyBeerCup(){
+	public HolyBeerCup(String id){
+		super(id);
 		isActivated = false;
 		effectDuration = 3;
+	}
+
+	public HolyBeerCup(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+		effectDuration = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
 	}
 
 	/**
@@ -70,6 +84,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 			else isActivated = false;
 		}
 		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return effectDuration;
 	}
 
 	/**

@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A tranzisztorok reprezentálása
  * Nyilvántartja, hogy ki a párja (ha van) és hogy, be van e kapcsolva.
@@ -20,9 +22,21 @@ public class Transistor extends Item implements Usable {
 	 */
 	private Transistor pair;
 
-	public Transistor(){
+	public Transistor(String id){
+		super(id);
 		isActive = false;
 		pair = null;
+	}
+
+	public Transistor(){
+		super(UUID.randomUUID().toString());
+		isActive = false;
+		pair = null;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
 	}
 
 	/**
