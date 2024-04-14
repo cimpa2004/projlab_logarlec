@@ -62,7 +62,7 @@ public class Instructor extends Person {
 	 * */
 	public void Stun(int duration) {
 		Logger.started(this, "Stun", duration);
-		// existing code
+		stunDuration = duration;
 		Logger.finished(this, "Stun", duration);
 	}
 
@@ -71,7 +71,9 @@ public class Instructor extends Person {
 	 * */
 	public void DecrementStun() {
 		Logger.started(this, "DecrementStun");
-		// existing code
+		if(stunDuration > 0){
+			stunDuration = stunDuration - 1;
+		}
 		Logger.finished(this, "DecrementStun");
 	}
 

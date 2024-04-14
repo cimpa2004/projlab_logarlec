@@ -26,15 +26,24 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	 * */
 	private boolean isActivated;
 
+	public WetTableCloth(){
+		isActivated = false;
+		effectDuration = 3;
+	}
+
 	/**
 	 * Ezen metódus meghívásakor a WetTableCloth, amire ezt a függvényt meghívták,
 	 * aktivált állapotba kerül, azaz igazra állítódik az isActivated változója.
 	 * */
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a WetTableClothot?");
 		Logger.finished(this, "Activate");
-		return isActivated;
+		if(isActivated){
+			return false;
+		}else{
+			isActivated = true;
+			return  true;
+		}
 	}
 
 	/**
@@ -44,6 +53,21 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	@Override
 	public boolean GetIsActive() {
 		return isActivated;
+	}
+
+	/**
+	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
+	 * az adott WetTableCloth aktiválva van.
+	 * A metódus eggyel csökkenti az effectDuration változót.
+	 * */
+	@Override
+	public void Decrement() {
+		Logger.started(this, "Decrement");
+		if(isActivated){
+			if(effectDuration>0) effectDuration = effectDuration - 1;
+			else isActivated = false;
+		}
+		Logger.finished(this, "Decrement");
 	}
 
 	/**
@@ -97,18 +121,6 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
-	 * az adott WetTableCloth aktiválva van.
-	 * A metódus eggyel csökkenti az effectDuration változót.
-	 * */
-	@Override
-	public void Decrement() {
-		Logger.started(this, "Decrement");
-		if (isActivated && effectDuration > 0) effectDuration = effectDuration - 1;
-		Logger.finished(this, "Decrement");
-	}
-
-	/**
 	 * Ezen metódus abban az esetben hívódik meg, amikor
 	 * egy Student használni szeretne egy nála lévő WetTableCloth -ot.
 	 * A metódus aktiválja a WetTableCloth -ot, amire meghívták, abban az esetben,
@@ -122,7 +134,11 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 		if (isActivated) {
 			s.AddWetTableCloth(this);
 		}
-		// TODO stun Instructors in Student's Room
+
+		for(Instructor i : s.GetRoom().GetInstructors()){
+			i.Stun(3);
+			Decrement();
+		}
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -149,7 +165,6 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	@Override
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
-		effectDuration = Reader.GetIntInput("Mennyi ideig hatásos még a WetTableCloth?");
 		Logger.finished(this, "CanDefend");
 		return isActivated && effectDuration > 0;
 	}

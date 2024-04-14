@@ -31,6 +31,10 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 		durability = 3;
 	}
 
+	public void SetIsFake(boolean b){
+		isFake = b;
+	}
+
 	/** Aktivalja az FFP2Mask-ot. Ezutan minden korben amit egy gazos szobaban tolt, csokkenti az FFP2 maszk durabilityjat*/
 	public boolean Activate() {
 		Logger.started(this, "Activate");

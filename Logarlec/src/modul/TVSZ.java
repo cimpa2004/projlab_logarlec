@@ -28,7 +28,11 @@ public class TVSZ extends Item implements Defendable{
 	 * legyen képes megvédeni a Student -et.
 	 * */
 	public TVSZ(){
-		usesLeft = Reader.GetIntInput("A létrejövő TVSZ hányszor tudjon még védeni gyilkosságtól?");
+		usesLeft = 3;
+	}
+
+	public void SetIsFake(boolean b){
+		isFake = b;
 	}
 
 	/**
@@ -56,8 +60,10 @@ public class TVSZ extends Item implements Defendable{
 	 * */
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
-		if (usesLeft > 0) st.AddTVSZ(this);
 		boolean isAdded = st.AddToInventory(this);
+		if(isAdded && usesLeft > 0){
+			st.AddTVSZ(this);
+		}
 		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -90,6 +96,7 @@ public class TVSZ extends Item implements Defendable{
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
 		p.RemoveTVSZ(this);
+		p.RemoveFromInventory(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -101,8 +108,8 @@ public class TVSZ extends Item implements Defendable{
 	@Override
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
-		// TODO ne tudjon védeni ha isFake
 		Logger.finished(this, "CanDefend");
+		if(isFake) return false;
 		return usesLeft > 0;
 	}
 }

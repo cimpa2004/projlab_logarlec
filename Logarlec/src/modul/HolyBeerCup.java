@@ -65,10 +65,9 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	@Override
 	public void Decrement() {
 		Logger.started(this, "Decrement");
-		// csak akkor csokken a durationje ha mar aktivalva van
 		if(isActivated){
 			if(effectDuration>0) effectDuration = effectDuration - 1;
-			else isActivated = false; // ha mar nincs tobb durationje akkor deaktivalodik
+			else isActivated = false;
 		}
 		Logger.finished(this, "Decrement");
 	}
