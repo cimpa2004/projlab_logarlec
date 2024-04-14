@@ -128,7 +128,6 @@ public abstract class Person implements IPerson{
 
 		if(inventory.contains(i)){
 			i.Thrown(this);
-			RemoveFromInventory(i);
 			this.GetRoom().AddItem(i);
 		}
 
