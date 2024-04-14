@@ -96,6 +96,14 @@ public class Student extends Person {
 			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
 			if(!h.CanDefend()) this.holyBeerCups.remove(h);
 		}
+
+		ArrayList<Defendable> wetTableClothesCopy = new ArrayList<>(this.wetTableClothes);
+		for (Defendable h : wetTableClothesCopy) {
+			h.Decrement();
+			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
+			if(!h.CanDefend()) this.wetTableClothes.remove(h);
+		}
+
 		activeTurn = false;
 		Logger.finished(this, "EndTurn");
 	}

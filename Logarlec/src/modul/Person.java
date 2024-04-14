@@ -221,9 +221,7 @@ public abstract class Person implements IPerson{
 		Logger.started(this, "DefendFromKill");
 		if(hasWetTableCloth) {
 			Defendable wtc = GetRandomActive(wetTableClothes);
-			int stunDuration = Reader.GetIntInput("Hatasosan megvedte a hallgatot egy TVSZ. Mennyire idore benuljon meg az oktato?");
-			instructor.Stun(stunDuration);
-			wtc.Decrement();
+			instructor.Stun(3);
 			Logger.finished(this, "DefendFromKill");
 			return true;
 		}

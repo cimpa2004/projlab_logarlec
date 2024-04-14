@@ -20,6 +20,10 @@ public class Transistor extends Item implements Usable {
 	 */
 	private Transistor pair;
 
+	public Transistor(){
+		isActive = false;
+		pair = null;
+	}
 
 	/**
 	 * Aktiválja a tárgyat
@@ -98,9 +102,9 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		boolean isAdded = i.AddToInventory(this);
 		Logger.finished(this, "PickedUpInstructor", i);
-		return returnValue;
+		return isAdded;
 	}
 
 	/**
@@ -110,12 +114,14 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-		if(pair != null && isActive && pair.isActive){
-			if(this.GetRoom() != null && pair.GetRoom() != null){
-				p.AppearInRoom(pair.GetRoom());
-				this.Activate();
-				pair.Activate();
-			}
+		if(pair != null && isActive && pair.isActive &&
+				pair.GetRoom() != null && pair.GetRoom() != p.GetRoom()){
+			p.RemoveFromInventory(this);
+			p.AppearInRoom(pair.GetRoom());
+			this.Activate();
+			pair.Activate();
+		}else{
+			p.RemoveFromInventory(this);
 		}
 		Logger.finished(this, "Thrown", p);
 	}
