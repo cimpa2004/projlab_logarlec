@@ -2,6 +2,8 @@ package modul;
 
 import util.Logger;
 
+import java.util.List;
+
 public interface IPerson {
     /**
      * A Person felszed egy tárgyat. Ez egy abstract függvény, mely a származott osztályokban van implementálva úgy,
@@ -53,4 +55,74 @@ public interface IPerson {
      * lesz.
      */
     void EndTurn();
+
+    /**
+     * Vissza adja azt a szobát amiben a Person jelenleg tartózkodik.
+     *
+     *  @return  Az a szoba ahol jenleg tartózkodik
+     */
+    Room GetRoom();
+
+
+    /**
+     * Vissza adja a Persont egyertelmuen azonosito id-t
+     * @return Persont egyertelmuen azonosito id
+     */
+    String GetId();
+
+    /**
+     * Vissza adja a szemelynel talalhato targyakat.
+     *
+     *  @return  Egy lista ami tartalmazza a szemelynel talahato targyakat
+     */
+    List<Item> GetInventory();
+
+    /**
+     * Vissza adja a szemelynel talalhato WetTableClothesokat.
+     *
+     *  @return  Egy lista ami tartalmazza a szemelynel talahato WetTableClothesokat
+     */
+     List<Defendable> GetWetTableClothes();
+    /**
+     * Vissza adja a szemelynel talalhato TVSZeket.
+     *
+     *  @return  Egy lista ami tartalmazza a szemelynel talahato TVSZeket
+     */
+     List<Defendable> GetTVSZs();
+
+    /**
+     * Vissza adja a szemelynel talalhato HolyBeerCupsokat.
+     *
+     *  @return  Egy lista ami tartalmazza a szemelynel talahato HolyBeerCupsokat
+     */
+     List<Defendable> GetHolyBeerCups();
+
+    /**
+     * Vissza adja a szemelynel talalhato FFP2Maskokat.
+     *
+     *  @return  Egy lista ami tartalmazza a szemelynel talahato FFP2Maskokat
+     */
+     List<Defendable> GetFFP2Masks();
+
+    /**
+     * Vissza adja hogy az adott szemely el van-e ajulva.
+     *
+     *  @return  Egy boolean ertek ami jelzi hogy ajult e a szemely
+     */
+    boolean GetIsFainted();
+
+    /**
+     * Vissza adja hogy az adott szemely el van-e kabulva.
+     *
+     *  @return  Egy boolean ertek ami jelzi hogy kabult e a szemely
+     */
+    boolean GetIsStunned();
+
+    /**
+     * Vissza adja hogy az adott szemelynek aktiv kore van e
+     *
+     *  @return  Egy boolean ertek ami jelzi hogy aktiv kore van-e a szemelynek
+     */
+    boolean GetIsActiveTurn();
+
 }

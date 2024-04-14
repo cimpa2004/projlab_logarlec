@@ -41,7 +41,15 @@ public class Game {
 	 * Itt vannak eltárolva a játékban található szobák.
 	 * */
 	private List<IRoom> rooms = new ArrayList<>();
-	
+
+	/**
+	 * Vissza adja az IPerson listat ami tartalmazza a jatekban levo szemelyeket
+	 * @return A jatekot jatszo szemelyek
+	 */
+	public ArrayList<IPerson> GetTurnOrder() {
+		return turnOrder;
+	}
+
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
 	 * */

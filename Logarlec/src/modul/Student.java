@@ -5,6 +5,7 @@ import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat
@@ -12,10 +13,14 @@ import java.util.ArrayList;
 */
 public class Student extends Person {
 
-	public Student(Game g){
+	public Student(String id, Game g){
+		super(id);
 		this.game = g;
 	}
-	public Student(){}
+	public Student(Game g){
+		super(UUID.randomUUID().toString());
+		this.game = g;
+	}
 
 	/** 
 	 * Ez a változó jelzi, hogy az adott Student az még él e.
@@ -107,7 +112,22 @@ public class Student extends Person {
 		activeTurn = false;
 		Logger.finished(this, "EndTurn");
 	}
-	
+
+	@Override
+	public boolean GetIsFainted() {
+		return isFainted;
+	}
+
+	@Override
+	public boolean GetIsStunned() {
+		return false;
+	}
+
+	@Override
+	public boolean GetIsActiveTurn() {
+		return activeTurn;
+	}
+
 	/** 
 	 * Ennek a függvény hatására a hallgató meghalhat. Innentől kezdve az isAlive változója false lesz amennyiben meghal. 
 	 * Ekkor, a Game már többet nem fogja meghivni rajta a StartTurn függvényt. Amennyiben a Student rendelkezik olyan 

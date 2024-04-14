@@ -3,17 +3,31 @@ package modul;
 
 import util.Logger;
 
+import java.util.UUID;
+
 /**
  * Az Item absztrakt osztály a játékban előforduló tárgyakat reprezentálja általánosan.
  * Az Item osztály összefoglalja azokat az attribútumokta és metódusokat,
  * amelyekkel az összes tárgy rendelkezik.
  * */
 public abstract class Item {
+	/**
+	 * Az adott Itemet egyertelmuen azonositja
+	 */
+	protected String id;
 
 	/**
 	 * Ez a változó tárolja el, hogy az adott Item melyik szobában van.
 	 * */
 	private Room room;
+
+	public Item(String id){
+		this.id = id;
+	}
+
+	public Item(){
+		this.id = UUID.randomUUID().toString();
+	}
 	
 	/**
 	 * Ez a változó tartalmazza, hogy az adott Item, melyik Person -höz tartozik.
@@ -21,7 +35,9 @@ public abstract class Item {
 	 * */
 	private Person owner;
 
-	public  void SetOwner(Person p){
+	public abstract boolean GetIsFake();
+
+	public void SetOwner(Person p){
 		Logger.started(this, "SetOwner");
 
 		owner = p;

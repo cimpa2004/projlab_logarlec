@@ -1,6 +1,9 @@
 package modul;
 import controller.Game;
 import util.*;
+
+import java.util.UUID;
+
 /**
  * A SlideRule egy olyan osztály ami a Tárgy osztályból van leszármaztatva.
  * Felvételével a játékos megnyeri a játékot.
@@ -15,6 +18,19 @@ public class SlideRule extends Item {
 	 * Ezen változó tárolja, hogy az adott SlideRule igazi-e.
 	 * */
 	private boolean isFake;
+
+	public SlideRule(String id) {
+		super(id);
+	}
+
+	public SlideRule() {
+		super(UUID.randomUUID().toString());
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return isFake;
+	}
 
 	public void SetIsFake(boolean b){
 		isFake = b;

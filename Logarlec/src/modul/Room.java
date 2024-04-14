@@ -7,9 +7,15 @@ import util.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 /** */
 public class Room implements IRoom {
+	/**
+	 * Az adott Roomot egyertelmuen azonositja
+	 */
+	protected String id;
+
 	/**
 	 * Azt mutatja, hogy a szobának hány körig tart még a mérgesgáz-effektje. Ha eléri a 0-t a szobában minden
 	 * hallgató és oktató felébred.
@@ -74,7 +80,8 @@ public class Room implements IRoom {
 	 */
 	private int numberOfPeopleBeenToRoom;
 
-	public Room(){
+	public Room(String id){
+		this.id = id;
 		neighbors = new ArrayList<>();
 		items = new ArrayList<>();
 		doors = new ArrayList<>();
@@ -82,6 +89,17 @@ public class Room implements IRoom {
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
 	}
+
+	public Room(){
+		this.id = UUID.randomUUID().toString();
+		neighbors = new ArrayList<>();
+		items = new ArrayList<>();
+		doors = new ArrayList<>();
+		janitors = new ArrayList<>();
+		students = new ArrayList<>();
+		instructors = new ArrayList<>();
+	}
+
 
 	/**
 	 * Vissza adja, hogy az adott szoba ragacsos-e.
@@ -166,12 +184,25 @@ public class Room implements IRoom {
 		Logger.finished(this, "GetStudents");
 		return students;
 	}
-  
+
+	/**
+	 * Visszaadja a szobában tartózkodó oktatokat.
+	 * */
 	public ArrayList<Instructor> GetInstructors() {
 		Logger.started(this, "GetInstructors");
 		// existing code
 		Logger.finished(this, "GetInstructors");
 		return this.instructors;
+	}
+
+	/**
+	 * Visszaadja a szobában tartózkodó takaritokat.
+	 * */
+	public ArrayList<Janitor> GetJanitors() {
+		Logger.started(this, "GetJanitors");
+		// existing code
+		Logger.finished(this, "GetJanitors");
+		return this.janitors;
 	}
 
 	/**
@@ -192,6 +223,16 @@ public class Room implements IRoom {
 		int _maxCapacity = Reader.GetIntInput("Mekkora a szoba maximum kapacitasa?");
 		Logger.finished(this, "GetMaxCapacity");
 		return _maxCapacity;
+	}
+
+
+	/**
+	 * Visszaadja, hogy hány ember volt már a szobában az utolso takaritas ota
+	 * */
+	public int NumberOfPeopleBeenToRoom() {
+		Logger.started(this, "NumberOfPeopleBeenToRoom");
+		Logger.finished(this, "NumberOfPeopleBeenToRoom");
+		return numberOfPeopleBeenToRoom;
 	}
 
 	/**
@@ -270,7 +311,7 @@ public class Room implements IRoom {
 		Logger.finished(this, "RemoveDoor", d);
 	}
 
-		/**
+	/**
 	 * Visszaadja a szobából kivezető ajtók szoba felé néző oldalait.
 	 * */
 	public ArrayList<DoorSide> GetDoors() {
@@ -387,14 +428,14 @@ public class Room implements IRoom {
 		Logger.started(this, "SeparateRoom");
 		if(currentCapacity == 0)
 		{
-			Room r2 = new Room();
+			Room r2 = new Room(UUID.randomUUID().toString());
 			r2.CloneAttributes(this);
 			for (DoorSide d : doors)
 			{
-				DoorSide dCopy = new DoorSide();
+				DoorSide dCopy = new DoorSide(UUID.randomUUID().toString());
 				dCopy.CloneAttributes(d);
 				DoorSide d2 = d.GetPair();
-				DoorSide d2Copy = new DoorSide();
+				DoorSide d2Copy = new DoorSide(UUID.randomUUID().toString());
 				d2Copy.CloneAttributes(d2);
 				dCopy.ConnectDoors(d2Copy);
 			}
@@ -520,6 +561,11 @@ public class Room implements IRoom {
 		Logger.started(this, "SetIsCursed", isc);
 		// existing code
 		Logger.finished(this, "SetIsCursed", isc);
+	}
+
+	@Override
+	public String GetId() {
+		return id;
 	}
 
 	/**

@@ -3,8 +3,15 @@ package modul;
 
 import util.Logger;
 
+import java.util.UUID;
+
 /** */
 public class DoorSide {
+	/**
+	 * Az adott DoorSidet egyertelmuen azonositja
+	 */
+	protected String id;
+
 	/**
 	 * Azt jelöli, hogy az ajtó kinyitható-e erről azt oldalról.
 	 * Ha nem, akkor semmilyen személy nem tud rajta átmenni ebből az irányból.
@@ -28,7 +35,12 @@ public class DoorSide {
 	 * */
 	private DoorSide pair;
 
+	public DoorSide(String id){
+		this.id = id;
+	}
+
 	public DoorSide(){
+		this.id = UUID.randomUUID().toString();
 	}
 
 	/**
@@ -129,5 +141,10 @@ public class DoorSide {
 		// existing code
 		Logger.finished(this, "GetIsVisible");
 		return false;
+	}
+
+
+	public String GetId() {
+		return id;
 	}
 }

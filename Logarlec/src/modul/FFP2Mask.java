@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * Az FFP2 maszk reprezentációja
  * Tárolja hogy hány körig használható még és, hogy aktív e.
@@ -26,9 +28,21 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	 * */
 	private boolean isFake;
 
-	public FFP2Mask(){
+	public FFP2Mask(String id){
+		super(id);
 		isActivated = false;
 		durability = 3;
+	}
+
+	public FFP2Mask(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+		durability = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return isFake;
 	}
 
 	public void SetIsFake(boolean b){
@@ -69,6 +83,11 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 			else isActivated = false;
 		}
 		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return durability;
 	}
 
 	/**

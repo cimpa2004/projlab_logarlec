@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  */
 public class AirFreshener extends Item implements Usable {
@@ -12,8 +14,19 @@ public class AirFreshener extends Item implements Usable {
      */
     private boolean isActivated;
 
-    public AirFreshener(){
+    public AirFreshener(String id){
+        super(id);
         isActivated = false;
+    }
+
+    public AirFreshener(){
+        super(UUID.randomUUID().toString());
+        isActivated = false;
+    }
+
+    @Override
+    public boolean GetIsFake() {
+        return false;
     }
 
     /**

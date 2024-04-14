@@ -7,12 +7,18 @@ import util.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
  * összefoglalja azokat a funkciókat, attribútumokat amiket a Hallgatók és Oktatók is hordoznak.
 */
 public abstract class Person implements IPerson{
+	/**
+	 * Az adott Persont egyertelmuen azonositja
+	 */
+	protected String id;
+
 	/**
 	 * Hz az adott Person egy gázos szobában tartózkodik, akkor ez a változó mutatja, hogy
 	 * el van kábulva. 
@@ -89,12 +95,66 @@ public abstract class Person implements IPerson{
 	*/
 	protected List<Defendable> ffp2Masks;
 
-	public Person(){
+	public Person(String id){
+		this.id = id;
 		inventory = new ArrayList<>();
 		wetTableClothes = new ArrayList<>();;
 		tvszs = new ArrayList<>();
 		holyBeerCups = new ArrayList<>();
 		ffp2Masks = new ArrayList<>();
+	}
+
+	public Person(){
+		this.id = UUID.randomUUID().toString();
+		inventory = new ArrayList<>();
+		wetTableClothes = new ArrayList<>();;
+		tvszs = new ArrayList<>();
+		holyBeerCups = new ArrayList<>();
+		ffp2Masks = new ArrayList<>();
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato WetTableClothesokat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato WetTableClothesokat
+	 */
+	public List<Defendable> GetWetTableClothes() {
+		Logger.started(this, "GetWetTableClothes");
+		Logger.finished(this, "GetWetTableClothes");
+		return wetTableClothes;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato TVSZeket.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato TVSZeket
+	 */
+	public List<Defendable> GetTVSZs() {
+		Logger.started(this, "GetTVSZs");
+		Logger.finished(this, "GetTVSZs");
+		return tvszs;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato HolyBeerCupsokat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato HolyBeerCupsokat
+	 */
+	public List<Defendable> GetHolyBeerCups() {
+		Logger.started(this, "GetHolyBeerCups");
+		Logger.finished(this, "GetHolyBeerCups");
+		return holyBeerCups;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato FFP2Maskokat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato FFP2Maskokat
+	 */
+	public List<Defendable> GetFFP2Masks() {
+		Logger.started(this, "GetFFP2Masks");
+		Logger.finished(this, "GetFFP2Masks");
+		return ffp2Masks;
 	}
 	
 	/**
@@ -170,6 +230,17 @@ public abstract class Person implements IPerson{
 		Logger.started(this, "GetRoom");
 		Logger.finished(this, "GetRoom");
 		return room;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato targyakat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato targyakat
+	 */
+	public List<Item> GetInventory() {
+		Logger.started(this, "GetInventory");
+		Logger.finished(this, "GetInventory");
+		return inventory;
 	}
 
 	
@@ -372,4 +443,11 @@ public abstract class Person implements IPerson{
 		Logger.finished(this, "GetRandomActive", list);
 		return null;
 	}
+
+	@Override
+	public String GetId() {
+		return id;
+	}
 }
+
+
