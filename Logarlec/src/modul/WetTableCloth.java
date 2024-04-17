@@ -56,7 +56,7 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 			return false;
 		}else{
 			isActivated = true;
-			return  true;
+			return true;
 		}
 	}
 
@@ -152,11 +152,6 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 		Activate();
 		if (isActivated) {
 			s.AddWetTableCloth(this);
-		}
-
-		for(Instructor i : s.GetRoom().GetInstructors()){
-			i.Stun(3);
-			Decrement();
 		}
 		Logger.finished(this, "UsedByStudent", s);
 	}

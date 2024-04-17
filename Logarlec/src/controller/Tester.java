@@ -24,18 +24,18 @@ public class Tester {
      * vegzi el az ebben megadott parancsokat. Majd a kimenetet osszehasonlitja a parameterkent megadott outputFilePath
      * utvonalon talalhato fajl tartalmaval.
      * @param inputFilePath Az bemeneti parancsokat tartalmazo fajl utvonala
-     * @param outputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
+     * @param expectedOutputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
      */
-    public void runTestWithInputFile(String inputFilePath, String outputFilePath){
+    public void runTestWithInputFile(String inputFilePath, String expectedOutputFilePath){
     }
 
     /**
      * Ezzel a metodussal futtathatok a tesztek. A fuggveny meghivasa utana az altalanos bemenetre adhatok meg a parancsok.
      * Miutan minden parancsot megadott a felhasznalo akkor az End paranccsal allithato le a teszt. Majd az End parancs elott
      * generalodott kimenetet osszehasonlitja a parameterkent megadott outputFilePath utvonalon talalhato fajl tartalmaval.
-     * @param outputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
+     * @param expectedOutputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
      */
-    public void runTest(String outputFilePath){
+    public void runTest(String expectedOutputFilePath){
     }
 
 }

@@ -54,6 +54,8 @@ public class Student extends Person {
 				instructor.StealSoul(this);
 				if(!isAlive) break;
 			}
+
+			//TODO: ájuljon el ha gázos a szoba
 		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
@@ -64,6 +66,7 @@ public class Student extends Person {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
+		//TODO: ha nem isAlive -> NextTurn()
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){
@@ -110,6 +113,7 @@ public class Student extends Person {
 		}
 
 		activeTurn = false;
+		// TODO: kör végén NextTurnt meghivni a gamen: game.NextTurn()
 		Logger.finished(this, "EndTurn");
 	}
 
@@ -138,7 +142,6 @@ public class Student extends Person {
 	public boolean Die() {
 		Logger.started(this, "Die");
 		isAlive = false;
-		game.RemoveFromGame(this);
 		EndTurn();
 		Logger.finished(this, "Die");
 		return isAlive;
@@ -169,6 +172,7 @@ public class Student extends Person {
 	*/
 	public void ConnectTransistors(Transistor t1, Transistor t2) {
 		Logger.started(this, "ConnectTransistors", t1, t2);
+		// TODO tranzisztorok összekapcsolása
 		Logger.finished(this, "ConnectTransistors", t1, t2);
 	}
 	

@@ -151,6 +151,7 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
 		Logger.finished(this, "CanDefend");
+		if(isFake) return false;
 		return isActivated && durability > 0;
 	}
 

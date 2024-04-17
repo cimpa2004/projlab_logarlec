@@ -44,6 +44,8 @@ public class Instructor extends Person {
 			for(Student student : students) {
 				StealSoul(student);
 			}
+
+			//TODO: ájuljon el ha gázos a szoba
 			
 		}
 		Logger.finished(this, "AppearInRoom", r);
@@ -117,7 +119,8 @@ public class Instructor extends Person {
 			StealSoul(student);
 		}
 
-
+		// TODO imlementálni az Instructor cselekedeteit: mozgás
+		// TODO: kör végén explicit meg kell hivni and EndTurn()
 		Logger.finished(this, "StartTurn");
 	}
 
@@ -127,6 +130,8 @@ public class Instructor extends Person {
 	public void EndTurn() {
 		Logger.started(this, "EndTurn");
 		// existing code
+		// TODO stunDuration csökkentése
+		// TODO: kör végén NextTurnt meghivni a gamen: game.NextTurn()
 		Logger.finished(this, "EndTurn");
 	}
 

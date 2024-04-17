@@ -16,6 +16,11 @@ public class Game {
 	 * Tárolja a hátralévő körök számát.
 	 * */
 	private int gameTimer;
+
+	/**
+	 * Tárolja, hogy a játék determinisztikus legyen-e
+	 */
+	private boolean isGameDeterministic;
 	
 	/**
 	 * Tárolja, hogy a játék végetért-e.
@@ -50,11 +55,19 @@ public class Game {
 		return turnOrder;
 	}
 
+	public Game(){
+		isGameDeterministic = false;
+	}
+	public Game(boolean isGameDeterministic){
+		this.isGameDeterministic = isGameDeterministic;
+	}
+
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
 	 * */
 	public void StartGame() {
 		Logger.started(this, "StartGame");
+		// TODO
 		Logger.finished(this, "StartGame");
 	}
 	
@@ -75,14 +88,14 @@ public class Game {
 	 * */
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
-		currentTurn.EndTurn();
+		// TODO csak akkor menjen ha még tart a játék (vége)
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
 		}
 		int currentIndex = turnOrder.indexOf(currentTurn);
 		currentIndex++;
-		if(currentIndex > turnOrder.size()){
+		if(currentIndex >= turnOrder.size()){
 			currentIndex = 0;
 		}
 		currentTurn = turnOrder.get(currentIndex);
@@ -121,18 +134,7 @@ public class Game {
 		turnOrder.add(p);
 		Logger.finished(this, "AddToGame", p);
 	}
-	
-	/**
-	 * Eltávolítja azt a Személyt a turnOrder attribútumból, akit paraméterként kap.
-	 *
-	 * @param p Az eltávolítandó Személy.
-	 * */
-	public void RemoveFromGame(Person p) {
-		Logger.started(this, "RemoveFromGame", p);
-		turnOrder.remove(p);
-		Logger.finished(this, "RemoveFromGame", p);
-	}
-	
+
 	/**
 	 * Hozzáadja a paraméterben kapott szobát a játékhoz.
 	 *
@@ -141,6 +143,7 @@ public class Game {
 	public void AddRoom(Room r) {
 		Logger.started(this, "AddRoom", r);
 		if (r != null)
+			r.SetIsDeterministic(isGameDeterministic);
 			this.rooms.add(r);
 		Logger.finished(this, "AddRoom", r);
 	}
@@ -154,4 +157,7 @@ public class Game {
 		Logger.started(this, "RemoveRoom", r);
 		Logger.finished(this, "RemoveRoom", r);
 	}
+
+	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
+	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
 }

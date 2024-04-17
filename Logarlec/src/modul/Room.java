@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+// TODO: kiszedni az összes AddNeighbor, RemoveNeighbor stb logikákat mert már a Game végzi ezek beállítását
+//  és a determinisztikusság attól függjön, hogy mi az isDeterministic értéke
+
 /** */
 public class Room implements IRoom {
 	/**
@@ -21,6 +24,11 @@ public class Room implements IRoom {
 	 * hallgató és oktató felébred.
 	 * */
 	private int poisonDuration;
+
+	/**
+	 * Jelzi, hogy a jatek determinisztikus-e
+	 */
+	private boolean isDeterministic;
 	
 	/**
 	 * A szoba maximum kapacitása, azaz egyszerre hány személy tartózkodhat a szobában.
@@ -109,6 +117,12 @@ public class Room implements IRoom {
 		Logger.started(this, "DecrementPoison");
 		Logger.finished(this, "DecrementPoison");
 		return isSticky;
+	}
+
+	public void SetIsDeterministic(boolean isDeterministic){
+		Logger.started(this, "SetIsDeterministic");
+		Logger.finished(this, "SetIsDeterministic");
+		this.isDeterministic = isDeterministic;
 	}
 
 
@@ -300,7 +314,7 @@ public class Room implements IRoom {
 		if(d.GetPair() != null && d.GetPair().GetRoom() != null){
 			Room connectedRoom = d.GetPair().GetRoom();
 			this.AddNeighbor(connectedRoom);
-			if(!connectedRoom.GetNeighbors().contains(this)) connectedRoom.GetNeighbors().add(this);
+			if(!connectedRoom.GetNeighbors().contains(this)) connectedRoom.AddNeighbor(this);
 		}
 		Logger.finished(this, "AddDoor", d);
 	}
@@ -326,7 +340,6 @@ public class Room implements IRoom {
 	 * */
 	public void AddNeighbor(Room r) {
 		Logger.started(this, "AddNeighbor", r);
-		// existing code
 		neighbors.add(r);
 		Logger.finished(this, "AddNeighbor", r);
 	}
@@ -336,7 +349,7 @@ public class Room implements IRoom {
 	 * */
 	public void SetNeighbors(ArrayList<Room> n) {
 		Logger.started(this, "SetNeighbors", n);
-		// existing code
+		// TODO: függvény implementálása
 		Logger.finished(this, "SetNeighbors", n);
 	}
 
@@ -529,7 +542,7 @@ public class Room implements IRoom {
 	 * */
 	public boolean RandomBool() {
 		Logger.started(this, "RandomBool");
-		// existing code
+		//TODO: implement: ha determinisztikus a játék akkor mindig csak egy értéket adjon vissza
 		Logger.finished(this, "RandomBool");
 		return false;
 	}
@@ -539,7 +552,7 @@ public class Room implements IRoom {
 	 * */
 	public Room SelectRoom(ArrayList<Room> r) {
 		Logger.started(this, "SelectRoom", r);
-		// existing code
+		//TODO: implement
 		Logger.finished(this, "SelectRoom", r);
 		return null;
 	}
@@ -550,7 +563,7 @@ public class Room implements IRoom {
 	 * */
 	public void ToggleDoorsVisible() {
 		Logger.started(this, "ToggleDoorsVisible");
-		// existing code
+		//TODO: implement
 		Logger.finished(this, "ToggleDoorsVisible");
 	}
 
@@ -559,7 +572,7 @@ public class Room implements IRoom {
 	 * */
 	public void SetIsCursed(boolean isc) {
 		Logger.started(this, "SetIsCursed", isc);
-		// existing code
+		//TODO: implement
 		Logger.finished(this, "SetIsCursed", isc);
 	}
 
