@@ -14,17 +14,24 @@
       "rooms": [
         {
           "id": "Room1",
-          "Instructors": [],
-          "Students" :[
+          "poisonDuracion" :0,
+          "Instructors": [
             {
-              "id" : "Student1"
+              "id": "Instructor1"
             }
           ],
+          "Students" :[
+          ],
           "Janitors":[],
-          "SlideRules":[],
+          "SlideRules":[
+          ],
           "TVSZs": [
           ],
           "FFP2Masks": [
+            {
+              "id" : "FFP2Mask1",
+              "durability": 3
+            }
           ],
           "wetTableClothes": [
           ],
@@ -39,10 +46,13 @@
         },
         {
           "id": "Room2",
+          "poisonDuracion" :5,
           "Instructors": [],
-          "Students" :[],
+          "Students" :[
+          ],
           "Janitors":[],
-          "SlideRules":[],
+          "SlideRules":[
+          ],
           "TVSZs": [
           ],
           "FFP2Masks": [
@@ -57,7 +67,35 @@
           ],
           "Transistors": [],
           "doors": ["Door2"]
+        }, 
+        {
+          "id": "Room3",
+          "poisonDuracion" :0,
+          "Instructors": [],
+          "Students" :[
+            {
+              "id" : "Student1"
+            }
+          ],
+          "Janitors":[],
+          "SlideRules":[
+          ],
+          "TVSZs": [
+          ],
+          "FFP2Masks": [
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "Transistors": [],
+          "doors": []
         }
+       
       ]
   }
   

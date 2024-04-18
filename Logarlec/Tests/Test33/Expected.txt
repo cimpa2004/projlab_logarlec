@@ -1,0 +1,54 @@
+message: A játékot sikerült létrehozni
+gameTimer: 10
+isEndGame: false
+currentTurn: Student1
+turnOrder: [Student1, Student2, Instructor1] 
+rooms: [Room1, Room2] 
+doorsides: [Door1, Door2] 
+items: [] 
+students: [Student1, Student2]
+instructors: [Instructor1]
+janitors: []
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
+
+message: A megadott Student1 hallgató részletei a többi mezőben.
+room: Room1
+inventory: []
+wetTableClothes: []
+tvszs: []
+holyBeerCups []
+ffp2Masks: []
+isAlive: false
+isFainted: false
+isStunned: None
+activeTurn: false
+
+message: A megadott Student2 hallgató részletei a többi mezőben.
+room: Room1
+inventory: []
+wetTableClothes: []
+tvszs: []
+holyBeerCups []
+ffp2Masks: []
+isAlive: false
+isFainted: false
+isStunned: None
+activeTurn: false
+
+message: A játék jelenlegi állapotai a többi mezőben.
+gameTimer: 10
+isEndGame: true
+winSide: false
+currentTurn: Instructor1
+turnOrder: [Student1, Student2, Instructor1]
+rooms: [Room1, Room2] 
+doors: [Door1, Door2] 
+items: []
+students: [Student1, Student2]
+instructors: [Instructor1]
+janitors: []

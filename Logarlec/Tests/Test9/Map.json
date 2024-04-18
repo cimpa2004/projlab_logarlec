@@ -17,14 +17,16 @@
           "Instructors": [],
           "Students" :[
             {
-              "id" : "Student1"
+              "id" :"Student1"
             }
           ],
           "Janitors":[],
-          "SlideRules":[],
+          "SlideRules":[
+          ],
           "TVSZs": [
           ],
           "FFP2Masks": [
+            
           ],
           "wetTableClothes": [
           ],
@@ -34,13 +36,21 @@
           ],
           "camemberts": [
           ],
-          "Transistors": [],
+          "Transistors": [
+            {
+              "id" :"Transistor1"
+            },
+            {
+              "id": "Transistor2"
+            }
+          ],
           "doors": ["Door1"]
         },
         {
           "id": "Room2",
           "Instructors": [],
-          "Students" :[],
+          "Students" :[
+          ],
           "Janitors":[],
           "SlideRules":[],
           "TVSZs": [
@@ -58,6 +68,7 @@
           "Transistors": [],
           "doors": ["Door2"]
         }
+       
       ]
   }
   

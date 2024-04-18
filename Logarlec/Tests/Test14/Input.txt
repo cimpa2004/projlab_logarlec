@@ -1,0 +1,3 @@
+CreateGame true Map.json
+Move Janitor1 Door1
+DescribePerson Instructor1

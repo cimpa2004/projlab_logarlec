@@ -1,0 +1,3 @@
+CreateGame true Map.json
+Pickup Instructor1 SlideRule1
+DescribePerson Instructor1

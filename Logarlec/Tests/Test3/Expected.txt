@@ -1,0 +1,41 @@
+message: A játékot sikerült létrehozni
+gameTimer: 10
+isEndGame: false
+currentTurn: Student1
+turnOrder: [Student1] 
+rooms: [Room1, Room2] 
+doorsides: [Door1, Door2] 
+items: [] 
+students: [Student1]
+instructors: []
+janitors: []
+
+message: A személynek nem sikerült belépnie a másik szobába.
+
+message: A megadott Room1 szoba részletei a többi mezőben.
+items: []
+doors: [Door1]
+neighbors: [Room2]
+isCursed: false
+isSticky: false
+poisonDuration: 0
+currentCapacity: 1
+maxCapacity: 1
+numberOfPeopleBeenToRoom: 1
+instructors: []
+students: [Student1]
+janitors []
+
+message: A megadott Room2 szoba részletei a többi mezőben.
+items: []
+doors: [Door2]
+neighbors: [Room1]
+isCursed: false
+isSticky: false
+poisonDuration: 0
+currentCapacity: 0
+maxCapacity: 0
+numberOfPeopleBeenToRoom: 0
+instructors: []
+students: []
+janitors []

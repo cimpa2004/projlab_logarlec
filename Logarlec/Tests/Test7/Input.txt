@@ -1,0 +1,9 @@
+CreateGame true Map.json
+Pickup Instructor1 
+Pickup Instructor1 FFP2Mask1
+Pickup Instructor1 FFP2Mask2
+Pickup Instructor1 FFP2Mask3
+Pickup Instructor1 FFP2Mask4
+Pickup Instructor1 FFP2Mask5
+Pickup Instructor1 FFP2Mask6
+DescribePerson Instructor1 

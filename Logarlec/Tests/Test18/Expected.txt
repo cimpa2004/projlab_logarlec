@@ -1,0 +1,47 @@
+message: A játékot sikerült létrehozni
+gameTimer: 10
+isEndGame: false
+currentTurn: Student1
+turnOrder: [Student1, Instructor1] 
+rooms: [Room1, Room2] 
+doorsides: [Door1, Door2] 
+items: [HolyBeerCup1, HolyBeerCup2] 
+students: [Student1]
+instructors: [Instructor1]
+janitors: []
+
+message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+
+message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+
+message: A személynek sikerült használnia a tárgyat.
+
+message: A személynek sikerült használnia a tárgyat.
+
+message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
+
+message: A megadott Student1 hallgató részletei a többi mezőben.
+room: Room2
+inventory: [TVSZ1]
+wetTableClothes: []
+tvszs: [TVSZ1]
+holyBeerCups []
+ffp2Masks: []
+isAlive: true
+isFainted: false
+isStunned: None
+activeTurn: true
+
+message: A megadott HolyBeerCup1 szent söröspohár részletei a többi mezőben.
+owner: Student1
+room: None
+isActivated: true
+durability: 3
+isFake: false
+
+message: A megadott HolyBeerCup2 szent söröspohár részletei a többi mezőben.
+owner: None
+room: Room2
+isActivated: true
+durability: 3
+isFake: false

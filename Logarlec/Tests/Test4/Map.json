@@ -23,6 +23,30 @@
           "Janitors":[],
           "SlideRules":[],
           "TVSZs": [
+            {
+              "id" : "TVSZ1",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ2",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ3",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ4",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ5",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ6",
+              "durability" :1
+            }
           ],
           "FFP2Masks": [
           ],
@@ -36,28 +60,8 @@
           ],
           "Transistors": [],
           "doors": ["Door1"]
-        },
-        {
-          "id": "Room2",
-          "Instructors": [],
-          "Students" :[],
-          "Janitors":[],
-          "SlideRules":[],
-          "TVSZs": [
-          ],
-          "FFP2Masks": [
-          ],
-          "wetTableClothes": [
-          ],
-          "holyBeerCups": [
-          ],
-          "airFresheners": [
-          ],
-          "camemberts": [
-          ],
-          "Transistors": [],
-          "doors": ["Door2"]
         }
+       
       ]
   }
   

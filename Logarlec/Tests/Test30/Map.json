@@ -1,0 +1,59 @@
+{
+    "doors": [
+        ],
+    "rooms": [
+      {
+        "id": "Room1",
+     "poisonDuration": 3,
+     "isCursed": true,
+     "isSticky": true,
+        "Instructors": [
+],
+        "Students" :[
+        ],
+        "Janitors":[],
+        "SlideRules":[
+{
+            "id":"SlideRule1"
+          }],
+        "TVSZs": [
+{
+            "durability": 3,
+            "id":"TVSZ1"
+          }
+        ],
+        "FFP2Masks": [
+{
+            "durability": 5,
+            "id":"FFP2Mask1"
+          }
+        ],
+        "wetTableClothes": [
+{
+            "durability": 3,
+        "id":"WetTableCloth1"
+          }
+        ],
+        "holyBeerCups": [
+{
+            "durability": 3,
+                "id":"HolyBeerCup1"
+          }
+        ],
+        "airFresheners": [
+{
+                  "id":"AirFreshener1"
+          }
+        ],
+        "camemberts": [
+{
+            "id":"Camembert1"        	}
+        ],
+        "Transistors": [
+{
+            "id":"Transistor1"
+          }],
+        "doors": []
+      }
+    ]
+  }

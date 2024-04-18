@@ -1,0 +1,5 @@
+CreateGame true Map.json
+DescribeRoom Room1
+SeparateRoom Room1
+DescribeRoom Room1
+DescribeRoom Room2

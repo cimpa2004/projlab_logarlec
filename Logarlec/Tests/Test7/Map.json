@@ -14,10 +14,58 @@
       "rooms": [
         {
           "id": "Room1",
+          "Instructors": [{
+            "id" : "Instructor1"
+          }],
+          "Students" :[
+          ],
+          "Janitors":[],
+          "SlideRules":[
+            
+          ],
+          "TVSZs": [
+          ],
+          "FFP2Masks": [
+            {
+              "id": "FFP2Mask1",
+              "durability" :1
+            },
+            {
+              "id": "FFP2Mask2",
+              "durability" :1
+            },{
+              "id": "FFP2Mask3",
+              "durability" :1
+            },
+            {
+              "id": "FFP2Mask4",
+              "durability" :1
+            },{
+              "id": "FFP2Mask5",
+              "durability" :1
+            },
+            {
+              "id": "FFP2Mask6",
+              "durability" :1
+            }
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "Transistors": [],
+          "doors": ["Door1"]
+        },
+        {
+          "id": "Room2",
           "Instructors": [],
           "Students" :[
             {
-              "id" : "Student1"
+              "id" :"Student1"
             }
           ],
           "Janitors":[],
@@ -35,29 +83,9 @@
           "camemberts": [
           ],
           "Transistors": [],
-          "doors": ["Door1"]
-        },
-        {
-          "id": "Room2",
-          "Instructors": [],
-          "Students" :[],
-          "Janitors":[],
-          "SlideRules":[],
-          "TVSZs": [
-          ],
-          "FFP2Masks": [
-          ],
-          "wetTableClothes": [
-          ],
-          "holyBeerCups": [
-          ],
-          "airFresheners": [
-          ],
-          "camemberts": [
-          ],
-          "Transistors": [],
           "doors": ["Door2"]
         }
+       
       ]
   }
   

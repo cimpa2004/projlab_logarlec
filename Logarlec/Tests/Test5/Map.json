@@ -21,7 +21,12 @@
             }
           ],
           "Janitors":[],
-          "SlideRules":[],
+          "SlideRules":[
+            {
+              "id" : "SlideRule1",
+              "fake":true
+            }
+          ],
           "TVSZs": [
           ],
           "FFP2Masks": [
@@ -36,28 +41,8 @@
           ],
           "Transistors": [],
           "doors": ["Door1"]
-        },
-        {
-          "id": "Room2",
-          "Instructors": [],
-          "Students" :[],
-          "Janitors":[],
-          "SlideRules":[],
-          "TVSZs": [
-          ],
-          "FFP2Masks": [
-          ],
-          "wetTableClothes": [
-          ],
-          "holyBeerCups": [
-          ],
-          "airFresheners": [
-          ],
-          "camemberts": [
-          ],
-          "Transistors": [],
-          "doors": ["Door2"]
         }
+       
       ]
   }
   
