@@ -147,4 +147,14 @@ public class DoorSide {
 	public String GetId() {
 		return id;
 	}
+
+	/**
+	 *	Használható e az ajtó
+	 * @return igaz, ha az ajtón valóban át lehet menni
+	 */
+	public boolean IsDoorUseable(){
+		return (this.GetCanBeOpened() &&
+				this.GetIsVisible()&&
+				this.GetPair().GetRoom().GetMaxCapacity() > this.GetPair().GetRoom().GetCurrentCapacity());
+	}
 }

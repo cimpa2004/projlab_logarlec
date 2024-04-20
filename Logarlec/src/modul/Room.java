@@ -119,6 +119,12 @@ public class Room implements IRoom {
 		return isSticky;
 	}
 
+	public void SetIsSticky(boolean value){
+		this.isSticky = value;
+		if (!value)
+			this.numberOfPeopleBeenToRoom = 0;
+	}
+
 	public void SetIsDeterministic(boolean isDeterministic){
 		Logger.started(this, "SetIsDeterministic");
 		Logger.finished(this, "SetIsDeterministic");

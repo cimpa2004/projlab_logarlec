@@ -139,24 +139,20 @@ public class Instructor extends Person {
 
 		//Mozgató logika
 		Random random = new Random();
-		if (game.GetIsDeterministic()){
+		if (!game.GetIsDeterministic()){
 			List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
 			Collections.shuffle(doorsCopy);
 
 			for (DoorSide dr : doorsCopy){
 				if (random.nextBoolean())
-					if (dr.GetCanBeOpened() &&
-						dr.GetIsVisible()&&
-						dr.GetPair().GetRoom().GetMaxCapacity() > dr.GetPair().GetRoom().GetCurrentCapacity()){
+					if (dr.IsDoorUseable()){
 							this.Move(dr);//a keresett ajtón átmegy
 							break;
 						}
 			}
 		}else{ //determinisztikus mozgás az első lehetséges szomszéd
 			for (DoorSide dr : this.GetRoom().GetDoors()){
-				if (dr.GetCanBeOpened() &&
-						dr.GetIsVisible()&&
-						dr.GetPair().GetRoom().GetMaxCapacity() > dr.GetPair().GetRoom().GetCurrentCapacity()){
+				if (dr.IsDoorUseable()){
 					this.Move(dr);//a keresett ajtón átmegy
 					break;
 					}
@@ -180,16 +176,28 @@ public class Instructor extends Person {
 		Logger.finished(this, "EndTurn");
 	}
 
+	/**
+	 * Elájult e?
+	 * @return isFainted értéke
+	 */
 	@Override
 	public boolean GetIsFainted() {
 		return isFainted;
 	}
 
+	/**
+	 * Bénítva van e?
+	 * @return stunDuracion >? 0
+	 */
 	@Override
 	public boolean GetIsStunned() {
 		return stunDuration > 0;
 	}
 
+	/**
+	 * Aktiv e a köre?
+	 * @return activeTurn értéke
+	 */
 	@Override
 	public boolean GetIsActiveTurn() {
 		return activeTurn;
