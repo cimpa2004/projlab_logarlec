@@ -158,6 +158,10 @@ public class Game {
 		Logger.finished(this, "RemoveRoom", r);
 	}
 
+	public boolean GetIsDeterministic(){
+		return isGameDeterministic;
+	}
+
 	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
 	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
 }

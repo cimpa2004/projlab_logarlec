@@ -1,10 +1,9 @@
 package modul;
-
+import controller.Game;
 import util.Logger;
 import util.Reader;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Az Instructor class valósítja meg a játékban az oktatókat.
@@ -15,6 +14,11 @@ public class Instructor extends Person {
 	 * Ez a változó tárolja az oktató bénulásának idejét.
 	 * */
 	private int stunDuration;
+
+	/**
+	 * Tárolja a játékot, a teszteléshez van rá szükség
+	 */
+	private Game game;
 
 	public Instructor(String id) {
 		super(id);
@@ -44,8 +48,13 @@ public class Instructor extends Person {
 			for(Student student : students) {
 				StealSoul(student);
 			}
+			//Megnezi hogy a szoba gázos e, ez alapján felébred vagy elájul
+			if (room.GetPoisonDuration() > 0){
+				this.SetIsFainted(true);
+			}else if (room.GetPoisonDuration()<=0 && !GetIsFainted()){
+				this.SetIsFainted(false);
+			}
 
-			//TODO: ájuljon el ha gázos a szoba
 			
 		}
 		Logger.finished(this, "AppearInRoom", r);
@@ -91,6 +100,7 @@ public class Instructor extends Person {
 	/**
 	 * Ezt a függvényt hívja meg a Game az Oktatón, amikor jelzi neki, hogy a köre megkeződik. Az activeTurn true értékre változik.
 	 */
+	@Override
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
 		activeTurn = true;
@@ -119,8 +129,41 @@ public class Instructor extends Person {
 			StealSoul(student);
 		}
 
+		//Mozgató logika
+		Random random = new Random();
+		if (game.GetIsDeterministic()){
+			List<Room> neighborsCopy = new ArrayList<>(this.room.GetNeighbors());
+			Collections.shuffle(neighborsCopy);
+
+			outerLoop:
+			for (Room r : neighborsCopy){
+				if (random.nextBoolean()){
+					for (DoorSide dr : r.GetDoors()){
+						if (this.GetRoom().GetDoors().contains(dr.GetPair()) &&
+								dr.GetPair().GetCanBeOpened() &&
+								dr.GetRoom().GetMaxCapacity() > dr.GetRoom().GetCurrentCapacity()){
+							this.Move(dr.GetPair());//a keresett ajtó ami össze köti a megfelelő szobával
+							break outerLoop;
+						}
+					}
+				}
+			}
+		}else{
+			outerLoop:
+			for (Room r: this.room.GetNeighbors()){
+				for (DoorSide dr: r.GetDoors()){
+					if(this.GetRoom().GetDoors().contains(dr.GetPair()) &&
+							dr.GetPair().GetCanBeOpened() &&
+							dr.GetRoom().GetMaxCapacity() > dr.GetRoom().GetCurrentCapacity()){
+						this.Move(dr.GetPair()); //keresett ajtó
+						break outerLoop;
+					}
+				}
+			}
+		}
 		// TODO imlementálni az Instructor cselekedeteit: mozgás
-		// TODO: kör végén explicit meg kell hivni and EndTurn()
+
+		EndTurn();
 		Logger.finished(this, "StartTurn");
 	}
 

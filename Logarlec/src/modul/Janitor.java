@@ -1,8 +1,13 @@
 package modul;
 
+import controller.Game;
+
 import java.util.UUID;
 
+
+//TODO: The whole class
 public class Janitor extends Person{
+    private Game game;
     public Janitor(String id) {
         super(id);
     }
@@ -10,6 +15,7 @@ public class Janitor extends Person{
     public Janitor() {
         super(UUID.randomUUID().toString());
     }
+
 
     @Override
     public void AppearInRoom(Room r) {
