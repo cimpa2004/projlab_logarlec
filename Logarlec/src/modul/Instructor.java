@@ -42,7 +42,6 @@ public class Instructor extends Person {
 			room = r; // atlepes a masik szobaba
 			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
 			room.AddInstructor(this);
-
 			
 			ArrayList<Student> students = room.GetStudents();
 			for(Student student : students) {
@@ -54,8 +53,14 @@ public class Instructor extends Person {
 			}else if (room.GetPoisonDuration()<=0 && !GetIsFainted()){
 				this.SetIsFainted(false);
 			}
-
-			
+			//tárgyfelvétel
+			if (this.inventory.size() <5){
+				if(!this.GetRoom().GetIsSticky())
+					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size()));
+			}
+			//mask aktiválása, minimális
+			for (Defendable m: this.GetFFP2Masks())
+				((FFP2Mask) m).Activate();
 		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
@@ -102,6 +107,9 @@ public class Instructor extends Person {
 	 */
 	@Override
 	public void StartTurn() {
+		if (isFainted || stunDuration > 0)
+			this.EndTurn();
+
 		Logger.started(this, "StartTurn");
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
@@ -132,36 +140,28 @@ public class Instructor extends Person {
 		//Mozgató logika
 		Random random = new Random();
 		if (game.GetIsDeterministic()){
-			List<Room> neighborsCopy = new ArrayList<>(this.room.GetNeighbors());
-			Collections.shuffle(neighborsCopy);
+			List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
+			Collections.shuffle(doorsCopy);
 
-			outerLoop:
-			for (Room r : neighborsCopy){
-				if (random.nextBoolean()){
-					for (DoorSide dr : r.GetDoors()){
-						if (this.GetRoom().GetDoors().contains(dr.GetPair()) &&
-								dr.GetPair().GetCanBeOpened() &&
-								dr.GetRoom().GetMaxCapacity() > dr.GetRoom().GetCurrentCapacity()){
-							this.Move(dr.GetPair());//a keresett ajtó ami össze köti a megfelelő szobával
-							break outerLoop;
+			for (DoorSide dr : doorsCopy){
+				if (random.nextBoolean())
+					if (dr.GetCanBeOpened() &&
+						dr.GetIsVisible()&&
+						dr.GetPair().GetRoom().GetMaxCapacity() > dr.GetPair().GetRoom().GetCurrentCapacity()){
+							this.Move(dr);//a keresett ajtón átmegy
+							break;
 						}
-					}
-				}
 			}
-		}else{
-			outerLoop:
-			for (Room r: this.room.GetNeighbors()){
-				for (DoorSide dr: r.GetDoors()){
-					if(this.GetRoom().GetDoors().contains(dr.GetPair()) &&
-							dr.GetPair().GetCanBeOpened() &&
-							dr.GetRoom().GetMaxCapacity() > dr.GetRoom().GetCurrentCapacity()){
-						this.Move(dr.GetPair()); //keresett ajtó
-						break outerLoop;
+		}else{ //determinisztikus mozgás az első lehetséges szomszéd
+			for (DoorSide dr : this.GetRoom().GetDoors()){
+				if (dr.GetCanBeOpened() &&
+						dr.GetIsVisible()&&
+						dr.GetPair().GetRoom().GetMaxCapacity() > dr.GetPair().GetRoom().GetCurrentCapacity()){
+					this.Move(dr);//a keresett ajtón átmegy
+					break;
 					}
-				}
 			}
 		}
-		// TODO imlementálni az Instructor cselekedeteit: mozgás
 
 		EndTurn();
 		Logger.finished(this, "StartTurn");
@@ -172,9 +172,11 @@ public class Instructor extends Person {
 	 */
 	public void EndTurn() {
 		Logger.started(this, "EndTurn");
-		// existing code
-		// TODO stunDuration csökkentése
-		// TODO: kör végén NextTurnt meghivni a gamen: game.NextTurn()
+		if (this.stunDuration > 0)
+			stunDuration--;
+		this.activeTurn = false;
+
+		game.NextTurn();
 		Logger.finished(this, "EndTurn");
 	}
 
@@ -231,13 +233,8 @@ public class Instructor extends Person {
 	 */
 	@Override
 	public void Move(DoorSide d) {
+		//már tudjuk hogy be lehet lépni
 		Logger.started(this, "Move", d);
-		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
-		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
-		if(!canBeOpened || !isVisible){
-			Logger.finished(this, "Move", d);
-			return;
-		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		room.RemoveInstructor(this);
