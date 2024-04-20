@@ -1,10 +1,9 @@
 package modul;
-
+import controller.Game;
 import util.Logger;
 import util.Reader;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Az Instructor class valósítja meg a játékban az oktatókat.
@@ -15,6 +14,11 @@ public class Instructor extends Person {
 	 * Ez a változó tárolja az oktató bénulásának idejét.
 	 * */
 	private int stunDuration;
+
+	/**
+	 * Tárolja a játékot, a teszteléshez van rá szükség
+	 */
+	private Game game;
 
 	public Instructor(String id) {
 		super(id);
@@ -38,15 +42,25 @@ public class Instructor extends Person {
 			room = r; // atlepes a masik szobaba
 			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
 			room.AddInstructor(this);
-
 			
 			ArrayList<Student> students = room.GetStudents();
 			for(Student student : students) {
 				StealSoul(student);
 			}
-
-			//TODO: ájuljon el ha gázos a szoba
-			
+			//Megnezi hogy a szoba gázos e, ez alapján felébred vagy elájul
+			if (room.GetPoisonDuration() > 0){
+				this.SetIsFainted(true);
+			}else if (room.GetPoisonDuration()<=0 && !GetIsFainted()){
+				this.SetIsFainted(false);
+			}
+			//tárgyfelvétel
+			if (this.inventory.size() <5){
+				if(!this.GetRoom().GetIsSticky())
+					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size()));
+			}
+			//mask aktiválása, minimális
+			for (Defendable m: this.GetFFP2Masks())
+				((FFP2Mask) m).Activate();
 		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
@@ -91,7 +105,11 @@ public class Instructor extends Person {
 	/**
 	 * Ezt a függvényt hívja meg a Game az Oktatón, amikor jelzi neki, hogy a köre megkeződik. Az activeTurn true értékre változik.
 	 */
+	@Override
 	public void StartTurn() {
+		if (isFainted || stunDuration > 0)
+			this.EndTurn();
+
 		Logger.started(this, "StartTurn");
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
@@ -119,8 +137,33 @@ public class Instructor extends Person {
 			StealSoul(student);
 		}
 
-		// TODO imlementálni az Instructor cselekedeteit: mozgás
-		// TODO: kör végén explicit meg kell hivni and EndTurn()
+		//Mozgató logika
+		Random random = new Random();
+		if (game.GetIsDeterministic()){
+			List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
+			Collections.shuffle(doorsCopy);
+
+			for (DoorSide dr : doorsCopy){
+				if (random.nextBoolean())
+					if (dr.GetCanBeOpened() &&
+						dr.GetIsVisible()&&
+						dr.GetPair().GetRoom().GetMaxCapacity() > dr.GetPair().GetRoom().GetCurrentCapacity()){
+							this.Move(dr);//a keresett ajtón átmegy
+							break;
+						}
+			}
+		}else{ //determinisztikus mozgás az első lehetséges szomszéd
+			for (DoorSide dr : this.GetRoom().GetDoors()){
+				if (dr.GetCanBeOpened() &&
+						dr.GetIsVisible()&&
+						dr.GetPair().GetRoom().GetMaxCapacity() > dr.GetPair().GetRoom().GetCurrentCapacity()){
+					this.Move(dr);//a keresett ajtón átmegy
+					break;
+					}
+			}
+		}
+
+		EndTurn();
 		Logger.finished(this, "StartTurn");
 	}
 
@@ -129,9 +172,11 @@ public class Instructor extends Person {
 	 */
 	public void EndTurn() {
 		Logger.started(this, "EndTurn");
-		// existing code
-		// TODO stunDuration csökkentése
-		// TODO: kör végén NextTurnt meghivni a gamen: game.NextTurn()
+		if (this.stunDuration > 0)
+			stunDuration--;
+		this.activeTurn = false;
+
+		game.NextTurn();
 		Logger.finished(this, "EndTurn");
 	}
 
@@ -188,13 +233,8 @@ public class Instructor extends Person {
 	 */
 	@Override
 	public void Move(DoorSide d) {
+		//már tudjuk hogy be lehet lépni
 		Logger.started(this, "Move", d);
-		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
-		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
-		if(!canBeOpened || !isVisible){
-			Logger.finished(this, "Move", d);
-			return;
-		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		room.RemoveInstructor(this);
