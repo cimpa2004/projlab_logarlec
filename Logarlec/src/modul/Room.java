@@ -256,6 +256,15 @@ public class Room implements IRoom {
 	}
 
 	/**
+	 * Beallitva, hogy hány ember volt már a szobában az utolso takaritas ota
+	 * */
+	public void SetNumberOfPeopleBeenToRoom(int number) {
+		Logger.started(this, "NumberOfPeopleBeenToRoom");
+		numberOfPeopleBeenToRoom = number;
+		Logger.finished(this, "NumberOfPeopleBeenToRoom");
+	}
+
+	/**
 	 * Beállítja a szoba jelenlegi kapacitását, azaz hogy egyszerre legfeljebb hány személy lehet a szobában.
 	 * */
 	public void SetCurrentCapacity(int cc) {
