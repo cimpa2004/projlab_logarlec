@@ -91,6 +91,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 		return effectDuration;
 	}
 
+	@Override
+	public void SetDurability(int durability) {
+		this.effectDuration = durability;
+	}
+
 	/**
 	 * Ezen metódus meghívásakor a paraméterként megkapott
 	 * Student inventárjában elhelyezi magát a HolyBeerCup

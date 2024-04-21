@@ -93,6 +93,16 @@ public class Student extends Person {
 	}
 
 
+	/**
+	 * Ezt a függvény visszaadja, hogy a hallgató életben van-e
+	 */
+	public boolean GetIsAlive() {
+		Logger.started(this, "GetIsAlive");
+		Logger.finished(this, "GetIsAlive");
+		return isAlive;
+	}
+
+
 	/** 
 	 * A Student ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor a activeTurn értékre false-ra vált.
 	*/
