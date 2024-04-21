@@ -45,6 +45,8 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 		return false;
 	}
 
+
+
 	/**
 	 * Ezen metódus meghívásakor a WetTableCloth, amire ezt a függvényt meghívták,
 	 * aktivált állapotba kerül, azaz igazra állítódik az isActivated változója.
@@ -87,6 +89,11 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	@Override
 	public int GetDurability() {
 		return effectDuration;
+	}
+
+	@Override
+	public void SetDurability(int durability) {
+		this.effectDuration = durability;
 	}
 
 	/**

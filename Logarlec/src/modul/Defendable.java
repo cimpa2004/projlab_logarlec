@@ -13,4 +13,6 @@ public interface Defendable {
      */
     public int GetDurability();
 
+    public void SetDurability(int durability);
+
 }

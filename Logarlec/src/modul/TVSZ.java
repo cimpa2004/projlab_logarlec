@@ -65,6 +65,15 @@ public class TVSZ extends Item implements Defendable{
 		return usesLeft;
 	}
 
+	@Override
+	public void SetDurability(int durability) {
+		this.usesLeft = durability;
+	}
+
+	public void SetUsesLeft(int uses){
+		usesLeft = uses;
+	}
+
 	/**
 	 * Ezen metódus meghívásakor a paraméterként megkapott
 	 * Student inventárjában elhelyezi magát a TVSZ

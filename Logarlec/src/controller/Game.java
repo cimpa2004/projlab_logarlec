@@ -1,9 +1,6 @@
 package controller;
 
-import modul.IPerson;
-import modul.IRoom;
-import modul.Person;
-import modul.Room;
+import modul.*;
 import util.Logger;
 import util.Reader;
 
@@ -22,11 +19,6 @@ public class Game {
 	 * */
 	private int gameTimer;
 
-	/**
-	 * Tárolja, hogy a játék determinisztikus legyen-e
-	 */
-	private boolean isGameDeterministic;
-	
 	/**
 	 * Tárolja, hogy a játék végetért-e.
 	 * */
@@ -114,15 +106,15 @@ public class Game {
 				Room room = new Room();
 				room.SetPoisonDuration(r.getInt("poisonDuration"));
 				room.SetIsCursed(r.getBoolean("isCursed"));
-				//room.SetIsSticky(r.getBoolean("isSticky"));
-				//room.SetPeopleBeenToRoom(r.getInt("numberOfPeopleToRoom"));
+				room.SetIsSticky(r.getBoolean("isSticky"));
+				room.SetNumberOfPeopleBeenToRoom(r.getInt("numberOfPeopleToRoom"));
 				room.SetMaxCapacity(r.getInt("maxCap"));
 				room.SetCurrentCapacity(r.getInt("currentCap"));
 
 				//Students
 				JSONArray students = r.getJSONArray("Students");
 				for (int j = 0; j < students.length(); j++) {
-					Student st = new Student();
+					Student st = new Student(this);
 					st.SetRoom(room);
 					room.AddStudent(st);
 				}
@@ -136,12 +128,12 @@ public class Game {
 				}
 
 				//Janitors
-				/*JSONArray janitors = r.getJSONArray("Janitors");
+				JSONArray janitors = r.getJSONArray("Janitors");
 				for(int j = 0; j < janitors.length(); j++) {
 					Janitor jan = new Janitor();
 					jan.SetRoom(room);
 					room.AddJanitor(jan);
-				}*/
+				}
 
 				//Items
 
@@ -150,7 +142,7 @@ public class Game {
 				for (int j = 0; j < slideRules.length(); j++) {
 					SlideRule sl = new SlideRule();
 					sl.SetRoom(room);
-					//sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
+					sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
 					room.AddItem(sl);
 				}
 
@@ -159,8 +151,8 @@ public class Game {
 				for (int j = 0; j < tvszs.length(); j++) {
 					TVSZ t = new TVSZ();
 					t.SetRoom(room);
-					//t.SetUsesLeft(tvszs.getJSONObject(j).getBoolean("durability"));
-					//t.SetIsFake(tvszs.getJSONObject(j).getBoolean("fake"));
+					t.SetUsesLeft(tvszs.getJSONObject(j).getInt("durability"));
+					t.SetIsFake(tvszs.getJSONObject(j).getBoolean("fake"));
 					room.AddItem(t);
 				}
 
@@ -169,8 +161,8 @@ public class Game {
 				for (int j = 0; j < ffp2masks.length(); j++) {
 					FFP2Mask fp = new FFP2Mask();
 					fp.SetRoom(room);
-					//fp.SetDurability(ffp2masks.getJSONObject(j).getBoolean("durability"));
-					//fp.SetIsFake(ffp2masks.getJSONObject(j).getBoolean("fake"));
+					fp.SetDurability(ffp2masks.getJSONObject(j).getInt("durability"));
+					fp.SetIsFake(ffp2masks.getJSONObject(j).getBoolean("fake"));
 					room.AddItem(fp);
 				}
 
@@ -179,7 +171,7 @@ public class Game {
 				for (int j = 0; j < wetTableClothes.length(); j++) {
 					WetTableCloth wt = new WetTableCloth();
 					wt.SetRoom(room);
-					//wt.SetDurability(wetTableClothes.getJSONObject(j).getBoolean("durability"));
+					wt.SetDurability(wetTableClothes.getJSONObject(j).getInt("durability"));
 					room.AddItem(wt);
 				}
 
@@ -188,25 +180,25 @@ public class Game {
 				for (int j = 0; j < holyBeerCups.length(); j++) {
 					HolyBeerCup hb = new HolyBeerCup();
 					hb.SetRoom(room);
-					//hb.SetDurability(holyBeerCups.getJSONObject(j).getBoolean("durability"));
+					hb.SetDurability(holyBeerCups.getJSONObject(j).getInt("durability"));
 					room.AddItem(hb);
 				}
 
 				//AirFresheners
-				/*JSONArray airFresheners = r.getJSONArray("airFresheners");
+				JSONArray airFresheners = r.getJSONArray("airFresheners");
 				for(int j = 0; j < airFresheners.length(); j++) {
 					AirFreshener af = new AirFreshener();
 					af.SetRoom(room);
-					af.SetIsActivated(airFresheners.getJSONObject(j).getBoolean("isActivated"));
+					if (airFresheners.getJSONObject(j).getBoolean("isActivated")) af.Activate();
 					room.AddItem(af);
-				}*/
+				}
 
 				//Camemberts
 				JSONArray camemberts = r.getJSONArray("camemberts");
 				for (int j = 0; j < camemberts.length(); j++) {
 					Camembert cb = new Camembert();
 					cb.SetRoom(room);
-					//cb.SetIsActivated(camemberts.getJSONObject(j).getBoolean("isActivated"));
+					if (camemberts.getJSONObject(j).getBoolean("isActivated")) cb.Activate();
 					room.AddItem(cb);
 				}
 
@@ -249,10 +241,8 @@ public class Game {
 	 * Átlépteti a játékot a következő körre.
 	 * */
 	public void NextTurn() {
-
 		Logger.started(this, "NextTurn");
 
-		currentTurn.EndTurn();
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
@@ -287,7 +277,7 @@ public class Game {
 		if (!toReturn)
 			this.EndGame(false);*/
 		boolean anyStudentAlive = false;
-		for(Room room : rooms) {
+		for(IRoom room : rooms) {
 			for(Student student : room.GetStudents()){
 				if(student.GetIsAlive()) {
 					anyStudentAlive = true;
