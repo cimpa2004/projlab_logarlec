@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class UseTransistor {
@@ -10,11 +11,13 @@ public class UseTransistor {
     private static Room r2;
     private static DoorSide d1;
     private static DoorSide d2;
+    private static Game game;
 
     private static void initTest(){
+        game = new Game();
         t1 = new Transistor();
         t2 = new Transistor();
-        s = new Student();
+        s = new Student(game);
         r1 = new Room();
         r2 = new Room();
         d1 = new DoorSide();

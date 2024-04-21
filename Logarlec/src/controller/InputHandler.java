@@ -1,11 +1,10 @@
 package controller;
 
-import modul.Room;
+import modul.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.security.InvalidParameterException;
+import java.util.*;
 import java.util.function.BiFunction;
-
 
 
 /**
@@ -19,7 +18,7 @@ public class InputHandler {
      * egy Stringek listáját amik a parancs paraméterei, illetve egy Gamet varnak bemenetkent amelyen a parancs végrehajtódik
      * és visszatérnek egy String-el ami a parancs kimenete.
      */
-    private Map<String, BiFunction<String[], Game, String>> commandMap;
+    final private Map<String, BiFunction<ArrayList<String>, Game, String>> commandMap;
 
     public InputHandler() {
         commandMap = new HashMap<>();
@@ -51,17 +50,19 @@ public class InputHandler {
      * @param game A játék amin a parancs végrehajtódik
      * @return Vissza adja a parancs kimenetet
      */
-    public String handleCommand(String input, Game game) {
+    public String handleCommand(String input, Game game) throws InvalidParameterException {
         String[] parts = input.split(" ");
         String command = parts[0];
         String[] parameters = new String[parts.length - 1];
         System.arraycopy(parts, 1, parameters, 0, parameters.length);
+        ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
 
-        BiFunction<String[], Game, String> commandFunction = commandMap.get(command);
+        BiFunction<ArrayList<String>, Game, String> commandFunction = commandMap.get(command);
         if (commandFunction != null) {
-            return commandFunction.apply(parameters, game);
+            if (!command.equals("CreateGame") && game == null) throw new InvalidParameterException("Game parameter for was not initialized. First call CreateGame.");
+            return commandFunction.apply(parameterList, game);
         } else {
-            return "A megadott parancs nem talalhato meg a definialt parancsok kozott!";
+            throw new InvalidParameterException("Given command is not defined: " + command);
         }
     }
 
@@ -76,7 +77,7 @@ public class InputHandler {
      * @param game A jatek parameter amit inicializal
      * @return Vissza adja a parancs kimenetet
      */
-    public String createGame(String[] parameters, Game game) {
+    public String createGame(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -88,8 +89,13 @@ public class InputHandler {
      * @param game A jatek amit elindit
      * @return Vissza adja a parancs kimenetet
      */
-    public String startGame(String[] parameters, Game game) {
-        return "";
+    public String startGame(ArrayList<String> parameters, Game game) throws InvalidParameterException {
+        StringBuilder str = new StringBuilder();
+        game.StartGame();
+        str.append("message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.");
+        IPerson currentTurn = game.GetCurrentTurn(); // ez nem kene h null lehessen, jatekosok nelkul nincs ertelme elinditani a jatekot
+        str.append("\ncurrentTurn: ").append(currentTurn.GetId());
+        return str.toString();
     }
 
     /**
@@ -100,8 +106,112 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeGame(String[] parameters, Game game) {
-        return "";
+    public String describeGame(ArrayList<String> parameters, Game game) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játék jelenlegi állapotai a többi mezőben.");
+
+        // gameTimer
+        str.append("\ngameTimer: ").append(game.GetGameTimer());
+
+        // isEndGame, winSide
+        boolean isGameEnded = game.GetIsEndGame();
+        str.append("\nisEndGame: ").append(isGameEnded);
+        if (isGameEnded){
+            str.append("\nwinSide: ").append(game.GetWinSide());
+        }
+
+        // currentTurn
+        str.append("\ncurrentTurn: ").append(game.GetCurrentTurn().GetId());
+
+        // turnOrder
+        ArrayList<IPerson> turnOrder = game.GetTurnOrder();
+        turnOrder.sort(Comparator.comparing(IPerson::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nturnOrder: [");
+        for (IPerson person : turnOrder){
+            str.append(person.GetId());
+            if(person != turnOrder.get(turnOrder.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // rooms
+        ArrayList<IRoom> rooms = game.GetRooms();
+        rooms.sort(Comparator.comparing(IRoom::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nrooms: [");
+        for (IRoom room : rooms){
+            str.append(room.GetId());
+            if(room != rooms.get(rooms.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // doors
+        ArrayList<DoorSide> allDoors = new ArrayList<>();
+        for (IRoom room : rooms){
+            allDoors.addAll(room.GetDoors());
+        }
+        allDoors.sort(Comparator.comparing(DoorSide::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\ndoors: [");
+        for (DoorSide door : allDoors){
+            str.append(door.GetId());
+            if(door != allDoors.get(allDoors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // items (ennek egyenlonek kene lennie (itemsFromPersons + itemsFromRooms)-val es 2 diszjunkt halmaz)
+        ArrayList<Item> allItems = new ArrayList<>();
+        //     items from persons
+        ArrayList<IPerson> allPerson = game.GetTurnOrder();
+        for (IPerson person : allPerson){
+            allItems.addAll(person.GetInventory());
+        }
+        //     items from rooms
+        ArrayList<IRoom> allRooms = game.GetRooms();
+        for (IRoom room : allRooms){
+            allItems.addAll(room.GetItems());
+        }
+        allItems.sort(Comparator.comparing(Item::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nitems: [");
+        for (Item item : allItems){
+            str.append(item.GetId());
+            if(item != allItems.get(allItems.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // students / instructors / janitors
+        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Instructor> instructors = new ArrayList<>();
+        ArrayList<Janitor> janitors = new ArrayList<>();
+        for (IRoom room : rooms){
+            students.addAll(room.GetStudents());
+            instructors.addAll(room.GetInstructors());
+            janitors.addAll(room.GetJanitors());
+        }
+        //     students
+        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nstudents: [");
+        for (Student student : students){
+            str.append(student.GetId());
+            if(student != students.get(students.size()-1)) str.append(", ");
+        }
+        str.append("]");
+        //     instructors
+        instructors.sort(Comparator.comparing(Instructor::GetId));
+        str.append("\ninstructors: [");
+        for (Instructor instructor : instructors){
+            str.append(instructor.GetId());
+            if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+        //     janitor
+        janitors.sort(Comparator.comparing(Janitor::GetId));
+        str.append("\njanitors: [");
+        for (Janitor janitor : janitors){
+            str.append(janitor.GetId());
+            if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+
+        return str.toString();
     }
 
     /**
@@ -112,8 +222,26 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String listStudents(String[] parameters, Game game) {
-        return "";
+    public String listStudents(ArrayList<String> parameters, Game game) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játékban résztvevő hallgatók a többi mezőben.");
+
+        ArrayList<IRoom> rooms = game.GetRooms();
+        // students
+        ArrayList<Student> students = new ArrayList<>();
+        for (IRoom room : rooms){
+            students.addAll(room.GetStudents());
+        }
+
+        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nstudents: [");
+        for (Student student : students){
+            str.append(student.GetId());
+            if(student != students.get(students.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        return str.toString();
     }
 
     /**
@@ -124,8 +252,30 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String listInstructors(String[] parameters, Game game) {
-        return "";
+    public String listInstructors(ArrayList<String> parameters, Game game) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játékban résztvevő oktatók a többi mezőben.");
+
+        ArrayList<IRoom> rooms = game.GetRooms();
+        // instructors
+        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Instructor> instructors = new ArrayList<>();
+        ArrayList<Janitor> janitors = new ArrayList<>();
+        for (IRoom room : rooms){
+            students.addAll(room.GetStudents());
+            instructors.addAll(room.GetInstructors());
+            janitors.addAll(room.GetJanitors());
+        }
+
+        instructors.sort(Comparator.comparing(Instructor::GetId));
+        str.append("\ninstructors: [");
+        for (Instructor instructor : instructors){
+            str.append(instructor.GetId());
+            if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        return str.toString();
     }
 
     /**
@@ -136,8 +286,26 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String listJanitors(String[] parameters, Game game) {
-        return "";
+    public String listJanitors(ArrayList<String> parameters, Game game) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játékban résztvevő oktatók a többi mezőben.");
+
+        ArrayList<IRoom> rooms = game.GetRooms();
+        // janitors
+        ArrayList<Janitor> janitors = new ArrayList<>();
+        for (IRoom room : rooms){
+            janitors.addAll(room.GetJanitors());
+        }
+
+        janitors.sort(Comparator.comparing(Janitor::GetId));
+        str.append("\njanitors: [");
+        for (Janitor janitor : janitors){
+            str.append(janitor.GetId());
+            if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        return str.toString();
     }
 
     /**
@@ -149,8 +317,33 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeRoom(String[] parameters, Game game) {
-        return "";
+    public String describeRoom(ArrayList<String> parameters, Game game) {
+        StringBuilder str = new StringBuilder();
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            throw new InvalidParameterException("DescribeRoom: no parameter was given or it was empty.");
+        }
+        // TODO
+        String roomId = parameters.get(0);
+        IRoom paramRoom;
+        ArrayList<IRoom> rooms = game.GetRooms();
+        for (IRoom room : rooms){
+            if (room.GetId().equals(roomId)){
+                paramRoom = room;
+            }
+        }
+
+
+        str.append("\nrooms: [");
+        for (IRoom room : rooms){
+            str.append(room.GetId());
+            if(room != rooms.get(rooms.size()-1)) str.append(", ");
+        }
+        str.append("message: A megadott ").append("szoba részletei a többi mezőben.");
+
+
+
+
+        return str.toString();
     }
 
     /**
@@ -163,7 +356,7 @@ public class InputHandler {
      * @return Vissza adja a parancs kimenetet
      *
      */
-    public String describePerson(String[] parameters, Game game) {
+    public String describePerson(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -175,7 +368,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeItem(String[] parameters, Game game) {
+    public String describeItem(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -187,7 +380,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeDoor(String[] parameters, Game game) {
+    public String describeDoor(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -199,7 +392,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String pickup(String[] parameters, Game game) {
+    public String pickup(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -211,7 +404,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String throwItem(String[] parameters, Game game) {
+    public String throwItem(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -223,7 +416,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String move(String[] parameters, Game game) {
+    public String move(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -235,7 +428,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String useItem(String[] parameters, Game game) {
+    public String useItem(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -247,7 +440,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String connectTransistors(String[] parameters, Game game) {
+    public String connectTransistors(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -259,7 +452,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String endTurn(String[] parameters, Game game) {
+    public String endTurn(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -271,7 +464,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String setCursed(String[] parameters, Game game) {
+    public String setCursed(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -283,7 +476,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String mergeRooms(String[] parameters, Game game) {
+    public String mergeRooms(ArrayList<String> parameters, Game game) {
         return "";
     }
 
@@ -295,7 +488,7 @@ public class InputHandler {
      * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String separateRoom(String[] parameters, Game game) {
+    public String separateRoom(ArrayList<String> parameters, Game game) {
         return "";
     }
 }

@@ -249,7 +249,7 @@ public class Room implements IRoom {
 	/**
 	 * Visszaadja, hogy hány ember volt már a szobában az utolso takaritas ota
 	 * */
-	public int NumberOfPeopleBeenToRoom() {
+	public int GetNumberOfPeopleBeenToRoom() {
 		Logger.started(this, "NumberOfPeopleBeenToRoom");
 		Logger.finished(this, "NumberOfPeopleBeenToRoom");
 		return numberOfPeopleBeenToRoom;

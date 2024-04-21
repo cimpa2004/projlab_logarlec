@@ -14,7 +14,7 @@ public class StudentSavedByHolyBeerCup {
     private static Instructor i;
 
     private static void Init(){
-        st = new Student();
+        st = new Student(g);
         hbc = new HolyBeerCup();
         d1 = new DoorSide();
         d2 = new DoorSide();

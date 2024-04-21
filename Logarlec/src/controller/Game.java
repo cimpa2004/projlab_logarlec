@@ -7,6 +7,7 @@ import modul.Room;
 import util.Logger;
 import util.Reader;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,11 @@ public class Game {
 	 * Tárolja a hátralévő körök számát.
 	 * */
 	private int gameTimer;
+
+	/**
+	 * Tarolja, hogy milyen szintu legyen a logolas. Jelenleg ket szint van: 0 ha nincs, 1 ha van logolas
+	 */
+	private int logLevel;
 
 	/**
 	 * Tárolja, hogy a játék determinisztikus legyen-e
@@ -45,7 +51,20 @@ public class Game {
 	/**
 	 * Itt vannak eltárolva a játékban található szobák.
 	 * */
-	private List<IRoom> rooms = new ArrayList<>();
+	private ArrayList<IRoom> rooms = new ArrayList<>();
+
+
+	public Game(){
+		isGameDeterministic = false;
+		this.logLevel = 1;
+		Logger.setLogLevel(this.logLevel);
+
+	}
+	public Game(boolean isGameDeterministic, int logLevel){
+		this.isGameDeterministic = isGameDeterministic;
+		this.logLevel = logLevel;
+		Logger.setLogLevel(this.logLevel);
+	}
 
 	/**
 	 * Vissza adja az IPerson listat ami tartalmazza a jatekban levo szemelyeket
@@ -55,11 +74,44 @@ public class Game {
 		return turnOrder;
 	}
 
-	public Game(){
-		isGameDeterministic = false;
+	/**
+	 * Vissza adja azt IPersont akinek eppen a kore van
+	 * @return A jelenleg aktiv korrel rendelkezo IPerson
+	 */
+	public IPerson GetCurrentTurn() {
+		return currentTurn;
 	}
-	public Game(boolean isGameDeterministic){
-		this.isGameDeterministic = isGameDeterministic;
+
+	/**
+	 * Vissza tudja adni a jatek idozitojet, vagyis hany kor van meg hatra a jatekbol
+	 * @return Ahany kor meg hatra van a jatekbol
+	 */
+	public int GetGameTimer(){
+		return gameTimer;
+	}
+
+	/**
+	 * Vissza tudja adni, hogy a jatek veget ert e mar
+	 * @return Ertek ami jelzi, hogy vege van-e mar a jateknak
+	 */
+	public boolean GetIsEndGame(){
+		return isEndGame;
+	}
+
+	/**
+	 * Ha vege van a jateknak, akkor ez vissza tudja adni azt, hogy ki nyert
+	 * @return Ertek ami jelzi, hogy ki nyert, ha true akkor a hallgatok, egyebkent az oktatok
+	 */
+	public boolean GetWinSide(){
+		return winSide;
+	}
+
+	/**
+	 * Vissz adja a jatekokat tartalmazo szobakat
+	 * @return Egy List<IRoom> ami tartalmazza a jatekban levo szobakat
+	 */
+	public ArrayList<IRoom> GetRooms(){
+		return rooms;
 	}
 
 	/**
@@ -89,15 +141,18 @@ public class Game {
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
 		// TODO csak akkor menjen ha még tart a játék (vége)
-		boolean anyStudentsAlive = AnyStudentsAlive();
-		if(!anyStudentsAlive){
-			EndGame(false);
-		}
 		int currentIndex = turnOrder.indexOf(currentTurn);
 		currentIndex++;
 		if(currentIndex >= turnOrder.size()){
 			currentIndex = 0;
+			gameTimer = gameTimer - 1; // mert ekkor mindenki lepett
 		}
+
+		boolean anyStudentsAlive = AnyStudentsAlive();
+		if(!anyStudentsAlive || gameTimer == 0){
+			EndGame(false);
+		}
+
 		currentTurn = turnOrder.get(currentIndex);
 		currentTurn.StartTurn();
 
