@@ -16,10 +16,12 @@ public class Student extends Person {
 	public Student(String id, Game g){
 		super(id);
 		this.game = g;
+		this.isAlive = true;
 	}
 	public Student(Game g){
 		super(UUID.randomUUID().toString());
 		this.game = g;
+		this.isAlive = true;
 	}
 
 	/** 
@@ -101,12 +103,12 @@ public class Student extends Person {
 	/**
 	 * Ezt a függvény visszaadja, hogy a hallgató életben van-e
 	 */
+	@Override
 	public boolean GetIsAlive() {
 		Logger.started(this, "GetIsAlive");
 		Logger.finished(this, "GetIsAlive");
 		return isAlive;
 	}
-
 
 	/** 
 	 * A Student ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor a activeTurn értékre false-ra vált.
@@ -147,10 +149,6 @@ public class Student extends Person {
 		return activeTurn;
 	}
 
-	@Override
-	public boolean GetIsAlive() {
-		return isAlive;
-	}
 
 	/** 
 	 * Ennek a függvény hatására a hallgató meghalhat. Innentől kezdve az isAlive változója false lesz amennyiben meghal. 

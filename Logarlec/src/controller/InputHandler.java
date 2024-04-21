@@ -1,10 +1,16 @@
 package controller;
 
 import modul.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 
 /**
@@ -47,24 +53,31 @@ public class InputHandler {
      * Az inputként megadott parancsot végrehajta a megadott játékon. Ha parancs játék létrehozása, akkor a paraméterként
      * megadott játékot hozza létre.
      * @param input A bemenet ami egy parancs megfelelő paraméterekkel, ha van
-     * @param game A játék amin a parancs végrehajtódik
+     * @param gameSupplier A játék amin a parancs végrehajtódik
      * @return Vissza adja a parancs kimenetet
      */
-    public String handleCommand(String input, Game game) throws InvalidParameterException {
-        String[] parts = input.split(" ");
-        String command = parts[0];
-        String[] parameters = new String[parts.length - 1];
-        System.arraycopy(parts, 1, parameters, 0, parameters.length);
-        ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
+    public String handleCommand(String input, Supplier<Game> gameSupplier) throws InvalidParameterException {
+    String[] parts = input.split(" ");
+    String command = parts[0];
+    String[] parameters = new String[parts.length - 1];
+    System.arraycopy(parts, 1, parameters, 0, parameters.length);
+    ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
 
-        BiFunction<ArrayList<String>, Game, String> commandFunction = commandMap.get(command);
-        if (commandFunction != null) {
-            if (!command.equals("CreateGame") && game == null) throw new InvalidParameterException("Game parameter for was not initialized. First call CreateGame.");
-            return commandFunction.apply(parameterList, game);
-        } else {
-            throw new InvalidParameterException("Given command is not defined: " + command);
+    BiFunction<ArrayList<String>, Game, String> commandFunction = commandMap.get(command);
+    Game game = gameSupplier.get() ;
+    if (commandFunction != null) {
+        // Check if game is null, and if so, use the supplier to get a new Game object
+        if (!command.equals("CreateGame") && game == null) {
+             game = gameSupplier.get();
+            if (game == null) {
+                throw new InvalidParameterException("Game parameter was not initialized. First call CreateGame.");
+            }
         }
+        return commandFunction.apply(parameterList, game);
+    } else {
+        throw new InvalidParameterException("Given command is not defined: " + command);
     }
+}
 
     /** Ez a metodus inicializalja a parameterkent megadott jatekot. Beallithato hogy a jatek determinisztikus legyen,
      * illetve megadhato egy elore definialt jatekterkep. Amennyiben nincs megadva jatekterkep akkor egy alap terkepet
@@ -78,7 +91,192 @@ public class InputHandler {
      * @return Vissza adja a parancs kimenetet
      */
     public String createGame(ArrayList<String> parameters, Game game) {
-        return "";
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            throw new InvalidParameterException("Pickup: not enough parameter was given or one of them was empty.");
+        }
+
+        boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
+        String mapPath = parameters.get(1);
+        game = new Game(isDeterministic, 0); // by default logLevel 0 tehat nincs logolas
+
+        try {
+            String contents = new String(Files.readAllBytes(Paths.get(mapPath)));
+            JSONObject gameJson = new JSONObject(contents);
+
+            //Setup doors
+            ArrayList<DoorSide> doorsList = new ArrayList<DoorSide>();
+            ArrayList<String> doorSideIDs = new ArrayList<String>();
+            if (gameJson.has("doors")) {
+                JSONArray doors = gameJson.getJSONArray("doors");
+                for (int i = 0; i < doors.length(); i++) {
+                    JSONObject d = doors.getJSONObject(i);
+                    DoorSide door = new DoorSide(d.getString("id"));
+                    door.SetCanBeOpened(d.getBoolean("canBeOpened"));
+                    doorsList.add(door);
+                    doorSideIDs.add(d.getString("id"));
+                }
+
+                //Set doorside pairs
+                for (int i = 0; i < doorsList.size(); i++) {
+                    doorsList.get(i).SetPair(doorsList.get(doorSideIDs.indexOf(doors.getJSONObject(i).getString("pair"))));
+                }
+            }
+
+            //Setup rooms
+            if (gameJson.has("rooms")) {
+                JSONArray rooms = gameJson.getJSONArray("rooms");
+                for (int i = 0; i < rooms.length(); i++) {
+                    JSONObject r = rooms.getJSONObject(i);
+                    Room room = new Room(r.getString("id"));
+                    if (r.has("poisonDuration")) room.SetPoisonDuration(r.getInt("poisonDuration"));
+                    if (r.has("isCursed")) room.SetIsCursed(r.getBoolean("isCursed"));
+                    if (r.has("isSticky")) room.SetIsSticky(r.getBoolean("isSticky"));
+                    if (r.has("numberOfPeopleToRoom"))
+                        room.SetNumberOfPeopleBeenToRoom(r.getInt("numberOfPeopleToRoom"));
+                    if (r.has("maxCapacity")) room.SetMaxCapacity(r.getInt("maxCapacity"));
+                    if (r.has("currentCapacity")) room.SetCurrentCapacity(r.getInt("currentCapacity"));
+
+                    //Students
+                    if (r.has("students")) {
+                        JSONArray students = r.getJSONArray("students");
+                        for (int j = 0; j < students.length(); j++) {
+                            Student st = new Student(students.getJSONObject(j).getString("id"), game);
+                            game.AddToGame(st);
+                            st.SetRoom(room);
+                            room.AddStudent(st);
+                        }
+                    }
+
+                    //Instructors
+                    if (r.has("instructors")) {
+                        JSONArray instructors = r.getJSONArray("instructors");
+                        for (int j = 0; j < instructors.length(); j++) {
+                            Instructor in = new Instructor(instructors.getJSONObject(j).getString("id"));
+                            game.AddToGame(in);
+                            in.SetRoom(room);
+                            room.AddInstructor(in);
+                        }
+                    }
+
+                    //Janitors
+                    if (r.has("janitors")) {
+                        JSONArray janitors = r.getJSONArray("janitors");
+                        for (int j = 0; j < janitors.length(); j++) {
+                            Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
+                            game.AddToGame(jan);
+                            jan.SetRoom(room);
+                            room.AddJanitor(jan);
+                        }
+                    }
+
+                    //Items
+
+                    //SlideRule
+                    if (r.has("slideRules")) {
+                        JSONArray slideRules = r.getJSONArray("slideRules");
+                        for (int j = 0; j < slideRules.length(); j++) {
+                            SlideRule sl = new SlideRule(slideRules.getJSONObject(j).getString("id"));
+                            sl.SetRoom(room);
+                            sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
+                            room.AddItem(sl);
+                        }
+                    }
+
+                    //TVSZ
+                    if (r.has("tvszs")) {
+                        JSONArray tvszs = r.getJSONArray("tvszs");
+                        for (int j = 0; j < tvszs.length(); j++) {
+                            TVSZ t = new TVSZ(tvszs.getJSONObject(j).getString("id"));
+                            t.SetRoom(room);
+                            t.SetUsesLeft(tvszs.getJSONObject(j).getInt("durability"));
+                            t.SetIsFake(tvszs.getJSONObject(j).getBoolean("fake"));
+                            room.AddItem(t);
+                        }
+                    }
+
+                    //FFP2Mask
+                    if (r.has("ffp2Masks")) {
+                        JSONArray ffp2masks = r.getJSONArray("ffp2Masks");
+                        for (int j = 0; j < ffp2masks.length(); j++) {
+                            FFP2Mask fp = new FFP2Mask(ffp2masks.getJSONObject(j).getString("id"));
+                            fp.SetRoom(room);
+                            fp.SetDurability(ffp2masks.getJSONObject(j).getInt("durability"));
+                            fp.SetIsFake(ffp2masks.getJSONObject(j).getBoolean("fake"));
+                            room.AddItem(fp);
+                        }
+                    }
+
+                    //WetTableClothes
+                    if (r.has("wetTableClothes")) {
+                        JSONArray wetTableClothes = r.getJSONArray("wetTableClothes");
+                        for (int j = 0; j < wetTableClothes.length(); j++) {
+                            WetTableCloth wt = new WetTableCloth(wetTableClothes.getJSONObject(j).getString("id"));
+                            wt.SetRoom(room);
+                            wt.SetDurability(wetTableClothes.getJSONObject(j).getInt("durability"));
+                            room.AddItem(wt);
+                        }
+                    }
+
+                    //HolyBeerCup
+                    if (r.has("holyBeerCups")) {
+                        JSONArray holyBeerCups = r.getJSONArray("holyBeerCups");
+                        for (int j = 0; j < holyBeerCups.length(); j++) {
+                            HolyBeerCup hb = new HolyBeerCup(holyBeerCups.getJSONObject(j).getString("id"));
+                            hb.SetRoom(room);
+                            hb.SetDurability(holyBeerCups.getJSONObject(j).getInt("durability"));
+                            room.AddItem(hb);
+                        }
+                    }
+
+                    //AirFresheners
+                    if (r.has("airFresheners")) {
+                        JSONArray airFresheners = r.getJSONArray("airFresheners");
+                        for (int j = 0; j < airFresheners.length(); j++) {
+                            AirFreshener af = new AirFreshener(airFresheners.getJSONObject(j).getString("id"));
+                            af.SetRoom(room);
+                            if (airFresheners.getJSONObject(j).getBoolean("isActivated")) af.Activate();
+                            room.AddItem(af);
+                        }
+                    }
+
+                    //Camemberts
+                    if (r.has("camemberts")) {
+                        JSONArray camemberts = r.getJSONArray("camemberts");
+                        for (int j = 0; j < camemberts.length(); j++) {
+                            Camembert cb = new Camembert(camemberts.getJSONObject(j).getString("id"));
+                            cb.SetRoom(room);
+                            if (camemberts.getJSONObject(j).getBoolean("isActivated")) cb.Activate();
+                            room.AddItem(cb);
+                        }
+                    }
+
+                    //Transistors
+                    if (r.has("transistors")) {
+                        JSONArray transistors = r.getJSONArray("transistors");
+                        for (int j = 0; j < transistors.length(); j++) {
+                            Transistor tr = new Transistor(transistors.getJSONObject(j).getString("id"));
+                            tr.SetRoom(room);
+                            room.AddItem(tr);
+                        }
+                    }
+
+                    //Set Doors to Rooms and Rooms to Doors
+                    if (r.has("doors")) {
+                        JSONArray roomDoors = r.getJSONArray("doors");
+                        for (int j = 0; j < roomDoors.length(); j++) {
+                            int doorIndex = doorSideIDs.indexOf(roomDoors.getString(j));
+                            DoorSide dPair = doorsList.get(doorIndex);
+                            dPair.SetRoom(room);
+                        }
+                    }
+                    game.AddRoom(room);
+                }
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        return describeGame(new ArrayList<>(), game);
     }
 
     /**
@@ -108,7 +306,7 @@ public class InputHandler {
      */
     public String describeGame(ArrayList<String> parameters, Game game) {
         StringBuilder str = new StringBuilder();
-        str.append("message: A játék jelenlegi állapotai a többi mezőben.");
+        str.append("message: A letrejott jatek állapotai a többi mezőben.");
 
         // gameTimer
         str.append("\ngameTimer: ").append(game.GetGameTimer());

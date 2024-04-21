@@ -15,6 +15,7 @@ public class Tester {
      * Egy inputHandler ami vegzi a parancsok beolvasasat, illetve a parancsok vegrehajtasat a megadott jatekon
      */
     InputHandler inputHandler;
+
     /**
      * Egy jatek peldany, melyet minden teszt futasanal ujbol inicializal, es ezen vegzi a teszt futasat
      */
@@ -51,11 +52,16 @@ public class Tester {
             if ("End".equalsIgnoreCase(input)) {
                 break;
             }
-            // Process the input or store it in a collection, as needed
-            System.out.println("You entered: " + input);
+            String commandOutput = inputHandler.handleCommand(input, () -> );
+            System.out.println(commandOutput+"\n");
         }
 
         scanner.close();
+    }
+
+    private Game GetOrCreateGame(){
+        if (this.game == null) return null; // this should be initialized in inputHandler at first
+        return this.game; // then just return stored
     }
 
     public ArrayList<String> readExpectedOutputFile(String expectedOutputFilePath){
