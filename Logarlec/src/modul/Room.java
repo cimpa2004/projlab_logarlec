@@ -366,7 +366,8 @@ public class Room implements IRoom {
 	 * Csak akkor hívódik meg, ha mindkét szoba aktuális kapacitása jelenleg 0.
 	 * A szobákban lévő tárgyak az új szobába kerülnek.
 	 * */
-	public boolean MergeRooms(Room r2) {
+	public boolean MergeRooms(IRoom ir2) {
+		Room r2 = (Room) ir2;
 		Logger.started(this, "MergeRooms", r2);
 
 		// Csak akkor egyesíthetünk két szobát, ha egyikben sem tartózkodik egy Person sem.

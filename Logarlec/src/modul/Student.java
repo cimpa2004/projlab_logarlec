@@ -38,13 +38,15 @@ public class Student extends Person {
 	 * 
 	 *  @param  r  Az a szoba ahol megjelenik a Student
 	*/
-	public void AppearInRoom(Room r) {
+	public boolean AppearInRoom(Room r) {
 		Logger.started(this, "AppearInRoom", r);
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
 			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
+			Room oldRoom = room;
 			room = r; // atlepes a masik szobaba
+			oldRoom.RemoveStudent(this);
 			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
 			room.AddStudent(this);
 
@@ -56,8 +58,11 @@ public class Student extends Person {
 			}
 
 			//TODO: ájuljon el ha gázos a szoba
+		} else{
+			return false;
 		}
 		Logger.finished(this, "AppearInRoom", r);
+		return true;
 	}
 	
 	/** 
@@ -132,6 +137,11 @@ public class Student extends Person {
 		return activeTurn;
 	}
 
+	@Override
+	public boolean GetIsAlive() {
+		return isAlive;
+	}
+
 	/** 
 	 * Ennek a függvény hatására a hallgató meghalhat. Innentől kezdve az isAlive változója false lesz amennyiben meghal. 
 	 * Ekkor, a Game már többet nem fogja meghivni rajta a StartTurn függvényt. Amennyiben a Student rendelkezik olyan 
@@ -148,19 +158,18 @@ public class Student extends Person {
 	}
 	
 	/** 
-	 * A Student a paraméterként megadott Usable-t használja. A Student mindenképp meghívja ekkor ezen
-	 * a Usable-n a UsedByStudent(this) függvényét, magát átadva paraméterként. Ennek hatására az adott 
-	 * Usable-t aktiválja amennyiben az még nem volt aktiválva, és képes lesz használni az adott Usable
+	 * A Student a paraméterként megadott Itemet használja. A Student mindenképp meghívja ekkor ezen
+	 * a Item-n a UsedByStudent(this) függvényét, magát átadva paraméterként. Ennek hatására az adott
+	 * Itemet aktiválja amennyiben az aktivalhato es még nem volt aktiválva, és képes lesz használni az adott Item
 	 * képességeit.
 	 * 
-	 *  @param  u  A Usable amit a Student használni szeretne
+	 *  @param  i  A Usable amit a Student használni szeretne
 	*/
-	public void UseItem(Usable u) {
-		Logger.started(this, "UseItem", u);
+	public void UseItem(Item i) {
+		Logger.started(this, "UseItem", i);
 		// Any Usable must be an Item as well
-		Item item = (Item)u;
-		if(inventory.contains(item)) u.UsedByStudent(this);
-		Logger.finished(this, "UseItem", u);
+		if(inventory.contains(i)) i.UsedByStudent(this);
+		Logger.finished(this, "UseItem", i);
 	}
 	
 	/** 
@@ -200,19 +209,19 @@ public class Student extends Person {
 	 *  @param  d  Egy ajtó, amelyen a Person megpróbál átlépni egy másik szobába
 	*/
 	@Override
-	public void Move(DoorSide d) {
+	public boolean Move(DoorSide d) {
 		Logger.started(this, "Move", d);
 		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
 		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
 		if (!canBeOpened || !isVisible) {
 			Logger.finished(this, "Move", d);
-			return;
+			return false;
 		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
-		room.RemoveStudent(this);
-		AppearInRoom(r2);
+		boolean isAppeared = AppearInRoom(r2);
 		Logger.finished(this, "Move", d);
+		return isAppeared;
 	}
 
 

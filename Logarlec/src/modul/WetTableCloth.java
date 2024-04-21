@@ -69,6 +69,11 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 		return isActivated;
 	}
 
+	@Override
+	public Transistor GetPair() {
+		return null;
+	}
+
 	/**
 	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
 	 * az adott WetTableCloth aktiválva van.

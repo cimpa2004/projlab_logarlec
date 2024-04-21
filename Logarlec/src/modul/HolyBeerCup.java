@@ -70,6 +70,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 		return isActivated;
 	}
 
+	@Override
+	public Transistor GetPair() {
+		return null;
+	}
+
 
 	/**
 	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben

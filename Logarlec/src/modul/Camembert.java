@@ -58,6 +58,11 @@ public class Camembert extends Item implements Usable {
 		return isActivated;
 	}
 
+	@Override
+	public Transistor GetPair() {
+		return null;
+	}
+
 	/**
 	 * Kezeli a felvételt, elhelyezi magát az st inventoryában
 	 * @param st A felvevő hallgató

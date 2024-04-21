@@ -73,6 +73,11 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 		return isActivated;
 	}
 
+	@Override
+	public Transistor GetPair() {
+		return null;
+	}
+
 	/**
 	 * Csökkenti a durability értékét 1-el
 	 */

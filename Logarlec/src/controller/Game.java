@@ -1,9 +1,6 @@
 package controller;
 
-import modul.IPerson;
-import modul.IRoom;
-import modul.Person;
-import modul.Room;
+import modul.*;
 import util.Logger;
 import util.Reader;
 
@@ -219,4 +216,72 @@ public class Game {
 
 	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
 	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
+
+	/**
+	 * Id alapján megkeresi az adott DoorSidet, ammenyiben benne van vissza adja, egyébként null
+	 * @param doorId A doorIdja amit keres
+	 * @return Maga a DoorSide objekt vagy null
+	 */
+	public DoorSide findDoorById(String doorId){
+		ArrayList<IRoom> rooms = GetRooms();
+		for (IRoom room : rooms){
+			for (DoorSide door : room.GetDoors()){
+				if (door.GetId().equals(doorId)) {
+					return door;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Id alapján megkeresi az adott Roomot, ammenyiben benne van vissza adja, egyébként null
+	 * @param roomId A Room idja amit keres
+	 * @return Maga a Room objekt vagy null
+	 */
+	public IRoom findRoomById(String roomId){
+		for (IRoom room : GetRooms()){
+			if (room.GetId().equals(roomId)){
+				return room;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Id alapján megkeresi az adott Persont, ammenyiben benne van vissza adja, egyébként null
+	 * @param personId A personId amit keres
+	 * @return Maga a Person objekt vagy null
+	 */
+	public IPerson findPersonById(String personId){
+		ArrayList<IPerson> persons = GetTurnOrder();
+		for (IPerson person : persons){
+			if (person.GetId().equals(personId)){
+				return person;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Id alapján megkeresi az adott Itemet, ammenyiben benne van vissza adja, egyébként null
+	 * @param itemId A doorIdja amit keres
+	 * @return Maga az Item objekt vagy null
+	 */
+	public Item findItemById(String itemId){
+		// items (ennek egyenlonek kene lennie (itemsFromPersons + itemsFromRooms)-val es 2 diszjunkt halmaz)
+		//     items from persons
+		for (IPerson person : GetTurnOrder()){
+			for (Item item : person.GetInventory()){
+				if (item.GetId().equals(itemId)) return item;
+			}
+		}
+		//     items from rooms
+		for (IRoom room : GetRooms()){
+			for (Item item : room.GetItems()){
+				if (item.GetId().equals(itemId)) return item;
+			}
+		}
+		return null;
+	}
 }
