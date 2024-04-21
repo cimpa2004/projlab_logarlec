@@ -4,6 +4,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A TVSZ osztály a TVSZ reprezentációja.
  * A TVSZ a tárgyak egyike, amelyeket a játékosok
@@ -19,11 +21,31 @@ public class TVSZ extends Item implements Defendable{
 	private int usesLeft;
 
 	/**
+	 * Ezen változó tárolja, hogy az adott TVSZ igazi-e.
+	 * */
+	private boolean isFake;
+
+	/**
 	 * A TVSZ osztály konstruktora, amiben meg lehet adni, hogy hányszor
 	 * legyen képes megvédeni a Student -et.
 	 * */
+	public TVSZ(String id){
+		super(id);
+		usesLeft = 3;
+	}
+
 	public TVSZ(){
-		usesLeft = Reader.GetIntInput("A létrejövő TVSZ hányszor tudjon még védeni gyilkosságtól?");
+		super(UUID.randomUUID().toString());
+		usesLeft = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return isFake;
+	}
+
+	public void SetIsFake(boolean b){
+		isFake = b;
 	}
 
 	/**
@@ -36,6 +58,11 @@ public class TVSZ extends Item implements Defendable{
 		Logger.started(this, "Decrement");
 		if (usesLeft > 0) usesLeft = usesLeft - 1;
 		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return usesLeft;
 	}
 
 	/**
@@ -51,8 +78,10 @@ public class TVSZ extends Item implements Defendable{
 	 * */
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
-		if (usesLeft > 0) st.AddTVSZ(this);
 		boolean isAdded = st.AddToInventory(this);
+		if(isAdded && usesLeft > 0){
+			st.AddTVSZ(this);
+		}
 		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -84,9 +113,8 @@ public class TVSZ extends Item implements Defendable{
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.tvszs.remove(this);
-
+		p.RemoveTVSZ(this);
+		p.RemoveFromInventory(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -99,6 +127,7 @@ public class TVSZ extends Item implements Defendable{
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
 		Logger.finished(this, "CanDefend");
+		if(isFake) return false;
 		return usesLeft > 0;
 	}
 }

@@ -2,6 +2,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A camebert-t reprezentációja
  * Tárolja, hogy aktív e. Ha nem aktív akkor nem engedi a használatot.
@@ -14,6 +16,21 @@ public class Camembert extends Item implements Usable {
 	 */
 	private boolean isActivated;
 
+	public Camembert(String id){
+		super(id);
+		isActivated = false;
+	}
+
+	public Camembert(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
+	}
+
 	/**
 	 * Aktiválja az Camembert-t
 	 * @return True ha sikerült False, ha nem/ már használva volt
@@ -21,8 +38,23 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a Camembert?");
+
 		Logger.finished(this, "Activate");
+		if(isActivated){
+			return false;
+		}else{
+			isActivated = true;
+			return  true;
+		}
+	}
+
+
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
 		return isActivated;
 	}
 
@@ -34,9 +66,9 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		boolean isAdded = st.AddToInventory(this);
 		Logger.finished(this, "PickedUpStudent", st);
-		return returnValue;
+		return isAdded;
 	}
 
 	/**
@@ -47,9 +79,9 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		boolean isAdded = i.AddToInventory(this);
 		Logger.finished(this, "PickedUpInstructor", i);
-		return returnValue;
+		return isAdded;
 	}
 
 	/**
@@ -59,7 +91,7 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
+		p.RemoveFromInventory(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -70,12 +102,7 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.started(this, "UsedByStudent", s);
-		boolean isActivated = Activate();
-		if(isActivated){
-			Room roomToPosion = s.GetRoom();
-			int duration = Reader.GetIntInput("Mennyi ideig legyen gázos a szoba?");
-			roomToPosion.SetPoisonDuration(duration);
-		}
+		if(Activate())s.GetRoom().SetPoisonDuration(5);
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -86,12 +113,7 @@ public class Camembert extends Item implements Usable {
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		Logger.started(this, "UsedByInstructor", i);
-		boolean isActivated = Activate();
-		if(isActivated){
-			Room roomToPosion = i.GetRoom();
-			int duration = Reader.GetIntInput("Mennyi ideig legyen gázos a szoba?");
-			roomToPosion.SetPoisonDuration(duration);
-		}
+		if(Activate()) i.GetRoom().SetPoisonDuration(5);
 		Logger.finished(this, "UsedByInstructor", i);
 	}
 }

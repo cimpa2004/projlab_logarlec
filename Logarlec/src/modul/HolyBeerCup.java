@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A HolyBeerCup osztály a Szent Söröspohár reprezentációja.
  * A HolyBeerCup a tárgyak egyike, amelyeket a játékosok
@@ -25,6 +27,23 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	 * */
 	private boolean isActivated;
 
+	public HolyBeerCup(String id){
+		super(id);
+		isActivated = false;
+		effectDuration = 3;
+	}
+
+	public HolyBeerCup(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+		effectDuration = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
+	}
+
 	/**
 	 * Ezen metódus meghívásakor a HolyBeerCup, amire ezt a függvényt meghívták,
 	 * aktivált állapotba kerül, azaz igazra állítódik az isActivated változója.
@@ -32,10 +51,25 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	@Override
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a HolyBeerCupot?");
+
 		Logger.finished(this, "Activate");
+		if(isActivated){
+			return false;
+		}else{
+			isActivated = true;
+			return  true;
+		}
+	}
+
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
 		return isActivated;
 	}
+
 
 	/**
 	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
@@ -45,8 +79,16 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	@Override
 	public void Decrement() {
 		Logger.started(this, "Decrement");
-		if(effectDuration>0) effectDuration = effectDuration - 1;
+		if(isActivated){
+			if(effectDuration>0) effectDuration = effectDuration - 1;
+			else isActivated = false;
+		}
 		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return effectDuration;
 	}
 
 	/**
@@ -94,9 +136,8 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.holyBeerCups.remove(this);
-
+		p.RemoveHolyBeerCup(this);
+		p.RemoveFromInventory(this);
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -111,9 +152,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public void UsedByStudent(Student s) {
 		Logger.started(this, "UsedByStudent", s);
 		Activate();
-		if(isActivated){
-			s.AddHolyBeerCup(this);
-		}
+		if(isActivated)	s.AddHolyBeerCup(this);
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -140,7 +179,6 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
 		Logger.finished(this, "CanDefend");
-		effectDuration = Reader.GetIntInput("Mennyi ideig hatásos még a HolyBeerCup?");
 		return isActivated && effectDuration > 0;
 	}
 }

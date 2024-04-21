@@ -5,7 +5,7 @@ import modul.WetTableCloth;
 import modul.DoorSide;
 import modul.Room;
 import modul.Instructor;
-import modul.Game;
+import controller.Game;
 
 public class StudentUsesWetTableClothOnInstructor {
     private static Student s;
@@ -31,16 +31,13 @@ public class StudentUsesWetTableClothOnInstructor {
 
 
         w = new WetTableCloth();
-        w.SetRoom(r1);
         r1.AddItem(w);
-        s = new Student();
 
+        s = new Student();
         r1.AddStudent(s);
-        s.SetRoom(r1);
 
         i = new Instructor();
         r2.AddInstructor(i);
-        i.SetRoom(r2);
     }
 
     public static void Run(){

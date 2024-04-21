@@ -1,0 +1,9 @@
+CreateGame true Map.json
+Pickup Student1 HolyBeerCup1
+Pickup Student1 HolyBeerCup2
+UseItem Student1 HolyBeerCup1
+UseItem Student1 HolyBeerCup2
+Move Student1 Door1
+DescribePerson Student1
+DescribeItem HolyBeerCup1
+DescribeItem HolyBeerCup2

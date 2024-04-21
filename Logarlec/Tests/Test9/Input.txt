@@ -1,0 +1,12 @@
+CreateGame true Map.json
+Pickup Student1 Transistor1
+Pickup Student1 Transistor2
+ConnectTransistors Student1 Transistor1 Transistor2
+UseItem Student1 Transistor1
+Move Student1 Door1
+UseItem Student1 Transistor2
+DescribeRoom Room1
+DescribeRoom Room2
+DescribePerson Student1
+DescribeItem Transistor1 
+DescribeItem Transistor2

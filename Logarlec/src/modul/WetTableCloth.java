@@ -4,6 +4,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A WetTableCloth osztály a Nedves Táblatörlő Rongy reprezentációja.
  * A WetTableCloth a tárgyak egyike, amelyeket a játékosok
@@ -26,15 +28,65 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	 * */
 	private boolean isActivated;
 
+	public WetTableCloth(String id){
+		super(id);
+		isActivated = false;
+		effectDuration = 3;
+	}
+
+	public WetTableCloth(){
+		super(UUID.randomUUID().toString());
+		isActivated = false;
+		effectDuration = 3;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
+	}
+
 	/**
 	 * Ezen metódus meghívásakor a WetTableCloth, amire ezt a függvényt meghívták,
 	 * aktivált állapotba kerül, azaz igazra állítódik az isActivated változója.
 	 * */
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		isActivated = Reader.GetBooleanInput("Sikerült aktiválni a WetTableClothot?");
 		Logger.finished(this, "Activate");
+		if(isActivated){
+			return false;
+		}else{
+			isActivated = true;
+			return true;
+		}
+	}
+
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
 		return isActivated;
+	}
+
+	/**
+	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
+	 * az adott WetTableCloth aktiválva van.
+	 * A metódus eggyel csökkenti az effectDuration változót.
+	 * */
+	@Override
+	public void Decrement() {
+		Logger.started(this, "Decrement");
+		if(isActivated){
+			if(effectDuration>0) effectDuration = effectDuration - 1;
+			else isActivated = false;
+		}
+		Logger.finished(this, "Decrement");
+	}
+
+	@Override
+	public int GetDurability() {
+		return effectDuration;
 	}
 
 	/**
@@ -82,22 +134,9 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	 * */
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-
-		p.wetTableClothes.remove(this);
-
+		p.RemoveFromInventory(this);
+		p.RemoveWetTableCloth(this);
 		Logger.finished(this, "Thrown", p);
-	}
-
-	/**
-	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
-	 * az adott WetTableCloth aktiválva van.
-	 * A metódus eggyel csökkenti az effectDuration változót.
-	 * */
-	@Override
-	public void Decrement() {
-		Logger.started(this, "Decrement");
-		if (effectDuration > 0) effectDuration = effectDuration - 1;
-		Logger.finished(this, "Decrement");
 	}
 
 	/**
@@ -114,7 +153,6 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 		if (isActivated) {
 			s.AddWetTableCloth(this);
 		}
-		// TODO stun Instructors in Student's Room
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -141,7 +179,6 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	@Override
 	public boolean CanDefend() {
 		Logger.started(this, "CanDefend");
-		effectDuration = Reader.GetIntInput("Mennyi ideig hatásos még a WetTableCloth?");
 		Logger.finished(this, "CanDefend");
 		return isActivated && effectDuration > 0;
 	}

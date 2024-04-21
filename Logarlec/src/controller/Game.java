@@ -1,5 +1,9 @@
-package modul;
+package controller;
 
+import modul.IPerson;
+import modul.IRoom;
+import modul.Person;
+import modul.Room;
 import util.Logger;
 import util.Reader;
 
@@ -17,6 +21,11 @@ public class Game {
 	 * Tárolja a hátralévő körök számát.
 	 * */
 	private int gameTimer;
+
+	/**
+	 * Tárolja, hogy a játék determinisztikus legyen-e
+	 */
+	private boolean isGameDeterministic;
 	
 	/**
 	 * Tárolja, hogy a játék végetért-e.
@@ -31,12 +40,12 @@ public class Game {
 	/**
 	 * A játékban szereplő Hallgatók és Oktatók sorrendjét tároló attribútum.
 	 * */
-	private ArrayList<Person> turnOrder;
+	private ArrayList<IPerson> turnOrder;
 	
 	/**
 	 * A soronkövetkező Személy található meg benne.
 	 * */
-	private Person currentTurn;
+	private IPerson currentTurn;
 
 	/**
 	 * Ha a játék véget ért (isEndGame == true), akkor jelzi, hogy a játékot melyik fél
@@ -47,8 +56,23 @@ public class Game {
 	/**
 	 * Itt vannak eltárolva a játékban található szobák.
 	 * */
-	private List<Room> rooms = new ArrayList<>();
-	
+	private List<IRoom> rooms = new ArrayList<>();
+
+	/**
+	 * Vissza adja az IPerson listat ami tartalmazza a jatekban levo szemelyeket
+	 * @return A jatekot jatszo szemelyek
+	 */
+	public ArrayList<IPerson> GetTurnOrder() {
+		return turnOrder;
+	}
+
+	public Game(){
+		isGameDeterministic = false;
+	}
+	public Game(boolean isGameDeterministic){
+		this.isGameDeterministic = isGameDeterministic;
+	}
+
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
 	 * */
@@ -246,7 +270,7 @@ public class Game {
 
 		/*boolean toUse = Reader.GetBooleanInput("Legyen e elátkozott minden szoba? ");
 		if (toUse && !rooms.isEmpty())
-			for (Room r : this.rooms){
+			for (IRoom r : this.rooms){
 				r.SetIsCursed(true);
 			}*/
 		Logger.finished(this, "NextTurn");
@@ -274,17 +298,18 @@ public class Game {
 		Logger.finished(this, "AnyStudentsAlive");
 		return anyStudentAlive;
 	}
-	
+
 	/**
-	 * Eltávolítja azt a Személyt a turnOrder attribútumból, akit paraméterként kap.
+	 * Hozzáadja azt a Személyt a turnOrder attribútumhoz, akit paraméterként kap.
 	 *
-	 * @param p Az eltávolítandó Személy.
+	 * @param p Az hozzáadandó Személy.
 	 * */
-	public void RemoveFromGame(Person p) {
-		Logger.started(this, "RemoveFromGame", p);
-		Logger.finished(this, "RemoveFromGame", p);
+	public void AddToGame(Person p) {
+		Logger.started(this, "AddToGame", p);
+		turnOrder.add(p);
+		Logger.finished(this, "AddToGame", p);
 	}
-	
+
 	/**
 	 * Hozzáadja a paraméterben kapott szobát a játékhoz.
 	 *
@@ -293,6 +318,7 @@ public class Game {
 	public void AddRoom(Room r) {
 		Logger.started(this, "AddRoom", r);
 		if (r != null)
+			r.SetIsDeterministic(isGameDeterministic);
 			this.rooms.add(r);
 		Logger.finished(this, "AddRoom", r);
 	}
@@ -306,4 +332,11 @@ public class Game {
 		Logger.started(this, "RemoveRoom", r);
 		Logger.finished(this, "RemoveRoom", r);
 	}
+
+	public boolean GetIsDeterministic(){
+		return isGameDeterministic;
+	}
+
+	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
+	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
 }

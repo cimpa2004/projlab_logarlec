@@ -3,6 +3,8 @@ package modul;
 import util.Logger;
 import util.Reader;
 
+import java.util.UUID;
+
 /**
  * A tranzisztorok reprezentálása
  * Nyilvántartja, hogy ki a párja (ha van) és hogy, be van e kapcsolva.
@@ -20,6 +22,22 @@ public class Transistor extends Item implements Usable {
 	 */
 	private Transistor pair;
 
+	public Transistor(String id){
+		super(id);
+		isActive = false;
+		pair = null;
+	}
+
+	public Transistor(){
+		super(UUID.randomUUID().toString());
+		isActive = false;
+		pair = null;
+	}
+
+	@Override
+	public boolean GetIsFake() {
+		return false;
+	}
 
 	/**
 	 * Aktiválja a tárgyat
@@ -33,6 +51,15 @@ public class Transistor extends Item implements Usable {
 		else
 			isActive = false;
 		Logger.finished(this, "Activate");
+		return isActive;
+	}
+
+	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 */
+	@Override
+	public boolean GetIsActive() {
 		return isActive;
 	}
 
@@ -54,6 +81,7 @@ public class Transistor extends Item implements Usable {
 	 */
 	public void SetPair(Transistor t) {
 		Logger.started(this, "SetPair", t);
+		pair = t;
 		Logger.finished(this, "SetPair", t);
 	}
 
@@ -88,9 +116,9 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
-		boolean returnValue = Reader.GetBooleanInput("Adja meg a visszatérési értéket");
+		boolean isAdded = i.AddToInventory(this);
 		Logger.finished(this, "PickedUpInstructor", i);
-		return returnValue;
+		return isAdded;
 	}
 
 	/**
@@ -100,12 +128,14 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
-		if(isActive && pair.isActive){
-			if(this.GetRoom() != null && pair.GetRoom() != null){
-				p.AppearInRoom(pair.GetRoom());
-				this.Activate();
-				pair.Activate();
-			}
+		if(pair != null && isActive && pair.isActive &&
+				pair.GetRoom() != null && pair.GetRoom() != p.GetRoom()){
+			p.RemoveFromInventory(this);
+			p.AppearInRoom(pair.GetRoom());
+			this.Activate();
+			pair.Activate();
+		}else{
+			p.RemoveFromInventory(this);
 		}
 		Logger.finished(this, "Thrown", p);
 	}

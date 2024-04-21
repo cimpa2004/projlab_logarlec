@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class GasClearsFromRoom {
@@ -11,7 +12,7 @@ public class GasClearsFromRoom {
     private static void initTest(){
         r = new Room();
         g = new Game();
-        s = new Student();
+        s = new Student(g);
         i = new Instructor();
 
         //Személyek és tárgyak elhelyezése

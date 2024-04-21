@@ -23,6 +23,7 @@ public class SkeletonMain {
         System.out.println("13. Egy hallgató beragad egy szobába, amit elátkozódik");
         System.out.println("14. Hallgató használt tárgyakat használna");
         System.out.println("15. Oktató használt, vagy nem használható tárgyat használna");
+        System.out.println("16. Gázos és Átkozott szoba szétválik");
         // ..
 
 
@@ -92,6 +93,10 @@ public class SkeletonMain {
                     break;
                 case 15:
                     InstructorTriesUsingUsedOrNotAllowedItems.Run();
+                    validInput = true;
+                    break;
+                case 16:
+                    PoisonedCursedRoomSplit.Run();
                     validInput = true;
                     break;
                 default:

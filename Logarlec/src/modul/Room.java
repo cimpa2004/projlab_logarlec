@@ -7,14 +7,28 @@ import util.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
+
+// TODO: kiszedni az összes AddNeighbor, RemoveNeighbor stb logikákat mert már a Game végzi ezek beállítását
+//  és a determinisztikusság attól függjön, hogy mi az isDeterministic értéke
 
 /** */
-public class Room {
+public class Room implements IRoom {
+	/**
+	 * Az adott Roomot egyertelmuen azonositja
+	 */
+	protected String id;
+
 	/**
 	 * Azt mutatja, hogy a szobának hány körig tart még a mérgesgáz-effektje. Ha eléri a 0-t a szobában minden
 	 * hallgató és oktató felébred.
 	 * */
 	private int poisonDuration;
+
+	/**
+	 * Jelzi, hogy a jatek determinisztikus-e
+	 */
+	private boolean isDeterministic;
 	
 	/**
 	 * A szoba maximum kapacitása, azaz egyszerre hány személy tartózkodhat a szobában.
@@ -47,12 +61,7 @@ public class Room {
 	 * vagy bezárt legyen, de a másik irányból nem)
 	 * */
 	private ArrayList<DoorSide> doors;
-	
-	/**
-	 * Minden olyan személy, aki jelenleg a szobában tartózkodik.
-	 * */
-	private ArrayList<Person> people;
-	
+
 	/**
 	 * A személyek közül azok a hellgatók, akik a szobában vannak.
 	 * */
@@ -63,13 +72,63 @@ public class Room {
 	 * */
 	private ArrayList<Instructor> instructors;
 
-	public Room(){
+	/**
+	 * A személyek közül azok az takarítók, akik a szobában vannak.
+	 * */
+	private ArrayList<Janitor> janitors;
+
+	/**
+	 * Jelzi, hogy a szoba ragacsos-e.
+	 */
+	private boolean isSticky;
+
+	/**
+	 * Jelzi, hogy hány ember volt már a szobában. Ha a Janitor kitakaritja a szobát, akkor ez nullázodik, mert olyan
+	 * tiszta lesz a szoba, hogy nem lehet megállapítani, hogy voltak-e benne.
+	 */
+	private int numberOfPeopleBeenToRoom;
+
+	public Room(String id){
+		this.id = id;
 		neighbors = new ArrayList<>();
 		items = new ArrayList<>();
 		doors = new ArrayList<>();
-		people = new ArrayList<>();
+		janitors = new ArrayList<>();
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
+	}
+
+	public Room(){
+		this.id = UUID.randomUUID().toString();
+		neighbors = new ArrayList<>();
+		items = new ArrayList<>();
+		doors = new ArrayList<>();
+		janitors = new ArrayList<>();
+		students = new ArrayList<>();
+		instructors = new ArrayList<>();
+	}
+
+
+	/**
+	 * Vissza adja, hogy az adott szoba ragacsos-e.
+	 * @return Az érték, ami jelzi, hogy ragacsos-e a szoba
+	 */
+	public boolean GetIsSticky(){
+		Logger.started(this, "DecrementPoison");
+		Logger.finished(this, "DecrementPoison");
+		return isSticky;
+	}
+
+	public void SetIsSticky(boolean value){
+		this.isSticky = value;
+		if (!value)
+			this.numberOfPeopleBeenToRoom = 0;
+	}
+
+	public void SetIsDeterministic(boolean isDeterministic){
+		Logger.started(this, "SetIsDeterministic");
+		Logger.finished(this, "SetIsDeterministic");
+		this.isDeterministic = isDeterministic;
 	}
 
 
@@ -118,7 +177,12 @@ public class Room {
 	 * */
 	public void CloneAttributes(Room r) {
 		Logger.started(this, "CloneAttributes", r);
-		// existing code
+		this.poisonDuration = r.poisonDuration;
+		this.isCursed = r.isCursed;
+		this.maxCapacity = r.maxCapacity;
+		this.neighbors = r.neighbors;
+		r.AddNeighbor(this);
+		this.AddNeighbor(r);
 		Logger.finished(this, "CloneAttributes", r);
 	}
 
@@ -138,14 +202,27 @@ public class Room {
 		Logger.started(this, "GetStudents");
 		// existing code
 		Logger.finished(this, "GetStudents");
-		return null;
+		return students;
 	}
-  
+
+	/**
+	 * Visszaadja a szobában tartózkodó oktatokat.
+	 * */
 	public ArrayList<Instructor> GetInstructors() {
 		Logger.started(this, "GetInstructors");
 		// existing code
 		Logger.finished(this, "GetInstructors");
 		return this.instructors;
+	}
+
+	/**
+	 * Visszaadja a szobában tartózkodó takaritokat.
+	 * */
+	public ArrayList<Janitor> GetJanitors() {
+		Logger.started(this, "GetJanitors");
+		// existing code
+		Logger.finished(this, "GetJanitors");
+		return this.janitors;
 	}
 
 	/**
@@ -166,6 +243,16 @@ public class Room {
 		int _maxCapacity = Reader.GetIntInput("Mekkora a szoba maximum kapacitasa?");
 		Logger.finished(this, "GetMaxCapacity");
 		return _maxCapacity;
+	}
+
+
+	/**
+	 * Visszaadja, hogy hány ember volt már a szobában az utolso takaritas ota
+	 * */
+	public int NumberOfPeopleBeenToRoom() {
+		Logger.started(this, "NumberOfPeopleBeenToRoom");
+		Logger.finished(this, "NumberOfPeopleBeenToRoom");
+		return numberOfPeopleBeenToRoom;
 	}
 
 	/**
@@ -191,7 +278,7 @@ public class Room {
 	 * */
 	public void SetMaxCapacity(int mc) {
 		Logger.started(this, "SetMaxCapacity", mc);
-		// existing code
+		maxCapacity = mc;
 		Logger.finished(this, "SetMaxCapacity", mc);
 	}
 
@@ -200,18 +287,25 @@ public class Room {
 	 * */
 	public int GetPoisonDuration() {
 		Logger.started(this, "GetPoisonDuration");
-		// existing code
 		Logger.finished(this, "GetPoisonDuration");
-		return 0;
+		return poisonDuration;
 	}
 
 	/** Beállítja azt, hogy a szobában hány körön keresztül tart még a mérgesgáz hatása.*/
 	public void SetPoisonDuration(int pd) {
 		Logger.started(this, "SetPoisonDuration", pd);
 		poisonDuration = pd;
-		for (Person p : people) {
-			boolean isPersonDefended = p.DefendFromGas();
-			if (!isPersonDefended) p.SetIsFainted(true);
+		for (Student s : students) {
+			boolean isPersonDefended = s.DefendFromGas();
+			if (!isPersonDefended) s.SetIsFainted(true);
+		}
+		for (Instructor i : instructors) {
+			boolean isPersonDefended = i.DefendFromGas();
+			if (!isPersonDefended) i.SetIsFainted(true);
+		}
+		for (Janitor j : janitors) {
+			boolean isPersonDefended = j.DefendFromGas();
+			if (!isPersonDefended) j.SetIsFainted(true);
 		}
 		Logger.finished(this, "SetPoisonDuration", pd);
 	}
@@ -222,6 +316,12 @@ public class Room {
 	public void AddDoor(DoorSide d) {
 		Logger.started(this, "AddDoor", d);
 		doors.add(d);
+		// Set neighboors
+		if(d.GetPair() != null && d.GetPair().GetRoom() != null){
+			Room connectedRoom = d.GetPair().GetRoom();
+			this.AddNeighbor(connectedRoom);
+			if(!connectedRoom.GetNeighbors().contains(this)) connectedRoom.AddNeighbor(this);
+		}
 		Logger.finished(this, "AddDoor", d);
 	}
 
@@ -231,7 +331,7 @@ public class Room {
 		Logger.finished(this, "RemoveDoor", d);
 	}
 
-		/**
+	/**
 	 * Visszaadja a szobából kivezető ajtók szoba felé néző oldalait.
 	 * */
 	public ArrayList<DoorSide> GetDoors() {
@@ -246,7 +346,7 @@ public class Room {
 	 * */
 	public void AddNeighbor(Room r) {
 		Logger.started(this, "AddNeighbor", r);
-		// existing code
+		neighbors.add(r);
 		Logger.finished(this, "AddNeighbor", r);
 	}
 
@@ -255,7 +355,7 @@ public class Room {
 	 * */
 	public void SetNeighbors(ArrayList<Room> n) {
 		Logger.started(this, "SetNeighbors", n);
-		// existing code
+		// TODO: függvény implementálása
 		Logger.finished(this, "SetNeighbors", n);
 	}
 
@@ -343,10 +443,33 @@ public class Room {
 	 * kerül egy ajtó. Csak akkor hívódik meg, ha a szoba aktuális kapacitása jelenleg 0.
 	 * A szobában lévő tárgyak a két szoba között véletlenszerűen lesznek elszórva.
 	 * */
-	public void SeparateRoom() {
+	public boolean SeparateRoom() {
 		Logger.started(this, "SeparateRoom");
-		// existing code
+		if(currentCapacity == 0)
+		{
+			Room r2 = new Room(UUID.randomUUID().toString());
+			r2.CloneAttributes(this);
+			for (DoorSide d : doors)
+			{
+				DoorSide dCopy = new DoorSide(UUID.randomUUID().toString());
+				dCopy.CloneAttributes(d);
+				DoorSide d2 = d.GetPair();
+				DoorSide d2Copy = new DoorSide(UUID.randomUUID().toString());
+				d2Copy.CloneAttributes(d2);
+				dCopy.ConnectDoors(d2Copy);
+			}
+			ArrayList<Item> itemsCopy = new ArrayList<Item>(items);
+			for (Item i: itemsCopy){
+				boolean trueorfalse = Reader.GetBooleanInput("Melyik szobába kerüljön a tárgy (false: az eredeti szobába, true: az új szobába)");
+				if(trueorfalse){
+					r2.AddItem(i);
+					RemoveItem(i);
+				}
+			}
+			return true;
+		}
 		Logger.finished(this, "SeparateRoom");
+		return false;
 	}
 
 	/**
@@ -362,7 +485,6 @@ public class Room {
 			}
 		}
 		instructors.add(i);
-		people.add(i);
 		Logger.finished(this, "AddInstructor", i);
 	}
 
@@ -371,7 +493,7 @@ public class Room {
 	 * */
 	public void RemoveInstructor(Instructor i) {
 		Logger.started(this, "RemoveInstructor", i);
-		// existing code
+		instructors.remove(i);
 		Logger.finished(this, "RemoveInstructor", i);
 	}
 
@@ -388,7 +510,6 @@ public class Room {
 			}
 		}
 		students.add(s);
-		people.add(s);
 		Logger.finished(this, "AddStudent", s);
 	}
 
@@ -397,8 +518,28 @@ public class Room {
 	 * */
 	public void RemoveStudent(Student s) {
 		Logger.started(this, "RemoveStudent", s);
-		// existing code
+		students.remove(s);
 		Logger.finished(this, "RemoveStudent", s);
+	}
+
+	/**
+	 * Hozzáad egy takarítót a szobához (amikor belép), és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 * */
+	public void AddJanitor(Janitor j) {
+		Logger.started(this, "AddJanitor", j);
+		j.SetRoom(this);
+		// TODO szoba tisztitása itt
+		janitors.add(j);
+		Logger.finished(this, "AddJanitor", j);
+	}
+
+	/**
+	 * Elvesz egy takarítót a szobából (átment egy másik szobába)
+	 * */
+	public void RemoveJanitor(Janitor j) {
+		Logger.started(this, "RemoveJanitor", j);
+		janitors.remove(j);
+		Logger.finished(this, "RemoveJanitor", j);
 	}
 
 	/**
@@ -407,7 +548,7 @@ public class Room {
 	 * */
 	public boolean RandomBool() {
 		Logger.started(this, "RandomBool");
-		// existing code
+		//TODO: implement: ha determinisztikus a játék akkor mindig csak egy értéket adjon vissza
 		Logger.finished(this, "RandomBool");
 		return false;
 	}
@@ -417,7 +558,7 @@ public class Room {
 	 * */
 	public Room SelectRoom(ArrayList<Room> r) {
 		Logger.started(this, "SelectRoom", r);
-		// existing code
+		//TODO: implement
 		Logger.finished(this, "SelectRoom", r);
 		return null;
 	}
@@ -428,7 +569,7 @@ public class Room {
 	 * */
 	public void ToggleDoorsVisible() {
 		Logger.started(this, "ToggleDoorsVisible");
-		// existing code
+		//TODO: implement
 		Logger.finished(this, "ToggleDoorsVisible");
 	}
 
@@ -437,8 +578,13 @@ public class Room {
 	 * */
 	public void SetIsCursed(boolean isc) {
 		Logger.started(this, "SetIsCursed", isc);
-		// existing code
+		//TODO: implement
 		Logger.finished(this, "SetIsCursed", isc);
+	}
+
+	@Override
+	public String GetId() {
+		return id;
 	}
 
 	/**

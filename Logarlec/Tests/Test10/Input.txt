@@ -1,0 +1,6 @@
+CreateGame true Map.json
+Pickup Student1 Camembert1
+UseItem Student1 Camembert1
+DescribePerson Student1
+DescribeItem Camembert
+DescibeRoom Room1

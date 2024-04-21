@@ -1,16 +1,27 @@
 package modul;
 
+import controller.Game;
 import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 /**
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat
  * irányítják a játék során.
 */
 public class Student extends Person {
+
+	public Student(String id, Game g){
+		super(id);
+		this.game = g;
+	}
+	public Student(Game g){
+		super(UUID.randomUUID().toString());
+		this.game = g;
+	}
+
 	/** 
 	 * Ez a változó jelzi, hogy az adott Student az még él e.
 	*/
@@ -32,12 +43,19 @@ public class Student extends Person {
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
-			room = r;
-			r.SetCurrentCapacity(++currentC);
+			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
+			room = r; // atlepes a masik szobaba
+			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
+			room.AddStudent(this);
+
 			ArrayList<Instructor> instructors = room.GetInstructors();
-			if (!instructors.isEmpty()) {
-				instructors.get(0).StealSoul(this);
+			// belep a szobaba es minden oktato megprobalja elvenni a lelket, de vedekezhet
+			for(Instructor instructor : instructors){
+				instructor.StealSoul(this);
+				if(!isAlive) break;
 			}
+
+			//TODO: ájuljon el ha gázos a szoba
 		}
 		Logger.finished(this, "AppearInRoom", r);
 	}
@@ -48,6 +66,29 @@ public class Student extends Person {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
+		//TODO: ha nem isAlive -> NextTurn()
+		activeTurn = true;
+		// ha kor kezdetekor gazos szobaban van akkor elkabul
+		if(room.GetPoisonDuration() > 0){
+			if(!ffp2Masks.isEmpty()){
+				Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+				if(ffp2Mask != null){
+					ffp2Mask.Decrement();
+					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+					if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+				}else{
+					SetIsFainted(true);
+				}
+			}// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
+		}else{
+			SetIsFainted(false);
+		}
+		// ha el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
+		if(isFainted) EndTurn();
+
+		// itt kezdheti meg a hallgato a lepeseit
+
+
 		Logger.finished(this, "StartTurn");
 	}
 
@@ -67,15 +108,40 @@ public class Student extends Person {
 	*/
 	public void EndTurn() {
 		Logger.started(this, "EndTurn");
-		for (Defendable h : this.holyBeerCups) {
+		ArrayList<Defendable> holyBeerCupsCopy = new ArrayList<>(this.holyBeerCups);
+		for (Defendable h : holyBeerCupsCopy) {
 			h.Decrement();
+			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
+			if(!h.CanDefend()) this.holyBeerCups.remove(h);
 		}
-		for (Defendable h : this.tvszs) {
+
+		ArrayList<Defendable> wetTableClothesCopy = new ArrayList<>(this.wetTableClothes);
+		for (Defendable h : wetTableClothesCopy) {
 			h.Decrement();
+			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
+			if(!h.CanDefend()) this.wetTableClothes.remove(h);
 		}
+
+		activeTurn = false;
+		// TODO: kör végén NextTurnt meghivni a gamen: game.NextTurn()
 		Logger.finished(this, "EndTurn");
 	}
-	
+
+	@Override
+	public boolean GetIsFainted() {
+		return isFainted;
+	}
+
+	@Override
+	public boolean GetIsStunned() {
+		return false;
+	}
+
+	@Override
+	public boolean GetIsActiveTurn() {
+		return activeTurn;
+	}
+
 	/** 
 	 * Ennek a függvény hatására a hallgató meghalhat. Innentől kezdve az isAlive változója false lesz amennyiben meghal. 
 	 * Ekkor, a Game már többet nem fogja meghivni rajta a StartTurn függvényt. Amennyiben a Student rendelkezik olyan 
@@ -85,24 +151,8 @@ public class Student extends Person {
 	*/
 	public boolean Die() {
 		Logger.started(this, "Die");
-		boolean defendSuccess = false;
-		if(hasWetTableCloth) {
-			WetTableCloth wtc = (WetTableCloth) GetRandomActive(wetTableClothes);
-			wtc.Activate();
-			defendSuccess = true;
-		}
-		else if(hasHolyBeerCup) {
-			defendSuccess = true;
-		}
-		else if(hasTVSZ) {
-			TVSZ tvsz = (TVSZ) GetRandomActive(tvszs);
-			tvsz.Decrement();
-			defendSuccess = true;
-		}
-		if(!defendSuccess) {
-			game.RemoveFromGame(this);
-			isAlive = false;
-		}
+		isAlive = false;
+		EndTurn();
 		Logger.finished(this, "Die");
 		return isAlive;
 	}
@@ -132,6 +182,7 @@ public class Student extends Person {
 	*/
 	public void ConnectTransistors(Transistor t1, Transistor t2) {
 		Logger.started(this, "ConnectTransistors", t1, t2);
+		// TODO tranzisztorok összekapcsolása
 		Logger.finished(this, "ConnectTransistors", t1, t2);
 	}
 	
@@ -169,12 +220,6 @@ public class Student extends Person {
 		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
-		int maxCapacity = r2.GetMaxCapacity();
-		int currCapacity = r2.GetCurrentCapacity();
-		if (!(currCapacity < maxCapacity)) {
-			Logger.finished(this, "Move", d);
-			return;
-		}
 		room.RemoveStudent(this);
 		AppearInRoom(r2);
 		Logger.finished(this, "Move", d);

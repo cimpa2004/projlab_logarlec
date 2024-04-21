@@ -1,0 +1,7 @@
+CreateGame true Map.json
+EndTurn Student1
+EndTurn Student2
+Move Instructor1 Room1
+DescribePerson Student1
+DescribePerson Student2
+DescribeGame

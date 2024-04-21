@@ -1,0 +1,71 @@
+{
+    "doors": [
+      {
+        "id": "Door1",
+        "canBeOpened": true,
+        "pair": "Door2"
+      },
+      {
+        "id": "Door2",
+        "canBeOpened": true,
+        "pair": "Door1"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "Room1",
+        "Instructors": [],
+        "Students" :[
+          {
+            "id" : "Student1"
+          }
+        ],
+        "Janitors":[],
+        "SlideRules":[],
+        "TVSZs": [
+        ],
+        "FFP2Masks": [
+{
+            "durability": 5,
+            "id":"FFP2Mask1"
+          }
+        ],
+        "wetTableClothes": [
+        ],
+        "holyBeerCups": [
+        ],
+        "airFresheners": [
+{
+            "isActivated": true,
+            "id": "AirFreshener1"
+          }
+        ],
+        "camemberts": [
+        ],
+        "Transistors": [],
+        "doors": ["Door1"]
+      },
+      {
+        "id": "Room2",
+        "Instructors": [],
+        "Students" :[],
+        "Janitors":[],
+        "SlideRules":[],
+        "TVSZs": [
+        ],
+        "FFP2Masks": [
+        ],
+        "wetTableClothes": [
+        ],
+        "holyBeerCups": [
+        ],
+        "airFresheners": [
+        ],
+        "camemberts": [
+        ],
+        "Transistors": [],
+        "doors": ["Door2"]
+      }
+    ]
+  }
+

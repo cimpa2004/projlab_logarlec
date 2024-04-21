@@ -1,0 +1,67 @@
+{
+      "doors": [
+        {
+          "id": "Door1",
+          "canBeOpened": true,
+          "pair": "Door2"
+        },
+        {
+          "id": "Door2",
+          "canBeOpened": true,
+          "pair": "Door1"
+        }
+      ],
+      "rooms": [
+        {
+          "id": "Room1",
+          "Instructors": [],
+          "Students" :[
+            {
+              "id" : "Student1"
+            }
+          ],
+          "Janitors":[],
+          "SlideRules":[],
+          "TVSZs": [
+            {
+              "id" : "TVSZ1",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ2",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ3",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ4",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ5",
+              "durability" :1
+            },
+            {
+              "id" : "TVSZ6",
+              "durability" :1
+            }
+          ],
+          "FFP2Masks": [
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "Transistors": [],
+          "doors": ["Door1"]
+        }
+       
+      ]
+  }
+  

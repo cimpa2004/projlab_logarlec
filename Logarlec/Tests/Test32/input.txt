@@ -1,0 +1,11 @@
+CreateGame true Map.json
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1
+EndTurn Student1

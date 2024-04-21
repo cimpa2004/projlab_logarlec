@@ -3,8 +3,15 @@ package modul;
 
 import util.Logger;
 
+import java.util.UUID;
+
 /** */
 public class DoorSide {
+	/**
+	 * Az adott DoorSidet egyertelmuen azonositja
+	 */
+	protected String id;
+
 	/**
 	 * Azt jelöli, hogy az ajtó kinyitható-e erről azt oldalról.
 	 * Ha nem, akkor semmilyen személy nem tud rajta átmenni ebből az irányból.
@@ -28,7 +35,12 @@ public class DoorSide {
 	 * */
 	private DoorSide pair;
 
+	public DoorSide(String id){
+		this.id = id;
+	}
+
 	public DoorSide(){
+		this.id = UUID.randomUUID().toString();
 	}
 
 	/**
@@ -37,7 +49,9 @@ public class DoorSide {
 	 * */
 	public void CloneAttributes(DoorSide d) {
 		Logger.started(this, "CloneAttributes", d);
-		// existing code
+		this.canBeOpened = d.canBeOpened;
+		this.isVisible = d.isVisible;
+		this.room = d.room;
 		Logger.finished(this, "CloneAttributes", d);
 	}
 
@@ -47,7 +61,8 @@ public class DoorSide {
 	 * */
 	public void ConnectDoors(DoorSide d) {
 		Logger.started(this, "ConnectDoors", d);
-		// existing code
+		this.SetPair(d);
+		d.SetPair(this);
 		Logger.finished(this, "ConnectDoors", d);
 	}
 
@@ -126,5 +141,20 @@ public class DoorSide {
 		// existing code
 		Logger.finished(this, "GetIsVisible");
 		return false;
+	}
+
+
+	public String GetId() {
+		return id;
+	}
+
+	/**
+	 *	Használható e az ajtó
+	 * @return igaz, ha az ajtón valóban át lehet menni
+	 */
+	public boolean IsDoorUseable(){
+		return (this.GetCanBeOpened() &&
+				this.GetIsVisible()&&
+				this.GetPair().GetRoom().GetMaxCapacity() > this.GetPair().GetRoom().GetCurrentCapacity());
 	}
 }

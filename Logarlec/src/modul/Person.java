@@ -7,12 +7,18 @@ import util.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
  * összefoglalja azokat a funkciókat, attribútumokat amiket a Hallgatók és Oktatók is hordoznak.
 */
-public abstract class Person {
+public abstract class Person implements IPerson{
+	/**
+	 * Az adott Persont egyertelmuen azonositja
+	 */
+	protected String id;
+
 	/**
 	 * Hz az adott Person egy gázos szobában tartózkodik, akkor ez a változó mutatja, hogy
 	 * el van kábulva. 
@@ -89,12 +95,66 @@ public abstract class Person {
 	*/
 	protected List<Defendable> ffp2Masks;
 
-	public Person(){
+	public Person(String id){
+		this.id = id;
 		inventory = new ArrayList<>();
 		wetTableClothes = new ArrayList<>();;
 		tvszs = new ArrayList<>();
 		holyBeerCups = new ArrayList<>();
 		ffp2Masks = new ArrayList<>();
+	}
+
+	public Person(){
+		this.id = UUID.randomUUID().toString();
+		inventory = new ArrayList<>();
+		wetTableClothes = new ArrayList<>();;
+		tvszs = new ArrayList<>();
+		holyBeerCups = new ArrayList<>();
+		ffp2Masks = new ArrayList<>();
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato WetTableClothesokat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato WetTableClothesokat
+	 */
+	public List<Defendable> GetWetTableClothes() {
+		Logger.started(this, "GetWetTableClothes");
+		Logger.finished(this, "GetWetTableClothes");
+		return wetTableClothes;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato TVSZeket.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato TVSZeket
+	 */
+	public List<Defendable> GetTVSZs() {
+		Logger.started(this, "GetTVSZs");
+		Logger.finished(this, "GetTVSZs");
+		return tvszs;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato HolyBeerCupsokat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato HolyBeerCupsokat
+	 */
+	public List<Defendable> GetHolyBeerCups() {
+		Logger.started(this, "GetHolyBeerCups");
+		Logger.finished(this, "GetHolyBeerCups");
+		return holyBeerCups;
+	}
+
+	/**
+	 * Vissza adja a szemelynel talalhato FFP2Maskokat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato FFP2Maskokat
+	 */
+	public List<Defendable> GetFFP2Masks() {
+		Logger.started(this, "GetFFP2Masks");
+		Logger.finished(this, "GetFFP2Masks");
+		return ffp2Masks;
 	}
 	
 	/**
@@ -121,34 +181,8 @@ public abstract class Person {
 	 *  @param  r  Az a szoba, amelyben a Person meg szeretne jelenni
 	*/
 	public abstract void AppearInRoom(Room r);
-	
-	/** 
-	 * Ennek segítségével lehet az adott Person-nal a szobák között mozogni. A kiválaszott ajtóba megpróbál belépni.
-	 * Lehetséges, hogy az adott ajtón nem lehet belépni valamiért, de amennyiben tud, akkor a Person megjelenhet
-	 * az ajtó által definiált másik szobában.
-	 * 
-	 *  @param  d  Egy ajtó, amelyen a Person megpróbál átlépni egy másik szobába
-	*/
-	public abstract void Move(DoorSide d);
-	
-	/**
-	 * A Person felszed egy tárgyat. Ez egy abstract függvény, mely a származott osztályokban van implementálva úgy, 
-	 * ha az adott Person képes felvenni a tárgyat, van hely az inventoryjában, akkor ez belekerül az inventoryjába.
-	 * Előfordulhat, hogy nem kerül benne az inventoryjába, ha nincs több helye, ekkor false-al tér vissza más esetben true-val.
-	 *
-	 * @param  i  Az az Item, amelyet a Person fel szeretne venni.
-	 * @return    Visszatérési érték egy boolean, ami jelzi, hogy sikerült-e felvenni az i Itemet vagy sem
-	*/
-	public abstract boolean Pickup(Item i);
-	
-	/** 
-	 * A Person a kiválasztott Item-et eldobja. Ha a paraméterként megadott Item nem szerepel a Person inventoryjában, 
-	 * akkor nem történik semmi. Ellenkező esetben az Item törlődik a Person inventoryjából és abba a szobába kerül ahol
-	 * épp tartózkodik. Az itemen minden esetben meghívódik az Item Thrown függvénye, mely az Itemtől függően törli a Person
-	 * védelmi Itemjei közül is a megadott Itemet.
-	 * 
-	 *  @param  i  A válaszott Item, melyet a Person eldob 
-	*/
+
+
 	public void Throw(Item i) {
 		Logger.started(this, "Throw", i);
 
@@ -167,18 +201,14 @@ public abstract class Person {
 	public void ThrowAllItems() {
 		Logger.started(this, "ThrowAllItems");
 
-		for(Item item : inventory){
+		ArrayList<Item> inventoryCopy = new ArrayList<>(inventory);
+		for(Item item : inventoryCopy){
 			Throw(item);
 		}
 
 		Logger.finished(this, "ThrowAllItems");
 	}
 
-	/** 
-	 * Egy absract függvény, mely a kiválasztott Usable-t aktiválja. Ez a származott osztályokban van leimplementálva, mert
-	 * attól függően változik egy Usable használata, hogy ki használja.
-	*/
-	public abstract void UseItem(Usable u);
 
 	/** 
 	 * Beállítja, hogy az adott Person melyik szobában tartózkodjon.
@@ -201,18 +231,18 @@ public abstract class Person {
 		Logger.finished(this, "GetRoom");
 		return room;
 	}
-	
-	/** 
-	 * Ez az a függvény amelyet a Game hív meg, és ezen belül implementálhatja az adott származott, hogy milyen lépéseket
-	 * tesz az aktív körében. Ekkor az activeTurn true értékre is változik.
-	*/
-	public abstract void StartTurn();
-	
-	/** 
-	 * Egy származott osztály implementálja, és ezzel jelzi, hogy az adott köre véget ért. Ekkor az activeTurn értékre false
-	 * lesz.
-	*/
-	public abstract void EndTurn();
+
+	/**
+	 * Vissza adja a szemelynel talalhato targyakat.
+	 *
+	 *  @return  Egy lista ami tartalmazza a szemelynel talahato targyakat
+	 */
+	public List<Item> GetInventory() {
+		Logger.started(this, "GetInventory");
+		Logger.finished(this, "GetInventory");
+		return inventory;
+	}
+
 	
 	/** 
 	 * A paraméterként megadott Item-et hozzáadja a Person inventoryjába. Attól függően, hogy van-e több hely az inventoryjában,
@@ -223,8 +253,12 @@ public abstract class Person {
 	*/
 	public boolean AddToInventory(Item i) {
 		Logger.started(this, "AddToInventory", i);
-		boolean canAdd = Reader.GetBooleanInput("Van hely az inventoryban?");
-		if(canAdd) inventory.add(i);
+		boolean canAdd = inventory.size() < 5;
+		if(canAdd) {
+			inventory.add(i);
+			i.SetRoom(null);
+			i.SetOwner(this);
+		}
 		Logger.finished(this, "AddToInventory", i);
 		return canAdd;
 	}
@@ -238,9 +272,13 @@ public abstract class Person {
 	*/
 	public boolean RemoveFromInventory(Item i) {
 		Logger.started(this, "RemoveFromInventory", i);
-
+		boolean canRemove = inventory.remove(i);
+		if(canRemove){
+			i.SetRoom(room);
+			i.SetOwner(null);
+		}
 		Logger.finished(this, "RemoveFromInventory", i);
-		return false;
+		return canRemove;
 	}
 	
 	/** 
@@ -249,8 +287,26 @@ public abstract class Person {
 	 * 
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a gyilkosságtól.
 	*/
-	public boolean DefendFromKill() {
+	public boolean DefendFromKill(Instructor instructor) {
 		Logger.started(this, "DefendFromKill");
+		if(hasWetTableCloth) {
+			Defendable wtc = GetRandomActive(wetTableClothes);
+			instructor.Stun(3);
+			Logger.finished(this, "DefendFromKill");
+			return true;
+		}
+		else if(hasHolyBeerCup) {
+			// TODO ekkor kene valszeg eldobni egy random itemet
+			Logger.finished(this, "DefendFromKill");
+			return true;
+		}
+		else if(hasTVSZ) {
+			Defendable tvsz = GetRandomActive(tvszs);
+			tvsz.Decrement();
+			Logger.finished(this, "DefendFromKill");
+			return true;
+		}
+
 		Logger.finished(this, "DefendFromKill");
 		return false;
 	}
@@ -280,7 +336,8 @@ public abstract class Person {
 	*/
 	public void AddWetTableCloth(Defendable w) {
 		Logger.started(this, "AddWetTableCloth", w);
-
+		wetTableClothes.add(w);
+		hasWetTableCloth = true;
 		Logger.finished(this, "AddWetTableCloth", w);
 	}
 	
@@ -291,7 +348,8 @@ public abstract class Person {
 	*/
 	public void AddTVSZ(Defendable t) {
 		Logger.started(this, "AddTVSZ", t);
-
+		tvszs.add(t);
+		hasTVSZ = true;
 		Logger.finished(this, "AddTVSZ", t);
 	}
 	
@@ -303,6 +361,7 @@ public abstract class Person {
 	public void AddFFP2Mask(Defendable f) {
 		Logger.started(this, "AddFFP2Mask", f);
 		ffp2Masks.add(f);
+		hasFFP2Mask = true;
 		Logger.finished(this, "AddFFP2Mask", f);
 	}
 	
@@ -314,6 +373,7 @@ public abstract class Person {
 	public void AddHolyBeerCup(Defendable h) {
 		Logger.started(this, "AddHolyBeerCup", h);
 		this.holyBeerCups.add(h);
+		hasHolyBeerCup = true;
 		Logger.finished(this, "AddHolyBeerCup", h);
 	}
 	
@@ -324,7 +384,8 @@ public abstract class Person {
 	*/
 	public void RemoveWetTableCloth(Defendable w) {
 		Logger.started(this, "RemoveWetTableCloth", w);
-
+		wetTableClothes.remove(w);
+		if(wetTableClothes.isEmpty()) hasWetTableCloth = false;
 		Logger.finished(this, "RemoveWetTableCloth", w);
 	}
 	
@@ -335,7 +396,8 @@ public abstract class Person {
 	*/
 	public void RemoveTVSZ(Defendable t) {
 		Logger.started(this, "RemoveTVSZ", t);
-
+		tvszs.remove(t);
+		if(tvszs.isEmpty()) hasTVSZ = false;
 		Logger.finished(this, "RemoveTVSZ", t);
 	}
 
@@ -347,7 +409,8 @@ public abstract class Person {
 	*/
 	public void RemoveFFP2Mask(Defendable f) {
 		Logger.started(this, "RemoveFFP2Mask", f);
-
+		ffp2Masks.remove(f);
+		if(ffp2Masks.isEmpty()) hasFFP2Mask = false;
 		Logger.finished(this, "RemoveFFP2Mask", f);
 	}
 	
@@ -358,7 +421,8 @@ public abstract class Person {
 	*/
 	public void RemoveHolyBeerCup(Defendable h) {
 		Logger.started(this, "RemoveHolyBeerCup", h);
-
+		holyBeerCups.remove(h);
+		if(holyBeerCups.isEmpty()) hasHolyBeerCup = false;
 		Logger.finished(this, "RemoveHolyBeerCup", h);
 	}
 	
@@ -379,4 +443,11 @@ public abstract class Person {
 		Logger.finished(this, "GetRandomActive", list);
 		return null;
 	}
+
+	@Override
+	public String GetId() {
+		return id;
+	}
 }
+
+

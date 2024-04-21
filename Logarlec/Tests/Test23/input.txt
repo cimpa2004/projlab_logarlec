@@ -1,0 +1,6 @@
+CreateGame true Map.json
+Pickup Student1 WetTableCloth1
+DescribeItem WetTableCloth1
+Move Student1 Door1
+DescribePerson Student1
+DescribePerson Instructor1

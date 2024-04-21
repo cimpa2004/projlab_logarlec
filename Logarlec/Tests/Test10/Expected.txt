@@ -1,0 +1,46 @@
+message: A játékot sikerült létrehozni
+gameTimer: 10
+isEndGame: false
+currentTurn: Student1
+turnOrder: [Student1] 
+rooms: [Room1] 
+doorsides: [] 
+items: [Camembert1] 
+students: [Student1]
+instructors: []
+janitors: []
+
+message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+
+message: A személynek sikerült használnia a tárgyat.
+
+message: A megadott Student1 hallgató részletei a többi mezőben.
+room: Room1
+inventory: [Camembert1]
+wetTableClothes: [WetTableCloth2]
+tvszs: []
+holyBeerCups []
+ffp2Masks: []
+airFresheners: []
+isAlive: true
+isFainted: true
+isStunned: None 
+activeTurn: true
+
+message: A megadott Camembert1 camembert részletei a többi mezőben.
+owner:Student1
+room: none
+isActiveted: true
+message: A megadott Room1 szoba részletei a többi mezőben.
+items: []
+doors: []
+neighbors: []
+isCursed: false
+isSticky: false
+poisonDuration: 5
+currentCapacity: 1
+maxCapacity: 10
+numberOfPeopleBeenToRoom: 1
+instructors: []
+students: [Student1]
+janitors []

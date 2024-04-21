@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.DoorSide;
 import modul.FFP2Mask;
 import modul.Student;
@@ -11,8 +12,11 @@ public class StudentSavedByFFP2Mask {
     private static DoorSide d1, d2;
     private static FFP2Mask f;
 
+    private static Game g;
+
 
     private static void initTest(){
+        g = new Game();
         r1 = new Room();
         r2 = new Room();
         r2.SetPoisonDuration(10);
@@ -30,7 +34,7 @@ public class StudentSavedByFFP2Mask {
         f = new FFP2Mask();
         f.SetRoom(r1);
         r1.AddItem(f);
-        s = new Student();
+        s = new Student(g);
         r1.AddStudent(s);
         s.SetRoom(r1);
     }

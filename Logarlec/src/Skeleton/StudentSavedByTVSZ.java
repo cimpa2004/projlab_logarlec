@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class StudentSavedByTVSZ {
@@ -10,10 +11,12 @@ public class StudentSavedByTVSZ {
     private static DoorSide d1;
     private static DoorSide d2;
     private static Instructor i;
+    private static Game g;
 
     private static void initTest(){
         t = new TVSZ();
-        s = new Student();
+        g = new Game();
+        s = new Student(g);
         r1 = new Room();
         r2 = new Room();
         d1 = new DoorSide();
