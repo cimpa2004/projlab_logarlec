@@ -52,7 +52,7 @@ public class Tester {
             if ("End".equalsIgnoreCase(input)) {
                 break;
             }
-            String commandOutput = inputHandler.handleCommand(input, () -> );
+            String commandOutput = inputHandler.handleCommand(input);
             System.out.println(commandOutput+"\n");
         }
 

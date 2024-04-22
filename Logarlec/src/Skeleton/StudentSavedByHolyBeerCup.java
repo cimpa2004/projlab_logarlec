@@ -21,7 +21,7 @@ public class StudentSavedByHolyBeerCup {
         r0 = new Room();
         r1 = new Room();
         g = new Game();
-        i = new Instructor();
+        i = new Instructor(g);
 
         r0.AddStudent(st);
         r0.AddItem(hbc);

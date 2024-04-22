@@ -73,7 +73,7 @@ public class Student extends Person {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
-		//TODO: ha nem isAlive -> NextTurn()
+		if (!isAlive) game.NextTurn();
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){
@@ -130,7 +130,7 @@ public class Student extends Person {
 		}
 
 		activeTurn = false;
-		// TODO: kör végén NextTurnt meghivni a gamen: game.NextTurn()
+		game.NextTurn();
 		Logger.finished(this, "EndTurn");
 	}
 
@@ -219,6 +219,7 @@ public class Student extends Person {
 	@Override
 	public boolean Move(DoorSide d) {
 		Logger.started(this, "Move", d);
+		if (!room.GetDoors().contains(d)) return false;
 		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
 		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
 		if (!canBeOpened || !isVisible) {

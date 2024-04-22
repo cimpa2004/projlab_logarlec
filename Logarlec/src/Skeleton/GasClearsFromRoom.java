@@ -13,7 +13,7 @@ public class GasClearsFromRoom {
         r = new Room();
         g = new Game();
         s = new Student(g);
-        i = new Instructor();
+        i = new Instructor(g);
 
         //Személyek és tárgyak elhelyezése
         r.SetPoisonDuration(1);

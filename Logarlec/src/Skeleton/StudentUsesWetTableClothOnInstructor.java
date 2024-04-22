@@ -36,7 +36,7 @@ public class StudentUsesWetTableClothOnInstructor {
         s = new Student(g);
         r1.AddStudent(s);
 
-        i = new Instructor();
+        i = new Instructor(g);
         r2.AddInstructor(i);
     }
 

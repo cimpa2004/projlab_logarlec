@@ -20,13 +20,16 @@ public class Instructor extends Person {
 	 */
 	private Game game;
 
-	public Instructor(String id) {
+	public Instructor(String id, Game g) {
 		super(id);
+		this.game = g;
 	}
 
-	public Instructor() {
+	public Instructor(Game g) {
 		super(UUID.randomUUID().toString());
+		this.game = g;
 	}
+
 
 	/**
 	 * A függvény által megjelenik az Oktató a paraméterként megadott szobában.
@@ -58,7 +61,7 @@ public class Instructor extends Person {
 			//tárgyfelvétel
 			if (this.inventory.size() <5){
 				if(!this.GetRoom().GetIsSticky())
-					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size()));
+					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size() - 1));
 			}
 			//mask aktiválása, minimális
 			for (Defendable m: this.GetFFP2Masks())
@@ -255,6 +258,7 @@ public class Instructor extends Person {
 	@Override
 	public boolean Move(DoorSide d) {
 		//már tudjuk hogy be lehet lépni
+		if (!room.GetDoors().contains(d)) return false;
 		Logger.started(this, "Move", d);
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();

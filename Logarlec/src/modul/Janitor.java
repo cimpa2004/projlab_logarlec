@@ -111,6 +111,7 @@ public class Janitor extends Person{
     @Override
     public boolean Move(DoorSide d) {
         Logger.started(this, "Move", d);
+        if (!room.GetDoors().contains(d)) return false;
         DoorSide d2 = d.GetPair();
         Room r2 = d2.GetRoom();
         boolean isAppeared = AppearInRoom(r2);

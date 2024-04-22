@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.DoorSide;
 import modul.FFP2Mask;
 import modul.Instructor;
@@ -27,7 +28,7 @@ public class InstructorSavedByFFP2Mask {
 
         f = new FFP2Mask();
         r1.AddItem(f);
-        i = new Instructor();
+        i = new Instructor(new Game());
         r1.AddInstructor(i);
     }
 

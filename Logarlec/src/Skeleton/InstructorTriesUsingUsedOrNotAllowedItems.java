@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class InstructorTriesUsingUsedOrNotAllowedItems {
@@ -13,7 +14,7 @@ public class InstructorTriesUsingUsedOrNotAllowedItems {
 
 
     private static void initTest(){
-        i = new Instructor();
+        i = new Instructor(new Game());
         c = new Camembert();
         f = new FFP2Mask();
         w = new WetTableCloth();

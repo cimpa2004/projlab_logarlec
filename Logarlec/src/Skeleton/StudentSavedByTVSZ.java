@@ -21,7 +21,7 @@ public class StudentSavedByTVSZ {
         r2 = new Room();
         d1 = new DoorSide();
         d2 = new DoorSide();
-        i = new Instructor();
+        i = new Instructor(g);
 
         //Szobák összekötése
         r1.AddNeighbor(r2);

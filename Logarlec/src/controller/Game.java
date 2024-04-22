@@ -54,7 +54,6 @@ public class Game {
 		Logger.setLogLevel(this.logLevel);
 		isEndGame = false;
 		gameTimer = 10;
-
 	}
 	public Game(boolean isGameDeterministic, int logLevel){
 		this.isGameDeterministic = isGameDeterministic;
@@ -156,7 +155,6 @@ public class Game {
 			if(gameTimer == 0)
 				EndGame(false);
 		}
-
 
 		currentTurn = turnOrder.get(currentIndex);
 		currentTurn.StartTurn();
