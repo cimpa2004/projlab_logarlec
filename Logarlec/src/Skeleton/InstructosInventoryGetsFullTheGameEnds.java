@@ -18,7 +18,7 @@ public class InstructosInventoryGetsFullTheGameEnds {
     private static Room r;
 
     private static void Init(){
-        i = new Instructor();
+        i = new Instructor(g);
         sd = new SlideRule();
         wtc = new WetTableCloth();
         hbc = new HolyBeerCup();

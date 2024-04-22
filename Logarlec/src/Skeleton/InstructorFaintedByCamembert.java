@@ -1,10 +1,13 @@
 package Skeleton;
 
+import controller.Game;
 import modul.Instructor;
 import modul.Camembert;
 import modul.Room;
 import modul.WetTableCloth;
 import modul.TVSZ;
+
+import java.awt.font.GlyphMetrics;
 
 public class InstructorFaintedByCamembert {
     private static Instructor i;
@@ -14,7 +17,7 @@ public class InstructorFaintedByCamembert {
     private static TVSZ tvsz;
 
     private static void initTest(){
-        i = new Instructor();
+        i = new Instructor(new Game());
         c = new Camembert();
         r = new Room();
         w = new WetTableCloth();

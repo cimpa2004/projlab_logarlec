@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class StudentTriesUsingUsedItems {
@@ -10,10 +11,12 @@ public class StudentTriesUsingUsedItems {
     private static HolyBeerCup h;
     private static TVSZ t;
     private static Room r;
+    private static Game game;
 
 
     private static void initTest(){
-        s = new Student();
+        game = new Game();
+        s = new Student(game);
         c = new Camembert();
         f = new FFP2Mask();
         w = new WetTableCloth();

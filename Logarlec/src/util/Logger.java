@@ -2,19 +2,22 @@ package util;
 
 public class Logger {
     private static int indentLevel = 0;
-    private static int startedCount = 0;
+    private static int logLevel = 1;
 
     public static void started(Object obj, String methodName, Object... params) {
-        String indent = generateIndent();
-        System.out.println(indent + "STARTED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
-        indentLevel++;
-        startedCount++;
+        if(logLevel == 1){
+            String indent = generateIndent();
+            System.out.println(indent + "STARTED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
+            indentLevel++;
+        }
     }
 
     public static void finished(Object obj, String methodName, Object... params) {
-        indentLevel--;
-        String indent = generateIndent();
-        System.out.println(indent + "FINISHED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
+        if(logLevel == 1){
+            indentLevel--;
+            String indent = generateIndent();
+            System.out.println(indent + "FINISHED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
+        }
     }
 
     private static String generateIndent() {
@@ -36,7 +39,7 @@ public class Logger {
         return sb.toString();
     }
 
-    public static int getStartedCount() {
-        return startedCount;
+    static public void setLogLevel(int level){
+        logLevel = level;
     }
 }

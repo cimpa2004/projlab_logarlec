@@ -180,7 +180,7 @@ public abstract class Person implements IPerson{
 	 * 
 	 *  @param  r  Az a szoba, amelyben a Person meg szeretne jelenni
 	*/
-	public abstract void AppearInRoom(Room r);
+	public abstract boolean AppearInRoom(Room r);
 
 
 	public void Throw(Item i) {
@@ -443,6 +443,15 @@ public abstract class Person implements IPerson{
 		Logger.finished(this, "GetRandomActive", list);
 		return null;
 	}
+
+	/**
+	 * A Person ennek a függvény hatására felveheti az adott Itemet.
+	 *
+	 * @param  i  Az az Item, amelyet a Person fel szeretne venni.
+	 * @return    Visszatérési érték egy boolean, ami jelzi, hogy sikerült-e felvenni az i Itemet vagy sem.
+	 */
+	public abstract boolean Pickup(Item i);
+
 
 	@Override
 	public String GetId() {

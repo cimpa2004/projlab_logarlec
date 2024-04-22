@@ -1,11 +1,17 @@
 package controller;
 
-import modul.Room;
+import modul.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.InvalidParameterException;
+import java.util.*;
 import java.util.function.BiFunction;
-
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 
 /**
@@ -19,51 +25,56 @@ public class InputHandler {
      * egy Stringek listáját amik a parancs paraméterei, illetve egy Gamet varnak bemenetkent amelyen a parancs végrehajtódik
      * és visszatérnek egy String-el ami a parancs kimenete.
      */
-    private Map<String, BiFunction<String[], Game, String>> commandMap;
+    final private Map<String, Function<ArrayList<String>, String>> commandMap;
+    private Game game;
 
     public InputHandler() {
         commandMap = new HashMap<>();
-        commandMap.put("CreateGame", this::createGame);
-        commandMap.put("StartGame", this::startGame);
-        commandMap.put("DescribeGame", this::describeGame);
-        commandMap.put("ListStudents", this::listStudents);
-        commandMap.put("ListInstructors", this::listInstructors);
-        commandMap.put("ListJanitors", this::listJanitors);
-        commandMap.put("DescribeRoom", this::describeRoom);
-        commandMap.put("DescribePerson", this::describePerson);
-        commandMap.put("DescribeItem", this::describeItem);
-        commandMap.put("DescribeDoor", this::describeDoor);
-        commandMap.put("Pickup", this::pickup);
-        commandMap.put("Throw", this::throwItem);
-        commandMap.put("Move", this::move);
-        commandMap.put("UseItem", this::useItem);
-        commandMap.put("ConnectTransistors", this::connectTransistors);
-        commandMap.put("EndTurn", this::endTurn);
-        commandMap.put("SetCursed", this::setCursed);
-        commandMap.put("MergeRooms", this::mergeRooms);
-        commandMap.put("SeperateRoom", this::separateRoom);
+        commandMap.put("creategame", this::createGame);
+        commandMap.put("startgame", this::startGame);
+        commandMap.put("describegame", this::describeGame);
+        commandMap.put("liststudents", this::listStudents);
+        commandMap.put("listonstructors", this::listInstructors);
+        commandMap.put("listkanitors", this::listJanitors);
+        commandMap.put("describeroom", this::describeRoom);
+        commandMap.put("describeperson", this::describePerson);
+        commandMap.put("describeitem", this::describeItem);
+        commandMap.put("describedoor", this::describeDoor);
+        commandMap.put("pickup", this::pickup);
+        commandMap.put("throw", this::throwItem);
+        commandMap.put("move", this::move);
+        commandMap.put("useitem", this::useItem);
+        commandMap.put("connecttransistors", this::connectTransistors);
+        commandMap.put("endturn", this::endTurn);
+        commandMap.put("setcursed", this::setCursed);
+        commandMap.put("mergerooms", this::mergeRooms);
+        commandMap.put("seperateroom", this::separateRoom);
     }
 
     /**
      * Az inputként megadott parancsot végrehajta a megadott játékon. Ha parancs játék létrehozása, akkor a paraméterként
      * megadott játékot hozza létre.
      * @param input A bemenet ami egy parancs megfelelő paraméterekkel, ha van
-     * @param game A játék amin a parancs végrehajtódik
      * @return Vissza adja a parancs kimenetet
      */
-    public String handleCommand(String input, Game game) {
-        String[] parts = input.split(" ");
-        String command = parts[0];
-        String[] parameters = new String[parts.length - 1];
-        System.arraycopy(parts, 1, parameters, 0, parameters.length);
+    public String handleCommand(String input) throws InvalidParameterException {
+    String[] parts = input.split(" ");
+    String command = parts[0].toLowerCase();
+    String[] parameters = new String[parts.length - 1];
+    System.arraycopy(parts, 1, parameters, 0, parameters.length);
+    ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
 
-        BiFunction<String[], Game, String> commandFunction = commandMap.get(command);
-        if (commandFunction != null) {
-            return commandFunction.apply(parameters, game);
-        } else {
-            return "A megadott parancs nem talalhato meg a definialt parancsok kozott!";
+    Function<ArrayList<String>, String> commandFunction = commandMap.get(command);
+    if (commandFunction != null) {
+        // Check if game is null, and if so, use the supplier to get a new Game object
+        if (!command.equals("creategame") && this.game == null) {
+            return "message: A parancs nem volt sikeres mert meg nem lett letrehozva jatek CreateGame paranccsal.";
         }
+        return commandFunction.apply(parameterList);
+    } else {
+        return "message: A megadott parancs helytelen, nem szerepel a parancsok kozott.";
     }
+}
 
     /** Ez a metodus inicializalja a parameterkent megadott jatekot. Beallithato hogy a jatek determinisztikus legyen,
      * illetve megadhato egy elore definialt jatekterkep. Amennyiben nincs megadva jatekterkep akkor egy alap terkepet
@@ -73,11 +84,221 @@ public class InputHandler {
      * vagyis null lesz).
      *
      * @param parameters Lehetseges parameterek: isDeterministic, gameMapPath (optional)
-     * @param game A jatek parameter amit inicializal
      * @return Vissza adja a parancs kimenetet
      */
-    public String createGame(String[] parameters, Game game) {
-        return "";
+    public String createGame(ArrayList<String> parameters) {
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Kötelező paraméter hiányzik: isDeterministic";
+        }
+        String mapPath;
+        if (parameters.size() > 1 && !parameters.get(1).isEmpty()){
+            mapPath = parameters.get(1);
+        } else{
+            mapPath = "Tests/Test16/Map.json";
+        }
+
+
+
+        boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
+
+        this.game = new Game(isDeterministic, 0); // by default logLevel 0 tehat nincs logolas
+
+        try {
+            String contents = new String(Files.readAllBytes(Paths.get(mapPath)));
+            JSONObject gameJson = new JSONObject(contents);
+
+            //Setup doors
+            ArrayList<DoorSide> doorsList = new ArrayList<DoorSide>();
+            ArrayList<String> doorSideIDs = new ArrayList<String>();
+            if (gameJson.has("doors")) {
+                JSONArray doors = gameJson.getJSONArray("doors");
+                for (int i = 0; i < doors.length(); i++) {
+                    JSONObject d = doors.getJSONObject(i);
+                    DoorSide door = new DoorSide(d.getString("id"));
+                    door.SetCanBeOpened(d.getBoolean("canBeOpened"));
+                    doorsList.add(door);
+                    doorSideIDs.add(d.getString("id"));
+                }
+
+                //Set doorside pairs
+                for (int i = 0; i < doorsList.size(); i++) {
+                    doorsList.get(i).SetPair(doorsList.get(doorSideIDs.indexOf(doors.getJSONObject(i).getString("pair"))));
+                }
+            }
+
+            //Setup rooms
+            if (gameJson.has("rooms")) {
+                JSONArray rooms = gameJson.getJSONArray("rooms");
+                for (int i = 0; i < rooms.length(); i++) {
+                    JSONObject r = rooms.getJSONObject(i);
+                    Room room = new Room(r.getString("id"));
+                    if (r.has("poisonDuration")) room.SetPoisonDuration(r.getInt("poisonDuration"));
+                    if (r.has("isCursed")) room.SetIsCursed(r.getBoolean("isCursed"));
+                    if (r.has("isSticky")) room.SetIsSticky(r.getBoolean("isSticky"));
+                    if (r.has("numberOfPeopleToRoom"))
+                        room.SetNumberOfPeopleBeenToRoom(r.getInt("numberOfPeopleToRoom"));
+                    if (r.has("maxCapacity")) room.SetMaxCapacity(r.getInt("maxCapacity"));
+                    if (r.has("currentCapacity")) room.SetCurrentCapacity(r.getInt("currentCapacity"));
+
+                    //Students
+                    if (r.has("students")) {
+                        JSONArray students = r.getJSONArray("students");
+                        for (int j = 0; j < students.length(); j++) {
+                            Student st = new Student(students.getJSONObject(j).getString("id"), game);
+                            game.AddToGame(st);
+                            st.SetRoom(room);
+                            room.AddStudent(st);
+                        }
+                    }
+
+                    //Instructors
+                    if (r.has("instructors")) {
+                        JSONArray instructors = r.getJSONArray("instructors");
+                        for (int j = 0; j < instructors.length(); j++) {
+                            Instructor in = new Instructor(instructors.getJSONObject(j).getString("id"), this.game);
+                            game.AddToGame(in);
+                            in.SetRoom(room);
+                            room.AddInstructor(in);
+                        }
+                    }
+
+                    //Janitors
+                    if (r.has("janitors")) {
+                        JSONArray janitors = r.getJSONArray("janitors");
+                        for (int j = 0; j < janitors.length(); j++) {
+                            Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
+                            game.AddToGame(jan);
+                            jan.SetRoom(room);
+                            room.AddJanitor(jan);
+                        }
+                    }
+
+                    //Items
+
+                    //SlideRule
+                    if (r.has("slideRules")) {
+                        JSONArray slideRules = r.getJSONArray("slideRules");
+                        for (int j = 0; j < slideRules.length(); j++) {
+                            SlideRule sl = new SlideRule(slideRules.getJSONObject(j).getString("id"));
+                            sl.SetRoom(room);
+                            if (slideRules.getJSONObject(j).has("fake")){
+                                sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
+                            }
+                            room.AddItem(sl);
+                        }
+                    }
+
+                    //TVSZ
+                    if (r.has("tvszs")) {
+                        JSONArray tvszs = r.getJSONArray("tvszs");
+                        for (int j = 0; j < tvszs.length(); j++) {
+                            TVSZ t = new TVSZ(tvszs.getJSONObject(j).getString("id"));
+                            t.SetRoom(room);
+                            if (tvszs.getJSONObject(j).has("durability")) {
+                                t.SetUsesLeft(tvszs.getJSONObject(j).getInt("durability"));
+                            }
+                            if (tvszs.getJSONObject(j).has("fake")) {
+                                t.SetIsFake(tvszs.getJSONObject(j).getBoolean("fake"));
+                            }
+                            room.AddItem(t);
+                        }
+                    }
+
+                    //FFP2Mask
+                    if (r.has("ffp2Masks")) {
+                        JSONArray ffp2masks = r.getJSONArray("ffp2Masks");
+                        for (int j = 0; j < ffp2masks.length(); j++) {
+                            FFP2Mask fp = new FFP2Mask(ffp2masks.getJSONObject(j).getString("id"));
+                            fp.SetRoom(room);
+                            if (ffp2masks.getJSONObject(j).has("durability")) {
+                                fp.SetDurability(ffp2masks.getJSONObject(j).getInt("durability"));
+                            }
+                            if (ffp2masks.getJSONObject(j).has("fake")) {
+                                fp.SetIsFake(ffp2masks.getJSONObject(j).getBoolean("fake"));
+                            }
+                            room.AddItem(fp);
+                        }
+                    }
+
+                    //WetTableClothes
+                    if (r.has("wetTableClothes")) {
+                        JSONArray wetTableClothes = r.getJSONArray("wetTableClothes");
+                        for (int j = 0; j < wetTableClothes.length(); j++) {
+                            WetTableCloth wt = new WetTableCloth(wetTableClothes.getJSONObject(j).getString("id"));
+                            wt.SetRoom(room);
+                            if (wetTableClothes.getJSONObject(j).has("durability")) {
+                                wt.SetDurability(wetTableClothes.getJSONObject(j).getInt("durability"));
+                            }
+                            room.AddItem(wt);
+                        }
+                    }
+
+                    //HolyBeerCup
+                    if (r.has("holyBeerCups")) {
+                        JSONArray holyBeerCups = r.getJSONArray("holyBeerCups");
+                        for (int j = 0; j < holyBeerCups.length(); j++) {
+                            HolyBeerCup hb = new HolyBeerCup(holyBeerCups.getJSONObject(j).getString("id"));
+                            hb.SetRoom(room);
+                            if (holyBeerCups.getJSONObject(j).has("durability")) {
+                                hb.SetDurability(holyBeerCups.getJSONObject(j).getInt("durability"));
+                            }
+                            room.AddItem(hb);
+                        }
+                    }
+
+                    //AirFresheners
+                    if (r.has("airFresheners")) {
+                        JSONArray airFresheners = r.getJSONArray("airFresheners");
+                        for (int j = 0; j < airFresheners.length(); j++) {
+                            AirFreshener af = new AirFreshener(airFresheners.getJSONObject(j).getString("id"));
+                            af.SetRoom(room);
+                            if (airFresheners.getJSONObject(j).has("isActivated")) {
+                                if (airFresheners.getJSONObject(j).getBoolean("isActivated")) af.Activate();
+                            }
+                            room.AddItem(af);
+                        }
+                    }
+
+                    //Camemberts
+                    if (r.has("camemberts")) {
+                        JSONArray camemberts = r.getJSONArray("camemberts");
+                        for (int j = 0; j < camemberts.length(); j++) {
+                            Camembert cb = new Camembert(camemberts.getJSONObject(j).getString("id"));
+                            cb.SetRoom(room);
+                            if (camemberts.getJSONObject(j).has("isActivated")) {
+                                if (camemberts.getJSONObject(j).getBoolean("isActivated")) cb.Activate();
+                            }
+                            room.AddItem(cb);
+                        }
+                    }
+
+                    //Transistors
+                    if (r.has("transistors")) {
+                        JSONArray transistors = r.getJSONArray("transistors");
+                        for (int j = 0; j < transistors.length(); j++) {
+                            Transistor tr = new Transistor(transistors.getJSONObject(j).getString("id"));
+                            tr.SetRoom(room);
+                            room.AddItem(tr);
+                        }
+                    }
+
+                    //Set Doors to Rooms and Rooms to Doors
+                    if (r.has("doors")) {
+                        JSONArray roomDoors = r.getJSONArray("doors");
+                        for (int j = 0; j < roomDoors.length(); j++) {
+                            int doorIndex = doorSideIDs.indexOf(roomDoors.getString(j));
+                            DoorSide dPair = doorsList.get(doorIndex);
+                            dPair.SetRoom(room);
+                        }
+                    }
+                    game.AddRoom(room);
+                }
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        return describeGame(new ArrayList<>());
     }
 
     /**
@@ -85,11 +306,15 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ebben az esetben ures a parameters lista
-     * @param game A jatek amit elindit
      * @return Vissza adja a parancs kimenetet
      */
-    public String startGame(String[] parameters, Game game) {
-        return "";
+    public String startGame(ArrayList<String> parameters) {
+        if (game.GetTurnOrder().isEmpty()) return "message: Nincs személy a játékban";
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.");
+        str.append("\ncurrentTurn: ").append(game.GetCurrentTurn().GetId());
+        game.StartGame();
+        return str.toString();
     }
 
     /**
@@ -97,11 +322,117 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ebben az esetben ures a parameters lista
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeGame(String[] parameters, Game game) {
-        return "";
+    public String describeGame(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A letrejott jatek állapotai a többi mezőben.");
+
+        // gameTimer
+        str.append("\ngameTimer: ").append(game.GetGameTimer());
+
+        // isEndGame, winSide
+        boolean isGameEnded = game.GetIsEndGame();
+        str.append("\nisEndGame: ").append(isGameEnded);
+        if (isGameEnded){
+            str.append("\nwinSide: ").append(game.GetWinSide());
+        }
+
+        // currentTurn
+        IPerson currentTurn = game.GetCurrentTurn();
+        if (currentTurn == null) return "message: Nincsenek személyek a játékban.";
+        str.append("\ncurrentTurn: ").append(currentTurn.GetId());
+
+
+        // turnOrder
+        ArrayList<IPerson> turnOrder = game.GetTurnOrder();
+        turnOrder.sort(Comparator.comparing(IPerson::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nturnOrder: [");
+        for (IPerson person : turnOrder){
+            str.append(person.GetId());
+            if(person != turnOrder.get(turnOrder.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // rooms
+        ArrayList<IRoom> rooms = game.GetRooms();
+        rooms.sort(Comparator.comparing(IRoom::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nrooms: [");
+        for (IRoom room : rooms){
+            str.append(room.GetId());
+            if(room != rooms.get(rooms.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // doors
+        ArrayList<DoorSide> allDoors = new ArrayList<>();
+        for (IRoom room : rooms){
+            allDoors.addAll(room.GetDoors());
+        }
+        allDoors.sort(Comparator.comparing(DoorSide::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\ndoors: [");
+        for (DoorSide door : allDoors){
+            str.append(door.GetId());
+            if(door != allDoors.get(allDoors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // items (ennek egyenlonek kene lennie (itemsFromPersons + itemsFromRooms)-val es 2 diszjunkt halmaz)
+        ArrayList<Item> allItems = new ArrayList<>();
+        //     items from persons
+        ArrayList<IPerson> allPerson = game.GetTurnOrder();
+        for (IPerson person : allPerson){
+            allItems.addAll(person.GetInventory());
+        }
+        //     items from rooms
+        ArrayList<IRoom> allRooms = game.GetRooms();
+        for (IRoom room : allRooms){
+            allItems.addAll(room.GetItems());
+        }
+        allItems.sort(Comparator.comparing(Item::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nitems: [");
+        for (Item item : allItems){
+            str.append(item.GetId());
+            if(item != allItems.get(allItems.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // students / instructors / janitors
+        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Instructor> instructors = new ArrayList<>();
+        ArrayList<Janitor> janitors = new ArrayList<>();
+        for (IRoom room : rooms){
+            students.addAll(room.GetStudents());
+            instructors.addAll(room.GetInstructors());
+            janitors.addAll(room.GetJanitors());
+        }
+        //     students
+        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nstudents: [");
+        for (Student student : students){
+            str.append(student.GetId());
+            if(student != students.get(students.size()-1)) str.append(", ");
+        }
+        str.append("]");
+        //     instructors
+        instructors.sort(Comparator.comparing(Instructor::GetId));
+        str.append("\ninstructors: [");
+        for (Instructor instructor : instructors){
+            str.append(instructor.GetId());
+            if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+        //     janitor
+        janitors.sort(Comparator.comparing(Janitor::GetId));
+        str.append("\njanitors: [");
+        for (Janitor janitor : janitors){
+            str.append(janitor.GetId());
+            if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+
+        return str.toString();
     }
 
     /**
@@ -109,11 +440,28 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ebben az esetben ures a parameters lista
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String listStudents(String[] parameters, Game game) {
-        return "";
+    public String listStudents(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játékban résztvevő hallgatók a többi mezőben.");
+
+        ArrayList<IRoom> rooms = game.GetRooms();
+        // students
+        ArrayList<Student> students = new ArrayList<>();
+        for (IRoom room : rooms){
+            students.addAll(room.GetStudents());
+        }
+
+        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nstudents: [");
+        for (Student student : students){
+            str.append(student.GetId());
+            if(student != students.get(students.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        return str.toString();
     }
 
     /**
@@ -121,11 +469,32 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ebben az esetben ures a parameters lista
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String listInstructors(String[] parameters, Game game) {
-        return "";
+    public String listInstructors(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játékban résztvevő oktatók a többi mezőben.");
+
+        ArrayList<IRoom> rooms = game.GetRooms();
+        // instructors
+        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Instructor> instructors = new ArrayList<>();
+        ArrayList<Janitor> janitors = new ArrayList<>();
+        for (IRoom room : rooms){
+            students.addAll(room.GetStudents());
+            instructors.addAll(room.GetInstructors());
+            janitors.addAll(room.GetJanitors());
+        }
+
+        instructors.sort(Comparator.comparing(Instructor::GetId));
+        str.append("\ninstructors: [");
+        for (Instructor instructor : instructors){
+            str.append(instructor.GetId());
+            if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        return str.toString();
     }
 
     /**
@@ -133,11 +502,28 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ebben az esetben ures a parameters lista
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String listJanitors(String[] parameters, Game game) {
-        return "";
+    public String listJanitors(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        str.append("message: A játékban résztvevő oktatók a többi mezőben.");
+
+        ArrayList<IRoom> rooms = game.GetRooms();
+        // janitors
+        ArrayList<Janitor> janitors = new ArrayList<>();
+        for (IRoom room : rooms){
+            janitors.addAll(room.GetJanitors());
+        }
+
+        janitors.sort(Comparator.comparing(Janitor::GetId));
+        str.append("\njanitors: [");
+        for (Janitor janitor : janitors){
+            str.append(janitor.GetId());
+            if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        return str.toString();
     }
 
     /**
@@ -146,11 +532,104 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Egy Stringet tartalmaz a lista, a szoba amelynek a reszleteit kiirja
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeRoom(String[] parameters, Game game) {
-        return "";
+    public String describeRoom(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String roomId = parameters.get(0);
+
+        IRoom paramRoom = game.findRoomById(roomId);
+        if (paramRoom == null){
+            return "message: A megadott szoba " + roomId + " nem létezik.";
+        }
+
+        str.append("message: A megadott ").append(roomId).append(" szoba részletei a többi mezőben.");
+        // items
+        ArrayList<Item> items = paramRoom.GetItems();
+        items.sort(Comparator.comparing(Item::GetId));
+        str.append("\nitems: [");
+        for (Item item : items){
+            str.append(item.GetId());
+            if(item != items.get(items.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // doors
+        ArrayList<DoorSide> doors = paramRoom.GetDoors();
+        doors.sort(Comparator.comparing(DoorSide::GetId));
+        str.append("\ndoors: [");
+        for (DoorSide door : doors){
+            str.append(door.GetId());
+            if(door != doors.get(doors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // neighbors
+        ArrayList<Room> neighbors = paramRoom.GetNeighbors();
+        neighbors.sort(Comparator.comparing(Room::GetId));
+        str.append("\nneighbors: [");
+        for (Room neighbor : neighbors){
+            str.append(neighbor.GetId());
+            if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // isCursed
+        String isCursed = paramRoom.GetIsCursed() ? "true" : "false";
+        str.append("\nisCursed: ").append(isCursed);
+
+        // isSticky
+        String isSticky = paramRoom.GetIsSticky() ? "true" : "false";
+        str.append("\nisSticky: ").append(isSticky);
+
+        // isGaseous
+        String isGaseous = paramRoom.GetPoisonDuration() > 0 ? "true" : "false";
+        str.append("\nisGaseous: ").append(isGaseous);
+
+        // currentCapacity
+        str.append("\ncurrentCapacity: ").append(paramRoom.GetCurrentCapacity());
+
+        // maxCapacity
+        str.append("\nmaxCapacity: ").append(paramRoom.GetMaxCapacity());
+
+        // numberOfPeopleBeenToRoom
+        str.append("\nnumberOfPeopleBeenToRoom: ").append(paramRoom.GetNumberOfPeopleBeenToRoom());
+
+        // students / instructors / janitors
+        ArrayList<Instructor> instructors = new ArrayList<>(paramRoom.GetInstructors());
+        ArrayList<Janitor> janitors = new ArrayList<>(paramRoom.GetJanitors());
+        ArrayList<Student> students = new ArrayList<>(paramRoom.GetStudents());
+
+        //     students
+        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        str.append("\nstudents: [");
+        for (Student student : students){
+            str.append(student.GetId());
+            if(student != students.get(students.size()-1)) str.append(", ");
+        }
+        str.append("]");
+        //     instructors
+        instructors.sort(Comparator.comparing(Instructor::GetId));
+        str.append("\ninstructors: [");
+        for (Instructor instructor : instructors){
+            str.append(instructor.GetId());
+            if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+        //     janitor
+        janitors.sort(Comparator.comparing(Janitor::GetId));
+        str.append("\njanitors: [");
+        for (Janitor janitor : janitors){
+            str.append(janitor.GetId());
+            if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+
+        return str.toString();
     }
 
     /**
@@ -159,12 +638,105 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Egy Stringet tartalmaz a lista: egy hallgató, oktató vagy takarító.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      *
      */
-    public String describePerson(String[] parameters, Game game) {
-        return "";
+    public String describePerson(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+
+        IPerson paramPerson = game.findPersonById(personId);
+        if (paramPerson == null) {
+            return "message: A megadott hallgató/oktató/takarító " + personId + " nem létezik.";
+        }
+
+        // describe person
+        str.append("message: A megadott ").append(personId).append(" hallgató részletei a többi mezőben.");
+
+        // room
+        str.append("\nroom: ").append(paramPerson.GetRoom().GetId());
+
+        // inventory
+        ArrayList<Item> inventory = new ArrayList<>(paramPerson.GetInventory());
+        inventory.sort(Comparator.comparing(Item::GetId));
+        str.append("\ninventory: [");
+        for (Item item : inventory){
+            str.append(item.GetId());
+            if(item != inventory.get(inventory.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // wetTableClothes
+        ArrayList<Item> wetTableClothes = new ArrayList<>();
+        for (Defendable wetTableCloth : paramPerson.GetWetTableClothes()){
+            wetTableClothes.add((Item)wetTableCloth);
+        }
+        wetTableClothes.sort(Comparator.comparing(Item::GetId));
+        str.append("\nwetTableClothes: [");
+        for (Item item : wetTableClothes){
+            str.append(item.GetId());
+            if(item != wetTableClothes.get(wetTableClothes.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // tvszs
+        ArrayList<Item> tvszs = new ArrayList<>();
+        for (Defendable tvsz : paramPerson.GetTVSZs()){
+            tvszs.add((Item)tvsz);
+        }
+        tvszs.sort(Comparator.comparing(Item::GetId));
+        str.append("\ntvszs: [");
+        for (Item item : tvszs){
+            str.append(item.GetId());
+            if(item != tvszs.get(tvszs.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // holyBeerCups
+        ArrayList<Item> holyBeerCups = new ArrayList<>();
+        for (Defendable holyBeerCup : paramPerson.GetHolyBeerCups()){
+            holyBeerCups.add((Item)holyBeerCup);
+        }
+        holyBeerCups.sort(Comparator.comparing(Item::GetId));
+        str.append("\nholyBeerCups: [");
+        for (Item item : holyBeerCups){
+            str.append(item.GetId());
+            if(item != holyBeerCups.get(holyBeerCups.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // ffp2Masks
+        ArrayList<Item> ffp2Masks = new ArrayList<>();
+        for (Defendable ffp2Mask : paramPerson.GetFFP2Masks()){
+            ffp2Masks.add((Item)ffp2Mask);
+        }
+        ffp2Masks.sort(Comparator.comparing(Item::GetId));
+        str.append("\nffp2Masks: [");
+        for (Item item : ffp2Masks){
+            str.append(item.GetId());
+            if(item != ffp2Masks.get(ffp2Masks.size()-1)) str.append(", ");
+        }
+        str.append("]");
+
+        // isAlive
+        String isAlive = paramPerson.GetIsAlive() ? "true" : "false";
+        str.append("\nisAlive: ").append(isAlive);
+
+        // isFainted
+        String isFainted = paramPerson.GetIsFainted() ? "true" : "false";
+        str.append("\nisFainted: ").append(isFainted);
+
+        // isStunned
+        String isStunned = paramPerson.GetIsStunned() ? "true" : "false";
+        str.append("\nisStunned: ").append(isStunned);
+
+        // activeTurn
+        str.append("\nactiveTurn: ").append(paramPerson.GetIsActiveTurn());
+
+        return str.toString();
     }
 
     /**
@@ -172,11 +744,47 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Egy Stringet tartalmaz a lista: a tárgy melynek részleteit kiírja.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeItem(String[] parameters, Game game) {
-        return "";
+    public String describeItem(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String itemId = parameters.get(0);
+
+        Item paramItem = game.findItemById(itemId);
+        if (paramItem == null) {
+            return "message: A megadott item " + itemId + " nem létezik.";
+        }
+
+        // describe item
+        str.append("message: A megadott ").append(itemId).append(" részletei a többi mezőben.");
+
+        // owner
+        Person ownerObj = paramItem.GetOwner();
+        String owner = ownerObj == null ? "None" : ownerObj.GetId();
+        str.append("\nowner: ").append(owner);
+
+        // room
+        Room roomObj = paramItem.GetRoom();
+        String room = roomObj == null ? "None" : roomObj.GetId();
+        str.append("\nroom: ").append(room);
+
+        // isActive
+        String isActive = paramItem.GetIsActive() ? "true" : "false";
+        str.append("\nisActive: ").append(isActive);
+
+        // pair
+        Transistor pairObj = paramItem.GetPair();
+        String pair = pairObj == null ? "None" : pairObj.GetId();
+        str.append("\npair: ").append(pair);
+
+        // isFake
+        String isFake = paramItem.GetIsFake() ? "true" : "false";
+        str.append("\nisFake: ").append(isFake);
+
+        return str.toString();
     }
 
     /**
@@ -184,11 +792,42 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Egy Stringet tartalmaz a lista: az ajtó melynek részleteit kiírja.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String describeDoor(String[] parameters, Game game) {
-        return "";
+    public String describeDoor(ArrayList<String> parameters) {
+        StringBuilder str = new StringBuilder();
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String doorId = parameters.get(0);
+
+        // find door in game
+        DoorSide paramDoor = game.findDoorById(doorId);
+        if (paramDoor == null) {
+            return "message: A megadott ajtó " + doorId + " nem létezik.";
+        }
+
+        // describe door
+        str.append("message: A megadott ").append(doorId).append(" ajtó részletei a többi mezőben.");
+
+        // isVisible
+        String isVisible = paramDoor.GetIsVisible() ? "true" : "false";
+        str.append("\nisVisible: ").append(isVisible);
+
+        // canBeOpened
+        String canBeOpened = paramDoor.GetCanBeOpened() ? "true" : "false";
+        str.append("\ncanBeOpened: ").append(canBeOpened);
+
+        // pair
+        str.append("\npair: ").append(paramDoor.GetPair().GetId());
+
+        // room
+        str.append("\nroom: ").append(paramDoor.GetRoom().GetId());
+
+        // neighbor
+        str.append("\nneighbor: ").append(paramDoor.GetPair().GetRoom().GetId());
+
+        return str.toString();
     }
 
     /**
@@ -196,11 +835,34 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ket Stringet tartalmaz a lista: a személy aki felveszi a tárgyat, illetve maga a tárgy.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String pickup(String[] parameters, Game game) {
-        return "";
+    public String pickup(ArrayList<String> parameters) {
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+        String itemId = parameters.get(1);
+
+        // find person in game
+        IPerson paramPerson = game.findPersonById(personId);
+
+        //find item in game
+        Item paramItem = game.findItemById(itemId);
+
+        if (paramPerson == null || paramItem == null) {
+            return "message: A tárgyat nem sikerült felvenni, a megadott személy " + personId + " vagy item " + itemId + " nem létezik.";
+        }
+
+        // try to pick up
+        if (paramPerson.GetRoom() != paramItem.GetRoom()){
+            return "message: A tárgyat nem sikerült felvenni, a megadott item " + itemId + " nem abban a szobában van mint a megadott személy.";
+        }
+        boolean isPickedUp = paramPerson.Pickup(paramItem);
+        if (!isPickedUp){
+            return "message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában.";
+        }
+        return "message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában";
     }
 
     /**
@@ -208,11 +870,32 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ket Stringet tartalmaz a lista: a személy aki eldobja a tárgyat, illetve maga a tárgy.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String throwItem(String[] parameters, Game game) {
-        return "";
+    public String throwItem(ArrayList<String> parameters) {
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+        String itemId = parameters.get(1);
+
+        // find person in game
+        IPerson paramPerson = game.findPersonById(personId);
+
+       // find item in game
+        Item paramItem = game.findItemById(itemId);
+
+        if (paramPerson == null || paramItem == null) {
+            return "message: A tárgyat nem sikerült eldobni, a megadott személy " + personId + " vagy item " + itemId + " nem létezik.";
+        }
+
+        // try to throw
+        if (!paramPerson.GetInventory().contains(paramItem)){
+            return "message: A tárgyat nem sikerült eldobni, a megadott item " + itemId + " nincs benne a személy inventoryjában.";
+        }
+        paramPerson.Throw(paramItem);
+
+        return "message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában";
     }
 
     /**
@@ -220,11 +903,30 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ket Stringet tartalmaz a lista: a személy amely lépni szeretne a szobák között, illetve az ajtó amin belépne.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String move(String[] parameters, Game game) {
-        return "";
+    public String move(ArrayList<String> parameters) {
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+        String doorId = parameters.get(1);
+
+        // find person in game
+        IPerson paramPerson = game.findPersonById(personId);
+
+        //find door in game
+        DoorSide paramDoor = game.findDoorById(doorId);
+
+        if (paramPerson == null || paramDoor == null) {
+            return "message: A személynek nem sikerült belépnie a másik szobába, mert a személy " + personId + " vagy ajtó " + doorId + " nem létezik.";
+        }
+
+        // try to move
+        boolean isAppeared = paramPerson.Move(paramDoor);
+        if (!isAppeared) return "message: A személynek nem sikerült belépnie a másik szobába.";
+
+        return "message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.";
     }
 
     /**
@@ -232,11 +934,32 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ket Stringet tartalmaz a lista: a személy amely a tárgyat használná, illetve maga a tárgy.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String useItem(String[] parameters, Game game) {
-        return "";
+    public String useItem(ArrayList<String> parameters) {
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+        String itemId = parameters.get(1);
+
+        // find person in game
+        IPerson paramPerson = game.findPersonById(personId);
+
+        //find door in game
+        Item paramItem = game.findItemById(itemId);
+
+        if (paramPerson == null || paramItem == null) {
+            return "message: A személynek nem sikerült használnia a tárgyat, mert a személy " + personId + " vagy tárgy " + itemId + " nem létezik.";
+        }
+
+        // try to use
+        if (!paramPerson.GetInventory().contains(paramItem)){
+            return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy nincs benne az inventoryjában.";
+        }
+        paramPerson.UseItem(paramItem);
+
+        return "message: A személynek sikerült használnia a tárgyat.";
     }
 
     /**
@@ -244,11 +967,25 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Harom Stringet tartalmaz a lista: a hallgató aki a tranzisztorokat kapcsolja össze, illetve a két tranzisztor melyet összekapcsolna.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String connectTransistors(String[] parameters, Game game) {
-        return "";
+    public String connectTransistors(ArrayList<String> parameters) {
+        if (!(parameters.size() > 2) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty() || parameters.get(2).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+        String transistor1 = parameters.get(1);
+        String transistor2 = parameters.get(2);
+
+        IPerson paramPerson = game.findPersonById(personId);
+        Item paramT1 = game.findItemById(transistor1);
+        Item paramT2 = game.findItemById(transistor2);
+        if (paramPerson == null || paramT1 == null || paramT2 == null) {
+            return "message: A hallgatónak nem sikerült párosítani a tranzisztorokat, mert a személy " + personId + " vagy tranzisztor " + transistor1 + ", " + transistor2 + "  nem létezik.";
+        }
+        paramPerson.ConnectTransistors((Transistor) paramT1, (Transistor) paramT2);
+
+        return "message: A hallgatónak sikeresen sikerült párosítani a tranzisztorokat.";
     }
 
     /**
@@ -256,11 +993,20 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Egy Stringet tartalmaz a lista: a személy aki a körével végez.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String endTurn(String[] parameters, Game game) {
-        return "";
+    public String endTurn(ArrayList<String> parameters) {
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String personId = parameters.get(0);
+        IPerson paramPerson = game.findPersonById(personId);
+
+        // check it chosen person has active turn
+        if (!paramPerson.GetIsActiveTurn()) return "message: Nem az adott személynek van jelenleg köre.";
+        paramPerson.EndTurn();
+
+        return "message: Az adott személy sikeresen befejezte a körét.";
     }
 
     /**
@@ -268,11 +1014,28 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ket Stringet tartalmaz a lista: a szoba melynek elátkozottsága állítódik, maga az érték ami jelzi, hogy elátkozott legyen vagy sem.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String setCursed(String[] parameters, Game game) {
-        return "";
+    public String setCursed(ArrayList<String> parameters) {
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String roomId = parameters.get(0);
+        String isCursed = parameters.get(1);
+
+        IRoom paramRoom = game.findRoomById(roomId);
+        boolean paramIsCursed = Boolean.parseBoolean(isCursed);
+
+        if (paramRoom == null){
+            return "message: Nem sikerült beállítani a szoba elátkozottságát, mert a szoba " + roomId + " nem található.";
+        }
+        paramRoom.SetIsCursed(paramIsCursed);
+
+        if (paramIsCursed){
+            return 	"message: A megadott szoba jelenleg elátkozott.";
+        } else{
+            return 	"message: A megadott szoba jelenleg nem elátkozott.";
+        }
     }
 
     /**
@@ -280,11 +1043,27 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Ket Stringet tartalmaz a lista: a két szoba melyek összeolvadnak.
-     * @param game A jatek amin a parancsot vegrehajta
      * @return Vissza adja a parancs kimenetet
      */
-    public String mergeRooms(String[] parameters, Game game) {
-        return "";
+    public String mergeRooms(ArrayList<String> parameters) {
+        if (!(parameters.size() > 1) || parameters.get(0).isEmpty() || parameters.get(1).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String room1Id = parameters.get(0);
+        String room2Id = parameters.get(1);
+
+        IRoom paramRoom1 = game.findRoomById(room1Id);
+        IRoom paramRoom2 = game.findRoomById(room2Id);
+        if (paramRoom1 == null || paramRoom2 == null){
+            return "message: A megadott szobákat nem sikerült összeolvasztani, mert a megadott szoba " + room1Id + " vagy szoba " + room2Id + " nem található.";
+        }
+        boolean isMerged = paramRoom1.MergeRooms(paramRoom2);
+
+        if (isMerged){
+            return "message: A két megadott szoba sikeresen összeolvadt.";
+        }else{
+            return "message: A megadott szobákat nem sikerült összeolvasztani.";
+        }
     }
 
     /**
@@ -292,10 +1071,23 @@ public class InputHandler {
      * Mindig ellenorzni, hogy a megadott parameterket String listaja megfelelo szamu parametereket tartalmaz, illetve azt
      * hogy ezek a parameterek megfeleloen definialtak-e, amennyiben nem ugy nem hajtodik vegre a parancs.
      * @param parameters Egy Stringet tartalmaz a lista: A szoba melyet szétválaszt.
-     * @param game A jatek amin a parancsot vegrehajta
+
      * @return Vissza adja a parancs kimenetet
      */
-    public String separateRoom(String[] parameters, Game game) {
-        return "";
+    public String separateRoom(ArrayList<String> parameters) {
+        if (parameters.isEmpty() || parameters.get(0).isEmpty()){
+            return "message: Nem volt megadva elegendő paraméter.";
+        }
+        String roomId = parameters.get(0);
+        IRoom paramRoom = game.findRoomById(roomId);
+
+        if (paramRoom == null){
+            return "message: A megadott szobát nem sikerült szétválasztani, mert a megadott szoba " + roomId + " nem található.";
+        }
+        paramRoom.SeparateRoom();
+        return "message: A megadott szobát sikeresen sikerült szétválasztani.";
     }
+
+
 }
+

@@ -38,6 +38,18 @@ public abstract class Item {
 	public abstract boolean GetIsFake();
 
 	/**
+	 *Vissza adja, hogy aktivalva volt-e mar
+	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e, a nem aktivalhato Itemek mindig false-al ternek vissza
+	 */
+	public abstract boolean GetIsActive();
+
+	/**
+	 * Megadja a párját
+	 * @return Pair értéke, null ha nincs párja
+	 */
+	public abstract Transistor GetPair();
+
+	/**
 	 * Vissza adja a tárgyhoz tartozó egyedi id-t.
 	 * @return A tárgyhoz tartozó egyedi id.
 	 */
@@ -122,4 +134,17 @@ public abstract class Item {
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
 	public abstract void Thrown(Person p);
+
+
+	/**
+	 *Egy hallgató használta a tárgyat
+	 * @param s implementáció a megvalósításban
+	 */
+	public abstract void UsedByStudent(Student s);
+
+	/**
+	 * Egy oktató használta a tárgyat
+	 * @param i implementáció a megvalósításban
+	 */
+	public abstract void UsedByInstructor(Instructor i);
 }

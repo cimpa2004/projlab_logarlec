@@ -20,26 +20,31 @@ public class Instructor extends Person {
 	 */
 	private Game game;
 
-	public Instructor(String id) {
+	public Instructor(String id, Game g) {
 		super(id);
+		this.game = g;
 	}
 
-	public Instructor() {
+	public Instructor(Game g) {
 		super(UUID.randomUUID().toString());
+		this.game = g;
 	}
+
 
 	/**
 	 * A függvény által megjelenik az Oktató a paraméterként megadott szobában.
 	 *
 	 *  @param  r  Az a szoba ahol megjelenik az Oktató
 	 */
-	public void AppearInRoom(Room r) {
+	public boolean AppearInRoom(Room r) {
 		Logger.started(this, "AppearInRoom", r);
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
 			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
+			Room oldRoom = room;
 			room = r; // atlepes a masik szobaba
+			oldRoom.RemoveInstructor(this);
 			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
 			room.AddInstructor(this);
 			
@@ -56,13 +61,16 @@ public class Instructor extends Person {
 			//tárgyfelvétel
 			if (this.inventory.size() <5){
 				if(!this.GetRoom().GetIsSticky())
-					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size()));
+					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size() - 1));
 			}
 			//mask aktiválása, minimális
 			for (Defendable m: this.GetFFP2Masks())
 				((FFP2Mask) m).Activate();
+		} else {
+			return false;
 		}
 		Logger.finished(this, "AppearInRoom", r);
+		return true;
 	}
 
 	/**
@@ -203,19 +211,27 @@ public class Instructor extends Person {
 		return activeTurn;
 	}
 
+	@Override
+	public boolean GetIsAlive() {
+		return true;
+	}
+
+	@Override
+	public void ConnectTransistors(Transistor t1, Transistor t2) {
+		throw new RuntimeException("Az instruktor nem csatlakoztathat ossze tranzisztorokat.");
+	}
+
 	/**
 	 * Az Oktató a paraméterben kapott Usable tárgyat használja. Ekkor meghívja a UsedByInstructor függvényt
-	 * az adott tárgyon. Ennek hatására az adott Usable aktiválódik (feltéve, hogy az FFP2 maszk vagy Camembert), ha még nem volt aktiválva és
-	 * képes lesz használni az adott Usable képességeit.
+	 * az adott tárgyon. Ennek hatására az adott Item aktiválódik (amennyiben kepes erre), ha még nem volt aktiválva és
+	 * képes lesz használni az adott Item képességeit.
 	 *
-	 *  @param  u  Usable amit az Oktató használni fog
+	 *  @param  i  Item amit az Oktató használni fog
 	 */
-	public void UseItem(Usable u) {
-		Logger.started(this, "UseItem", u);
-		// Any Usable must be an Item as well
-		Item item = (Item)u;
-		if(inventory.contains(item)) u.UsedByInstructor(this);
-		Logger.finished(this, "UseItem", u);
+	public void UseItem(Item i) {
+		Logger.started(this, "UseItem", i);
+		if(inventory.contains(i)) i.UsedByInstructor(this);
+		Logger.finished(this, "UseItem", i);
 	}
 
 	/**
@@ -240,14 +256,15 @@ public class Instructor extends Person {
 	 *  @param  d  Az az ajtó, amin az Oktató átlép a másik szobába
 	 */
 	@Override
-	public void Move(DoorSide d) {
+	public boolean Move(DoorSide d) {
 		//már tudjuk hogy be lehet lépni
+		if (!room.GetDoors().contains(d)) return false;
 		Logger.started(this, "Move", d);
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
-		room.RemoveInstructor(this);
-		AppearInRoom(r2);
+		boolean isAppeared = AppearInRoom(r2);
 		Logger.finished(this, "Move", d);
+		return isAppeared;
 	}
 
 }

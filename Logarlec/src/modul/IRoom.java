@@ -15,7 +15,7 @@ public interface IRoom {
      * Csak akkor hívódik meg, ha mindkét szoba aktuális kapacitása jelenleg 0.
      * A szobákban lévő tárgyak az új szobába kerülnek.
      * */
-    boolean MergeRooms(Room r2);
+    boolean MergeRooms(IRoom r2);
 
     /**
      * A szoba két szobára válik. Mindkét szoba maximum kapacitása egyenlő lesz az eredeti befogadóképességével, valamint
@@ -41,6 +41,12 @@ public interface IRoom {
      * Visszaadja a szobából kivezető ajtók szoba felé néző oldalait.
      * */
     ArrayList<DoorSide> GetDoors();
+
+    /**
+     * Visszaadja, hogy hány ember volt már a szobában az utolso takaritas ota
+     * */
+    int GetNumberOfPeopleBeenToRoom();
+
 
     /**
      * Vissza adja a Roomot egyertelmuen azonosito id-t

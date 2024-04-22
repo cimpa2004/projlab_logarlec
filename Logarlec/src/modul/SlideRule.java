@@ -32,6 +32,16 @@ public class SlideRule extends Item {
 		return isFake;
 	}
 
+	@Override
+	public boolean GetIsActive() {
+		return false;
+	}
+
+	@Override
+	public Transistor GetPair() {
+		return null;
+	}
+
 	public void SetIsFake(boolean b){
 		isFake = b;
 	}
@@ -77,5 +87,15 @@ public class SlideRule extends Item {
 		Logger.started(this, "Thrown", p);
 		p.RemoveFromInventory(this);
 		Logger.finished(this, "Thrown", p);
+	}
+
+	@Override
+	public void UsedByStudent(Student s) {
+
+	}
+
+	@Override
+	public void UsedByInstructor(Instructor i) {
+
 	}
 }

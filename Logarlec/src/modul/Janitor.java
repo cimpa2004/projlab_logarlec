@@ -33,13 +33,15 @@ public class Janitor extends Person{
      * @param r  Az a szoba, amelyben a Person meg szeretne jelenni
      */
     @Override
-    public void AppearInRoom(Room r) {
+    public boolean AppearInRoom(Room r) {
         Logger.started(this, "AppearInRoom", r);
         int currentC = r.GetCurrentCapacity();
         int maxC = r.GetMaxCapacity();
         if(currentC < maxC) {
             room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
+            Room oldRoom = room;
             room = r; // atlepes a masik szobaba
+            oldRoom.RemoveJanitor(this);
             room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
             room.AddJanitor(this);
 
@@ -49,8 +51,11 @@ public class Janitor extends Person{
             //takarítás szellőztetés
             this.GetRoom().SetPoisonDuration(0);
             this.GetRoom().SetIsSticky(false);
+        } else{
+            return false;
         }
         Logger.finished(this, "AppearInRoom", r);
+        return true;
     }
 
     /**
@@ -104,14 +109,16 @@ public class Janitor extends Person{
      * @param d  Egy ajtó, amelyen a Person megpróbál átlépni egy másik szobába
      */
     @Override
-    public void Move(DoorSide d) {
+    public boolean Move(DoorSide d) {
         Logger.started(this, "Move", d);
+        if (!room.GetDoors().contains(d)) return false;
         DoorSide d2 = d.GetPair();
         Room r2 = d2.GetRoom();
-        room.RemoveJanitor(this);
-        AppearInRoom(r2);
+        boolean isAppeared = AppearInRoom(r2);
         Logger.finished(this, "Move", d);
+        return isAppeared;
     }
+
 
     /**
      * Tárgyfelvétel, Tilos!!!
@@ -126,11 +133,11 @@ public class Janitor extends Person{
 
     /**
      * Tárgyhasználat, Tilos!!!
-     * @param u
+     * @param i
      *Kivételt dob
      */
     @Override
-    public void UseItem(Usable u) {
+    public void UseItem(Item i) {
         throw new RuntimeException("A takarito nem hasznalhat targyakat");
     }
 
@@ -204,5 +211,15 @@ public class Janitor extends Person{
     @Override
     public boolean GetIsActiveTurn() {
         return this.activeTurn;
+    }
+
+    @Override
+    public boolean GetIsAlive() {
+        return true;
+    }
+
+    @Override
+    public void ConnectTransistors(Transistor t1, Transistor t2) {
+
     }
 }

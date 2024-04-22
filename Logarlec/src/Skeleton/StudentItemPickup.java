@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class StudentItemPickup {
@@ -11,12 +12,14 @@ public class StudentItemPickup {
     private static FFP2Mask ffp2;
     private static TVSZ tvsz2;
     private static Room r;
+    private static Game game;
 
     public static void Init(){
+        game = new Game();
 
         r = new Room();
 
-        st = new Student();
+        st = new Student(game);
         r.AddStudent(st);
 
         c = new Camembert();

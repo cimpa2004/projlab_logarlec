@@ -21,8 +21,9 @@ public interface IPerson {
      * az ajtó által definiált másik szobában.
      *
      *  @param  d  Egy ajtó, amelyen a Person megpróbál átlépni egy másik szobába
+     *  @return  Egy boolean érték ami megmondja, hogy sikerült e átlépni a másik szobába.
      */
-    void Move(DoorSide d);
+    boolean Move(DoorSide d);
 
 
     /**
@@ -37,10 +38,10 @@ public interface IPerson {
 
 
     /**
-     * Egy absract függvény, mely a kiválasztott Usable-t aktiválja. Ez a származott osztályokban van leimplementálva, mert
+     * Egy absract függvény, mely a kiválasztott Itemet aktiválja amennyiben elhetseges. Ez a származott osztályokban van leimplementálva, mert
      * attól függően változik egy Usable használata, hogy ki használja.
      */
-    void UseItem(Usable u);
+    void UseItem(Item i);
 
 
     /**
@@ -124,5 +125,20 @@ public interface IPerson {
      *  @return  Egy boolean ertek ami jelzi hogy aktiv kore van-e a szemelynek
      */
     boolean GetIsActiveTurn();
+
+    /**
+     * Vissz adja, hogy az adott Person el e. Csak hallgato eseteben lehet ez false
+     * @return
+     */
+    boolean GetIsAlive();
+
+    /**
+     * Az IPerson a két paraméterként megadott Transistor-t összekapcsolja. Ez után már képes lesz használni a
+     * két Transistor-t arra, hogy szobák között teleportáljon.
+     *
+     *  @param t1  Az egyik transzisztor amit csatlakoztatni akar a másikhoz
+     *  @param t2  A másik tranzisztor amit a t1-hez szeretne csatlakoztatni
+     */
+    void ConnectTransistors(Transistor t1, Transistor t2);
 
 }

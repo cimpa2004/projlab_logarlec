@@ -1,5 +1,6 @@
 package Skeleton;
 
+import controller.Game;
 import modul.*;
 
 public class StudentSelfGas {
@@ -11,11 +12,13 @@ public class StudentSelfGas {
     private static TVSZ tvsz;
     private static FFP2Mask ffp2;
     private static Room r;
+    private static Game game;
     public static void Init(){
+        game = new Game();
 
         r = new Room();
 
-        st = new Student();
+        st = new Student(game);
         r.AddStudent(st);
 
         c = new Camembert();

@@ -14,14 +14,14 @@ public class StudentSavedByHolyBeerCup {
     private static Instructor i;
 
     private static void Init(){
-        st = new Student();
+        st = new Student(g);
         hbc = new HolyBeerCup();
         d1 = new DoorSide();
         d2 = new DoorSide();
         r0 = new Room();
         r1 = new Room();
         g = new Game();
-        i = new Instructor();
+        i = new Instructor(g);
 
         r0.AddStudent(st);
         r0.AddItem(hbc);
