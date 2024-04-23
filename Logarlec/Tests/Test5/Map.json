@@ -14,22 +14,22 @@
       "rooms": [
         {
           "id": "Room1",
-          "Instructors": [],
-          "Students" :[
+          "instructors": [],
+          "students":[
             {
               "id" : "Student1"
             }
           ],
-          "Janitors":[],
-          "SlideRules":[
+          "janitors":[],
+          "slideRules":[
             {
               "id" : "SlideRule1",
               "fake":true
             }
           ],
-          "TVSZs": [
+          "tvszs": [
           ],
-          "FFP2Masks": [
+          "ffp2Masks": [
           ],
           "wetTableClothes": [
           ],
@@ -39,7 +39,7 @@
           ],
           "camemberts": [
           ],
-          "Transistors": [],
+          "transistors": [],
           "doors": ["Door1"]
         }
        

@@ -1,11 +1,11 @@
-message: A játékot sikerült létrehozni
+message: A letrejott jatek állapotai a többi mezőben.
 gameTimer: 10
 isEndGame: false
 currentTurn: Student1
-turnOrder: [Student1] 
-rooms: [Room1] 
-doorsides: [] 
-items: [] 
+turnOrder: [Student1]
+rooms: [Room1]
+doorsides: []
+items: []
 students: [Student1]
 instructors: []
 janitors: []
@@ -16,10 +16,10 @@ message: A játék jelenlegi állapotai a többi mezőben.
 gameTimer: 10
 isEndGame: true
 currentTurn: Student1
-turnOrder: [Student1] 
-rooms: [Room1] 
-doorsides: [] 
-items: [] 
+turnOrder: [Student1]
+rooms: [Room1]
+doorsides: []
+items: []
 students: [Student1]
 instructors: []
 janitors: []

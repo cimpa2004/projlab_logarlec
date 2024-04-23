@@ -1,4 +1,4 @@
-CreateGame true Map.json
+CreateGame true Tests/Test4/Map.json
 Pickup Student1 TVSZ1
 Pickup Student1 TVSZ2
 Pickup Student1 TVSZ3

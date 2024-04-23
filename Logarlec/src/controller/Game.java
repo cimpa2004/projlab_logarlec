@@ -142,11 +142,14 @@ public class Game {
 	 * */
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
+		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
+		else if (currentTurn == null) currentTurn = turnOrder.get(0);
 
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
 		}
+
 		int currentIndex = turnOrder.indexOf(currentTurn);
 		currentIndex++;
 		if(currentIndex >= turnOrder.size()){

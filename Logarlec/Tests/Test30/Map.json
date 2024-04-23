@@ -7,22 +7,22 @@
      "poisonDuration": 3,
      "isCursed": true,
      "isSticky": true,
-        "Instructors": [
+        "instructors": [
 ],
-        "Students" :[
+        "students":[
         ],
-        "Janitors":[],
-        "SlideRules":[
+        "janitors":[],
+        "slideRules":[
 {
             "id":"SlideRule1"
           }],
-        "TVSZs": [
+        "tvszs": [
 {
             "durability": 3,
             "id":"TVSZ1"
           }
         ],
-        "FFP2Masks": [
+        "ffp2Masks": [
 {
             "durability": 5,
             "id":"FFP2Mask1"
@@ -49,7 +49,7 @@
 {
             "id":"Camembert1"        	}
         ],
-        "Transistors": [
+        "transistors": [
 {
             "id":"Transistor1"
           }],

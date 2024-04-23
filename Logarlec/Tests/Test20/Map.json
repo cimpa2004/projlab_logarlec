@@ -4,18 +4,18 @@
     "rooms": [
       {
         "id": "Room1",
-        "Instructors": [
+        "instructors": [
 ],
-        "Students" :[
+        "students":[
 {
             "id" : "Student1"
           }
         ],
-        "Janitors":[],
-        "SlideRules":[],
-        "TVSZs": [
+        "janitors":[],
+        "slideRules":[],
+        "tvszs": [
         ],
-        "FFP2Masks": [
+        "ffp2Masks": [
 {
             "durability": 5,
             "id":"FFP2Mask1",
@@ -31,7 +31,7 @@
         ],
         "camemberts": [
         ],
-        "Transistors": [],
+        "transistors": [],
         "doors": []
       }
       

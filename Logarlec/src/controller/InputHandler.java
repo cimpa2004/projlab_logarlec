@@ -340,8 +340,9 @@ public class InputHandler {
 
         // currentTurn
         IPerson currentTurn = game.GetCurrentTurn();
-        if (currentTurn == null) return "message: Nincsenek személyek a játékban.";
-        str.append("\ncurrentTurn: ").append(currentTurn.GetId());
+        if (currentTurn != null) str.append("\ncurrentTurn: ").append(currentTurn.GetId());
+        else str.append("\ncurrentTurn: ").append("None");
+
 
 
         // turnOrder
@@ -370,7 +371,7 @@ public class InputHandler {
             allDoors.addAll(room.GetDoors());
         }
         allDoors.sort(Comparator.comparing(DoorSide::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
-        str.append("\ndoors: [");
+        str.append("\ndoorsides: [");
         for (DoorSide door : allDoors){
             str.append(door.GetId());
             if(door != allDoors.get(allDoors.size()-1)) str.append(", ");
@@ -560,7 +561,7 @@ public class InputHandler {
         // doors
         ArrayList<DoorSide> doors = paramRoom.GetDoors();
         doors.sort(Comparator.comparing(DoorSide::GetId));
-        str.append("\ndoors: [");
+        str.append("\ndoorsides: [");
         for (DoorSide door : doors){
             str.append(door.GetId());
             if(door != doors.get(doors.size()-1)) str.append(", ");
@@ -773,7 +774,7 @@ public class InputHandler {
 
         // isActive
         String isActive = paramItem.GetIsActive() ? "true" : "false";
-        str.append("\nisActive: ").append(isActive);
+        str.append("\nisActivated: ").append(isActive);
 
         // pair
         Transistor pairObj = paramItem.GetPair();

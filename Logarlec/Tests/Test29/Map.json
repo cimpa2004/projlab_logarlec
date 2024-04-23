@@ -14,8 +14,8 @@
     "rooms": [
       {
         "id": "Room1",
-        "Instructors": [],
-        "Students" :[
+        "instructors": [],
+        "students":[
           {
             "id" : "Student1"
           },
@@ -32,11 +32,11 @@
             "id" : "Student5"
           }
         ],
-        "Janitors":[],
-        "SlideRules":[],
-        "TVSZs": [
+        "janitors":[],
+        "slideRules":[],
+        "tvszs": [
         ],
-        "FFP2Masks": [
+        "ffp2Masks": [
         ],
         "wetTableClothes": [
         ],
@@ -46,18 +46,18 @@
         ],
         "camemberts": [
         ],
-        "Transistors": [],
+        "transistors": [],
         "doors": ["Door1"]
       },
       {
         "id": "Room2",
-        "Instructors": [],
-        "Students" :[],
-        "Janitors":[],
-        "SlideRules":[],
-        "TVSZs": [
+        "instructors": [],
+        "students":[],
+        "janitors":[],
+        "slideRules":[],
+        "tvszs": [
         ],
-        "FFP2Masks": [
+        "ffp2Masks": [
 {
 "durability": 5,
 "isActivated": false,
@@ -72,7 +72,7 @@
         ],
         "camemberts": [
         ],
-        "Transistors": [],
+        "transistors": [],
         "doors": ["Door2"]
       }
     ]

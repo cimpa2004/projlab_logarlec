@@ -15,19 +15,19 @@
         {
           "id": "Room1",
           "poisonDuracion" :0,
-          "Instructors": [
+          "instructors": [
             {
               "id": "Instructor1"
             }
           ],
-          "Students" :[
+          "students":[
           ],
-          "Janitors":[],
-          "SlideRules":[
+          "janitors":[],
+          "slideRules":[
           ],
-          "TVSZs": [
+          "tvszs": [
           ],
-          "FFP2Masks": [
+          "ffp2Masks": [
             {
               "id" : "FFP2Mask1",
               "durability": 3
@@ -41,21 +41,21 @@
           ],
           "camemberts": [
           ],
-          "Transistors": [],
+          "transistors": [],
           "doors": ["Door1"]
         },
         {
           "id": "Room2",
           "poisonDuracion" :5,
-          "Instructors": [],
-          "Students" :[
+          "instructors": [],
+          "students":[
           ],
-          "Janitors":[],
-          "SlideRules":[
+          "janitors":[],
+          "slideRules":[
           ],
-          "TVSZs": [
+          "tvszs": [
           ],
-          "FFP2Masks": [
+          "ffp2Masks": [
           ],
           "wetTableClothes": [
           ],
@@ -65,24 +65,24 @@
           ],
           "camemberts": [
           ],
-          "Transistors": [],
+          "transistors": [],
           "doors": ["Door2"]
         }, 
         {
           "id": "Room3",
           "poisonDuracion" :0,
-          "Instructors": [],
-          "Students" :[
+          "instructors": [],
+          "students":[
             {
               "id" : "Student1"
             }
           ],
-          "Janitors":[],
-          "SlideRules":[
+          "janitors":[],
+          "slideRules":[
           ],
-          "TVSZs": [
+          "tvszs": [
           ],
-          "FFP2Masks": [
+          "ffp2Masks": [
           ],
           "wetTableClothes": [
           ],
@@ -92,7 +92,7 @@
           ],
           "camemberts": [
           ],
-          "Transistors": [],
+          "transistors": [],
           "doors": []
         }
        

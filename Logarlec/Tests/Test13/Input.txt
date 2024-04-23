@@ -1,4 +1,4 @@
-CreateGame true Map.json
+CreateGame true Tests/Test13/Map.json
 Move Janitor1 Door1
 DescribePerson Student1
 DescribeRoom Room2
