@@ -110,7 +110,7 @@ public class DoorSide {
 	 * */
 	public void SetCanBeOpened(boolean b) {
 		Logger.started(this, "SetCanBeOpened", b);
-		// existing code
+		this.canBeOpened = b;
 		Logger.finished(this, "SetCanBeOpened", b);
 	}
 
@@ -119,7 +119,7 @@ public class DoorSide {
 	 * */
 	public void SetIsVisible(boolean b) {
 		Logger.started(this, "SetIsVisible", b);
-		// existing code
+		this.isVisible = b;
 		Logger.finished(this, "SetIsVisible", b);
 	}
 
@@ -128,9 +128,8 @@ public class DoorSide {
 	 * */
 	public boolean GetCanBeOpened() {
 		Logger.started(this, "GetCanBeOpened");
-		// existing code
 		Logger.finished(this, "GetCanBeOpened");
-		return false;
+		return this.canBeOpened;
 	}
 
 	/**
@@ -138,9 +137,8 @@ public class DoorSide {
 	 * */
 	public boolean GetIsVisible() {
 		Logger.started(this, "GetIsVisible");
-		// existing code
 		Logger.finished(this, "GetIsVisible");
-		return false;
+		return this.isVisible;
 	}
 
 

@@ -46,7 +46,7 @@ public class Transistor extends Item implements Usable {
 	@Override
 	public boolean Activate() {
 		Logger.started(this, "Activate");
-		if(!isActive)
+		if(!isActive && this.GetPair() != null)
 			isActive = true;
 		else
 			isActive = false;
