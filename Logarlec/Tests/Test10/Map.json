@@ -15,18 +15,18 @@
         {
           "id": "Room1",
           "poisonDuracion" : 0,
-          "Instructors": [],
-          "Students" :[
+          "instructors": [],
+          "students":[
             {
               "id" : "Student1"
             }
           ],
-          "Janitors":[],
-          "SlideRules":[
+          "janitors":[],
+          "slideRules":[
           ],
-          "TVSZs": [
+          "tvszs": [
           ],
-          "FFP2Masks": [
+          "ffp2Masks": [
           ],
           "wetTableClothes": [
           ],
@@ -40,7 +40,7 @@
               "isActivated" :false
             }
           ],
-          "Transistors": [],
+          "transistors": [],
           "doors": ["Door1"]
         }
        

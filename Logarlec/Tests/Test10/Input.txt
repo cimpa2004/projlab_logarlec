@@ -1,4 +1,4 @@
-CreateGame true Map.json
+CreateGame true Tests/Test10/Map.json
 Pickup Student1 Camembert1
 UseItem Student1 Camembert1
 DescribePerson Student1

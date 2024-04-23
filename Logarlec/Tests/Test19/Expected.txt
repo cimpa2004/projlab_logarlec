@@ -1,11 +1,11 @@
-message: A játékot sikerült létrehozni
+message: A letrejott jatek állapotai a többi mezőben.
 gameTimer: 10
 isEndGame: false
 currentTurn: Instructor1
 turnOrder: [Instructor1]
-rooms: [Room1] 
-doorsides: [] 
-items: [FFP2Mask1] 
+rooms: [Room1]
+doorsides: []
+items: [FFP2Mask1]
 students: []
 instructors: [Instructor1]
 janitors: []

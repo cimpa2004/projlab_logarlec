@@ -21,6 +21,41 @@ public class Tester {
      */
     Game game;
 
+    /**
+     * Ezzel a fuggvenynel elindithato egy teszt mely soran a bemenetrol olvasodnak be a parancsok. End parancs utan
+     * leall a teszt. Futas vegen kiirja az eredmenyeket.
+     * @param testNumber A teszt szama
+     */
+    public void TestManual(int testNumber){
+        String path = "Tests/Test"+testNumber;
+        System.out.println("--- RUN Test"+testNumber+ " ---");
+        runTest(path + "/Expected.txt");
+        System.out.println("--- END ---");
+    }
+
+    /**
+     * Ezzel a fuggvenynel elindithato egy teszt mely soran az input.txt-bol olvasodnak be a parancsok. Futas vegen kiirja az eredmenyeket.
+     * @param testNumber A teszt szama
+     */
+    public void TestAuto(int testNumber){
+        String path = "Tests/Test"+ testNumber;
+        System.out.println("--- RUN Test"+testNumber+ " ---");
+        runTestWithInputFile(path+"/input.txt", path + "/Expected.txt");
+        System.out.println("--- END ---");
+    }
+
+    /**
+     * Ez a fuggveny lefuttatja az osszes tesztet oly modon, hogy beolvassa az inputokat a megfelelo teszt fajlbol.
+     */
+    public void TestRunAll(){
+        for (int i = 1; i <= 33; i++) {
+            String path = "Tests/Test"+ i;
+            System.out.println("--- RUN Test"+i+ " ---");
+            runTestWithInputFile(path+"/input.txt", path + "/Expected.txt");
+            System.out.println("--- END ---");
+        }
+    }
+
     public Tester(){
         inputHandler = new InputHandler();
     }
@@ -33,6 +68,27 @@ public class Tester {
      * @param expectedOutputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
      */
     public void runTestWithInputFile(String inputFilePath, String expectedOutputFilePath){
+        ArrayList<String> expectedCommandOutputs = readExpectedOutputFile(expectedOutputFilePath);
+        ArrayList<String> actualCommandOutputs = new ArrayList<>();
+
+        // Read input commands from inputFilePath
+        ArrayList<String> inputCommands = new ArrayList<>();
+        File file = new File(inputFilePath);
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                inputCommands.add(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (String command : inputCommands) {
+            String commandOutput = inputHandler.handleCommand(command);
+            actualCommandOutputs.add(commandOutput);
+        }
+
+        logOutput(expectedCommandOutputs, actualCommandOutputs, inputCommands);
     }
 
     /**
@@ -43,28 +99,60 @@ public class Tester {
      */
     public void runTest(String expectedOutputFilePath){
         ArrayList<String> expectedCommandOutputs = readExpectedOutputFile(expectedOutputFilePath);
+        ArrayList<String> actualCommandOutputs = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String input;
 
-        System.out.println("Add meg a parancsokat: ");
+        ArrayList<String> inputCommands = new ArrayList<>();
+        System.out.println("Add meg a parancsokat: \n");
         while (true) {
             input = scanner.nextLine();
+            inputCommands.add(input);
             if ("End".equalsIgnoreCase(input)) {
                 break;
             }
             String commandOutput = inputHandler.handleCommand(input);
+            actualCommandOutputs.add(commandOutput);
             System.out.println(commandOutput+"\n");
         }
+
+        logOutput(expectedCommandOutputs, actualCommandOutputs, inputCommands);
 
         scanner.close();
     }
 
-    private Game GetOrCreateGame(){
-        if (this.game == null) return null; // this should be initialized in inputHandler at first
-        return this.game; // then just return stored
+    private void logOutput(ArrayList<String> expectedCommandOutputs, ArrayList<String> actualCommandOutputs, ArrayList<String> inputCommands){
+        StringBuilder str = new StringBuilder();
+        if (actualCommandOutputs.size() != expectedCommandOutputs.size()){
+            str.append("\n--- FAIL: Az elvart es aktualis parancsok szama elter.\n");
+            str.append("EXPECTED:\n").append(expectedCommandOutputs.size()).append("\n");
+            str.append("ACTUAL:\n").append(actualCommandOutputs.size());
+            System.err.println(str);
+            str.setLength(0);
+        }
+
+        int n = Math.min(actualCommandOutputs.size(), expectedCommandOutputs.size());
+        for (int i = 0; i < n; i++) {
+            String result = compareOutputs(expectedCommandOutputs.get(i), actualCommandOutputs.get(i), inputCommands.get(i));
+            if (result.contains("SUCCESS")) System.out.println(result + "\n\n");
+            else System.err.println(result + "\n\n");
+        }
     }
 
-    public ArrayList<String> readExpectedOutputFile(String expectedOutputFilePath){
+    private String compareOutputs(String expected, String actual, String command){
+        if (!actual.equals(expected)){
+            StringBuilder str = new StringBuilder();
+            str.append("--- FAIL: ").append(command).append("\n");
+            str.append("EXPECTED:\n");
+            str.append(expected).append("\n\n");
+            str.append("ACTUAL:\n");
+            str.append(actual);
+            return str.toString();
+        }
+        return "-- SUCCESS: " + command;
+    }
+
+    private ArrayList<String> readExpectedOutputFile(String expectedOutputFilePath){
         ArrayList<String> result = new ArrayList<>();
         File file = new File(expectedOutputFilePath);
 

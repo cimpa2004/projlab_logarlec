@@ -15,7 +15,7 @@
       {
         "id": "Room1",
         "instructors": [],
-        "students" :[
+        "students":[
           {
             "id" : "Student1"
           }
@@ -44,7 +44,7 @@
       {
         "id": "Room2",
         "instructors": [],
-        "students" :[],
+        "students":[],
         "janitors":[],
         "slideRules":[],
         "tvszs": [
