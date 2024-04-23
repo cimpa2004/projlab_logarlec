@@ -58,8 +58,19 @@ public class Student extends Person {
 				instructor.StealSoul(this);
 				if(!isAlive) break;
 			}
-
-			//TODO: ájuljon el ha gázos a szoba
+			//megvizsgalja, hogy gazos-e a szoba
+			if (room.GetPoisonDuration() > 0){
+				//ha van nala ffp2 maszk, akkor megprobal aktivalni egyet
+				if(!ffp2Masks.isEmpty()) {
+					if(!this.DefendFromGas()){
+						this.SetIsFainted(true);
+					}else this.SetIsFainted(false);
+				}
+			}
+			//ha a szoba nem gazos es nincs elkabulva a hallgato, akkor nem kabul el
+			else if(room.GetPoisonDuration() <= 0 && !GetIsFainted()){
+				this.SetIsFainted(false);
+			}
 		} else{
 			return false;
 		}
@@ -189,7 +200,13 @@ public class Student extends Person {
 	*/
 	public void ConnectTransistors(Transistor t1, Transistor t2) {
 		Logger.started(this, "ConnectTransistors", t1, t2);
-		// TODO tranzisztorok összekapcsolása
+		// ha nem hamisak a tranzisztorok
+		if(!t1.GetIsFake() && !t2.GetIsFake()){
+			//ha nem aktivak a tranzisztorok
+			if(!t1.GetIsActive() && !t2.GetIsActive()) {
+				t1.SetPairs(t2);
+			}
+		}
 		Logger.finished(this, "ConnectTransistors", t1, t2);
 	}
 	
