@@ -7,53 +7,82 @@ import util.Reader;
 import java.util.UUID;
 
 /**
- * A TVSZ osztály a TVSZ reprezentációja.
- * A TVSZ a tárgyak egyike, amelyeket a játékosok
- * a szobákban találhatnak. Ezeket a tárgyakat fel tudják venni, illetve eldobni.
- * A HolyBeerCup -ot Instructorok is fel tudják venni, illetve eldobni.
- * A TVSZ a Student -ek kezében képes megvédeni őket az Instructor -októl bizonyos számú alkalommal.
+ * A TVSZ osztály a TVSZ tárgy reprezentációja.
+ * Tárolja hogy hány alkalommal lehet még használni az adott TVSZ példányt és
+ * ha ez eléri a 0-át nem teszi lehetővé a használatot.
+ * Felelőssége továbbá, hogy egy TVSZ példány felvételekor és eldobásakor frissítse a TVSZ változóit
+ * és kezelje, hogy ezen cselekvések, hogy hatnak ki a TVSZ környezetére (owner és room).
+ * Továbbá meg tudja állapítani egy TVSZ -ről, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
 public class TVSZ extends Item implements Defendable{
 
 	/**
-	 * Ezen változó tárolja, hogy hányszor tudja még megmenteni a Student -et.
+	 *  Ez az integer typusú változó tárolja, hogy hány alkalommal tudja még a Student életét megmenteni.
 	 * */
 	private int usesLeft;
 
 	/**
-	 * Ezen változó tárolja, hogy az adott TVSZ igazi-e.
+	 * Ez a boolean típusú változó eltárolja az adott TVSZ példányról, hogy igazi-e vagy hamis.
 	 * */
 	private boolean isFake;
 
 	/**
-	 * A TVSZ osztály konstruktora, amiben meg lehet adni, hogy hányszor
-	 * legyen képes megvédeni a Student -et.
+	 * A TVSZ osztály konstruktora. A usesLeft értékét háromra állítja.
+	 * Az id értékét a paraméterben kapott értékre állítja.
+	 *
+	 * @param id Az id változó értékét erre az értékre állítja.
 	 * */
 	public TVSZ(String id){
 		super(id);
 		usesLeft = 3;
 	}
 
+	/**
+	 * A TVSZ osztály konstruktora.
+	 * A usesLeft értékét háromra állítja.
+	 * Az id-t beállítja egy random értékre.
+	 */
 	public TVSZ(){
 		super(UUID.randomUUID().toString());
 		usesLeft = 3;
 	}
 
+	/**
+	 * Visszaadja, hogy az adott TVSZ hamis-e.
+	 *
+	 * @return Az isFake változó értéke.
+	 * */
 	@Override
 	public boolean GetIsFake() {
 		return isFake;
 	}
 
+	/**
+	 * Ezen metódussal le lehet kérdezni, hogy egy TVSZ példány aktív-e.
+	 *
+	 * @return Mindig hamis, mert egy TVSZ -t nem lehet/kell aktiválni.
+	 */
 	@Override
 	public boolean GetIsActive() {
 		return false;
 	}
 
+	/**
+	 * Ezen metódussal le lehet kérdezni, hogy az
+	 * adott Transistor  -nak melyik Transistor  a párja.
+	 *
+	 * @return Mindig null, mert a TVSZ nem Transistor.
+	 */
 	@Override
 	public Transistor GetPair() {
 		return null;
 	}
 
+	/**
+	 * 	Ezen metódus a paraméterként kapott értékre állítja a TVSZ isFake változóját.
+	 *
+	 * @param b Az isFake leendő értéke.
+	 * */
 	public void SetIsFake(boolean b){
 		isFake = b;
 	}
@@ -61,7 +90,7 @@ public class TVSZ extends Item implements Defendable{
 	/**
 	 * Ezen metódus akkor kerül meghívásra, ha a TVSZ megmenti a
 	 * Student -et egy Instructor -tól.
-	 * A metódus eggyel csökkenti a usesLeft változót.
+	 * A metódus eggyel csökkenti a usesLeft változót, ha az még nullánál nagyobb.
 	 * */
 	@Override
 	public void Decrement() {
@@ -70,31 +99,36 @@ public class TVSZ extends Item implements Defendable{
 		Logger.finished(this, "Decrement");
 	}
 
+	/**
+	 * Visszaadja, hogy az adott TVSZ mennyiszer tudja még a hallgatót megvédeni.
+	 *
+	 * @return a usesLeft változó értéke
+	 */
 	@Override
 	public int GetDurability() {
 		return usesLeft;
 	}
 
+	/**
+	 * 	Ezen metódus a paraméterként kapott értékre állítja a TVSZ usesLeft változóját.
+	 *
+	 * @param durability A usesLeft értékét erre az értékre állítja.
+	 * */
 	@Override
 	public void SetDurability(int durability) {
 		this.usesLeft = durability;
 	}
 
-	public void SetUsesLeft(int uses){
-		usesLeft = uses;
-	}
-
 	/**
-	 * Ezen metódus meghívásakor a paraméterként megkapott
-	 * Student inventárjában elhelyezi magát a TVSZ
-	 * és átállítja az owner változóját a paraméterként kapott Student -re.
-	 * Igaz értékkel fog visszatérni, ha sikeresen fel tudta venni
-	 * az adott tárgyat a Student és hamissal, ha nem.
-	 * Abben az esetben nem sikerülhet felvenni a tárgyat,
-	 * ha a Student inventárja már tele van.
+	 * Ezen metódus referenciaként átveszi hogy melyik Student vette fel
+	 * és megpróbálja elhelyezi magát a Student inventoryában.
+	 * Meghívja a Student AddToInventory metódusát, aminek átadja a TVSZt.
+	 * Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie a TVSZt a Student -nek.
 	 *
-	 * @param	st	Azon Student, aki megpróbálja felvenni az adott TVSZ -t.
-	 * */
+	 * @param st A felvevő hallgató
+	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
+	 */
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
@@ -106,16 +140,15 @@ public class TVSZ extends Item implements Defendable{
 	}
 
 	/**
-	 * Ezen metódus meghívásakor a paraméterként megkapott
-	 * Instructor inventárjában elhelyezi magát a TVSZ
-	 * és átállítja az owner változóját a paraméterként kapott Instructor -ra.
-	 * Igaz értékkel fog visszatérni, ha sikeresen fel tudta venni
-	 * az adott tárgyat az Instructor és hamissal, ha nem.
-	 * Abben az esetben nem sikerülhet felvenni a tárgyat,
-	 * ha az Instructor inventárja már tele van.
+	 * Ezen metódus referenciaként átveszi hogy melyik Instructor vette fel
+	 * és megpróbálja elhelyezi magát az Instructor inventoryában.
+	 * Meghívja az Instructor AddToInventory metódusát, aminek átadja a TVSZt.
+	 * Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie a TVSZt az Instructor -nak.
 	 *
-	 * @param	i	Azon Instructor, aki megpróbálja felvenni az adott TVSZ -ot.
-	 * */
+	 * @param i A felvevő oktató
+	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
+	 */
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
@@ -124,9 +157,10 @@ public class TVSZ extends Item implements Defendable{
 	}
 
 	/**
-	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a TVSZ szemszögéből, törli magát a
-	 * Person tvszs listájából.
+	 *  Ezen metódus akkor hívódik meg, ha a Person el szeretné
+	 *  távolítani az inventoryából az adott TVSZ tárgyat.
+	 *  A metódus eltávolítja a TVSZ -t a Person inventoryából és a Person tvszslistájából
+	 *  a RemoveFromInventory és a RemoveTVSZ metódusok meghívásával.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
@@ -137,18 +171,29 @@ public class TVSZ extends Item implements Defendable{
 		Logger.finished(this, "Thrown", p);
 	}
 
+	/**
+	 * Egy SlideRule -t nem lehet használni, ezért ez egy üres metódus.
+	 *
+	 * @param s Azon Student, aki használná az adott tárgyat.
+	 */
 	@Override
-	public void UsedByStudent(Student s) {
-	}
-
-	@Override
-	public void UsedByInstructor(Instructor i) {
-	}
+	public void UsedByStudent(Student s) {}
 
 	/**
-	 * Ezen metódus annak a kiderítésére szolgál, hogy képes-e még megvédeni
-	 * a Student -et a TVSZ.
-	 * Igazat ad vissza, ha a TVSZ -nek a usesLeft változója legalább 1.
+	 * Egy SlideRule -t nem lehet használni, ezért ez egy üres metódus.
+	 *
+	 * @param i Azon Instructor, aki használná az adott tárgyat.
+	 */
+	@Override
+	public void UsedByInstructor(Instructor i) {}
+
+	/**
+	 * Ez a metódus megállapítja, hogy az adott TVSZ
+	 * képes-e még megvédeni a Person -t, akihez tartozik egy Instructor-tól.
+	 * Igazzal tér vissza, ha a TVSZ usesLeft változója nagyobb mint nulla és a TVSZ nem hamis.
+	 * Minden más esetben hamissal tér vissza.
+	 *
+	 * @return Igaz ha még képes védelemre és hamis ha nem.
 	 * */
 	@Override
 	public boolean CanDefend() {

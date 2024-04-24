@@ -12,51 +12,80 @@ import java.util.UUID;
  * */
 public abstract class Item {
 	/**
-	 * Az adott Itemet egyertelmuen azonositja
+	 * Ez egy string típusú változó, amely egyértelműen azonosít egy Item -et.
 	 */
 	protected String id;
 
 	/**
-	 * Ez a változó tárolja el, hogy az adott Item melyik szobában van.
+	 * Ez a Room típusú változó eltárolja azt a Room -ot, amelyben az adott tárgy van.
+	 * Amennyiben már egy Person felvette a tárgyat, null értéket vesz fel a változó.
 	 * */
 	private Room room;
 
+	/**
+	 * Ez a Person típusú változó eltárolja azt a Person -t, akihez az adott Item tartozik.
+	 * Amennyiben senkihez sem tartozik a tárgy, null értéket vesz fel a változó.
+	 * */
+	private Person owner;
+
+	/**
+	 * Az Item osztály konstruktora.
+	 * Beállítja a paraméterként megadott id-t.
+	 *
+	 * @param id Az id értéke erre az értékre lesz beállítva.
+	 * */
 	public Item(String id){
 		this.id = id;
 	}
 
+	/**
+	 * Az Item osztály konstruktora.
+	 * Az id-t beállítja egy random értékre.
+	 * */
 	public Item(){
 		this.id = UUID.randomUUID().toString();
 	}
-	
-	/**
-	 * Ez a változó tartalmazza, hogy az adott Item, melyik Person -höz tartozik.
-	 * Amennyiben nem tartozik senkihez, akkor üresen marad a változó.
-	 * */
-	private Person owner;
 
+	/**
+	 * Visszaadja, hogy az adott Item hamis-e.
+	 * Van olyan item amire ez mindig hamis,
+	 * van olyan amire igaz is lehet.
+	 *
+	 * @return Igaz ha hamis az Item és hamis ha igazi az Item.
+	 * */
 	public abstract boolean GetIsFake();
 
 	/**
-	 *Vissza adja, hogy aktivalva volt-e mar
+	 * Ezen metódussal le lehet kérdezni, hogy egy Item aktív-e.
+	 *
 	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e, a nem aktivalhato Itemek mindig false-al ternek vissza
 	 */
 	public abstract boolean GetIsActive();
 
 	/**
-	 * Megadja a párját
+	 * Ezen metódussal le lehet kérdezni, hogy az
+	 * adott Transistor  -nak melyik Transistor  a párja.
+	 *
 	 * @return Pair értéke, null ha nincs párja
 	 */
 	public abstract Transistor GetPair();
 
 	/**
 	 * Vissza adja a tárgyhoz tartozó egyedi id-t.
+	 *
 	 * @return A tárgyhoz tartozó egyedi id.
 	 */
 	public String GetId(){
 		return id;
 	}
 
+	/**
+	 * Az Item owner változójának értékét a
+	 * paraméterként kapott Person -re állítja.
+	 *
+	 * @param p Azon Person, amelyre az adott
+	 * Item owner változóját beállítja a metódus.
+	 */
 	public void SetOwner(Person p){
 		Logger.started(this, "SetOwner");
 
@@ -65,6 +94,12 @@ public abstract class Item {
 		Logger.finished(this, "SetOwner");
 	}
 
+	/**
+	 * Visszaadja, hogy az Item melyik Person -hoz tartozik
+	 *
+	 * @return Az owner változó, amely felvehet
+	 * null értéket is ha senkihez sem tartozik a tárgy.
+	 */
 	public Person GetOwner(){
 		Logger.started(this, "GetOwner");
 
@@ -90,6 +125,9 @@ public abstract class Item {
 	/**
 	 * Ez a metódus visszatérési értékként megadja azt a szobát, amelyben az Item található,
 	 * vagy null értéket, amennyiben egy Person már felvette.
+	 *
+	 * @return A szoba, ahol a tárgy éppen van.
+	 * Ha egy személynél van akkor null értéket ad vissza.
 	 * */
 	public Room GetRoom() {
 		Logger.started(this, "GetRoom");
@@ -100,36 +138,37 @@ public abstract class Item {
 	
 	/**
 	 * Ez egy absztrakt függvény, amelyet a leszármazott osztályok majd külön-külön implementálnak.
-	 * Meghívásakor a paraméterként megkapott Student inventárjában elhelyezi magát a tárgy
-	 * és átállítja az owner változóját a paraméterként kapott Student -re.
-	 * Igaz értékkel fog visszatérni, ha sikeresen fel tudta venni az adott tárgyat a Student és
-	 * hamissal, ha nem.
-	 * Abben az esetben nem sikerülhet felvenni a tárgyat, ha a Student inventárja már tele van.
+	 * Ezen metódus referenciaként átveszi hogy melyik Student vette fel és
+	 * megpróbálja elhelyezi magát a Student inventoryában.
+	 * Meghívja a Student AddToInventory metódusát, aminek átadja az Item -et.
 	 * Specális esete amikor az Item, aminek ezt a függvényét meghívták egy SlideRule.
 	 * Ez esetben véget ér a játék, a hallgatók nyertek.
 	 *
 	 * @param	st	Azon Student, aki megpróbálja felvenni az adott Item -et.
+	 * @return Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie az Item -et a Student -nek.
+	 * A metódus visszatérési igaz, ha sikerült felvenni és hamis ha nem.
 	 * */
 	public abstract boolean PickedUpStudent(Student st);
-	
+
 	/**
 	 * Ez egy absztrakt függvény, amelyet a leszármazott osztályok majd külön-külön implementálnak.
-	 * Meghívásakor a paraméterként megkapott Instructor inventárjában elhelyezi magát a tárgy
-	 * és átállítja az owner változóját a paraméterként kapott Instructor -ra.
-	 * Igaz értékkel fog visszatérni, ha sikeresen fel tudta venni az adott tárgyat az Instructor és
-	 * hamissal, ha nem.
-	 * Abben az esetben nem sikerülhet felvenni a tárgyat, ha a Instructor inventárja már tele van,
-	 * vagy az Item amit megpróbál felvenni egy SlideRule.
+	 * Ezen metódus referenciaként átveszi hogy melyik Instructor vette fel és
+	 * megpróbálja elhelyezi magát az Instructor inventoryában.
+	 * Meghívja az Instructor AddToInventory metódusát, aminek átadja az Item -et.
 	 *
 	 * @param	i	Azon Instructor, aki megpróbálja felvenni az adott Item -et.
+	 * @return Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie az Item -et az Instructor -nak.
+	 * A metódus visszatérési igaz, ha sikerült felvenni és hamis ha nem.
 	 * */
 	public abstract boolean PickedUpInstructor(Instructor i);
 	
 	/**
-	 * Ez egy absztrakt függvény, amelyet a leszármazott osztályok majd külön-külön implementálnak.
-	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a tárgy szemszögéből, az Itemtől függően törli a Person
-	 * védelmi Itemjei közül is a megadott Itemet.
+	 * Ezen metódus akkor hívódik meg, ha a Person el szeretné távolítani
+	 * az inventoryából az adott Item -et.
+	 * A metódus eltávolítja az Item -et a Person inventoryából
+	 * a Person RemoveFromInventory metódus meghívásával.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
@@ -137,14 +176,19 @@ public abstract class Item {
 
 
 	/**
-	 *Egy hallgató használta a tárgyat
-	 * @param s implementáció a megvalósításban
+	 * Ezen metódus akkor hívódik meg, ha egy Student szeretne
+	 * használni egy az inventoryában lévő Item -et.
+	 *
+	 * @param s Azon Student, aki használná az adott tárgyat.
 	 */
 	public abstract void UsedByStudent(Student s);
 
 	/**
-	 * Egy oktató használta a tárgyat
-	 * @param i implementáció a megvalósításban
+	 * Ezen metódus akkor hívódik meg, ha egy Instructor szeretne
+	 * használni egy az inventoryában lévő Item -et.
+	 * Ez egy absztrakt metódus, amit az egyes tárgyak külön-külön valósítanak meg.
+	 *
+	 * @param i Azon Instructor, aki használná az adott tárgyat.
 	 */
 	public abstract void UsedByInstructor(Instructor i);
 }

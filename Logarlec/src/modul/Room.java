@@ -4,34 +4,30 @@ package modul;
 import util.Logger;
 import util.Reader;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-// TODO: kiszedni az összes AddNeighbor, RemoveNeighbor stb logikákat mert már a Game végzi ezek beállítását
-//  és a determinisztikusság attól függjön, hogy mi az isDeterministic értéke
-
-/** */
+/**
+ * A Room osztály felelős egy szoba reprezentálásáért és annak működéséért a játékban.
+ * Kezeli a szoba kapacitását, tartalmát, állapotát és a szobához kapcsolódó tevékenységeket.
+ * */
 public class Room implements IRoom {
 	/**
-	 * Az adott Roomot egyertelmuen azonositja
+	 *  Ez egy string típusú változó, amely egyértelműen azonosít egy Room -ot.
 	 */
 	protected String id;
 
 	/**
-	 * Azt mutatja, hogy a szobának hány körig tart még a mérgesgáz-effektje. Ha eléri a 0-t a szobában minden
-	 * hallgató és oktató felébred.
+	 * Ez az integer typusú változó tárolja, hogy a szobának hány körig tart még a mérgesgáz-effektje.
 	 * */
 	private int poisonDuration;
 
 	/**
-	 * Jelzi, hogy a jatek determinisztikus-e
+	 * Ez a boolean típusú változó jelzi, hogy a játék determinisztikus-e.
 	 */
 	private boolean isDeterministic;
 	
 	/**
-	 * A szoba maximum kapacitása, azaz egyszerre hány személy tartózkodhat a szobában.
+	 * A szoba maximális kapacitása, azaz egyszerre legfeljebb hány személy tartózkodhat a szobában.
 	 * */
 	private int maxCapacity;
 	
@@ -52,7 +48,7 @@ public class Room implements IRoom {
 	private ArrayList<Room> neighbors;
 	
 	/**
-	 * EgyArrayLista, ami a szobában található tárgyakat tartalmazza.
+	 * Egy ArrayLista, ami a szobában található tárgyakat tartalmazza.
 	 * */
 	private ArrayList<Item> items;
 	
@@ -63,7 +59,7 @@ public class Room implements IRoom {
 	private ArrayList<DoorSide> doors;
 
 	/**
-	 * A személyek közül azok a hellgatók, akik a szobában vannak.
+	 * A személyek közül azok a hallgatók, akik a szobában vannak.
 	 * */
 	private ArrayList<Student> students;
 	
@@ -78,7 +74,7 @@ public class Room implements IRoom {
 	private ArrayList<Janitor> janitors;
 
 	/**
-	 * Jelzi, hogy a szoba ragacsos-e.
+	 * Ez a boolean típusú változó jelzi, hogy a szoba ragacsos-e.
 	 */
 	private boolean isSticky;
 
@@ -88,6 +84,13 @@ public class Room implements IRoom {
 	 */
 	private int numberOfPeopleBeenToRoom;
 
+	/**
+	 * A Room osztály konstruktora.
+	 * A Room id változóját a paraméterben kapott értékre állítja.
+	 * Továbbá létrehozza a neighbors, items, doors, janitors, students és az instructors listákat.
+	 *
+	 * @param id A szoba leendő id -ja
+	 */
 	public Room(String id){
 		this.id = id;
 		neighbors = new ArrayList<>();
@@ -98,6 +101,11 @@ public class Room implements IRoom {
 		instructors = new ArrayList<>();
 	}
 
+	/**
+	 * A Room osztály konstruktora.
+	 * A Room id változóját egy random értékre állítja.
+	 * Továbbá létrehozza a neighbors, items, doors, janitors, students és az instructors listákat.
+	 */
 	public Room(){
 		this.id = UUID.randomUUID().toString();
 		neighbors = new ArrayList<>();
@@ -111,7 +119,8 @@ public class Room implements IRoom {
 
 	/**
 	 * Vissza adja, hogy az adott szoba ragacsos-e.
-	 * @return Az érték, ami jelzi, hogy ragacsos-e a szoba
+	 *
+	 * @return Az isSticky változó értéke.
 	 */
 	public boolean GetIsSticky(){
 		Logger.started(this, "DecrementPoison");
@@ -119,12 +128,24 @@ public class Room implements IRoom {
 		return isSticky;
 	}
 
+	/**
+	 * Ezen metódus a Room isSticky változóját a paraméterben kapott értékre állítja.
+	 * Ha hamisra állítja a változót, akkor reset -eli a numberOfPeopleBeenToRoom változó értékér
+	 * azaz nullára állítja.
+	 *
+	 * @param value az isSticky változó új értéke.
+	 */
 	public void SetIsSticky(boolean value){
 		this.isSticky = value;
 		if (!value)
 			this.numberOfPeopleBeenToRoom = 0;
 	}
 
+	/**
+	 * A Room isDeterministic változóját beállítja a paraméterként kapott értékre.
+	 *
+	 * @param isDeterministic az isDeterministic változó új értéke.
+	 */
 	public void SetIsDeterministic(boolean isDeterministic){
 		Logger.started(this, "SetIsDeterministic");
 		Logger.finished(this, "SetIsDeterministic");
@@ -133,7 +154,8 @@ public class Room implements IRoom {
 
 
 	/**
-	 * A mérgesgáz idejének csökkentése. Ha minden hallgatónak és oktatónak volt köre, akkor lefut egyszer.
+	 * Ezen metódus a Room poisonDuration változóját csökkenti eggyel, ha az nagyobb mint 0.
+	 * Ha a poisonDuration elérte a nullát, akkor felébreszti az elájult oktatókat és hallgatókat.
 	 * */
 	public void DecrementPoison() {
 		Logger.started(this, "DecrementPoison");
@@ -153,6 +175,10 @@ public class Room implements IRoom {
 
 	/**
 	 * Hozzáad egy tárgyat a szobához (amikor például egy tárgy eldobásra kerül).
+	 * A Room items listájához hozzáadja a paraméterként kapott tárgyat és a
+	 * tárgy Room változóját beállítja az adott Room -ra.
+	 *
+	 * @param i A hozzáadandó tárgy.
 	 * */
 	public void AddItem(Item i) {
 		Logger.started(this, "AddItem", i);
@@ -163,6 +189,9 @@ public class Room implements IRoom {
 
 	/**
 	 * Elvesz egy tárgyat a szobából (amikor például egy tárgyat felvesznek).
+	 * A Room items listájából eltávolítja a tárgyta és a tárgy room változóját nullára állítja.
+	 *
+	 * @param i Az eltávolítandó tárgy
 	 * */
 	public void RemoveItem(Item i) {
 		Logger.started(this, "RemoveItem", i);
@@ -174,6 +203,8 @@ public class Room implements IRoom {
 	/**
 	 * A szoba attribútumait (max kapacitás, mérgesgáz ideje, átkozottság, szomszédos szobák)
 	 * másolja át a paraméterben megadott szobára. A szoba osztódásánál hívódik meg.
+	 *
+	 * @param r A Room, amely a jelenlegi Room klónja lesz.
 	 * */
 	public void CloneAttributes(Room r) {
 		Logger.started(this, "CloneAttributes", r);
@@ -181,13 +212,13 @@ public class Room implements IRoom {
 		this.isCursed = r.isCursed;
 		this.maxCapacity = r.maxCapacity;
 		this.neighbors = r.neighbors;
-		r.AddNeighbor(this);
-		this.AddNeighbor(r);
 		Logger.finished(this, "CloneAttributes", r);
 	}
 
 	/**
 	 * Visszaadja a szobában található tárgyakat.
+	 *
+	 * @return A Room items listája.
 	 * */
 	public ArrayList<Item> GetItems() {
 		Logger.started(this, "GetItems");
@@ -197,57 +228,64 @@ public class Room implements IRoom {
 
 	/**
 	 * Visszaadja a szobában tartózkodó hallgatókat.
+	 *
+	 * @return A Room students listája.
 	 * */
 	public ArrayList<Student> GetStudents() {
 		Logger.started(this, "GetStudents");
-		// existing code
 		Logger.finished(this, "GetStudents");
 		return students;
 	}
 
 	/**
 	 * Visszaadja a szobában tartózkodó oktatokat.
+	 *
+	 * @return A Room instructors listája.
 	 * */
 	public ArrayList<Instructor> GetInstructors() {
 		Logger.started(this, "GetInstructors");
-		// existing code
 		Logger.finished(this, "GetInstructors");
-		return this.instructors;
+		return instructors;
 	}
 
 	/**
 	 * Visszaadja a szobában tartózkodó takaritokat.
+	 *
+	 * @return A Room janitors listája.
 	 * */
 	public ArrayList<Janitor> GetJanitors() {
 		Logger.started(this, "GetJanitors");
-		// existing code
 		Logger.finished(this, "GetJanitors");
-		return this.janitors;
+		return janitors;
 	}
 
 	/**
 	 * Visszaadja a szoba jelenlegi kapacitását, azaz hogy jelenleg hány személy tartózkodik a szobában.
+	 *
+	 * @return A Room currentCapacity változója.
 	 * */
 	public int GetCurrentCapacity() {
 		Logger.started(this, "GetCurrentCapacity");
-		int _currentCapacity = Reader.GetIntInput("Mekkora a szoba jelenlegi kapacitasa?");
 		Logger.finished(this, "GetCurrentCapacity");
-		return _currentCapacity;
+		return currentCapacity;
 	}
 
 	/**
 	 * Visszaadja a szoba maximum kapacitását, azaz hogy egyszerre legfeljebb hány személy lehet a szobában.
+	 *
+	 * @return A Room maxCapacity változója.
 	 * */
 	public int GetMaxCapacity() {
 		Logger.started(this, "GetMaxCapacity");
-		int _maxCapacity = Reader.GetIntInput("Mekkora a szoba maximum kapacitasa?");
 		Logger.finished(this, "GetMaxCapacity");
-		return _maxCapacity;
+		return maxCapacity;
 	}
 
 
 	/**
-	 * Visszaadja, hogy hány ember volt már a szobában az utolso takaritas ota
+	 * Visszaadja, hogy hány ember volt már a szobában az utolsó takarítás óta.
+	 *
+	 * @return A Room numberOfPeopleBeenToRoom változója.
 	 * */
 	public int GetNumberOfPeopleBeenToRoom() {
 		Logger.started(this, "NumberOfPeopleBeenToRoom");
@@ -256,7 +294,9 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Beallitva, hogy hány ember volt már a szobában az utolso takaritas ota
+	 * Beallitva, hogy hány ember volt már a szobában az utolsó takarítás óta a paraméterként kapott értékre.
+	 *
+	 * @param number A numberOfPeopleBeenToRoom változó új értéke.
 	 * */
 	public void SetNumberOfPeopleBeenToRoom(int number) {
 		Logger.started(this, "NumberOfPeopleBeenToRoom");
@@ -266,6 +306,8 @@ public class Room implements IRoom {
 
 	/**
 	 * Beállítja a szoba jelenlegi kapacitását, azaz hogy egyszerre legfeljebb hány személy lehet a szobában.
+	 *
+	 * @param cc A currentCapacity változó új értéke.
 	 * */
 	public void SetCurrentCapacity(int cc) {
 		Logger.started(this, "GetMaxCapacity");
@@ -275,6 +317,8 @@ public class Room implements IRoom {
 
 	/**
 	 * Visszaadja a szoba szomszédait, azaz minden olyan szobát, amelybe innen ajtó vezet.
+	 *
+	 * @return A Room neighbors listája.
 	 * */
 	public ArrayList<Room> GetNeighbors() {
 		Logger.started(this, "GetNeighbors");
@@ -284,6 +328,8 @@ public class Room implements IRoom {
 
 	/**
 	 * Beállítja a szoba maximum kapacitását, azaz hogy egyszerre legfeljebb hány személy lehet a szobában.
+	 *
+	 * @param mc A maxCapacity változó új értéke.
 	 * */
 	public void SetMaxCapacity(int mc) {
 		Logger.started(this, "SetMaxCapacity", mc);
@@ -293,6 +339,8 @@ public class Room implements IRoom {
 
 	/**
 	 * Visszaadja azt, hogy a szobában hány körön keresztül tart még a mérgesgáz hatása.
+	 *
+	 * @return A poisonDuration változó értéke.
 	 * */
 	public int GetPoisonDuration() {
 		Logger.started(this, "GetPoisonDuration");
@@ -300,40 +348,46 @@ public class Room implements IRoom {
 		return poisonDuration;
 	}
 
-	/** Beállítja azt, hogy a szobában hány körön keresztül tart még a mérgesgáz hatása.*/
+	/**
+	 * Beállítja, hogy a szobában hány körön keresztül tart még a mérgesgáz hatása.
+	 * Ha ez az érték nagyobb, mint 0, akkor az összes szobában tartózkodó
+	 * oktató és hallgató elájul, abban  az esetben ha nem tudják magukat a gáztól megvédeni.
+	 *
+	 * @param pd A poisonDuration változó új értéke.
+	 * */
 	public void SetPoisonDuration(int pd) {
 		Logger.started(this, "SetPoisonDuration", pd);
 		poisonDuration = pd;
-		for (Student s : students) {
-			boolean isPersonDefended = s.DefendFromGas();
-			if (!isPersonDefended) s.SetIsFainted(true);
-		}
-		for (Instructor i : instructors) {
-			boolean isPersonDefended = i.DefendFromGas();
-			if (!isPersonDefended) i.SetIsFainted(true);
-		}
-		for (Janitor j : janitors) {
-			boolean isPersonDefended = j.DefendFromGas();
-			if (!isPersonDefended) j.SetIsFainted(true);
+		if(poisonDuration > 0){
+			for (Student s : students) {
+				boolean isPersonDefended = s.DefendFromGas();
+				if (!isPersonDefended) s.SetIsFainted(true);
+			}
+			for (Instructor i : instructors) {
+				boolean isPersonDefended = i.DefendFromGas();
+				if (!isPersonDefended) i.SetIsFainted(true);
+			}
 		}
 		Logger.finished(this, "SetPoisonDuration", pd);
 	}
 
 	/**
 	 * Hozzáad egy ajtót a szobához. A szobák osztódásánál hívódik meg.
+	 *
+	 * @param d A Room -hoz hozzáadandó ajtó.
 	 * */
 	public void AddDoor(DoorSide d) {
 		Logger.started(this, "AddDoor", d);
 		doors.add(d);
-		// Set neighboors
-		if(d.GetPair() != null && d.GetPair().GetRoom() != null){
-			Room connectedRoom = d.GetPair().GetRoom();
-			this.AddNeighbor(connectedRoom);
-			if(!connectedRoom.GetNeighbors().contains(this)) connectedRoom.AddNeighbor(this);
-		}
 		Logger.finished(this, "AddDoor", d);
 	}
 
+	/**
+	 * Ezen metódus a paraméterként kapott ajtót eltávolítja a szoba ajtói közül,
+	 * azaz a doors listából.
+	 *
+	 * @param d Az eltávolítandó ajtó.
+	 */
 	public void RemoveDoor(DoorSide d){
 		Logger.started(this, "RemoveDoor", d);
 		doors.remove(d);
@@ -342,6 +396,8 @@ public class Room implements IRoom {
 
 	/**
 	 * Visszaadja a szobából kivezető ajtók szoba felé néző oldalait.
+	 *
+	 * @return A Room doors listája.
 	 * */
 	public ArrayList<DoorSide> GetDoors() {
 		Logger.started(this, "GetDoors");
@@ -350,30 +406,14 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Hozzáad egy szomszédos szobát a szobához, azaz egy olyan szobát, amelyikbe innen vezet ajtó.
-	 * A szobák osztódásánál hívódik meg.
-	 * */
-	public void AddNeighbor(Room r) {
-		Logger.started(this, "AddNeighbor", r);
-		neighbors.add(r);
-		Logger.finished(this, "AddNeighbor", r);
-	}
-
-	/**
-	 * Beállítja a szoba szomszédait.
-	 * */
-	public void SetNeighbors(ArrayList<Room> n) {
-		Logger.started(this, "SetNeighbors", n);
-		// TODO: függvény implementálása
-		Logger.finished(this, "SetNeighbors", n);
-	}
-
-	/**
-	 * Összeolvasztja a szobát a paraméterben kapott másik szobával. A maximum kapacitása a nagyobb szoba befogadó-
-	 * képességével lesz egyenlő, a mérgesgáz ideje a hosszabb ideig tartó idő lesz, valamint elátkozott lesz, ha
+	 * Ezen metódus összeolvasztja a szobát a paraméterben kapott másik szobával.
+	 * A maximum kapacitása a nagyobb szoba befogadóképességével lesz egyenlő,
+	 * a mérgesgáz ideje a hosszabb ideig tartó idő lesz, valamint elátkozott lesz, ha
 	 * legalább az egyik szoba elátkozott. Az új szoba szomszédjai a régi két szoba szomszédjainak uniója.
 	 * Csak akkor hívódik meg, ha mindkét szoba aktuális kapacitása jelenleg 0.
 	 * A szobákban lévő tárgyak az új szobába kerülnek.
+	 *
+	 * @param ir2 A Room, amivel a jelenlegi Room -ot összeolvasztja a metódus.
 	 * */
 	public boolean MergeRooms(IRoom ir2) {
 		Room r2 = (Room) ir2;
@@ -433,10 +473,6 @@ public class Room implements IRoom {
 				}
 			}
 
-			// Legvégül kivesszük a szobákat egymás szomszédai közül.
-			this.GetNeighbors().remove(r2);
-			r2.GetNeighbors().remove(this);
-
 			Logger.finished(this, "MergeRooms", r2);
 			return true;
 		}
@@ -448,13 +484,17 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * A szoba két szobára válik. Mindkét szoba maximum kapacitása egyenlő lesz az eredeti befogadóképességével, valamint
-	 * a mérgesgáz- és elátkozottság attribútumok és a szobák szomszédjai is lemásolódnak. Az két új szoba közés is
-	 * kerül egy ajtó. Csak akkor hívódik meg, ha a szoba aktuális kapacitása jelenleg 0.
+	 * A szoba két szobára válik. Mindkét szoba maximum kapacitása egyenlő lesz az eredeti befogadóképességével,
+	 * valamint a mérgesgáz- és elátkozottság attribútumok és a szobák szomszédjai is lemásolódnak.
+	 * Az két új szoba közés is kerül egy ajtó.
+	 * Csak akkor hívódik meg, ha a szoba aktuális kapacitása jelenleg 0.
 	 * A szobában lévő tárgyak a két szoba között véletlenszerűen lesznek elszórva.
+	 *
+	 * @return Igaz ha sikerült osztódnia a Szobának és hamis ha nem.
 	 * */
 	public boolean SeparateRoom() {
 		Logger.started(this, "SeparateRoom");
+		// A Room csak akkor tud osztódni ha nincs egy személy se benne.
 		if(currentCapacity == 0)
 		{
 			Room r2 = new Room(UUID.randomUUID().toString());
@@ -470,20 +510,24 @@ public class Room implements IRoom {
 			}
 			ArrayList<Item> itemsCopy = new ArrayList<Item>(items);
 			for (Item i: itemsCopy){
-				boolean trueorfalse = Reader.GetBooleanInput("Melyik szobába kerüljön a tárgy (false: az eredeti szobába, true: az új szobába)");
-				if(trueorfalse){
+				if(RandomBool()){
 					r2.AddItem(i);
 					RemoveItem(i);
 				}
 			}
 			return true;
 		}
+
+		// A Room nem tud osztódni, ha tartózkodik valaki a Room -ban.
 		Logger.finished(this, "SeparateRoom");
 		return false;
 	}
 
 	/**
-	 * Hozzáad egy oktatót a szobához (amikor belép), és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 * Hozzáadja a paraméterként kapott oktatót a szobához (amikor belép)
+	 * és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 *
+	 * @param i A hozzáadandó Instructor.
 	 * */
 	public void AddInstructor(Instructor i) {
 		Logger.started(this, "AddInstructor", i);
@@ -499,7 +543,9 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Elvesz egy oktatót a szobából (átment egy másik szobába)
+	 * Eltávolítja a paraméterként kapott Instructort a szobából (átment egy másik szobába)
+	 *
+	 * @param i Az eltávolítandó Instructor.
 	 * */
 	public void RemoveInstructor(Instructor i) {
 		Logger.started(this, "RemoveInstructor", i);
@@ -508,7 +554,10 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Hozzáad egy hallgatót a szobához (amikor belép), és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 * Hozzáadja a paraméterként kapott Studentet a szobához (amikor belép),
+	 * és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 *
+	 * @param s A hozzáadandó Student.
 	 * */
 	public void AddStudent(Student s) {
 		Logger.started(this, "AddStudent", s);
@@ -524,7 +573,9 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Elvesz egy hallgatót a szobából (átment egy másik szobába)
+	 * Eltávolítja a paraméterként kapott Studentet a szobából (átment egy másik szobába)
+	 *
+	 * @param s Az eltávolítandó Student.
 	 * */
 	public void RemoveStudent(Student s) {
 		Logger.started(this, "RemoveStudent", s);
@@ -533,18 +584,25 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Hozzáad egy takarítót a szobához (amikor belép), és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 *  Ezen metódus a paraméterként kapott Janitort hozzáadja a szobához, azaz
+	 * 	hozzáadja a Room janitors listájához és a Janitor room változóját beállítja a jelenlegi szobára.
+	 *	Továbbá egy Janitor új szobába lépve kitakarítja a szobát, azaz az isSticky változót hamisra állítja és a
+	 *	poisonDuration változót pedig nullára.
+	 *	Ezeken kívül minden mozogni képes (nem bénult / ájult) embert kirak a szobából, még takarítás előtt.
+	 *
+	 * @param j A hozzáadandó Janitor.
 	 * */
 	public void AddJanitor(Janitor j) {
 		Logger.started(this, "AddJanitor", j);
-		j.SetRoom(this);
-		// TODO szoba tisztitása itt
 		janitors.add(j);
 		Logger.finished(this, "AddJanitor", j);
 	}
 
 	/**
-	 * Elvesz egy takarítót a szobából (átment egy másik szobába)
+	 * Ezen metódus a paraméterként kapott Janitort eltávolítja a szobából, azaz
+	 * kiveszi a Room janitors listájából.
+	 *
+	 * @param j Az eltávolítandó Janitor.
 	 * */
 	public void RemoveJanitor(Janitor j) {
 		Logger.started(this, "RemoveJanitor", j);
@@ -554,23 +612,43 @@ public class Room implements IRoom {
 
 	/**
 	 * Generál véletlenszerűen egy 'true' vagy 'false' bool értéket. A szobák osztódásánál kell ahhoz, hogy
-	 * a tárgyak véletlenszerűen meg tudjanak feleződni a szibák között.
+	 * a tárgyak véletlenszerűen meg tudjanak feleződni a szobák között.
+	 * Ha a játék determinisztikus akkor mindig igazat ad vissza.
+	 *
+	 * @return Egy random boolean érték.
 	 * */
 	public boolean RandomBool() {
 		Logger.started(this, "RandomBool");
-		//TODO: implement: ha determinisztikus a játék akkor mindig csak egy értéket adjon vissza
 		Logger.finished(this, "RandomBool");
-		return false;
+
+		if(isDeterministic){
+			return true;
+		}
+
+		Random rand = new Random();
+		return rand.nextBoolean();
 	}
 
 	/**
-	 * Véletlenszerűen kiválaszt egy szobát a megadottArrayListából, majd visszaadja.
+	 * Véletlenszerűen kiválaszt egy szobát a paraméterként megadott ArrayListából, majd visszaadja.
+	 *
+	 * @param r A lista, amelyből egy Room -ot kell kiválasztani véletlenszerűen
+	 * @return A véletlenszerűen kiválasztott Room
 	 * */
 	public Room SelectRoom(ArrayList<Room> r) {
 		Logger.started(this, "SelectRoom", r);
-		//TODO: implement
 		Logger.finished(this, "SelectRoom", r);
-		return null;
+		if(r.isEmpty()){
+			throw  new IllegalArgumentException("Error: Üres lista lett megadva!");
+		}
+		// Ha a játék determinisztikus akkor mindig az első szobát adja vissza.
+		if(isDeterministic){
+			return r.get(0);
+		}
+
+		// Ha a játék nem determinisztikus akkor véletlenszerűen kiválaszt egy DoorSide -ot
+		Random randInt = new Random();
+		return r.get(randInt.nextInt(r.size()));
 	}
 
 	/**
@@ -579,31 +657,50 @@ public class Room implements IRoom {
 	 * */
 	public void ToggleDoorsVisible() {
 		Logger.started(this, "ToggleDoorsVisible");
-		//TODO: implement
+		if(isCursed){
+			// Ha a játék determinisztikus akkor mindig az első ajtót adja vissza.
+			if(isDeterministic){
+				DoorSide firstDoor = doors.get(0);
+                firstDoor.SetIsVisible(!firstDoor.GetIsVisible());
+			}
+			// Ha a játék nem determinisztikus akkor véletlenszerűen kiválaszt egy DoorSide -ot
+			Random randInt = new Random();
+			DoorSide randomDoor = doors.get(randInt.nextInt(doors.size()));
+			randomDoor.SetIsVisible(!randomDoor.GetIsVisible());
+
+		}
 		Logger.finished(this, "ToggleDoorsVisible");
 	}
 
 	/**
 	 * Beállítja, hogy a szoba elátkozott legyen, azaz az ajtajai véletlenszerűen megjelenjenek/eltűnjenek.
+	 *
+	 * @param isc Az isCursed változó leendő értéke.
 	 * */
 	public void SetIsCursed(boolean isc) {
 		Logger.started(this, "SetIsCursed", isc);
-		//TODO: implement
+		isCursed = isc;
 		Logger.finished(this, "SetIsCursed", isc);
 	}
 
+	/**
+	 * Ezen metódus visszaadja a Room id változójának értékét.
+	 *
+	 * @return A Room id változója.
+	 */
 	@Override
 	public String GetId() {
 		return id;
 	}
 
 	/**
-	 * Visszaadja, hogy a szoba elátkozott-e.
+	 * Ezen metódus visszaadja, hogy a szoba elátkozott-e.
+	 *
+	 * @return Az isCursed változó értéke.
 	 * */
 	public boolean GetIsCursed() {
 		Logger.started(this, "GetIsCursed");
-		// existing code
 		Logger.finished(this, "GetIsCursed");
-		return false;
+		return isCursed;
 	}
 }

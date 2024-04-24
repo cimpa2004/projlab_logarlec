@@ -6,33 +6,62 @@ import util.Reader;
 import java.util.UUID;
 
 /**
+ * Az AirFreshener osztály a Légfrissítő tárgy reprezentációja.
+ * Eltárolja egy AirFreshener -ról, hogy  aktív-e.
+ * Felelőssége továbbá, hogy egy AirFreshener példány felvételekor, eldobásakor és használatakor
+ * frissítse a AirFreshener változóit
+ * és kezelje, hogy ezen cselekvések, hogy hatnak ki a AirFreshener környezetére (owner és room).
  */
 public class AirFreshener extends Item implements Usable {
 
     /**
-     * Tárolja hogy aktív e
+     * Ez a boolean típusú változó tárolja az adott AirFreshener példányról,
+     * hogy aktiválva van-e vagy nem.
      */
     private boolean isActivated;
 
+    /**
+     * Az AirFreshener osztály konstruktora.
+     * Az isActivated értékét hamisra állítja.
+     * Az id értékét a paraméterben kapott értékre állítja.
+     *
+     * @param id Az id változó értékét erre az értékre állítja.
+     * */
     public AirFreshener(String id){
         super(id);
         isActivated = false;
     }
 
+    /**
+     * Az AirFreshener osztály konstruktora.
+     * Az isActivated értékét hamisra állítja,
+     * Az id-t beállítja egy random értékre.
+     */
     public AirFreshener(){
         super(UUID.randomUUID().toString());
         isActivated = false;
     }
 
+    /**
+     * Visszaadja, hogy az adott AirFreshener hamis-e.
+     * Egy AirFreshener nem lehet hamis, tehát
+     * mindig hamisat fog visszaadni.
+     *
+     * @return Mindig hamis.
+     * */
     @Override
     public boolean GetIsFake() {
         return false;
     }
 
     /**
-     * Aktiválja az AirFreshenert
-     * @return True ha sikerült False, ha nem/ már használva volt
-     */
+     * Ez a metódus, abban az esetben lesz meghívva ha egy AirFreshener tárgyat aktiválni szeretnénk.
+     * Ha a tárgy már használva volt - azaz az isActivated már igazra lett állítva -
+     * akkor a metódus hamissal tér vissza.
+     * Ellenkező esetben igazra állítja az isActivated változót és igazzal tér vissza.
+     *
+     * @return Igaz ha sikerült aktiválni és hamis ha nem.
+     * */
     @Override
     public boolean Activate() {
         Logger.started(this, "Activate");
@@ -47,23 +76,34 @@ public class AirFreshener extends Item implements Usable {
 
 
     /**
-     *Vissza adja, hogy aktivalva volt-e mar
-     * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+     * Ezen metódussal le lehet kérdezni, hogy egy AirFreshener példány aktív-e.
+     * @return Az isActivated változó értéke.
      */
     @Override
     public boolean GetIsActive() {
         return isActivated;
     }
 
+    /**
+     * Ezen metódussal le lehet kérdezni, hogy az
+     * adott Transistor  -nak melyik Transistor  a párja.
+     *
+     * @return Mindig null, mert az AirFreshener nem Transistor.
+     */
     @Override
     public Transistor GetPair() {
         return null;
     }
 
     /**
-     * Kezeli a felvételt, elhelyezi magát az st inventoryában
+     * Ezen metódus referenciaként átveszi hogy melyik Student vette fel
+     * és megpróbálja elhelyezi magát a Student inventoryában.
+     * Meghívja a Student AddToInventory metódusát, aminek átadja a AirFreshenert.
+     * Ezen metódus visszatérési értéke megadja,
+     * hogy sikerült-e felvennie az AirFreshenert a Student -nek.
+     *
      * @param st A felvevő hallgató
-     * @return true ha sikerült felvenni, false ha nem
+     * @return Igaz, ha sikerült felvenni és hamis ha nem.
      */
     @Override
     public boolean PickedUpStudent(Student st) {
@@ -74,9 +114,14 @@ public class AirFreshener extends Item implements Usable {
     }
 
     /**
-     * Kezeli a felvételt, elhelyezi magát az i inventoryában
+     * Ezen metódus referenciaként átveszi hogy melyik Instructor vette fel
+     * és megpróbálja elhelyezi magát az Instructor inventoryában.
+     * Meghívja az Instructor AddToInventory metódusát, aminek átadja a AirFreshenert.
+     * Ezen metódus visszatérési értéke megadja,
+     * hogy sikerült-e felvennie az AirFreshenert az Instructor -nak.
+     *
      * @param i A felvevő oktató
-     * @return True, ha sikerült felvenni; False, ha nem
+     * @return Igaz, ha sikerült felvenni és hamis ha nem.
      */
     @Override
     public boolean PickedUpInstructor(Instructor i) {
@@ -87,7 +132,11 @@ public class AirFreshener extends Item implements Usable {
     }
 
     /**
-     * Kezeli az eldobást
+     * Ezen metódus akkor hívódik meg, ha a Person el szeretné
+     * távolítani az inventoryából az adott AirFreshener tárgyat.
+     * A metódus eltávolítja a AirFreshener -ot a Person inventoryából
+     * a RemoveFromInventory metódus meghívásával.
+     *
      * @param p Az eldobó személy
      */
     @Override
@@ -98,7 +147,13 @@ public class AirFreshener extends Item implements Usable {
     }
 
     /**
-     * Kezeli a használatot
+     *  Ezen metódus akkor hívódik meg, ha egy Student szeretne
+     *  használni egy az inventoryában lévő AirFreshener -t.
+     *  Ekkor először aktiválja, tehát meghívja az Activate metódust.
+     *  Amennyiben az Activate metódus igaz értékkel tér vissza,
+     *  akkor sikerült aktiválni és a Student szobájában semlegesíti a gázhatást,
+     *  azaz a poisonDuration értékét 0-ra állítja.
+     *
      * @param s Az AirFreshener-t használó hallgató
      */
     @Override
@@ -111,7 +166,13 @@ public class AirFreshener extends Item implements Usable {
     }
 
     /**
-     * Kezeli a használatot
+     * Ezen metódus akkor hívódik meg, ha egy Instructor szeretne
+     * használni egy az inventoryában lévő AirFreshener -t.
+     * Ekkor először aktiválja, tehát meghívja az Activate metódust.
+     * Amennyiben az Activate metódus igaz értékkel tér vissza,
+     * akkor sikerült aktiválni és az Instructor szobájában semlegesíti a gázhatást,
+     * azaz a poisonDuration értékét 0-ra állítja.
+     *
      * @param i Az AirFreshenert-t használó oktató
      */
     @Override
