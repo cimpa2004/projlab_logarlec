@@ -29,4 +29,8 @@ public class Reader {
         System.out.println(message + ": Integer: ");
         return scanner.nextInt();
     }
+
+    static public String GetStringInput(){
+        return scanner.nextLine();
+    }
 }

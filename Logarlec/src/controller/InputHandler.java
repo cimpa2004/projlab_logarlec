@@ -3,15 +3,12 @@ package controller;
 import modul.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 
 /**
@@ -122,7 +119,14 @@ public class InputHandler {
 
                 //Set doorside pairs
                 for (int i = 0; i < doorsList.size(); i++) {
-                    doorsList.get(i).SetPair(doorsList.get(doorSideIDs.indexOf(doors.getJSONObject(i).getString("pair"))));
+                    String doorPairId = doors.getJSONObject(i).getString("pair");
+                    int indexOfPair = doorSideIDs.indexOf(doorPairId);
+                    if (indexOfPair == -1) {
+                        doorsList.get(i).SetPair(null);
+                    } else{
+                        DoorSide doorPair = doorsList.get(indexOfPair);
+                        doorsList.get(i).SetPair(doorPair);
+                    }
                 }
             }
 
@@ -179,7 +183,7 @@ public class InputHandler {
                     if (r.has("slideRules")) {
                         JSONArray slideRules = r.getJSONArray("slideRules");
                         for (int j = 0; j < slideRules.length(); j++) {
-                            SlideRule sl = new SlideRule(slideRules.getJSONObject(j).getString("id"));
+                            SlideRule sl = new SlideRule(slideRules.getJSONObject(j).getString("id"), game);
                             sl.SetRoom(room);
                             if (slideRules.getJSONObject(j).has("fake")){
                                 sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
@@ -1003,6 +1007,8 @@ public class InputHandler {
         String personId = parameters.get(0);
         IPerson paramPerson = game.findPersonById(personId);
 
+        // check if person exists in game
+        if (paramPerson == null) return "message: A szemely " + personId + " nem letezik a jatekban.";
         // check it chosen person has active turn
         if (!paramPerson.GetIsActiveTurn()) return "message: Nem az adott személynek van jelenleg köre.";
         paramPerson.EndTurn();

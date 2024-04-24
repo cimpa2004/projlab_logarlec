@@ -237,8 +237,8 @@ public class Student extends Person {
 	public boolean Move(DoorSide d) {
 		Logger.started(this, "Move", d);
 		if (!room.GetDoors().contains(d)) return false;
-		boolean canBeOpened = Reader.GetBooleanInput("Az ajtot ki lehet nyitni?");
-		boolean isVisible = Reader.GetBooleanInput("Az ajto lathato?");
+		boolean canBeOpened = d.GetCanBeOpened();
+		boolean isVisible = d.GetIsVisible();
 		if (!canBeOpened || !isVisible) {
 			Logger.finished(this, "Move", d);
 			return false;

@@ -30,8 +30,9 @@ public class SlideRule extends Item {
 	 *
 	 * @param id Az id változó értékét erre az értékre állítja.
 	 * */
-	public SlideRule(String id) {
+	public SlideRule(String id, Game game) {
 		super(id);
+		this.game = game;
 	}
 
 	/**

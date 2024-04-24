@@ -24,8 +24,6 @@ public class StudentSavedByTVSZ {
         i = new Instructor(g);
 
         //Szobák összekötése
-        r1.AddNeighbor(r2);
-        r2.AddNeighbor(r1);
         d1.SetPair(d2);
         d2.SetPair(d1);
         r1.AddDoor(d1);

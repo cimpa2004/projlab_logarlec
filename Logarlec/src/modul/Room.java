@@ -441,7 +441,8 @@ public class Room implements IRoom {
 			}
 
 			// Minden az r2 -ben lévő tárgyat áthelyezünk az r1 -be.
-			for(Item item : r2.GetItems()){
+			ArrayList<Item> r2ItemsCopy = new ArrayList<>(r2.GetItems());
+			for(Item item : r2ItemsCopy){
 				r2.RemoveItem(item);
 				this.AddItem(item);
 			}

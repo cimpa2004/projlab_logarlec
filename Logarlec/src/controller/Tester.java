@@ -1,6 +1,8 @@
 package controller;
 
 
+import util.Reader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ public class Tester {
      * Egy inputHandler ami vegzi a parancsok beolvasasat, illetve a parancsok vegrehajtasat a megadott jatekon
      */
     InputHandler inputHandler;
+    String RESET = "\u001B[0m";
+    String RED = "\u001B[31m";
+    String GREEN = "\u001B[32m";
 
     /**
      * Egy jatek peldany, melyet minden teszt futasanal ujbol inicializal, es ezen vegzi a teszt futasat
@@ -100,13 +105,12 @@ public class Tester {
     public void runTest(String expectedOutputFilePath){
         ArrayList<String> expectedCommandOutputs = readExpectedOutputFile(expectedOutputFilePath);
         ArrayList<String> actualCommandOutputs = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
         String input;
 
         ArrayList<String> inputCommands = new ArrayList<>();
         System.out.println("Add meg a parancsokat: \n");
         while (true) {
-            input = scanner.nextLine();
+            input = Reader.GetStringInput();
             inputCommands.add(input);
             if ("End".equalsIgnoreCase(input)) {
                 break;
@@ -117,8 +121,6 @@ public class Tester {
         }
 
         logOutput(expectedCommandOutputs, actualCommandOutputs, inputCommands);
-
-        scanner.close();
     }
 
     private void logOutput(ArrayList<String> expectedCommandOutputs, ArrayList<String> actualCommandOutputs, ArrayList<String> inputCommands){
@@ -127,15 +129,15 @@ public class Tester {
             str.append("\n--- FAIL: Az elvart es aktualis parancsok szama elter.\n");
             str.append("EXPECTED:\n").append(expectedCommandOutputs.size()).append("\n");
             str.append("ACTUAL:\n").append(actualCommandOutputs.size());
-            System.err.println(str);
+            System.out.println(RED + str + RESET);
             str.setLength(0);
         }
 
         int n = Math.min(actualCommandOutputs.size(), expectedCommandOutputs.size());
         for (int i = 0; i < n; i++) {
             String result = compareOutputs(expectedCommandOutputs.get(i), actualCommandOutputs.get(i), inputCommands.get(i));
-            if (result.contains("SUCCESS")) System.out.println(result + "\n\n");
-            else System.err.println(result + "\n\n");
+            if (result.contains("SUCCESS")) System.out.println(GREEN + result + RESET + "\n\n");
+            else System.out.println(RED + result + RESET + "\n\n");
         }
     }
 

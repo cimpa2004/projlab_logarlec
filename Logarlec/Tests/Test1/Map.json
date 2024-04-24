@@ -1,63 +1,186 @@
 {
-      "doors": [
-        {
-          "id": "Door1",
-          "canBeOpened": true,
-          "pair": "Door2"
-        },
-        {
-          "id": "Door2",
-          "canBeOpened": true,
-          "pair": "Door1"
-        }
-      ],
-      "rooms": [
-        {
-          "id": "Room1",
-          "instructors": [],
-          "students":[
-            {
-              "id" : "Student1"
-            }
-          ],
-          "janitors":[],
-          "slideRules":[],
-          "tvszs": [
-          ],
-          "ffp2Masks": [
-          ],
-          "wetTableClothes": [
-          ],
-          "holyBeerCups": [
-          ],
-          "airFresheners": [
-          ],
-          "camemberts": [
-          ],
-          "transistors": [],
-          "doors": ["Door1"]
-        },
-        {
-          "id": "Room2",
-          "instructors": [],
-          "students":[],
-          "janitors":[],
-          "slideRules":[],
-          "tvszs": [
-          ],
-          "ffp2Masks": [
-          ],
-          "wetTableClothes": [
-          ],
-          "holyBeerCups": [
-          ],
-          "airFresheners": [
-          ],
-          "camemberts": [
-          ],
-          "transistors": [],
-          "doors": ["Door2"]
-        }
-      ]
-  }
-  
+"doors": [
+{
+"id": "Door1",
+"canBeOpened": true,
+"pair": "Door2"
+},
+{
+"id": "Door2",
+"canBeOpened": true,
+"pair": "Door1"
+}
+],
+"rooms": [
+{
+"id": "Room1",
+"Instructors": [
+{
+"id" :"Instructor1"
+}
+],
+"Students": [],
+"Janitors": [],
+"SlideRules":[
+{
+"id" : "SlideRule1",
+"fake" :false
+}
+],
+"TVSZs": [
+{
+"durability": 1,
+"id" : "TVSZ1"
+},
+{
+"durability": 2,
+"id" : "TVSZ2"
+}
+],
+"FFP2Masks": [
+{
+"durability": 1,
+"id":"FFP2Mask1"
+},
+{
+"durability": 2,
+"id":"FFP2Mask2"
+}
+],
+"wetTableClothes": [
+{
+"durability": 1,
+"id" : "WetTableCloth1"
+},
+{
+"durability": 2,
+"id" : "WetTableCloth2"
+}
+],
+"holyBeerCups": [
+{
+"durability": 1,
+"id": "HolyBeerCup1"
+},
+{
+"durability": 2,
+"id": "HolyBeerCup2"
+}
+],
+"airFresheners": [
+{
+"isActivated": true,
+"id": "AirFreshener1"
+},
+{
+"isActivated": false,
+"id": "AirFreshener2"
+}
+],
+"camemberts": [
+{
+"isActivated": true,
+"id": "Camembert1"
+
+},
+{
+"isActivated": false,
+"id": "Camembert2"
+
+}
+],
+"Transistors": [
+{
+"id": "Transistor1"
+}
+],
+
+"doors": ["Door1"]
+},
+{
+"id": "Room2",
+"Instructors": [],
+"Students": [
+{
+"id" : "Student1"
+}
+],
+"Janitors": [],
+"SlideRules":[
+{
+"id" : "SlideRule2",
+"fake" :false
+}
+],
+"TVSZs": [
+{
+"durability": 1,
+"id" : "TVSZ3"
+},
+{
+"durability": 2,
+"id" : "TVSZ4"
+}
+],
+"FFP2Masks": [
+{
+"durability": 1,
+"id":"FFP2Mask3"
+},
+{
+"durability": 2,
+"id":"FFP2Mask4"
+}
+],
+"wetTableClothes": [
+{
+"durability": 1,
+"id" : "WetTableCloth3"
+},
+{
+"durability": 2,
+"id" : "WetTableCloth4"
+}
+],
+"holyBeerCups": [
+{
+"durability": 1,
+"id": "HolyBeerCup3"
+},
+{
+"durability": 2,
+"id": "HolyBeerCup4"
+}
+],
+"airFresheners": [
+{
+"isActivated": true,
+"id": "AirFreshener3"
+},
+{
+"isActivated": false,
+"id": "AirFreshener4"
+}
+],
+"camemberts": [
+{
+"isActivated": true,
+"id": "Camembert3"
+
+},
+{
+"isActivated": false,
+"id": "Camembert4"
+
+}
+],
+"Transistors": [
+{
+"id": "Transistor2"
+}
+],
+
+"doors": ["Door2"]
+}
+]
+}
