@@ -6,47 +6,72 @@ import util.Reader;
 import java.util.UUID;
 
 /**
- * A HolyBeerCup osztály a Szent Söröspohár reprezentációja.
- * A HolyBeerCup a tárgyak egyike, amelyeket a játékosok
- * a szobákban találhatnak. Ezeket a tárgyakat fel tudják venni, illetve eldobni.
- * A HolyBeerCup tárgyat lehet aktiválni és aktiválás után egy bizonyos számú körig
- * védelmet biztosít az aktiváló Student -nek az Instructor -okkal szemben.
- * A HolyBeerCup -ot Instructorok is fel tudják venni, illetve eldobni, de
- * használni nem tudják.
+ * A HolyBeerCup osztály a Szent Söröspohár tárgy reprezentációja.
+ * Eltárolja egy HolyBeerCup -ról, hogy  aktív-e és hány körig aktív még.
+ * Felelőssége továbbá, hogy egy HolyBeerCup példány felvételekor, eldobásakor és használatakor
+ * frissítse a HolyBeerCup változóit és kezelje, hogy ezen cselekvések,
+ * hogy hatnak ki a HolyBeerCup környezetére (owner és room).
+ * Továbbá meg tudja állapítani egy HolyBeerCup -ról,
+ * hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
 public class HolyBeerCup extends Item implements Usable, Defendable {
 
 	/**
-	 * Ez a változó eltárolja, hogy még hány körig képes a
+	 * Ez az integer típusú változó eltárolja, hogy még hány körig képes a
 	 * HolyBeerCup megvédeni a Studentet, akihez tartozik
 	 * */
 	private int effectDuration;
 
 	/**
-	 * Ez a változó eltárolja, hogy az adott HolyBeerCup aktiválva van-e vagy sem.
-	 * */
+	 * Ez a boolean típusú változó tárolja az adott HolyBeerCup példányról,
+	 * hogy aktiválva van-e vagy nem.
+	 */
 	private boolean isActivated;
 
+	/**
+	 * A HolyBeerCup osztály konstruktora. Az effectDuration értékét háromra,
+	 * az isActivated értékét hamisra állítja.
+	 * Az id értékét a paraméterben kapott értékre állítja.
+	 *
+	 * @param id Az id változó értékét erre az értékre állítja.
+	 * */
 	public HolyBeerCup(String id){
 		super(id);
 		isActivated = false;
 		effectDuration = 3;
 	}
 
+	/**
+	 * A HolyBeerCup osztály konstruktora.
+	 * Az isActivated értékét hamisra állítja,
+	 * az effectDuration értékét pedig háromra.
+	 * Az id-t beállítja egy random értékre.
+	 */
 	public HolyBeerCup(){
 		super(UUID.randomUUID().toString());
 		isActivated = false;
 		effectDuration = 3;
 	}
 
+	/**
+	 * Visszaadja, hogy az adott HolyBeerCup hamis-e.
+	 * Egy HolyBeerCup nem lehet hamis, tehát
+	 * mindig hamisat fog visszaadni.
+	 *
+	 * @return Mindig hamis.
+	 * */
 	@Override
 	public boolean GetIsFake() {
 		return false;
 	}
 
 	/**
-	 * Ezen metódus meghívásakor a HolyBeerCup, amire ezt a függvényt meghívták,
-	 * aktivált állapotba kerül, azaz igazra állítódik az isActivated változója.
+	 * Ez a metódus, abban az esetben lesz meghívva ha egy HolyBeerCup tárgyat aktiválni szeretnénk.
+	 * Ha a tárgy már használva volt - azaz az isActivated már igazra lett állítva -
+	 * akkor a metódus hamissal tér vissza.
+	 * Ellenkező esetben igazra állítja az isActivated változót és igazzal tér vissza.
+	 *
+	 * @return Igaz ha sikerült aktiválni és hamis ha nem.
 	 * */
 	@Override
 	public boolean Activate() {
@@ -62,14 +87,21 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 *Vissza adja, hogy aktivalva volt-e mar
-	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 * Ezen metódussal le lehet kérdezni, hogy egy HolyBeerCup példány aktív-e.
+	 *
+	 * @return az isActivated változó értéke.
 	 */
 	@Override
 	public boolean GetIsActive() {
 		return isActivated;
 	}
 
+	/**
+	 * Ezen metódussal le lehet kérdezni, hogy az
+	 * adott Transistor  -nak melyik Transistor  a párja.
+	 *
+	 * @return Mindig null, mert a HolyBeerCup nem Transistor.
+	 */
 	@Override
 	public Transistor GetPair() {
 		return null;
@@ -77,9 +109,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 
 
 	/**
-	 * Ezen metódus minden kör végén meghívásra kerül, amennyiben
-	 * az adott HolyBeerCup aktiválva van.
-	 * A metódus eggyel csökkenti az effectDuration változót.
+	 * Ez a metódus az adott HolyBeerCup effectDuration változójának értékét csökkenti eggyel,
+	 * akkor ha az a HolyBeerCup aktiválva volt, azaz az isActivated igaz, és
+	 * még tud védelmet biztosítani azaz az effectDuration nullánál nagyobb.
+	 * Ha aktiválva van, de az effectDuration már nullára csökkent,
+	 * akkor el lett használva a HolyBeerCup és az isActivated értékét hamisra állítja.
 	 * */
 	@Override
 	public void Decrement() {
@@ -91,27 +125,36 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 		Logger.finished(this, "Decrement");
 	}
 
+	/**
+	 * Visszaadja, hogy az adott HolyBeerCup hány körig hatásos még.
+	 *
+	 * @return Az effectDuration változó értéke.
+	 */
 	@Override
 	public int GetDurability() {
 		return effectDuration;
 	}
 
+	/**
+	 * Az effectDuration értékét a paraméterben kapott értékre állítja.
+	 *
+	 * @param durability Erre az értékre lesz állítva az effectDuration változó.
+	 */
 	@Override
 	public void SetDurability(int durability) {
 		this.effectDuration = durability;
 	}
 
 	/**
-	 * Ezen metódus meghívásakor a paraméterként megkapott
-	 * Student inventárjában elhelyezi magát a HolyBeerCup
-	 * és átállítja az owner változóját a paraméterként kapott Student -re.
-	 * Igaz értékkel fog visszatérni, ha sikeresen fel tudta venni
-	 * az adott tárgyat a Student és hamissal, ha nem.
-	 * Abben az esetben nem sikerülhet felvenni a tárgyat,
-	 * ha a Student inventárja már tele van.
+	 * Ezen metódus referenciaként átveszi hogy melyik Student vette fel
+	 * és megpróbálja elhelyezi magát a Student inventoryában.
+	 * Meghívja a Student AddToInventory metódusát, aminek átadja a HolyBeerCupot.
+	 * Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie a HolyBeerCupot a Student -nek.
 	 *
-	 * @param	st	Azon Student, aki megpróbálja felvenni az adott HolyBeerCup -ot.
-	 * */
+	 * @param st A felvevő hallgató
+	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
+	 */
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
@@ -120,16 +163,15 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 * Ezen metódus meghívásakor a paraméterként megkapott
-	 * Instructor inventárjában elhelyezi magát a HolyBeerCup
-	 * és átállítja az owner változóját a paraméterként kapott Instructor -ra.
-	 * Igaz értékkel fog visszatérni, ha sikeresen fel tudta venni
-	 * az adott tárgyat az Instructor és hamissal, ha nem.
-	 * Abben az esetben nem sikerülhet felvenni a tárgyat,
-	 * ha az Instructor inventárja már tele van.
+	 * Ezen metódus referenciaként átveszi hogy melyik Instructor vette fel
+	 * és megpróbálja elhelyezi magát az Instructor inventoryában.
+	 * Meghívja az Instructor AddToInventory metódusát, aminek átadja a HolyBeerCupot.
+	 * Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie a HolyBeerCupot az Instructor -nak.
 	 *
-	 * @param	i	Azon Instructor, aki megpróbálja felvenni az adott HolyBeerCup -ot.
-	 * */
+	 * @param i A felvevő oktató
+	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
+	 */
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
@@ -138,9 +180,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 * Ezen metódus a Person Throw függvényéből hívódik meg.
-	 * Kezeli az eldobást a HolyBeerCup szemszögéből, törli magát a
-	 * Person HolyBeerCups listájából.
+	 *  Ezen metódus akkor hívódik meg, ha a Person el szeretné
+	 *  távolítani az inventoryából az adott HolyBeerCup tárgyat.
+	 *  A metódus eltávolítja a HolyBeerCup -ot a Person inventoryából
+	 *  és a Person holyBeerCups listájából
+	 *  a RemoveFromInventory és a RemoveHolyBeerCup metódusok meghívásával.
 	 *
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
@@ -152,10 +196,10 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 * Ezen metódus abban az esetben hívódik meg, amikor
-	 * egy Student használni szeretne egy nála lévő HolyBeerCup -ot.
-	 * A metódus aktiválja a HolyBeerCup -ot, amire meghívták, abban az esetben,
-	 * ha még nem volt aktiválva.
+	 *  Ezen metódus akkor hívódik meg, ha egy Student szeretne használni egy az inventoryában lévő HolyBeerCup -ot.
+	 *  Ekkor először aktiválja, tehát meghívja az Activate metódust.
+	 *  Amennyiben az Activate metódus igaz értékkel tér vissza, akkor sikerült aktiválni.
+	 *  Ekkor hozzáadja az adott HolyBeerCup -ot a Student holyBeerCups listájához.
 	 *
 	 * @param s Az a Student, aki használni szeretné a HolyBeerCup -ot.
 	 * */
@@ -167,10 +211,10 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 * Ezen metódus abban az esetben hívódik meg, amikor
-	 * egy Instructor használni szeretne egy nála lévő HolyBeerCup -ot.
-	 * A metódus nem csinál semmit, nem fogja aktiválni a HolyBeerCup -ot,
-	 * mivel az Instructor nem használhatja azt.
+	 * Ezen metódus akkor hívódik meg, ha egy Instructor szeretne
+	 * használni egy az inventoryában lévő HolyBeerCup -ot.
+	 * Instructor nem képes a HolyBeerCup használatára,
+	 * ezért e metódus üres.
 	 *
 	 * @param i Az a Instructor, aki használni szeretné a HolyBeerCup -ot.
 	 * */
@@ -180,10 +224,11 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
-	 * Ezen metódus annak a kiderítésére szolgál, hogy képes-e még megvédeni
-	 * a Student -et a HolyBeerCup.
-	 * Igazat ad vissza, ha a HolyBeerCup aktiválva van
-	 * és még legalább egy körig tart a hatása.
+	 * Ez a metódus megállapítja, hogy az adott HolyBeerCup képes-e még megvédeni a Person -t,
+	 * akihez tartozik egy Instructor-tól.
+	 * Abban az esetben tudja, ha aktiválva van és a effectDuration változója nagyobb nullánál.
+	 *
+	 * @return Ha képes megvédeni igazzal tér vissza, ellenkező esetben hamissal.
 	 * */
 	@Override
 	public boolean CanDefend() {

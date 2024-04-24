@@ -195,7 +195,7 @@ public class InputHandler {
                             TVSZ t = new TVSZ(tvszs.getJSONObject(j).getString("id"));
                             t.SetRoom(room);
                             if (tvszs.getJSONObject(j).has("durability")) {
-                                t.SetUsesLeft(tvszs.getJSONObject(j).getInt("durability"));
+                                t.SetDurability(tvszs.getJSONObject(j).getInt("durability"));
                             }
                             if (tvszs.getJSONObject(j).has("fake")) {
                                 t.SetIsFake(tvszs.getJSONObject(j).getBoolean("fake"));

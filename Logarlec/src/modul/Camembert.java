@@ -5,35 +5,63 @@ import util.Reader;
 import java.util.UUID;
 
 /**
- * A camebert-t reprezentációja
- * Tárolja, hogy aktív e. Ha nem aktív akkor nem engedi a használatot.
- * Elhelyezi magát az őt felvevők inventoryába, és megvalósítja a használatot.
+ * A Camembert osztály a Dobozolt Camembert tárgy reprezentációja.
+ * Eltárolja egy Camembertről, hogy aktiválva van-e és képes aktiválni azt.
+ * Felelőssége továbbá, hogy egy Camembert példány felvételekor, eldobásakor és használatakor
+ * frissítse a Camembert változóit és kezelje, hogy ezen cselekvések,
+ * hogy hatnak ki a Camembert környezetére (owner és room).
  * {@inheritDoc}
  */
 public class Camembert extends Item implements Usable {
+
 	/**
-	 * Tárolja hogy aktív e
+	 * Ez a boolean típusú változó tárolja az adott Camembert példányról,
+	 * hogy aktiválva van-e vagy nem.
 	 */
 	private boolean isActivated;
 
+	/**
+	 * A Camembert osztály konstruktora.
+	 * Az isActivated értékét hamisra állítja.
+	 * Az id értékét a paraméterként kapott értékre állítja.
+	 *
+	 * @param id Az id változó értékét erre az értékre állítja.
+	 */
 	public Camembert(String id){
 		super(id);
 		isActivated = false;
 	}
 
+	/**
+	 * A Camembert osztály konstruktora.
+	 * Az isActivated értékét hamisra állítja.
+	 * Az id-t beállítja egy random értékre.
+	 */
 	public Camembert(){
 		super(UUID.randomUUID().toString());
 		isActivated = false;
 	}
 
+	/**
+	 * Visszaadja, hogy az adott Camembert	 hamis-e.
+	 * Egy Camembert nem lehet hamis, tehát
+	 * mindig hamisat fog visszaadni.
+	 *
+	 * @return Mindig hamis.
+	 * */
 	@Override
 	public boolean GetIsFake() {
 		return false;
 	}
 
 	/**
-	 * Aktiválja az Camembert-t
-	 * @return True ha sikerült False, ha nem/ már használva volt
+	 * Ez a metódus, abban az esetben lesz meghívva,
+	 * ha egy Camembert tárgyat aktiválni szeretnénk.
+	 * Ha a tárgy már használva volt - azaz az isActivated már igazra lett állítva -
+	 * akkor a metódus hamissal tér vissza.
+	 * Ellenkező esetben igazra állítja az isActivated változót és igazzal tér vissza.
+	 *
+	 * @return True ha sikerült és False, ha nem vagy már használva volt.
 	 */
 	@Override
 	public boolean Activate() {
@@ -50,23 +78,35 @@ public class Camembert extends Item implements Usable {
 
 
 	/**
-	 *Vissza adja, hogy aktivalva volt-e mar
-	 * @return igaz/hamis ertek ami jelzi hogy aktivalva van e
+	 * Ezen metódussal le lehet kérdezni, hogy egy Camembert példány aktív-e.
+	 *
+	 * @return az isActivated változó értéke.
 	 */
 	@Override
 	public boolean GetIsActive() {
 		return isActivated;
 	}
 
+	/**
+	 * Ezen metódussal le lehet kérdezni, hogy az
+	 * adott Transistor  -nak melyik Transistor  a párja.
+	 *
+	 * @return Mindig null, mert a Camembert nem Transistor.
+	 */
 	@Override
 	public Transistor GetPair() {
 		return null;
 	}
 
 	/**
-	 * Kezeli a felvételt, elhelyezi magát az st inventoryában
+	 * Ezen metódus referenciaként átveszi hogy melyik Student vette fel
+	 * és megpróbálja elhelyezi magát a Student inventoryában.
+	 * Meghívja a Student AddToInventory metódusát, aminek átadja a Camambertet.
+	 * Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie a Camembertet a Student -nek.
+	 *
 	 * @param st A felvevő hallgató
-	 * @return true ha sikerült felvenni, false ha nem
+	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	@Override
 	public boolean PickedUpStudent(Student st) {
@@ -77,9 +117,14 @@ public class Camembert extends Item implements Usable {
 	}
 
 	/**
-	 * Kezeli a felvételt, elhelyezi magát az i inventoryában
+	 * Ezen metódus referenciaként átveszi hogy melyik Instructor vette fel
+	 * és megpróbálja elhelyezi magát az Instructor inventoryában.
+	 * Meghívja az Instructor AddToInventory metódusát, aminek átadja a Camembertet.
+	 * Ezen metódus visszatérési értéke megadja,
+	 * hogy sikerült-e felvennie a Camembertet az Instructor -nak.
+	 *
 	 * @param i A felvevő oktató
-	 * @return True, ha sikerült felvenni; False, ha nem
+	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
@@ -90,7 +135,11 @@ public class Camembert extends Item implements Usable {
 	}
 
 	/**
-	 * Kezeli az eldobást
+	 * Ezen metódus akkor hívódik meg, ha a Person el szeretné
+	 * távolítani az inventoryából az adott Camembert tárgyat.
+	 * A metódus eltávolítja a Camembertet a Person inventoryából
+	 * a Person RemoveFromInventory metódus meghívásával.
+	 *
 	 * @param p Az eldobó személy
 	 */
 	@Override
@@ -101,7 +150,12 @@ public class Camembert extends Item implements Usable {
 	}
 
 	/**
-	 * Kezeli a használatot
+	 * Ezen metódus akkor hívódik meg, ha egy Student szeretne használni egy
+	 * az inventoryában lévő Camembertet. Ekkor először aktiválja, tehát meghívja az Activate metódust.
+	 * Amennyiben az Activate metódus igaz értékkel tér vissza, akkor sikerült aktiválni.
+	 * Ekkor a szobát, amelyben a Student tartózkodik mérges gáz lepi el 5 körig,
+	 * tehát a szoba poisonDuration változóját 5 re állítja.
+	 *
 	 * @param s Az Camembert-t használó hallgató
 	 */
 	@Override
@@ -112,8 +166,13 @@ public class Camembert extends Item implements Usable {
 	}
 
 	/**
-	 * Kezeli a használatot
-	 * @param i A Camembert-t használó oktató
+	 * Ezen metódus akkor hívódik meg, ha egy Instructor szeretne használni egy
+	 * az inventoryában lévő Camembertet. Ekkor először aktiválja, tehát meghívja az Activate metódust.
+	 * Amennyiben az Activate metódus igaz értékkel tér vissza, akkor sikerült aktiválni.
+	 * Ekkor a szobát, amelyben az Instructor tartózkodik mérges gáz lepi el 5 körig,
+	 * tehát a szoba poisonDuration változóját 5 re állítja.
+	 *
+	 * @param i Az Camembert-t használó oktató
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
