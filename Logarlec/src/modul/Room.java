@@ -99,6 +99,8 @@ public class Room implements IRoom {
 		janitors = new ArrayList<>();
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
+
+		maxCapacity = 10;
 	}
 
 	/**
@@ -114,6 +116,8 @@ public class Room implements IRoom {
 		janitors = new ArrayList<>();
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
+
+		maxCapacity = 10;
 	}
 
 
@@ -533,6 +537,8 @@ public class Room implements IRoom {
 	public void AddInstructor(Instructor i) {
 		Logger.started(this, "AddInstructor", i);
 		i.SetRoom(this);
+		currentCapacity++;
+		numberOfPeopleBeenToRoom++;
 		if (poisonDuration > 0) {
 			boolean defended = i.DefendFromGas();
 			if (!defended) {
@@ -563,6 +569,8 @@ public class Room implements IRoom {
 	public void AddStudent(Student s) {
 		Logger.started(this, "AddStudent", s);
 		s.SetRoom(this);
+		currentCapacity++;
+		numberOfPeopleBeenToRoom++;
 		if (poisonDuration > 0) {
 			boolean defended = s.DefendFromGas();
 			if (!defended) {
@@ -595,6 +603,7 @@ public class Room implements IRoom {
 	 * */
 	public void AddJanitor(Janitor j) {
 		Logger.started(this, "AddJanitor", j);
+		currentCapacity++;
 		janitors.add(j);
 		Logger.finished(this, "AddJanitor", j);
 	}
