@@ -49,8 +49,7 @@ public class Student extends Person {
 			Room oldRoom = room;
 			room = r; // atlepes a masik szobaba
 			oldRoom.RemoveStudent(this);
-			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
-			room.AddStudent(this);
+			room.AddStudent(this); // belepes a masik szobaba
 
 			ArrayList<Instructor> instructors = room.GetInstructors();
 			// belep a szobaba es minden oktato megprobalja elvenni a lelket, de vedekezhet

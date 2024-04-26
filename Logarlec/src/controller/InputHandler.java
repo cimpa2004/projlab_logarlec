@@ -55,23 +55,23 @@ public class InputHandler {
      * @return Vissza adja a parancs kimenetet
      */
     public String handleCommand(String input) throws InvalidParameterException {
-    String[] parts = input.split(" ");
-    String command = parts[0].toLowerCase();
-    String[] parameters = new String[parts.length - 1];
-    System.arraycopy(parts, 1, parameters, 0, parameters.length);
-    ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
+        String[] parts = input.split(" ");
+        String command = parts[0].toLowerCase();
+        String[] parameters = new String[parts.length - 1];
+        System.arraycopy(parts, 1, parameters, 0, parameters.length);
+        ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
 
-    Function<ArrayList<String>, String> commandFunction = commandMap.get(command);
-    if (commandFunction != null) {
-        // Check if game is null, and if so, use the supplier to get a new Game object
-        if (!command.equals("creategame") && this.game == null) {
-            return "message: A parancs nem volt sikeres mert meg nem lett letrehozva jatek CreateGame paranccsal.";
+        Function<ArrayList<String>, String> commandFunction = commandMap.get(command);
+        if (commandFunction != null) {
+            // Check if game is null, and if so, use the supplier to get a new Game object
+            if (!command.equals("creategame") && this.game == null) {
+                return "message: A parancs nem volt sikeres mert meg nem lett letrehozva jatek CreateGame paranccsal.";
+            }
+            return commandFunction.apply(parameterList);
+        } else {
+            return "message: A megadott parancs helytelen, nem szerepel a parancsok kozott.";
         }
-        return commandFunction.apply(parameterList);
-    } else {
-        return "message: A megadott parancs helytelen, nem szerepel a parancsok kozott.";
     }
-}
 
     /** Ez a metodus inicializalja a parameterkent megadott jatekot. Beallithato hogy a jatek determinisztikus legyen,
      * illetve megadhato egy elore definialt jatekterkep. Amennyiben nincs megadva jatekterkep akkor egy alap terkepet
@@ -298,6 +298,20 @@ public class InputHandler {
                     game.AddRoom(room);
                 }
             }
+            // Set the neighbors of each Room
+            for(IRoom room : game.GetRooms()){
+                for(DoorSide door : room.GetDoors()){ // We iterate through every door of every room
+                    DoorSide pair = door.GetPair();
+                    if(pair != null){ // if the door has a pair
+                        if(!room.GetNeighbors().contains(pair.GetRoom())){
+                            // and if the other room isn't already in the neighbor list
+                            room.GetNeighbors().add(pair.GetRoom());
+                        }
+
+                    }
+                }
+            }
+
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -375,7 +389,7 @@ public class InputHandler {
             allDoors.addAll(room.GetDoors());
         }
         allDoors.sort(Comparator.comparing(DoorSide::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
-        str.append("\ndoorsides: [");
+        str.append("\ndoors: [");
         for (DoorSide door : allDoors){
             str.append(door.GetId());
             if(door != allDoors.get(allDoors.size()-1)) str.append(", ");
@@ -565,7 +579,7 @@ public class InputHandler {
         // doors
         ArrayList<DoorSide> doors = paramRoom.GetDoors();
         doors.sort(Comparator.comparing(DoorSide::GetId));
-        str.append("\ndoorsides: [");
+        str.append("\ndoors: [");
         for (DoorSide door : doors){
             str.append(door.GetId());
             if(door != doors.get(doors.size()-1)) str.append(", ");
@@ -591,8 +605,8 @@ public class InputHandler {
         str.append("\nisSticky: ").append(isSticky);
 
         // isGaseous
-        String isGaseous = paramRoom.GetPoisonDuration() > 0 ? "true" : "false";
-        str.append("\nisGaseous: ").append(isGaseous);
+        int poisonDuration = paramRoom.GetPoisonDuration();
+        str.append("\npoisonDuration: ").append(poisonDuration);
 
         // currentCapacity
         str.append("\ncurrentCapacity: ").append(paramRoom.GetCurrentCapacity());

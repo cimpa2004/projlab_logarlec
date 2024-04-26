@@ -37,10 +37,12 @@ public class DoorSide {
 
 	public DoorSide(String id){
 		this.id = id;
+		isVisible = true;
 	}
 
 	public DoorSide(){
 		this.id = UUID.randomUUID().toString();
+		isVisible = true;
 	}
 
 	/**
