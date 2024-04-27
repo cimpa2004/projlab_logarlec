@@ -169,6 +169,9 @@ public abstract class Person implements IPerson{
 
 		if(b){
 			ThrowAllItems();
+			isFainted = true;
+		}else{
+			isFainted = false;
 		}
 
 		Logger.finished(this, "SetIsFainted", b);

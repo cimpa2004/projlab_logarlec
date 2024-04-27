@@ -29,6 +29,10 @@
           "ffp2Masks": [
           ],
           "wetTableClothes": [
+            {
+              "id": "WetTableCloth1",
+              "isActivated":false
+            }
           ],
           "holyBeerCups": [
           ],

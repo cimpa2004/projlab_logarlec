@@ -4,36 +4,43 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1]
-doorsides: []
-items: [Camembert1]
+doors: [Door1]
+items: [Camembert1, WetTableCloth1]
 students: [Student1]
 instructors: []
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.
+currentTurn: Student1
+
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
+
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A személynek sikerült használnia a tárgyat.
 
-message: A megadott Student1 hallgató részletei a többi mezőben.
+message: A megadott Student1 személy részletei a többi mezőben.
 room: Room1
-inventory: [Camembert1]
-wetTableClothes: [WetTableCloth2]
+inventory: []
+wetTableClothes: []
 tvszs: []
-holyBeerCups []
+holyBeerCups: []
 ffp2Masks: []
-airFresheners: []
 isAlive: true
 isFainted: true
-isStunned: None 
+isStunned: false
 activeTurn: true
 
 message: A megadott Camembert1 részletei a többi mezőben.
-owner:Student1
-room: none
-isActiveted: true
+owner: None
+room: Room1
+isActivated: true
+pair: None
+isFake: false
+
 message: A megadott Room1 szoba részletei a többi mezőben.
-items: []
-doors: []
+items: [Camembert1, WetTableCloth1]
+doors: [Door1]
 neighbors: []
 isCursed: false
 isSticky: false
@@ -41,6 +48,7 @@ poisonDuration: 5
 currentCapacity: 1
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 1
-instructors: []
 students: [Student1]
-janitors []
+instructors: []
+janitors: []
+

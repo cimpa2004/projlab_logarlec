@@ -1,6 +1,8 @@
 CreateGame true Tests/Test10/Map.json
+startGame
 Pickup Student1 Camembert1
+Pickup Student1 WetTableCloth1
 UseItem Student1 Camembert1
 DescribePerson Student1
-DescribeItem Camembert
-DescibeRoom Room1
+DescribeItem Camembert1
+DescribeRoom Room1

@@ -4,11 +4,12 @@ isEndGame: false
 currentTurn: Instructor1
 turnOrder: [Instructor1,Student1]
 rooms: [Room1, Room2, Room3]
-doorsides: []
+doors: []
 items: [FFP2Mask1]
 students: [Student1]
 instructors: [Instructor1]
 janitors: []
+
 message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
 
 message: A személynek sikerült használnia a tárgyat.
@@ -18,10 +19,10 @@ message: A személynek sikerült belépnie az ajtón és megjelennie a másik sz
 message: A megadott Instructor1 oktató részletei a többi mezőben.
 room: Room2
 inventory: [FFP2Mask1]
-ffp2Masks: [FFP2Mask1]
 wetTableClothes”: []
 tvszs: []
 holyBeerCups: []
+ffp2Masks: [FFP2Mask1]
 isFainted: false
 isStunned: false
 activeTurn: true
