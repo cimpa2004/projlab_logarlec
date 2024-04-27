@@ -52,17 +52,20 @@ public class Instructor extends Person {
 			for(Student student : students) {
 				StealSoul(student);
 			}
-			//Megnezi hogy a szoba gázos e, ez alapján felébred vagy elájul
+			//megvizsgalja, hogy gazos-e a szoba
 			if (room.GetPoisonDuration() > 0){
-				this.SetIsFainted(true);
-			}else if (room.GetPoisonDuration()<=0 && !GetIsFainted()){
-				this.SetIsFainted(false);
+				//ha van nala ffp2 maszk, akkor megprobal aktivalni egyet
+				if(!ffp2Masks.isEmpty()) {
+					if(!this.DefendFromGas()){
+						this.SetIsFainted(true);
+					}else this.SetIsFainted(false);
+				}
 			}
 			//tárgyfelvétel
-			if (this.inventory.size() <5){
+			/*if (this.inventory.size() <5){
 				if(!this.GetRoom().GetIsSticky())
 					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size() - 1));
-			}
+			}*///Nem szükséges a teszteléshez
 			//mask aktiválása, minimális
 			for (Defendable m: this.GetFFP2Masks())
 				((FFP2Mask) m).Activate();

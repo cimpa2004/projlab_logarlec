@@ -144,6 +144,7 @@ public class Game {
 		Logger.started(this, "NextTurn");
 		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
 		else if (currentTurn == null) currentTurn = turnOrder.get(0);
+		currentTurn.SetActiveTurn(true);
 
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){

@@ -1,4 +1,5 @@
 CreateGame true Tests/Test11/Map.json
+startGame
 Pickup Instructor1 FFP2Mask1
 UseItem Instructor1 FFP2Mask1
 Move Instructor1 Door1

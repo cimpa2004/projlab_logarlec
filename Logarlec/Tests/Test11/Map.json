@@ -14,7 +14,7 @@
       "rooms": [
         {
           "id": "Room1",
-          "poisonDuracion" :0,
+          "poisonDuration" :0,
           "instructors": [
             {
               "id": "Instructor1"
@@ -46,7 +46,7 @@
         },
         {
           "id": "Room2",
-          "poisonDuracion" :5,
+          "poisonDuration" :5,
           "instructors": [],
           "students":[
           ],
@@ -70,7 +70,7 @@
         }, 
         {
           "id": "Room3",
-          "poisonDuracion" :0,
+          "poisonDuration" :0,
           "instructors": [],
           "students":[
             {
