@@ -100,6 +100,7 @@ public class Room implements IRoom {
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
 
+		currentCapacity = 0;
 		maxCapacity = 10;
 	}
 
@@ -117,6 +118,7 @@ public class Room implements IRoom {
 		students = new ArrayList<>();
 		instructors = new ArrayList<>();
 
+		currentCapacity = 0;
 		maxCapacity = 10;
 	}
 

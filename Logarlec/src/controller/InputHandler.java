@@ -31,8 +31,8 @@ public class InputHandler {
         commandMap.put("startgame", this::startGame);
         commandMap.put("describegame", this::describeGame);
         commandMap.put("liststudents", this::listStudents);
-        commandMap.put("listonstructors", this::listInstructors);
-        commandMap.put("listkanitors", this::listJanitors);
+        commandMap.put("listinstructors", this::listInstructors);
+        commandMap.put("listjanitors", this::listJanitors);
         commandMap.put("describeroom", this::describeRoom);
         commandMap.put("describeperson", this::describePerson);
         commandMap.put("describeitem", this::describeItem);
@@ -141,8 +141,12 @@ public class InputHandler {
                     if (r.has("isSticky")) room.SetIsSticky(r.getBoolean("isSticky"));
                     if (r.has("numberOfPeopleToRoom"))
                         room.SetNumberOfPeopleBeenToRoom(r.getInt("numberOfPeopleToRoom"));
-                    if (r.has("maxCapacity")) room.SetMaxCapacity(r.getInt("maxCapacity"));
-                    if (r.has("currentCapacity")) room.SetCurrentCapacity(r.getInt("currentCapacity"));
+                    if (r.has("maxCap")) {
+                        room.SetMaxCapacity(r.getInt("maxCap"));
+                    }
+                    if (r.has("currentCap")) {
+                        room.SetCurrentCapacity(r.getInt("currentCap"));
+                    }
 
                     //Students
                     if (r.has("students")) {
@@ -590,9 +594,11 @@ public class InputHandler {
         ArrayList<Room> neighbors = paramRoom.GetNeighbors();
         neighbors.sort(Comparator.comparing(Room::GetId));
         str.append("\nneighbors: [");
-        for (Room neighbor : neighbors){
-            str.append(neighbor.GetId());
-            if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
+        if(!neighbors.contains(null)){
+            for (Room neighbor : neighbors){
+                str.append(neighbor.GetId());
+                if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
+            }
         }
         str.append("]");
 
@@ -673,7 +679,7 @@ public class InputHandler {
         }
 
         // describe person
-        str.append("message: A megadott ").append(personId).append(" hallgató részletei a többi mezőben.");
+        str.append("message: A megadott ").append(personId).append(" személy részletei a többi mezőben.");
 
         // room
         str.append("\nroom: ").append(paramPerson.GetRoom().GetId());
@@ -881,7 +887,7 @@ public class InputHandler {
         if (!isPickedUp){
             return "message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában.";
         }
-        return "message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában";
+        return "message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában";
     }
 
     /**

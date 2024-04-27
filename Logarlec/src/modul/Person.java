@@ -256,7 +256,7 @@ public abstract class Person implements IPerson{
 		boolean canAdd = inventory.size() < 5;
 		if(canAdd) {
 			inventory.add(i);
-			i.SetRoom(null);
+			room.RemoveItem(i);
 			i.SetOwner(this);
 		}
 		Logger.finished(this, "AddToInventory", i);

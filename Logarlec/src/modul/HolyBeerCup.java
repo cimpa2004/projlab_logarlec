@@ -158,6 +158,9 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
+		if(isAdded && effectDuration > 0){
+			st.AddHolyBeerCup(this);
+		}
 		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -175,6 +178,9 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
+		if(isAdded && effectDuration > 0){
+			i.AddHolyBeerCup(this);
+		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}

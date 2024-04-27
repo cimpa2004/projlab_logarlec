@@ -4,22 +4,23 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1]
-doorsides: []
-items: []
+doors: [Door1]
+items: [SlideRule1]
 students: [Student1]
 instructors: []
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A játék jelenlegi állapotai a többi mezőben.
+message: A letrejott jatek állapotai a többi mezőben.
 gameTimer: 10
 isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1]
-doorsides: []
-items: []
+doors: [Door1]
+items: [SlideRule1]
 students: [Student1]
 instructors: []
 janitors: []
+
