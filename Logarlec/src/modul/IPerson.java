@@ -5,6 +5,14 @@ import util.Logger;
 import java.util.List;
 
 public interface IPerson {
+
+    /**
+     * Ez a metódus a paraméterként kapott értékre állítja az activeTurn változót
+     *
+     * @param b Az érték amire az activeTurn változó értékét állítja a metódus
+     */
+    void SetActiveTurn(boolean b);
+
     /**
      * A Person felszed egy tárgyat. Ez egy abstract függvény, mely a származott osztályokban van implementálva úgy,
      * ha az adott Person képes felvenni a tárgyat, van hely az inventoryjában, akkor ez belekerül az inventoryjába.

@@ -541,12 +541,6 @@ public class Room implements IRoom {
 		i.SetRoom(this);
 		currentCapacity++;
 		numberOfPeopleBeenToRoom++;
-		if (poisonDuration > 0) {
-			boolean defended = i.DefendFromGas();
-			if (!defended) {
-				i.SetIsFainted(true);
-			}
-		}
 		instructors.add(i);
 		Logger.finished(this, "AddInstructor", i);
 	}
@@ -573,12 +567,6 @@ public class Room implements IRoom {
 		s.SetRoom(this);
 		currentCapacity++;
 		numberOfPeopleBeenToRoom++;
-		if (poisonDuration > 0) {
-			boolean defended = s.DefendFromGas();
-			if (!defended) {
-				s.SetIsFainted(true);
-			}
-		}
 		students.add(s);
 		Logger.finished(this, "AddStudent", s);
 	}

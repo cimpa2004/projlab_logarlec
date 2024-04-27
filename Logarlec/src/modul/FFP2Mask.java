@@ -226,7 +226,7 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public void UsedByStudent(Student s) {
 		Logger.started(this, "UsedByStudent", s);
 		Activate();
-		if (isActivated) s.AddFFP2Mask(this);
+		//if (isActivated) s.AddFFP2Mask(this);
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -242,7 +242,7 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public void UsedByInstructor(Instructor i) {
 		Logger.started(this, "UsedByInstructor", i);
 		Activate();
-		if (isActivated) i.AddFFP2Mask(this);
+		//if (isActivated) i.AddFFP2Mask(this);
 		Logger.finished(this, "UsedByInstructor", i);
 	}
 

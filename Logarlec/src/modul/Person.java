@@ -114,6 +114,15 @@ public abstract class Person implements IPerson{
 	}
 
 	/**
+	 * Ez a metódus a paraméterként kapott értékre állítja az activeTurn változót
+	 *
+	 * @param b Az érték amire az activeTurn változó értékét állítja a metódus
+	 */
+	public void SetActiveTurn(boolean b){
+		activeTurn = b;
+	}
+
+	/**
 	 * Vissza adja a szemelynel talalhato WetTableClothesokat.
 	 *
 	 *  @return  Egy lista ami tartalmazza a szemelynel talahato WetTableClothesokat

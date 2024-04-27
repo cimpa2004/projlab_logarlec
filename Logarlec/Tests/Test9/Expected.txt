@@ -21,13 +21,13 @@ message: A hallgatónak sikeresen sikerült párosítani a tranzisztorokat.
 
 message: A személynek sikerült használnia a tárgyat.
 
-message: A személynek sikerült eldobni a tárgyat amely már megtálható a szobában.
+message: A személynek sikerült eldobni a tárgyat amely már megtalálható a szobában.
 
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
 message: A személynek sikerült használnia a tárgyat.
 
-message: A személynek sikerült eldobni a tárgyat amely már megtálható a szobában.
+message: A személynek sikerült eldobni a tárgyat amely már megtalálható a szobában.
 
 message: A megadott Room1 szoba részletei a többi mezőben.
 items: [Transistor1]
