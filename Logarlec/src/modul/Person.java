@@ -188,7 +188,6 @@ public abstract class Person implements IPerson{
 
 		if(inventory.contains(i)){
 			i.Thrown(this);
-			this.GetRoom().AddItem(i);
 		}
 
 		Logger.finished(this, "Throw", i);
@@ -274,7 +273,7 @@ public abstract class Person implements IPerson{
 		Logger.started(this, "RemoveFromInventory", i);
 		boolean canRemove = inventory.remove(i);
 		if(canRemove){
-			i.SetRoom(room);
+			room.AddItem(i);
 			i.SetOwner(null);
 		}
 		Logger.finished(this, "RemoveFromInventory", i);

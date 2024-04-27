@@ -180,10 +180,10 @@ public class Transistor extends Item implements Usable {
 		Logger.started(this, "Thrown", p);
 		if(pair != null && isActive && pair.isActive &&
 				pair.GetRoom() != null && pair.GetRoom() != p.GetRoom()){
-			p.RemoveFromInventory(this);
-			p.AppearInRoom(pair.GetRoom());
 			this.Activate();
 			pair.Activate();
+			p.RemoveFromInventory(this);
+			p.AppearInRoom(pair.GetRoom());
 		}else{
 			p.RemoveFromInventory(this);
 		}

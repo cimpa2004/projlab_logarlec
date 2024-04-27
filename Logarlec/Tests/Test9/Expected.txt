@@ -4,23 +4,30 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
-items: [Transistor1,Transistor2]
+doors: [Door1, Door2]
+items: [Transistor1, Transistor2]
 students: [Student1]
 instructors: []
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.
+currentTurn: Student1
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
+
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A hallgatónak sikeresen sikerült párosítani a tranzisztorokat.
 
 message: A személynek sikerült használnia a tárgyat.
 
+message: A személynek sikerült eldobni a tárgyat amely már megtálható a szobában.
+
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
 message: A személynek sikerült használnia a tárgyat.
+
+message: A személynek sikerült eldobni a tárgyat amely már megtálható a szobában.
 
 message: A megadott Room1 szoba részletei a többi mezőben.
 items: [Transistor1]
@@ -32,9 +39,9 @@ poisonDuration: 0
 currentCapacity: 1
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 2
-instructors: []
 students: [Student1]
-janitors []
+instructors: []
+janitors: []
 
 message: A megadott Room2 szoba részletei a többi mezőben.
 items: [Transistor2]
@@ -46,31 +53,33 @@ poisonDuration: 0
 currentCapacity: 0
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 1
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
 
-message: A megadott Student1 hallgató részletei a többi mezőben.
+message: A megadott Student1 személy részletei a többi mezőben.
 room: Room1
 inventory: []
 wetTableClothes: []
 tvszs: []
-holyBeerCups []
+holyBeerCups: []
 ffp2Masks: []
-airFresheners: []
 isAlive: true
 isFainted: false
-isStunned: None 
+isStunned: false
 activeTurn: true
 
-message: A megadott Transistor1 tranziszor részletei a többi mezőben.
+message: A megadott Transistor1 részletei a többi mezőben.
 owner: None
 room: Room1
-isActive: false
-pair: Transistor2 
+isActivated: false
+pair: Transistor2
+isFake: false
 
-message: A megadott Transistor2 tranziszor részletei a többi mezőben.
+message: A megadott Transistor2 részletei a többi mezőben.
 owner: None
 room: Room2
-isActive: false
+isActivated: false
 pair: Transistor1
+isFake: false
+
