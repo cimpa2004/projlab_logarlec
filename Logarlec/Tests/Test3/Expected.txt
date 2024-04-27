@@ -4,7 +4,7 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
+doors: [Door1, Door2]
 items: []
 students: [Student1]
 instructors: []
@@ -20,11 +20,11 @@ isCursed: false
 isSticky: false
 poisonDuration: 0
 currentCapacity: 1
-maxCapacity: 1
+maxCapacity: 10
 numberOfPeopleBeenToRoom: 1
-instructors: []
 students: [Student1]
-janitors []
+instructors: []
+janitors: []
 
 message: A megadott Room2 szoba részletei a többi mezőben.
 items: []
@@ -36,6 +36,7 @@ poisonDuration: 0
 currentCapacity: 0
 maxCapacity: 0
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
+

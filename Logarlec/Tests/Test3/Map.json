@@ -39,8 +39,8 @@
         },
         {
           "id": "Room2",
-          "maxCap " : 0,
-          "curentCap" : 0,
+          "maxCap" : 0,
+          "currentCap" : 0,
           "instructors": [],
           "students":[],
           "janitors":[],

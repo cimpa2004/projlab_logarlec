@@ -156,6 +156,9 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
+		if(isAdded && effectDuration > 0){
+			st.AddWetTableCloth(this);
+		}
 		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -173,6 +176,9 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
+		if(isAdded && effectDuration > 0){
+			i.AddWetTableCloth(this);
+		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}

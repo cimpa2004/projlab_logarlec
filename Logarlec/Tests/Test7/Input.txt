@@ -1,5 +1,4 @@
 CreateGame true Tests/Test7/Map.json
-Pickup Instructor1 
 Pickup Instructor1 FFP2Mask1
 Pickup Instructor1 FFP2Mask2
 Pickup Instructor1 FFP2Mask3

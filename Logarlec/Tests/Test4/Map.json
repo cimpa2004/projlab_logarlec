@@ -60,6 +60,26 @@
           ],
           "transistors": [],
           "doors": ["Door1"]
+        },
+        {
+          "id": "Room2",
+          "instructors": [],
+          "students":[],
+          "janitors":[],
+          "slideRules":[],
+          "tvszs": [],
+          "ffp2Masks": [
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "transistors": [],
+          "doors": ["Door2"]
         }
        
       ]

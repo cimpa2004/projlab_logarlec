@@ -172,6 +172,9 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
+		if(isAdded && durability > 0){
+			st.AddFFP2Mask(this);
+		}
 		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -189,6 +192,9 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
+		if(isAdded && durability > 0){
+			i.AddFFP2Mask(this);
+		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
