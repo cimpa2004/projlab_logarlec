@@ -920,7 +920,7 @@ public class InputHandler {
         }
         paramPerson.Throw(paramItem);
 
-        return "message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában";
+        return "message: A személynek sikerült eldobni a tárgyat amely már megtálható a szobában.";
     }
 
     /**
