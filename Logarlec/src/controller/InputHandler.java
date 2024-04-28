@@ -801,8 +801,7 @@ public class InputHandler {
         str.append("\nisActivated: ").append(isActive);
 
         //durability
-        Transistor pairObj = paramItem.GetPair();
-        if(pairObj == null) {
+        if(paramItem instanceof Defendable){
             Defendable d = (Defendable) paramItem;
             if (d.CanDefend() || !d.CanDefend()) {
                 int dur = d.GetDurability();
@@ -812,6 +811,7 @@ public class InputHandler {
         }
 
         // pair
+        Transistor pairObj = paramItem.GetPair();
         String pair = pairObj == null ? "None" : pairObj.GetId();
         str.append("\npair: ").append(pair);
 
