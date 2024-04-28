@@ -1,0 +1,9 @@
+CreateGame true Tests/Test29/Map.json
+Move Student1 Room2
+Move Student2 Room2
+Move Student3 Room2
+Move Student4 Room2
+Move Student5 Room2
+Pickup Student3 FFP2Mask1
+DescribeItem FFP2Mask1
+DescribeRoom Room2

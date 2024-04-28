@@ -1,0 +1,101 @@
+{
+      "doors": [
+        {
+          "id": "Door1",
+          "canBeOpened": true,
+          "pair": "Door2"
+        },
+        {
+          "id": "Door2",
+          "canBeOpened": true,
+          "pair": "Door1"
+        }
+      ],
+      "rooms": [
+        {
+          "id": "Room1",
+          "poisonDuration" :0,
+          "instructors": [
+            {
+              "id": "Instructor1"
+            }
+          ],
+          "students":[
+          ],
+          "janitors":[],
+          "slideRules":[
+          ],
+          "tvszs": [
+          ],
+          "ffp2Masks": [
+            {
+              "id" : "FFP2Mask1",
+              "durability": 3
+            }
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "transistors": [],
+          "doors": ["Door1"]
+        },
+        {
+          "id": "Room2",
+          "poisonDuration" :5,
+          "instructors": [],
+          "students":[
+          ],
+          "janitors":[],
+          "slideRules":[
+          ],
+          "tvszs": [
+          ],
+          "ffp2Masks": [
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "transistors": [],
+          "doors": ["Door2"]
+        }, 
+        {
+          "id": "Room3",
+          "poisonDuration" :0,
+          "instructors": [],
+          "students":[
+            {
+              "id" : "Student1"
+            }
+          ],
+          "janitors":[],
+          "slideRules":[
+          ],
+          "tvszs": [
+          ],
+          "ffp2Masks": [
+          ],
+          "wetTableClothes": [
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+          ],
+          "transistors": [],
+          "doors": []
+        }
+       
+      ]
+  }
+  

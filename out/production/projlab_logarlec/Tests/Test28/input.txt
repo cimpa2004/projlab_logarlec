@@ -1,0 +1,8 @@
+CreateGame true Tests/Test28/Map.json
+Pickup Student1 HolyBeerCup1
+Pickup Student1 WetTableCloth1
+DescribeItem HolyBeerCup1
+DescribeItem WetTableCloth1
+Move Student1 Door1
+DescribePerson Student1
+DescribePerson Instructor1

@@ -33,7 +33,7 @@ message: A személynek sikerült belépnie az ajtón és megjelennie a másik sz
 
 message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
 
-message: A megadott Instructor1 oktató részletei a többi mezőben.
+message: A megadott Instructor1 személy részletei a többi mezőben.
 room: Room2
 inventory: [FFP2Mask1]
 ffp2Masks: [FFP2Mask1]
@@ -67,16 +67,16 @@ instructors: [Instructor1]
 students: [Student1]
 janitors []
 
-message: A megadott Student1 hallgató részletei a többi mezőben.
+message: A megadott Student1 személy részletei a többi mezőben.
 room: Room2
 inventory: [TVSZ1]
 wetTableClothes: []
 tvszs: [TVSZ1]
-holyBeerCups []
+holyBeerCups: []
 ffp2Masks: []
 isAlive: true
 isFainted: false
-isStunned: None
+isStunned: false
 activeTurn: false
 
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
@@ -89,7 +89,7 @@ isEndGame: true
 currentTurn: Instructor1
 turnOrder: [Instructor1, Student1]
 rooms: [Room1, Room2, Room3,Room4,Room5,Room6,Room7,Room8]
-doorsides: [Door1, Door2, Door3, Door4, Door5, Door6, Door7, Door8, Door9, Door10, Door11, Door12, Door13, Door14, Door15, Door16, Door17, Door18, Door19, Door20]
+doors: [Door1, Door2, Door3, Door4, Door5, Door6, Door7, Door8, Door9, Door10, Door11, Door12, Door13, Door14, Door15, Door16, Door17, Door18, Door19, Door20]
 items: [TVSZ1, FFP2Mask1]
 students: [Student1]
 instructors: [Instructor1]

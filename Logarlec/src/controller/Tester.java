@@ -32,7 +32,9 @@ public class Tester {
      * @param testNumber A teszt szama
      */
     public void TestManual(int testNumber){
-        String path = "Tests/Test"+testNumber;
+        String rootDir = "C:/Users/reka2/OneDrive/Asztali gép/projlab_logarlec/Logarlec";
+        String path = rootDir + "/Tests/Test" + testNumber;
+        //String path = "Tests/Test"+testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
         runTest(path + "/Expected.txt");
         System.out.println("--- END ---");
@@ -43,9 +45,11 @@ public class Tester {
      * @param testNumber A teszt szama
      */
     public void TestAuto(int testNumber){
-        String path = "Tests/Test"+ testNumber;
+        String rootDir = "C:/Users/reka2/OneDrive/Asztali gép/projlab_logarlec/Logarlec";
+        String path = rootDir + "/Tests/Test" + testNumber;
+        //String path = "Tests/Test"+ testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
-        runTestWithInputFile(path+"/input.txt", path + "/Expected.txt");
+        runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
         System.out.println("--- END ---");
     }
 
@@ -54,9 +58,11 @@ public class Tester {
      */
     public void TestRunAll(){
         for (int i = 1; i <= 33; i++) {
+            //String rootDir = "C:/Users/reka2/OneDrive/Asztali gép/projlab_logarlec/Logarlec";
+            //String path = rootDir + "/Tests/Test" + i;
             String path = "Tests/Test"+ i;
             System.out.println("--- RUN Test"+i+ " ---");
-            runTestWithInputFile(path+"/input.txt", path + "/Expected.txt");
+            runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
             System.out.println("--- END ---");
         }
     }
