@@ -810,6 +810,16 @@ public class InputHandler {
         String isActive = paramItem.GetIsActive() ? "true" : "false";
         str.append("\nisActivated: ").append(isActive);
 
+        //durability
+        if(paramItem instanceof Defendable){
+            Defendable d = (Defendable) paramItem;
+            if (d.CanDefend() || !d.CanDefend()) {
+                int dur = d.GetDurability();
+                if(dur>0)
+                    str.append("\ndurability: ").append(dur);
+            }
+        }
+
         // pair
         Transistor pairObj = paramItem.GetPair();
         String pair = pairObj == null ? "None" : pairObj.GetId();
@@ -996,6 +1006,12 @@ public class InputHandler {
             return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.";
         }
         paramPerson.UseItem(paramItem);
+
+        //if its fake
+        if(paramItem.GetIsFake()){
+            return "message: A személynek nem sikerült használnia a tárgyat.";
+
+        }
 
         return "message: A személynek sikerült használnia a tárgyat.";
     }

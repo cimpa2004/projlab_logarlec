@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Logarlec" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Logarlec/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -17,5 +18,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="json-20240303" level="project" />
   </component>
 </module>

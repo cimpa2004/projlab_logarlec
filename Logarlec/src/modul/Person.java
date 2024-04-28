@@ -313,7 +313,8 @@ public abstract class Person implements IPerson{
 		}
 		else if(hasTVSZ) {
 			Defendable tvsz = GetRandomActive(tvszs);
-			tvsz.Decrement();
+			if(tvsz!=null)
+				tvsz.Decrement();
 			Logger.finished(this, "DefendFromKill");
 			return true;
 		}
