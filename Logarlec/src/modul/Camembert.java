@@ -43,6 +43,15 @@ public class Camembert extends Item implements Usable {
 	}
 
 	/**
+	 * 	Ezen metódus a paraméterként kapott értékre állítja a Camembert isActivated változóját.
+	 *
+	 * @param isActivated Az isActivated értékét erre az értékre állítja.
+	 * */
+	public void SetIsActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
+
+	/**
 	 * Visszaadja, hogy az adott Camembert	 hamis-e.
 	 * Egy Camembert nem lehet hamis, tehát
 	 * mindig hamisat fog visszaadni.

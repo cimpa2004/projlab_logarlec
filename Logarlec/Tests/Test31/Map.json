@@ -65,7 +65,7 @@
 {
             "id":"Transistor1"
           }],
-        "doors": []
+        "doors": ["Door1"]
       },
 {
         "id": "Room2",
@@ -119,7 +119,7 @@
 {
             "id":"Transistor2"
           }],
-        "doors": []
+        "doors": ["Door2"]
       }
     ]
   }

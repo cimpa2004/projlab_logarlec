@@ -264,7 +264,7 @@ public abstract class Person implements IPerson{
 	*/
 	public boolean AddToInventory(Item i) {
 		Logger.started(this, "AddToInventory", i);
-		boolean canAdd = inventory.size() < 5;
+		boolean canAdd = inventory.size() < 5 && !room.GetIsSticky();
 		if(canAdd) {
 			inventory.add(i);
 			room.RemoveItem(i);

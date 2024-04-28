@@ -146,6 +146,15 @@ public class HolyBeerCup extends Item implements Usable, Defendable {
 	}
 
 	/**
+	 * 	Ezen metódus a paraméterként kapott értékre állítja a HolyBeerCup isActivated változóját.
+	 *
+	 * @param isActivated Az isActivated értékét erre az értékre állítja.
+	 * */
+	public void SetIsActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
+
+	/**
 	 * Ezen metódus referenciaként átveszi hogy melyik Student vette fel
 	 * és megpróbálja elhelyezi magát a Student inventoryában.
 	 * Meghívja a Student AddToInventory metódusát, aminek átadja a HolyBeerCupot.

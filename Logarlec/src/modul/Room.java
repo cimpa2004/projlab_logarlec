@@ -214,10 +214,10 @@ public class Room implements IRoom {
 	 * */
 	public void CloneAttributes(Room r) {
 		Logger.started(this, "CloneAttributes", r);
-		this.poisonDuration = r.poisonDuration;
-		this.isCursed = r.isCursed;
-		this.maxCapacity = r.maxCapacity;
-		this.neighbors = r.neighbors;
+		this.poisonDuration = r.GetPoisonDuration();
+		this.isCursed = r.GetIsCursed();
+		this.isSticky = r.GetIsSticky();
+		this.maxCapacity = r.GetMaxCapacity();
 		Logger.finished(this, "CloneAttributes", r);
 	}
 
@@ -230,6 +230,25 @@ public class Room implements IRoom {
 		Logger.started(this, "GetItems");
 		Logger.finished(this, "GetItems");
 		return items;
+	}
+
+	/**
+	 * Hozzáad egy szomszédot a szobához.
+	 *
+	 * @param r: A hozzáadandó szoba
+	 * */
+	public void AddNeighbor(Room r) {
+		neighbors.add(r);
+        neighbors.remove(this);
+	}
+
+	/**
+	 * Elvesz egy szomszédot a szobától.
+	 *
+	 * @param r: Az elvevendő szoba (szerintem ez létező szó)
+	 * */
+	public void RemoveNeighbor(Room r) {
+		neighbors.remove(r);
 	}
 
 	/**
@@ -412,125 +431,6 @@ public class Room implements IRoom {
 	}
 
 	/**
-	 * Ezen metódus összeolvasztja a szobát a paraméterben kapott másik szobával.
-	 * A maximum kapacitása a nagyobb szoba befogadóképességével lesz egyenlő,
-	 * a mérgesgáz ideje a hosszabb ideig tartó idő lesz, valamint elátkozott lesz, ha
-	 * legalább az egyik szoba elátkozott. Az új szoba szomszédjai a régi két szoba szomszédjainak uniója.
-	 * Csak akkor hívódik meg, ha mindkét szoba aktuális kapacitása jelenleg 0.
-	 * A szobákban lévő tárgyak az új szobába kerülnek.
-	 *
-	 * @param ir2 A Room, amivel a jelenlegi Room -ot összeolvasztja a metódus.
-	 * */
-	public boolean MergeRooms(IRoom ir2) {
-		Room r2 = (Room) ir2;
-		Logger.started(this, "MergeRooms", r2);
-
-		// Csak akkor egyesíthetünk két szobát, ha egyikben sem tartózkodik egy Person sem.
-		if(this.GetCurrentCapacity() == 0 && r2.GetCurrentCapacity() == 0){
-
-			// Az egyesült szoba maximális kapacitása a két szoba
-			// maximális kapacitása közül a nagyobbik lesz.
-			if(r2.GetMaxCapacity() > this.GetMaxCapacity()){
-				this.SetMaxCapacity(r2.GetMaxCapacity());
-			}
-
-			// Ha az egyik szoba is elátkozott, akkor
-			// az egyesült szoba is az lesz.
-			if(r2.GetIsCursed()){
-				this.SetIsCursed(r2.GetIsCursed());
-			}
-
-			// Az egyesült szoba poisonDuration változója a két szoba
-			// poisonDuration -je közül a nagyobbik lesz.
-			if(r2.GetPoisonDuration() > this.GetPoisonDuration()){
-				this.SetPoisonDuration(r2.GetPoisonDuration());
-			}
-
-			// Minden az r2 -ben lévő tárgyat áthelyezünk az r1 -be.
-			ArrayList<Item> r2ItemsCopy = new ArrayList<>(r2.GetItems());
-			for(Item item : r2ItemsCopy){
-				r2.RemoveItem(item);
-				this.AddItem(item);
-			}
-
-			// Az ajtók közti összeköttetéseket frissíteni kell
-			// Végigmegyünk a beolvasztandó (r2) szoba összes DoorSide -ján.
-			// Iterátort érdemes használnunk, mivel a ciklus futása közben szeretnénk
-			// változtatni a listán.
-
-			Iterator<DoorSide> iter = r2.GetDoors().iterator();
-
-			while(iter.hasNext()){
-				DoorSide doorSide = iter.next();
-
-				// Ha egy DoorSide az r1 -el köti össze az r2 -t, akkor
-				// már nem lesz szükség ezekre a félajtókra, hiszen az r2 -t
-				// az r1 -be olvasztjuk.
-				if(doorSide.GetPair().GetRoom() == this){
-					this.RemoveDoor(doorSide.GetPair());
-					doorSide.SetRoom(null);
-					doorSide.SetRoom(null);
-					iter.remove();
-				}else{
-					// Ha egy DoorSide egy másik szobával köti össze az r2 -t,
-					// akkor azt át kell alakítanunk, hogy a másik szoba az r1 -el
-					// legyen összeköttetésben
-					doorSide.SetRoom(this);
-					iter.remove();
-				}
-			}
-
-			Logger.finished(this, "MergeRooms", r2);
-			return true;
-		}
-
-		// Ha van bárki is az egyik szobában, akkor nem hajtódik
-		// végre az egyesítés.
-		Logger.finished(this, "MergeRooms", r2);
-		return false;
-	}
-
-	/**
-	 * A szoba két szobára válik. Mindkét szoba maximum kapacitása egyenlő lesz az eredeti befogadóképességével,
-	 * valamint a mérgesgáz- és elátkozottság attribútumok és a szobák szomszédjai is lemásolódnak.
-	 * Az két új szoba közés is kerül egy ajtó.
-	 * Csak akkor hívódik meg, ha a szoba aktuális kapacitása jelenleg 0.
-	 * A szobában lévő tárgyak a két szoba között véletlenszerűen lesznek elszórva.
-	 *
-	 * @return Igaz ha sikerült osztódnia a Szobának és hamis ha nem.
-	 * */
-	public boolean SeparateRoom() {
-		Logger.started(this, "SeparateRoom");
-		// A Room csak akkor tud osztódni ha nincs egy személy se benne.
-		if(currentCapacity == 0)
-		{
-			Room r2 = new Room(UUID.randomUUID().toString());
-			r2.CloneAttributes(this);
-			for (DoorSide d : doors)
-			{
-				DoorSide dCopy = new DoorSide(UUID.randomUUID().toString());
-				dCopy.CloneAttributes(d);
-				DoorSide d2 = d.GetPair();
-				DoorSide d2Copy = new DoorSide(UUID.randomUUID().toString());
-				d2Copy.CloneAttributes(d2);
-				dCopy.ConnectDoors(d2Copy);
-			}
-			ArrayList<Item> itemsCopy = new ArrayList<Item>(items);
-			for (Item i: itemsCopy){
-				if(RandomBool()){
-					r2.AddItem(i);
-					RemoveItem(i);
-				}
-			}
-			return true;
-		}
-
-		// A Room nem tud osztódni, ha tartózkodik valaki a Room -ban.
-		Logger.finished(this, "SeparateRoom");
-		return false;
-	}
-
-	/**
 	 * Hozzáadja a paraméterként kapott oktatót a szobához (amikor belép)
 	 * és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
 	 *
@@ -567,6 +467,8 @@ public class Room implements IRoom {
 		s.SetRoom(this);
 		currentCapacity++;
 		numberOfPeopleBeenToRoom++;
+		if(numberOfPeopleBeenToRoom >= 5)
+			SetIsSticky(true);
 		students.add(s);
 		Logger.finished(this, "AddStudent", s);
 	}

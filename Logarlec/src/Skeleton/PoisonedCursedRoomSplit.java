@@ -24,7 +24,7 @@ public class PoisonedCursedRoomSplit {
         System.out.println("Run");
 
         //Függvényhívások a szekvencia diagramon
-        r.SeparateRoom();
+        //r.SeparateRoom();
 
         System.out.println("--------");
     }

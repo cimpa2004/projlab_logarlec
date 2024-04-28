@@ -4,10 +4,10 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
+doors: [Door1, Door2]
 items: [Camembert1]
 students: [Student1]
-instructors: [Instructor1]
+instructors: []
 janitors: []
 
 message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
@@ -15,24 +15,25 @@ message: A személynek sikerült felvenni a tárgyat amely már megtálható az 
 message: A megadott Camembert1 részletei a többi mezőben.
 owner: Student1
 room: None
-isActivated: false
+isActivated: true
+pair: None
 isFake: false
 
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
-message: A személynek nem sikerült használnia a tárgyat.
+message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.
 
-message: A megadott Student1 hallgató részletei a többi mezőben.
+message: A megadott Student1 személy részletei a többi mezőben.
 room: Room2
 inventory: [Camembert1]
 wetTableClothes: []
 tvszs: []
-holyBeerCups []
+holyBeerCups: []
 ffp2Masks: []
 isAlive: true
 isFainted: false
-isStunned: None
-activeTurn: true
+isStunned: false
+activeTurn: false
 
 message: A megadott Room2 szoba részletei a többi mezőben.
 items: []
@@ -44,6 +45,7 @@ poisonDuration: 0
 currentCapacity: 1
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 1
-instructors: []
 students: [Student1]
-janitors []
+instructors: []
+janitors: []
+
