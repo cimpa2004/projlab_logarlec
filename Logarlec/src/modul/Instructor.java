@@ -15,11 +15,6 @@ public class Instructor extends Person {
 	 * */
 	private int stunDuration;
 
-	/**
-	 * Tárolja a játékot, a teszteléshez van rá szükség
-	 */
-	private Game game;
-
 	public Instructor(String id, Game g) {
 		super(id);
 		this.game = g;
@@ -41,15 +36,13 @@ public class Instructor extends Person {
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
-			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
 			Room oldRoom = room;
 			room = r; // atlepes a masik szobaba
 			oldRoom.RemoveInstructor(this);
-			room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
 			room.AddInstructor(this);
-			
-			ArrayList<Student> students = room.GetStudents();
-			for(Student student : students) {
+
+			ArrayList<Student> studentCopy = new ArrayList<>(room.GetStudents());
+			for(Student student : studentCopy) {
 				StealSoul(student);
 			}
 			//megvizsgalja, hogy gazos-e a szoba
@@ -143,10 +136,14 @@ public class Instructor extends Person {
 			SetIsFainted(false);
 		}
 		// ha az oktato meg van benulva vagy el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
-		if(stunDuration > 0 || isFainted) EndTurn();
+		if(stunDuration > 0 || isFainted){
+			EndTurn();
+			return;
+		}
 
 		// oktato minden kore elejen megprobalja elvenni minden hallgato lelket a jelenlegi szobajaban
-		for(Student student : room.GetStudents()){
+		ArrayList<Student> studentCopy = new ArrayList<>(room.GetStudents());
+		for(Student student : studentCopy){
 			StealSoul(student);
 		}
 
@@ -163,14 +160,15 @@ public class Instructor extends Person {
 							break;
 						}
 			}
-		}else{ //determinisztikus mozgás az első lehetséges szomszéd
-			for (DoorSide dr : this.GetRoom().GetDoors()){
-				if (dr.IsDoorUseable()){
-					this.Move(dr);//a keresett ajtón átmegy
-					break;
-					}
-			}
 		}
+//		else{ //determinisztikus mozgás az első lehetséges szomszéd
+//			for (DoorSide dr : this.GetRoom().GetDoors()){
+//				if (dr.IsDoorUseable()){
+//					this.Move(dr);//a keresett ajtón átmegy
+//					break;
+//					}
+//			}
+//		}
 
 		EndTurn();
 		Logger.finished(this, "StartTurn");

@@ -38,11 +38,9 @@ public class Janitor extends Person{
         int currentC = r.GetCurrentCapacity();
         int maxC = r.GetMaxCapacity();
         if(currentC < maxC) {
-            room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
             Room oldRoom = room;
             room = r; // atlepes a masik szobaba
             oldRoom.RemoveJanitor(this);
-            room.SetCurrentCapacity(room.GetCurrentCapacity()+1); // belepes a masik szobaba
             room.AddJanitor(this);
 
             //kitessékelés

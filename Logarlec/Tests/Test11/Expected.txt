@@ -10,9 +10,6 @@ students: [Student1]
 instructors: [Instructor1]
 janitors: []
 
-message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.
-currentTurn: Instructor1
-
 message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A személynek sikerült használnia a tárgyat.
@@ -29,5 +26,5 @@ ffp2Masks: [FFP2Mask1]
 isAlive: true
 isFainted: false
 isStunned: false
-activeTurn: true
+activeTurn: false
 

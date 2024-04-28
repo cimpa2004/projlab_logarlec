@@ -1,7 +1,6 @@
 CreateGame true Logarlec/Tests/Test33/Map.json
-EndTurn Student1
-EndTurn Student2
-Move Instructor1 Room1
+StartGame
+Move Instructor1 Door2
 DescribePerson Student1
 DescribePerson Student2
 DescribeGame

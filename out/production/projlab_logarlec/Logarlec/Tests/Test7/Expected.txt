@@ -20,7 +20,7 @@ message: A személynek sikerült felvenni a tárgyat amely már megtalálható a
 
 message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában.
+message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.
 
 message: A megadott Instructor1 személy részletei a többi mezőben.
 room: Room1

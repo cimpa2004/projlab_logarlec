@@ -4,41 +4,45 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1]
-doorsides: []
-items: []
-students: [Student1]
-instructors: []
-janitors: []
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: Az adott személy sikeresen befejezte a körét.
-
-message: A játék jelenlegi állapotai a többi mezőben.
-gameTimer: 0
-isEndGame: true
-winSide: false
-currentTurn: Student1
-turnOrder: [Student1]
-rooms: [Room]
 doors: []
 items: []
 students: [Student1]
 instructors: []
 janitors: []
+
+message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.
+currentTurn: Student1
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: Az adott személy sikeresen befejezte a körét.
+
+message: A letrejott jatek állapotai a többi mezőben.
+gameTimer: 0
+isEndGame: true
+winSide: false
+currentTurn: Student1
+turnOrder: [Student1]
+rooms: [Room1]
+doors: []
+items: []
+students: [Student1]
+instructors: []
+janitors: []
+

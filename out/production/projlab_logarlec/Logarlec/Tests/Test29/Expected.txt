@@ -4,7 +4,7 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1, Student2, Student3, Student4, Student5]
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
+doors: [Door1, Door2]
 items: [FFP2Mask1]
 students: [Student1, Student2, Student3, Student4, Student5]
 instructors: []
@@ -20,17 +20,18 @@ message: A személynek sikerült belépnie az ajtón és megjelennie a másik sz
 
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
-message: A személynek nem sikerült felvenni a tárgyat, mert a szoba ragacsos.
+message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.
 
-message: A megadott FFP2Mask1 FFP2-es maszk részletei a többi mezőben.
+message: A megadott FFP2Mask1 részletei a többi mezőben.
 owner: None
 room: Room2
-effectDuration: 5
 isActivated: false
+durability: 5
+pair: None
 isFake: false
 
 message: A megadott Room2 szoba részletei a többi mezőben.
-items: [FFP2Mask]
+items: [FFP2Mask1]
 doors: [Door2]
 neighbors: [Room1]
 isCursed: false
@@ -39,6 +40,7 @@ poisonDuration: 0
 currentCapacity: 5
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 5
-instructors: []
 students: [Student1, Student2, Student3, Student4, Student5]
-janitors []
+instructors: []
+janitors: []
+

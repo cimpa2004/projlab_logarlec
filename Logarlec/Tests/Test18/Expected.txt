@@ -22,10 +22,10 @@ message: A személynek sikerült belépnie az ajtón és megjelennie a másik sz
 
 message: A megadott Student1 személy részletei a többi mezőben.
 room: Room2
-inventory: [HolyBeerCup1, HolyBeerCup2]
+inventory: [HolyBeerCup2]
 wetTableClothes: []
 tvszs: []
-holyBeerCups: [HolyBeerCup1, HolyBeerCup2]
+holyBeerCups: [HolyBeerCup2]
 ffp2Masks: []
 isAlive: true
 isFainted: false
@@ -33,8 +33,8 @@ isStunned: false
 activeTurn: false
 
 message: A megadott HolyBeerCup1 részletei a többi mezőben.
-owner: Student1
-room: None
+owner: None
+room: Room2
 isActivated: true
 durability: 3
 pair: None

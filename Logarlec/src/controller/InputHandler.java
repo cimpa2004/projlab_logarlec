@@ -606,10 +606,14 @@ public class InputHandler {
         ArrayList<Room> neighbors = paramRoom.GetNeighbors();
         neighbors.sort(Comparator.comparing(Room::GetId));
         str.append("\nneighbors: [");
-        for (Room neighbor : neighbors){
-            str.append(neighbor.GetId());
-            if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
+        if (!neighbors.isEmpty()){
+            for (Room neighbor : neighbors){
+                if (neighbor == null) continue;
+                str.append(neighbor.GetId());
+                if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
+            }
         }
+
         str.append("]");
 
         // isCursed
@@ -907,7 +911,7 @@ public class InputHandler {
         if (!isPickedUp){
             return "message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.";
         }
-        return "message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában";
+        return "message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában";
     }
 
     /**

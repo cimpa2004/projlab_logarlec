@@ -31,7 +31,7 @@ neighbors: [Room1]
 isCursed: false
 isSticky: false
 poisonDuration: 0
-currentCapacity: 3
+currentCapacity: 2
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 0
 students: [Student1]

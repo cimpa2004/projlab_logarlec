@@ -89,7 +89,7 @@
           {"id": "Room3",
           "poisonDuracion" :0,
           "numberOfPeopleToRoom" : 1,
-          "maxCap": 0,
+          "maxCapacity": 0,
           "curentCap": 0,
           "instructors": [],
           "students":[

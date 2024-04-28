@@ -39,7 +39,7 @@
         },
         {
           "id": "Room2",
-          "maxCap" : 0,
+          "maxCapacity" : 0,
           "currentCap" : 0,
           "instructors": [],
           "students":[],

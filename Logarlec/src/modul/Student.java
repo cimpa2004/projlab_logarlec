@@ -28,12 +28,7 @@ public class Student extends Person {
 	 * Ez a változó jelzi, hogy az adott Student az még él e.
 	*/
 	private boolean isAlive;
-	
-	/** 
-	 * A játékra való referencia. Amikor a Student meghal akkor ennek segítségével tudja értesíteni
-	 * a játékot, hogy meghalt és többé nem következhet.
-	*/
-	private Game game;
+
 	
 	/** 
 	 * Ez a függvény által megjelenik a Student a paraméterként megadott szobában.
@@ -45,7 +40,6 @@ public class Student extends Person {
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
-			room.SetCurrentCapacity(room.GetCurrentCapacity()-1); // kilepes a jelenlegi szobabol
 			Room oldRoom = room;
 			room = r; // atlepes a masik szobaba
 			oldRoom.RemoveStudent(this);

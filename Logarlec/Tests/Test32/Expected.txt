@@ -31,6 +31,8 @@ message: Az adott személy sikeresen befejezte a körét.
 
 message: Az adott személy sikeresen befejezte a körét.
 
+message: Az adott személy sikeresen befejezte a körét.
+
 message: A letrejott jatek állapotai a többi mezőben.
 gameTimer: 0
 isEndGame: true

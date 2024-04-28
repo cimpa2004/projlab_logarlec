@@ -9,4 +9,5 @@ EndTurn Student1
 EndTurn Student1
 EndTurn Student1
 EndTurn Student1
+EndTurn Student1
 DescribeGame

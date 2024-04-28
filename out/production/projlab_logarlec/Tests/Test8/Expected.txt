@@ -10,7 +10,7 @@ students: [Student1]
 instructors: [Instructor1]
 janitors: []
 
-message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában.
+message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.
 
 message: A megadott Instructor1 személy részletei a többi mezőben.
 room: Room1

@@ -4,14 +4,14 @@ isEndGame: false
 currentTurn: None
 turnOrder: []
 rooms: [Room1]
-doorsides: []
-items: [SlideRule1, TVSZ1, FFP2Mask1, WetTableCloth1, HolyBeerCup1, AirFreshener1, Camembert1, Transistor1]
+doors: []
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
 students: []
 instructors: []
 janitors: []
 
 message: A megadott Room1 szoba részletei a többi mezőben.
-items: [SlideRule1, TVSZ1, FFP2Mask1, WetTableCloth1, HolyBeerCup1, AirFreshener1, Camembert1, Transistor1]
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
 doors: []
 neighbors: []
 isCursed: true
@@ -20,14 +20,14 @@ poisonDuration: 3
 currentCapacity: 0
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
 
 message: A megadott szobát sikeresen sikerült szétválasztani.
 
 message: A megadott Room1 szoba részletei a többi mezőben.
-items: [SlideRule1, TVSZ1, FFP2Mask1, WetTableCloth1, HolyBeerCup1, AirFreshener1, Camembert1, Transistor1]
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
 doors: [Door1]
 neighbors: [Room2]
 isCursed: true
@@ -36,9 +36,9 @@ poisonDuration: 3
 currentCapacity: 0
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
 
 message: A megadott Room2 szoba részletei a többi mezőben.
 items: []
@@ -50,6 +50,7 @@ poisonDuration: 3
 currentCapacity: 0
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
+

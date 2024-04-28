@@ -10,7 +10,7 @@ students: [Student1]
 instructors: [Instructor1]
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.
 
@@ -33,7 +33,7 @@ ffp2Masks: []
 isAlive: false
 isFainted: false
 isStunned: false
-activeTurn: true
+activeTurn: false
 
 message: A megadott Instructor1 személy részletei a többi mezőben.
 room: Room2

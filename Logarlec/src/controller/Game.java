@@ -2,6 +2,8 @@ package controller;
 
 import modul.*;
 import util.Logger;
+
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
@@ -123,7 +125,9 @@ public class Game {
 		Logger.started(this, "StartGame");
 		isEndGame = false;
 		gameTimer = 10;
-		NextTurn();
+		if (currentTurn != null) currentTurn.StartTurn();
+		else throw new RuntimeException("No person was added to game when game was started.");
+
 		Logger.finished(this, "StartGame");
 	}
 

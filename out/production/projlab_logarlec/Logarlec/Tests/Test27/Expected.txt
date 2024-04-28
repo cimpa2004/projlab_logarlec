@@ -4,29 +4,31 @@ isEndGame: false
 currentTurn: Student1
 turnOrder: [Student1]
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
-items: [FFP2Mask1, AirFreshener1]
+doors: [Door1, Door2]
+items: [AirFreshener1, FFP2Mask1]
 students: [Student1]
 instructors: []
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A személynek sikerült használnia a tárgyat.
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
-message: A személynek nem sikerült használnia a tárgyat.
+message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.
 
 message: A személynek sikerült eldobnia a tárgyat az inventoryjából, amely már megtálható a szobában.
 
-message: A megadott AirFreshener1 légfrissítő maszk részletei a többi mezőben.
+message: A megadott AirFreshener1 részletei a többi mezőben.
 owner: None
 room: Room2
 isActivated: true
-	
+pair: None
+isFake: false
+
 message: A megadott Room2 szoba részletei a többi mezőben.
 items: [AirFreshener1]
 doors: [Door2]
@@ -37,6 +39,7 @@ poisonDuration: 0
 currentCapacity: 1
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 1
-instructors: []
 students: [Student1]
-janitors []
+instructors: []
+janitors: []
+

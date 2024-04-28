@@ -2,11 +2,13 @@ package modul;
 
 
 
+import controller.Game;
 import util.Logger;
 import util.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -14,6 +16,11 @@ import java.util.UUID;
  * összefoglalja azokat a funkciókat, attribútumokat amiket a Hallgatók és Oktatók is hordoznak.
 */
 public abstract class Person implements IPerson{
+	/**
+	 * Tárolja a játékot, a teszteléshez van rá szükség
+	 */
+	protected Game game;
+
 	/**
 	 * Az adott Persont egyertelmuen azonositja
 	 */
@@ -307,14 +314,22 @@ public abstract class Person implements IPerson{
 			return true;
 		}
 		else if(hasHolyBeerCup) {
-			// TODO ekkor kene valszeg eldobni egy random itemet
+			if (!GetInventory().isEmpty()) {
+				if (game.GetIsDeterministic()) {
+					Throw(GetInventory().get(0));
+				} else{
+					Random rnd = new Random();
+					int indexOfItem = rnd.nextInt(GetInventory().size());
+					Throw(GetInventory().get(indexOfItem));
+				}
+			}
 			Logger.finished(this, "DefendFromKill");
 			return true;
 		}
 		else if(hasTVSZ) {
 			Defendable tvsz = GetRandomActive(tvszs);
-			if(tvsz!=null)
-				tvsz.Decrement();
+			if(tvsz==null) return false;
+			tvsz.Decrement();
 			Logger.finished(this, "DefendFromKill");
 			return true;
 		}

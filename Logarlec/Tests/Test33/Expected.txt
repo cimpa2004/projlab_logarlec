@@ -25,7 +25,7 @@ ffp2Masks: []
 isAlive: false
 isFainted: false
 isStunned: false
-activeTurn: true
+activeTurn: false
 
 message: A megadott Student2 személy részletei a többi mezőben.
 room: Room1
@@ -40,15 +40,15 @@ isStunned: false
 activeTurn: false
 
 message: A letrejott jatek állapotai a többi mezőben.
-gameTimer: 8
+gameTimer: 10
 isEndGame: true
 winSide: false
-currentTurn: Student1
+currentTurn: Student2
 turnOrder: [Instructor1, Student1, Student2]
 rooms: [Room1, Room2]
 doors: [Door1, Door2]
 items: []
-students: [Student1, Student2]
+students: []
 instructors: [Instructor1]
 janitors: []
 

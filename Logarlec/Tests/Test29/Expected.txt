@@ -26,6 +26,7 @@ message: A megadott FFP2Mask1 részletei a többi mezőben.
 owner: None
 room: Room2
 isActivated: false
+durability: 5
 pair: None
 isFake: false
 

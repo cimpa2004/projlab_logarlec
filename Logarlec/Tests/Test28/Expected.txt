@@ -10,14 +10,15 @@ students: [Student1]
 instructors: [Instructor1]
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
 message: A megadott HolyBeerCup1 részletei a többi mezőben.
 owner: Student1
 room: None
 isActivated: false
+durability: 3
 pair: None
 isFake: false
 
@@ -25,6 +26,7 @@ message: A megadott WetTableCloth1 részletei a többi mezőben.
 owner: Student1
 room: None
 isActivated: false
+durability: 3
 pair: None
 isFake: false
 
@@ -40,7 +42,7 @@ ffp2Masks: []
 isAlive: false
 isFainted: false
 isStunned: false
-activeTurn: true
+activeTurn: false
 
 message: A megadott Instructor1 személy részletei a többi mezőben.
 room: Room2

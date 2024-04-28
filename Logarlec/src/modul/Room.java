@@ -453,6 +453,7 @@ public class Room implements IRoom {
 	public void RemoveInstructor(Instructor i) {
 		Logger.started(this, "RemoveInstructor", i);
 		instructors.remove(i);
+		currentCapacity--;
 		Logger.finished(this, "RemoveInstructor", i);
 	}
 
@@ -481,6 +482,7 @@ public class Room implements IRoom {
 	public void RemoveStudent(Student s) {
 		Logger.started(this, "RemoveStudent", s);
 		students.remove(s);
+		currentCapacity--;
 		Logger.finished(this, "RemoveStudent", s);
 	}
 
@@ -509,6 +511,7 @@ public class Room implements IRoom {
 	public void RemoveJanitor(Janitor j) {
 		Logger.started(this, "RemoveJanitor", j);
 		janitors.remove(j);
+		currentCapacity--;
 		Logger.finished(this, "RemoveJanitor", j);
 	}
 

@@ -1,4 +1,5 @@
 CreateGame true Logarlec/Tests/Test32/Map.json
+StartGame
 EndTurn Student1
 EndTurn Student1
 EndTurn Student1
@@ -9,3 +10,4 @@ EndTurn Student1
 EndTurn Student1
 EndTurn Student1
 EndTurn Student1
+DescribeGame
