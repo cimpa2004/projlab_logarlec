@@ -98,7 +98,7 @@ public class InputHandler {
 
         String defaultPath = new File(".").getAbsolutePath();
         defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
-        mapPath = defaultPath + "Logarlec/" + mapPath;
+        mapPath = defaultPath  + mapPath;
 
         boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
 
