@@ -1,0 +1,37 @@
+{
+    "doors": [
+    ],
+    "rooms": [
+      {
+        "id": "Room1",
+        "Instructors": [
+        {
+            "id" : "Instructor1"
+        }],
+        "Students" :[
+        ],
+        "Janitors":[],
+        "SlideRules":[],
+        "TVSZs": [
+        ],
+        "FFP2Masks": [
+        {
+            "durability": 5,
+            "id":"FFP2Mask1",
+            "fake" :true
+        }
+        ],
+        "wetTableClothes": [
+        ],
+        "holyBeerCups": [
+        ],
+        "airFresheners": [
+        ],
+        "camemberts": [
+        ],
+        "Transistors": [],
+        "doors": []
+      }
+    ]
+  }
+

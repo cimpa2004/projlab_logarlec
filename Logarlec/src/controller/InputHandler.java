@@ -811,7 +811,7 @@ public class InputHandler {
         str.append("\nisActivated: ").append(isActive);
 
         //durability
-        if(paramItem instanceof Defendable){
+        if(paramItem instanceof Defendable) {
             Defendable d = (Defendable) paramItem;
             if (d.CanDefend() || !d.CanDefend()) {
                 int dur = d.GetDurability();

@@ -118,8 +118,10 @@ public class Instructor extends Person {
 	 */
 	@Override
 	public void StartTurn() {
-		if (isFainted || stunDuration > 0)
+		if (isFainted || stunDuration > 0){
 			this.EndTurn();
+			return;
+		}
 
 		Logger.started(this, "StartTurn");
 		activeTurn = true;

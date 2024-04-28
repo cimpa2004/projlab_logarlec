@@ -1,112 +1,112 @@
 {
   "doors": [
     {
-      "id": "door1",
+      "id": "Door1",
       "canBeOpened": true,
-      "pair": "door2"
+      "pair": "Door2"
     },
     {
-      "id": "door2",
+      "id": "Door2",
       "canBeOpened": true,
-      "pair": "door1"
+      "pair": "Door1"
     },
     {
-      "id": "door3",
+      "id": "Door3",
       "canBeOpened": true,
-      "pair": "door4"
+      "pair": "Door4"
     },
     {
-      "id": "door4",
+      "id": "Door4",
       "canBeOpened": true,
-      "pair": "door3"
+      "pair": "Door3"
     },
     {
-      "id": "door5",
+      "id": "Door5",
       "canBeOpened": true,
-      "pair": "door6"
+      "pair": "Door6"
     },
     {
-      "id": "door6",
+      "id": "Door6",
       "canBeOpened": true,
-      "pair": "door5"
+      "pair": "Door5"
     },
     {
-      "id": "door7",
+      "id": "Door7",
       "canBeOpened": true,
-      "pair": "door8"
+      "pair": "Door8"
     },
     {
-      "id": "door8",
+      "id": "Door8",
       "canBeOpened": true,
-      "pair": "door7"
+      "pair": "Door7"
     },
     {
-      "id": "door9",
+      "id": "Door9",
       "canBeOpened": true,
-      "pair": "door10"
+      "pair": "Door10"
     },
     {
-      "id": "door10",
+      "id": "Door10",
       "canBeOpened": true,
-      "pair": "door9"
+      "pair": "Door9"
     },
     {
-      "id": "door11",
+      "id": "Door11",
       "canBeOpened": true,
-      "pair": "door12"
+      "pair": "Door12"
     },
     {
-      "id": "door12",
+      "id": "Door12",
       "canBeOpened": true,
-      "pair": "door11"
+      "pair": "Door11"
     },
     {
-      "id": "door13",
+      "id": "Door13",
       "canBeOpened": true,
-      "pair": "door14"
+      "pair": "Door14"
     },
     {
-      "id": "door14",
+      "id": "Door14",
       "canBeOpened": true,
-      "pair": "door13"
+      "pair": "Door13"
     },
     {
-      "id": "door15",
+      "id": "Door15",
       "canBeOpened": true,
-      "pair": "door16"
+      "pair": "Door16"
     },
     {
-      "id": "door16",
+      "id": "Door16",
       "canBeOpened": true,
-      "pair": "door15"
+      "pair": "Door15"
     },
     {
-      "id": "door17",
+      "id": "Door17",
       "canBeOpened": true,
-      "pair": "door18"
+      "pair": "Door18"
     },
     {
-      "id": "door18",
+      "id": "Door18",
       "canBeOpened": true,
-      "pair": "door17"
+      "pair": "Door17"
     },
     {
-      "id": "door19",
+      "id": "Door19",
       "canBeOpened": true,
-      "pair": "door20"
+      "pair": "Door20"
     },
     {
-      "id": "door20",
+      "id": "Door20",
       "canBeOpened": true,
-      "pair": "door19"
+      "pair": "Door19"
     }
   ],
   "rooms": [
     {
-      "id": "room1",
+      "id": "Room1",
       "instructors": [
         {
-          "id": "instructor1"
+          "id": "Instructor1"
         }
       ],
       "students": [],
@@ -119,10 +119,10 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door1"]
+      "doors": ["Door1"]
     },
     {
-      "id": "room2",
+      "id": "Room2",
       "instructors": [],
       "students": [],
       "janitors": [],
@@ -130,7 +130,7 @@
       "tvszs": [],
       "ffp2Masks": [
         {
-          "id": "ffFP2Mask1",
+          "id": "FFP2Mask1",
           "durability": 3
         }
       ],
@@ -139,16 +139,16 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door2", "door3", "door14", "door20", "door16"]
+      "doors": ["Door2", "Door3", "Door14", "Door20", "Door16"]
     },
     {
-      "id": "room3",
+      "id": "Room3",
       "instructors": [],
       "students": [],
       "janitors": [],
       "slideRules": [
         {
-          "id": "slideRule1",
+          "id": "SlideRule1",
           "fake": false
         }
       ],
@@ -159,10 +159,10 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door4", "door5"]
+      "doors": ["Door4", "Door5"]
     },
     {
-      "id": "room4",
+      "id": "Room4",
       "instructors": [],
       "students": [],
       "janitors": [],
@@ -174,10 +174,10 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door6", "door6", "door9"]
+      "doors": ["Door6", "Door6", "Door9"]
     },
     {
-      "id": "room5",
+      "id": "Room5",
       "instructors": [],
       "students": [],
       "janitors": [],
@@ -189,10 +189,10 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door8", "door11", "door13"]
+      "doors": ["Door8", "Door11", "Door13"]
     },
     {
-      "id": "room6",
+      "id": "Room6",
       "instructors": [],
       "students": [],
       "janitors": [],
@@ -204,14 +204,14 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door10", "door12", "door19"]
+      "doors": ["Door10", "Door12", "Door19"]
     },
     {
-      "id": "room7",
+      "id": "Room7",
       "instructors": [],
       "students": [
         {
-          "id": "student1"
+          "id": "Student1"
         }
       ],
       "janitors": [],
@@ -228,10 +228,10 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door15", "door17"]
+      "doors": ["Door15", "Door17"]
     },
     {
-      "id": "room8",
+      "id": "Room8",
       "instructors": [],
       "students": [],
       "janitors": [],
@@ -243,7 +243,7 @@
       "airFresheners": [],
       "camemberts": [],
       "transistors": [],
-      "doors": ["door18"]
+      "doors": ["Door18"]
     }
   ]
 }

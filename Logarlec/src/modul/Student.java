@@ -170,6 +170,7 @@ public class Student extends Person {
 	public boolean Die() {
 		Logger.started(this, "Die");
 		isAlive = false;
+		room.RemoveStudent(this);
 		EndTurn();
 		Logger.finished(this, "Die");
 		return isAlive;
