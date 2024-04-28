@@ -45,6 +45,11 @@ public class Tester {
     public void TestAuto(int testNumber){
         String path = "Tests/Test"+ testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
+
+        //System.out.println(path + "/Expected.txt");
+        //String defaultPath = new File(".").getAbsolutePath();
+        //defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
+        //runTestWithInputFile(defaultPath + "Logarlec/" + path + "/input.txt", defaultPath + "Logarlec/" + path + "/Expected.txt");
         runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
         System.out.println("--- END ---");
     }

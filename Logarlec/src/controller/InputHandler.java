@@ -3,6 +3,8 @@ package controller;
 import modul.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,8 +33,8 @@ public class InputHandler {
         commandMap.put("startgame", this::startGame);
         commandMap.put("describegame", this::describeGame);
         commandMap.put("liststudents", this::listStudents);
-        commandMap.put("listinstructors", this::listInstructors);
-        commandMap.put("listjanitors", this::listJanitors);
+        commandMap.put("listonstructors", this::listInstructors);
+        commandMap.put("listkanitors", this::listJanitors);
         commandMap.put("describeroom", this::describeRoom);
         commandMap.put("describeperson", this::describePerson);
         commandMap.put("describeitem", this::describeItem);
@@ -94,7 +96,9 @@ public class InputHandler {
             mapPath = "Tests/Test16/Map.json";
         }
 
-
+        String defaultPath = new File(".").getAbsolutePath();
+        defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
+        mapPath = defaultPath + "Logarlec/" + mapPath;
 
         boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
 
@@ -141,12 +145,8 @@ public class InputHandler {
                     if (r.has("isSticky")) room.SetIsSticky(r.getBoolean("isSticky"));
                     if (r.has("numberOfPeopleToRoom"))
                         room.SetNumberOfPeopleBeenToRoom(r.getInt("numberOfPeopleToRoom"));
-                    if (r.has("maxCap")) {
-                        room.SetMaxCapacity(r.getInt("maxCap"));
-                    }
-                    if (r.has("currentCap")) {
-                        room.SetCurrentCapacity(r.getInt("currentCap"));
-                    }
+                    if (r.has("maxCapacity")) room.SetMaxCapacity(r.getInt("maxCapacity"));
+                    if (r.has("currentCapacity")) room.SetCurrentCapacity(r.getInt("currentCapacity"));
 
                     //Students
                     if (r.has("students")) {
@@ -218,6 +218,9 @@ public class InputHandler {
                         for (int j = 0; j < ffp2masks.length(); j++) {
                             FFP2Mask fp = new FFP2Mask(ffp2masks.getJSONObject(j).getString("id"));
                             fp.SetRoom(room);
+                            if (ffp2masks.getJSONObject(j).has("isActivated")) {
+                                fp.SetIsActivated(ffp2masks.getJSONObject(j).getBoolean("isActivated"));
+                            }
                             if (ffp2masks.getJSONObject(j).has("durability")) {
                                 fp.SetDurability(ffp2masks.getJSONObject(j).getInt("durability"));
                             }
@@ -234,6 +237,9 @@ public class InputHandler {
                         for (int j = 0; j < wetTableClothes.length(); j++) {
                             WetTableCloth wt = new WetTableCloth(wetTableClothes.getJSONObject(j).getString("id"));
                             wt.SetRoom(room);
+                            if (wetTableClothes.getJSONObject(j).has("isActivated")) {
+                                wt.SetIsActivated(wetTableClothes.getJSONObject(j).getBoolean("isActivated"));
+                            }
                             if (wetTableClothes.getJSONObject(j).has("durability")) {
                                 wt.SetDurability(wetTableClothes.getJSONObject(j).getInt("durability"));
                             }
@@ -247,6 +253,9 @@ public class InputHandler {
                         for (int j = 0; j < holyBeerCups.length(); j++) {
                             HolyBeerCup hb = new HolyBeerCup(holyBeerCups.getJSONObject(j).getString("id"));
                             hb.SetRoom(room);
+                            if (holyBeerCups.getJSONObject(j).has("isActivated")) {
+                                hb.SetIsActivated(holyBeerCups.getJSONObject(j).getBoolean("isActivated"));
+                            }
                             if (holyBeerCups.getJSONObject(j).has("durability")) {
                                 hb.SetDurability(holyBeerCups.getJSONObject(j).getInt("durability"));
                             }
@@ -273,6 +282,9 @@ public class InputHandler {
                         for (int j = 0; j < camemberts.length(); j++) {
                             Camembert cb = new Camembert(camemberts.getJSONObject(j).getString("id"));
                             cb.SetRoom(room);
+                            if (camemberts.getJSONObject(j).has("isActivated")) {
+                                cb.SetIsActivated(camemberts.getJSONObject(j).getBoolean("isActivated"));
+                            }
                             if (camemberts.getJSONObject(j).has("isActivated")) {
                                 if (camemberts.getJSONObject(j).getBoolean("isActivated")) cb.Activate();
                             }
@@ -594,11 +606,9 @@ public class InputHandler {
         ArrayList<Room> neighbors = paramRoom.GetNeighbors();
         neighbors.sort(Comparator.comparing(Room::GetId));
         str.append("\nneighbors: [");
-        if(!neighbors.contains(null)){
-            for (Room neighbor : neighbors){
-                str.append(neighbor.GetId());
-                if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
-            }
+        for (Room neighbor : neighbors){
+            str.append(neighbor.GetId());
+            if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
         }
         str.append("]");
 
@@ -895,9 +905,9 @@ public class InputHandler {
         }
         boolean isPickedUp = paramPerson.Pickup(paramItem);
         if (!isPickedUp){
-            return "message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában.";
+            return "message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.";
         }
-        return "message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában";
+        return "message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában";
     }
 
     /**
@@ -930,7 +940,7 @@ public class InputHandler {
         }
         paramPerson.Throw(paramItem);
 
-        return "message: A személynek sikerült eldobni a tárgyat amely már megtalálható a szobában.";
+        return "message: A személynek sikerült eldobnia a tárgyat az inventoryjából, amely már megtálható a szobában.";
     }
 
     /**
@@ -991,6 +1001,9 @@ public class InputHandler {
         // try to use
         if (!paramPerson.GetInventory().contains(paramItem)){
             return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy nincs benne az inventoryjában.";
+        }
+        if (paramItem.GetIsActive()){
+            return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.";
         }
         paramPerson.UseItem(paramItem);
 
@@ -1100,7 +1113,7 @@ public class InputHandler {
         if (paramRoom1 == null || paramRoom2 == null){
             return "message: A megadott szobákat nem sikerült összeolvasztani, mert a megadott szoba " + room1Id + " vagy szoba " + room2Id + " nem található.";
         }
-        boolean isMerged = paramRoom1.MergeRooms(paramRoom2);
+        boolean isMerged = game.MergeRooms((Room)paramRoom1, (Room)paramRoom2);
 
         if (isMerged){
             return "message: A két megadott szoba sikeresen összeolvadt.";
@@ -1127,7 +1140,7 @@ public class InputHandler {
         if (paramRoom == null){
             return "message: A megadott szobát nem sikerült szétválasztani, mert a megadott szoba " + roomId + " nem található.";
         }
-        paramRoom.SeparateRoom();
+        game.SeparateRoom((Room)paramRoom);
         return "message: A megadott szobát sikeresen sikerült szétválasztani.";
     }
 

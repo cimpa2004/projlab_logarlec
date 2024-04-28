@@ -178,6 +178,15 @@ public class WetTableCloth extends Item implements Usable, Defendable {
 	}
 
 	/**
+	 * 	Ezen metódus a paraméterként kapott értékre állítja a WetTableCloth isActivated változóját.
+	 *
+	 * @param isActivated Az isActivated értékét erre az értékre állítja.
+	 * */
+	public void SetIsActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
+
+	/**
 	 *  Ezen metódus akkor hívódik meg, ha a Person el szeretné
 	 *  távolítani az inventoryából az adott WetTableCloth tárgyat.
 	 *  A metódus eltávolítja a WetTableCloth -ot a Person inventoryából
