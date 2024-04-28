@@ -1,0 +1,15 @@
+CreateGame true Tests/Test9/Map.json
+startGame
+Pickup Student1 Transistor1
+Pickup Student1 Transistor2
+ConnectTransistors Student1 Transistor1 Transistor2
+UseItem Student1 Transistor1
+Throw Student1 Transistor1
+Move Student1 Door1
+UseItem Student1 Transistor2
+Throw Student1 Transistor2
+DescribeRoom Room1
+DescribeRoom Room2
+DescribePerson Student1
+DescribeItem Transistor1 
+DescribeItem Transistor2

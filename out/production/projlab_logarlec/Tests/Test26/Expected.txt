@@ -1,0 +1,49 @@
+message: A letrejott jatek állapotai a többi mezőben.
+gameTimer: 10
+isEndGame: false
+currentTurn: Student1
+turnOrder: [Student1]
+rooms: [Room1, Room2]
+doorsides: [Door1, Door2]
+items: [Camembert1]
+students: [Student1]
+instructors: [Instructor1]
+janitors: []
+
+message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+
+message: A megadott Camembert1 részletei a többi mezőben.
+owner: Student1
+room: None
+isActivated: false
+isFake: false
+
+message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
+
+message: A személynek nem sikerült használnia a tárgyat.
+
+message: A megadott Student1 hallgató részletei a többi mezőben.
+room: Room2
+inventory: [Camembert1]
+wetTableClothes: []
+tvszs: []
+holyBeerCups []
+ffp2Masks: []
+isAlive: true
+isFainted: false
+isStunned: None
+activeTurn: true
+
+message: A megadott Room2 szoba részletei a többi mezőben.
+items: []
+doors: [Door2]
+neighbors: [Room1]
+isCursed: false
+isSticky: false
+poisonDuration: 0
+currentCapacity: 1
+maxCapacity: 10
+numberOfPeopleBeenToRoom: 1
+instructors: []
+students: [Student1]
+janitors []

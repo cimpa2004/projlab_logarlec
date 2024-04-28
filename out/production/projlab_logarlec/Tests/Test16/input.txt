@@ -1,0 +1,14 @@
+CreateGame True Tests/Test16/Map.json
+Pickup Student1 TVSZ1
+DescribeItem TVSZ1
+DescribePerson Student1
+Move Instructor1 Door1
+Pickup Instructor1 FFP2Mask1
+DescribePerson Instructor1
+DescribeItem FFP2Mask1
+Move Student1 Door15
+DescribeRoom Room2 
+DescribePerson Student1
+Move Student1 Door3
+Pickup Student1 SlideRule1
+DescribeGame

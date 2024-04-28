@@ -1,0 +1,9 @@
+CreateGame true Tests/Test4/Map.json
+startGame
+Pickup Student1 TVSZ1
+Pickup Student1 TVSZ2
+Pickup Student1 TVSZ3
+Pickup Student1 TVSZ4
+Pickup Student1 TVSZ5
+Pickup Student1 TVSZ6
+DescribePerson Student1

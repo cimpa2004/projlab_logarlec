@@ -1,0 +1,249 @@
+{
+  "doors": [
+    {
+      "id": "door1",
+      "canBeOpened": true,
+      "pair": "door2"
+    },
+    {
+      "id": "door2",
+      "canBeOpened": true,
+      "pair": "door1"
+    },
+    {
+      "id": "door3",
+      "canBeOpened": true,
+      "pair": "door4"
+    },
+    {
+      "id": "door4",
+      "canBeOpened": true,
+      "pair": "door3"
+    },
+    {
+      "id": "door5",
+      "canBeOpened": true,
+      "pair": "door6"
+    },
+    {
+      "id": "door6",
+      "canBeOpened": true,
+      "pair": "door5"
+    },
+    {
+      "id": "door7",
+      "canBeOpened": true,
+      "pair": "door8"
+    },
+    {
+      "id": "door8",
+      "canBeOpened": true,
+      "pair": "door7"
+    },
+    {
+      "id": "door9",
+      "canBeOpened": true,
+      "pair": "door10"
+    },
+    {
+      "id": "door10",
+      "canBeOpened": true,
+      "pair": "door9"
+    },
+    {
+      "id": "door11",
+      "canBeOpened": true,
+      "pair": "door12"
+    },
+    {
+      "id": "door12",
+      "canBeOpened": true,
+      "pair": "door11"
+    },
+    {
+      "id": "door13",
+      "canBeOpened": true,
+      "pair": "door14"
+    },
+    {
+      "id": "door14",
+      "canBeOpened": true,
+      "pair": "door13"
+    },
+    {
+      "id": "door15",
+      "canBeOpened": true,
+      "pair": "door16"
+    },
+    {
+      "id": "door16",
+      "canBeOpened": true,
+      "pair": "door15"
+    },
+    {
+      "id": "door17",
+      "canBeOpened": true,
+      "pair": "door18"
+    },
+    {
+      "id": "door18",
+      "canBeOpened": true,
+      "pair": "door17"
+    },
+    {
+      "id": "door19",
+      "canBeOpened": true,
+      "pair": "door20"
+    },
+    {
+      "id": "door20",
+      "canBeOpened": true,
+      "pair": "door19"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room1",
+      "instructors": [
+        {
+          "id": "instructor1"
+        }
+      ],
+      "students": [],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door1"]
+    },
+    {
+      "id": "room2",
+      "instructors": [],
+      "students": [],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [],
+      "ffp2Masks": [
+        {
+          "id": "ffFP2Mask1",
+          "durability": 3
+        }
+      ],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door2", "door3", "door14", "door20", "door16"]
+    },
+    {
+      "id": "room3",
+      "instructors": [],
+      "students": [],
+      "janitors": [],
+      "slideRules": [
+        {
+          "id": "slideRule1",
+          "fake": false
+        }
+      ],
+      "tvszs": [],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door4", "door5"]
+    },
+    {
+      "id": "room4",
+      "instructors": [],
+      "students": [],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door6", "door6", "door9"]
+    },
+    {
+      "id": "room5",
+      "instructors": [],
+      "students": [],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door8", "door11", "door13"]
+    },
+    {
+      "id": "room6",
+      "instructors": [],
+      "students": [],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door10", "door12", "door19"]
+    },
+    {
+      "id": "room7",
+      "instructors": [],
+      "students": [
+        {
+          "id": "student1"
+        }
+      ],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [
+        {
+          "id": "tvsz1",
+          "durability": 1
+        }
+      ],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door15", "door17"]
+    },
+    {
+      "id": "room8",
+      "instructors": [],
+      "students": [],
+      "janitors": [],
+      "slideRules": [],
+      "tvszs": [],
+      "ffp2Masks": [],
+      "wetTableClothes": [],
+      "holyBeerCups": [],
+      "airFresheners": [],
+      "camemberts": [],
+      "transistors": [],
+      "doors": ["door18"]
+    }
+  ]
+}

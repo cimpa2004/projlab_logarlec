@@ -1,0 +1,1 @@
+CreateGame true Tests/Test1/Map.json

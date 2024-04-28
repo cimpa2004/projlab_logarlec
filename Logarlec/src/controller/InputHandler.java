@@ -45,7 +45,7 @@ public class InputHandler {
         commandMap.put("endturn", this::endTurn);
         commandMap.put("setcursed", this::setCursed);
         commandMap.put("mergerooms", this::mergeRooms);
-        commandMap.put("seperateroom", this::separateRoom);
+        commandMap.put("separateroom", this::separateRoom);
     }
 
     /**
@@ -800,8 +800,18 @@ public class InputHandler {
         String isActive = paramItem.GetIsActive() ? "true" : "false";
         str.append("\nisActivated: ").append(isActive);
 
-        // pair
+        //durability
         Transistor pairObj = paramItem.GetPair();
+        if(pairObj == null) {
+            Defendable d = (Defendable) paramItem;
+            if (d.CanDefend() || !d.CanDefend()) {
+                int dur = d.GetDurability();
+                if(dur>0)
+                    str.append("\ndurability: ").append(dur);
+            }
+        }
+
+        // pair
         String pair = pairObj == null ? "None" : pairObj.GetId();
         str.append("\npair: ").append(pair);
 
@@ -983,6 +993,12 @@ public class InputHandler {
             return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy nincs benne az inventoryjában.";
         }
         paramPerson.UseItem(paramItem);
+
+        //if its fake
+        if(paramItem.GetIsFake()){
+            return "message: A személynek nem sikerült használnia a tárgyat.";
+
+        }
 
         return "message: A személynek sikerült használnia a tárgyat.";
     }
