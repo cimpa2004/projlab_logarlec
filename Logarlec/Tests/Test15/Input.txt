@@ -1,4 +1,4 @@
-CreateGame true Logarlec/Tests/Test15/Map.Json
+CreateGame true Tests/Test15/Map.Json
 Pickup Student1 WetTableCloth1
 UseItem Student1 WetTableCloth1
 Move Student1 Door1

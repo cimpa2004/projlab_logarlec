@@ -91,7 +91,7 @@ public class InputHandler {
         if (parameters.size() > 1 && !parameters.get(1).isEmpty()){
             mapPath = parameters.get(1);
         } else{
-            mapPath = "Logarlec/Tests/Test16/Map.json";
+            mapPath = "Tests/Test16/Map.json";
         }
 
 
