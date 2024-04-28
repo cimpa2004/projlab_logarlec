@@ -36,7 +36,7 @@ isStunned: false
 activeTurn: true
 
 message: A megadott Instructor1 személy részletei a többi mezőben.
-room: Room1
+room: Room2
 inventory: []
 wetTableClothes: []
 tvszs: []
@@ -45,5 +45,5 @@ ffp2Masks: []
 isAlive: true
 isFainted: false
 isStunned: false
-activeTurn: true
+activeTurn: false
 
