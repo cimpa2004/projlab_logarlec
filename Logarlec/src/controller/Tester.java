@@ -32,7 +32,7 @@ public class Tester {
      * @param testNumber A teszt szama
      */
     public void TestManual(int testNumber){
-        String path = "Tests/Test"+testNumber;
+        String path = "Logarlec/Tests/Test"+testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
         runTest(path + "/Expected.txt");
         System.out.println("--- END ---");
@@ -43,7 +43,7 @@ public class Tester {
      * @param testNumber A teszt szama
      */
     public void TestAuto(int testNumber){
-        String path = "Tests/Test"+ testNumber;
+        String path = "Logarlec/Tests/Test"+ testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
         runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
         System.out.println("--- END ---");
@@ -54,7 +54,7 @@ public class Tester {
      */
     public void TestRunAll(){
         for (int i = 1; i <= 33; i++) {
-            String path = "Tests/Test"+ i;
+            String path = "Logarlec/Tests/Test"+ i;
             System.out.println("--- RUN Test"+i+ " ---");
             runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
             System.out.println("--- END ---");

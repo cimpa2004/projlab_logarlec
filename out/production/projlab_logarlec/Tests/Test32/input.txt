@@ -1,4 +1,4 @@
-CreateGame true Tests/Test32/Map.json
+CreateGame true Logarlec/Tests/Test32/Map.json
 EndTurn Student1
 EndTurn Student1
 EndTurn Student1

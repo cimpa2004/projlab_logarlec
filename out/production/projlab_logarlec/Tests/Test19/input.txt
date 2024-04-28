@@ -1,4 +1,4 @@
-CreateGame true Tests/Test19/Map.json
+CreateGame true Logarlec/Tests/Test19/Map.json
 Pickup Instructor1 FFP2Mask1
 UseItem Instructor1 FFP2Mask1
 DescribeItem FFP2Mask1

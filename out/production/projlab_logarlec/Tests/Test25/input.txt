@@ -1,4 +1,4 @@
-CreateGame true Tests/Test25/Map.json
+CreateGame true Logarlec/Tests/Test25/Map.json
 Pickup Student1 HolyBeerCup1
 UseItem Student1 HolyBeerCup1
 DescribeItem HolyBeerCup1

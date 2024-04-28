@@ -1,4 +1,4 @@
-CreateGame true Tests/Test29/Map.json
+CreateGame true Logarlec/Tests/Test29/Map.json
 Move Student1 Room2
 Move Student2 Room2
 Move Student3 Room2

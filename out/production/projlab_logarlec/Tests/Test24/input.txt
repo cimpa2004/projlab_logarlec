@@ -1,4 +1,4 @@
-CreateGame true Tests/Test24/Map.json
+CreateGame true Logarlec/Tests/Test24/Map.json
 Pickup Student1 TVSZ1
 DescribeItem TVSZ1
 Move Student1 Door1

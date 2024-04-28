@@ -143,12 +143,12 @@ public class Game {
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
 		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
-		else if (currentTurn == null) currentTurn = turnOrder.get(0);
-		currentTurn.SetActiveTurn(true);
+		else if (currentTurn == null) currentTurn = turnOrder.get(turnOrder.size()-1);
 
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
+			return;
 		}
 
 		int currentIndex = turnOrder.indexOf(currentTurn);
@@ -156,8 +156,10 @@ public class Game {
 		if(currentIndex >= turnOrder.size()){
 			currentIndex = 0;
 			gameTimer--;
-			if(gameTimer == 0)
-				EndGame(false);
+		}
+		if(gameTimer == 0){
+			EndGame(false);
+			return;
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
