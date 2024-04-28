@@ -1,0 +1,5 @@
+CreateGame true Tests/Test17/Map.json
+Pickup Student1 TVSZ1
+Move Student1 Door1
+DescribePerson Student1
+DescribeItem TVSZ1

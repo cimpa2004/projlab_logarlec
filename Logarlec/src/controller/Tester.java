@@ -45,7 +45,7 @@ public class Tester {
     public void TestAuto(int testNumber){
         String path = "Tests/Test"+ testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
-        runTestWithInputFile(path+"/input.txt", path + "/Expected.txt");
+        runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
         System.out.println("--- END ---");
     }
 
@@ -56,7 +56,7 @@ public class Tester {
         for (int i = 1; i <= 33; i++) {
             String path = "Tests/Test"+ i;
             System.out.println("--- RUN Test"+i+ " ---");
-            runTestWithInputFile(path+"/input.txt", path + "/Expected.txt");
+            runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
             System.out.println("--- END ---");
         }
     }
