@@ -4,14 +4,14 @@ isEndGame: false
 currentTurn: None
 turnOrder: []
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
-items: [SlideRule1, TVSZ1, FFP2Mask1, WetTableCloth1, HolyBeerCup1, AirFreshener1, Camembert1, Transistor1, SlideRule2, TVSZ2, FFP2Mask2, WetTableCloth2, HolyBeerCup2, AirFreshener2, Camembert2, Transistor2]
+doors: [Door1, Door2]
+items: [AirFreshener1, AirFreshener2, Camembert1, Camembert2, FFP2Mask1, FFP2Mask2, HolyBeerCup1, HolyBeerCup2, SlideRule1, SlideRule2, TVSZ1, TVSZ2, Transistor1, Transistor2, WetTableCloth1, WetTableCloth2]
 students: []
 instructors: []
 janitors: []
 
 message: A megadott Room1 szoba részletei a többi mezőben.
-items: [SlideRule1, TVSZ1, FFP2Mask1, WetTableCloth1, HolyBeerCup1, AirFreshener1, Camembert1, Transistor1]
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
 doors: [Door1]
 neighbors: [Room2]
 isCursed: true
@@ -20,12 +20,12 @@ poisonDuration: 0
 currentCapacity: 0
 maxCapacity: 5
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
 
-message: A megadott Room3 szoba részletei a többi mezőben.
-items: [SlideRule2, TVSZ2, FFP2Mask2, WetTableCloth2, HolyBeerCup2, AirFreshener2, Camembert2, Transistor2]
+message: A megadott Room2 szoba részletei a többi mezőben.
+items: [AirFreshener2, Camembert2, FFP2Mask2, HolyBeerCup2, SlideRule2, TVSZ2, Transistor2, WetTableCloth2]
 doors: [Door2]
 neighbors: [Room1]
 isCursed: false
@@ -34,14 +34,14 @@ poisonDuration: 5
 currentCapacity: 0
 maxCapacity: 3
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
 
 message: A két megadott szoba sikeresen összeolvadt.
 
 message: A megadott Room1 szoba részletei a többi mezőben.
-items: [SlideRule1, TVSZ1, FFP2Mask1, WetTableCloth1, HolyBeerCup1, AirFreshener1, Camembert1, Transistor1, SlideRule2, TVSZ2, FFP2Mask2, WetTableCloth2, HolyBeerCup2, AirFreshener2, Camembert2, Transistor2]
+items: [AirFreshener1, AirFreshener2, Camembert1, Camembert2, FFP2Mask1, FFP2Mask2, HolyBeerCup1, HolyBeerCup2, SlideRule1, SlideRule2, TVSZ1, TVSZ2, Transistor1, Transistor2, WetTableCloth1, WetTableCloth2]
 doors: []
 neighbors: []
 isCursed: true
@@ -50,6 +50,7 @@ poisonDuration: 5
 currentCapacity: 0
 maxCapacity: 5
 numberOfPeopleBeenToRoom: 0
-instructors: []
 students: []
-janitors []
+instructors: []
+janitors: []
+

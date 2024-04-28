@@ -83,7 +83,7 @@ public class Student extends Person {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
-		if (!isAlive) game.NextTurn();
+		//if (!isAlive) game.NextTurn();
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){

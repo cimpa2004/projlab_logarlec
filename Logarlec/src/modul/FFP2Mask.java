@@ -89,6 +89,15 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	}
 
 	/**
+	 * 	Ezen metódus a paraméterként kapott értékre állítja a FFP2Mask isActivated változóját.
+	 *
+	 * @param isActivated Az isActivated értékét erre az értékre állítja.
+	 * */
+	public void SetIsActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
+
+	/**
 	 * Ez a metódus, abban az esetben lesz meghívva ha egy FFP2Mask tárgyat aktiválni szeretnénk.
 	 * Ha egy tárgy hamis, azaz az isFake változó igaz, akkor nem lehet aktiválni és a
 	 * metódus hamis értékkel tér vissza. Ha a tárgy még nem volt használva,

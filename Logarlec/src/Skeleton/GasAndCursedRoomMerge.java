@@ -39,7 +39,7 @@ public class GasAndCursedRoomMerge {
         System.out.println("--------");
         System.out.println("Run");
 
-        r1.MergeRooms(r2);
+        //r1.MergeRooms(r2);
 
         System.out.println("--------");
     }

@@ -74,6 +74,15 @@ public class AirFreshener extends Item implements Usable {
         }
     }
 
+    /**
+     * 	Ezen metódus a paraméterként kapott értékre állítja az AirFreshener isActivated változóját.
+     *
+     * @param isActivated Az isActivated értékét erre az értékre állítja.
+     * */
+    public void SetIsActivated(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+
 
     /**
      * Ezen metódussal le lehet kérdezni, hogy egy AirFreshener példány aktív-e.

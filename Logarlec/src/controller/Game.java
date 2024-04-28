@@ -3,6 +3,8 @@ package controller;
 import modul.*;
 import util.Logger;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.UUID;
 
 /** */
 public class Game {
@@ -163,7 +165,8 @@ public class Game {
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
-		currentTurn.StartTurn();
+		if(!isEndGame)
+			currentTurn.StartTurn();
 
 		Logger.finished(this, "NextTurn");
 	}
@@ -189,6 +192,137 @@ public class Game {
 		}
 		Logger.finished(this, "AnyStudentsAlive");
 		return anyStudentAlive;
+	}
+
+	/**
+	 * A szoba két szobára válik. Mindkét szoba maximum kapacitása egyenlő lesz az eredeti befogadóképességével,
+	 * valamint a mérgesgáz- és elátkozottság attribútumok és a szobák szomszédjai is lemásolódnak.
+	 * Az két új szoba közés is kerül egy ajtó.
+	 * Csak akkor hívódik meg, ha a szoba aktuális kapacitása jelenleg 0.
+	 * A szobában lévő tárgyak a két szoba között véletlenszerűen lesznek elszórva.
+	 *
+	 * @return Igaz ha sikerült osztódnia a Szobának és hamis ha nem.
+	 * */
+	public boolean SeparateRoom(Room r1) {
+		Logger.started(this, "SeparateRoom");
+		// A Room csak akkor tud osztódni ha nincs egy személy se benne.
+		if(r1.GetCurrentCapacity() == 0)
+		{
+			Room r2 = new Room("Room2");
+			r2.CloneAttributes(r1);
+			for (DoorSide d : r1.GetDoors())
+			{
+				DoorSide dCopy = new DoorSide(UUID.randomUUID().toString());
+				dCopy.CloneAttributes(d);
+				DoorSide d2 = d.GetPair();
+				DoorSide d2Copy = new DoorSide(UUID.randomUUID().toString());
+				d2Copy.CloneAttributes(d2);
+				dCopy.ConnectDoors(d2Copy);
+			}
+
+			DoorSide dConnect1 = new DoorSide("Door1");
+			DoorSide dConnect2 = new DoorSide("Door2");
+			dConnect2.SetPair(dConnect1);
+			dConnect1.SetPair(dConnect2);
+			r1.AddDoor(dConnect1);
+			r2.AddDoor(dConnect2);
+
+			ArrayList<Item> itemsCopy = new ArrayList<Item>(r1.GetItems());
+			if(!isGameDeterministic)
+				for (Item i: itemsCopy){
+					if(r1.RandomBool()){
+						r2.AddItem(i);
+						r1.RemoveItem(i);
+					}
+				}
+			r1.AddNeighbor(r2);
+			r2.AddNeighbor(r1);
+			rooms.add(r2);
+			return true;
+		}
+
+		// A Room nem tud osztódni, ha tartózkodik valaki a Room -ban.
+		Logger.finished(this, "SeparateRoom");
+		return false;
+	}
+
+	/**
+	 * Ezen metódus összeolvasztja a szobát a paraméterben kapott másik szobával.
+	 * A maximum kapacitása a nagyobb szoba befogadóképességével lesz egyenlő,
+	 * a mérgesgáz ideje a hosszabb ideig tartó idő lesz, valamint elátkozott lesz, ha
+	 * legalább az egyik szoba elátkozott. Az új szoba szomszédjai a régi két szoba szomszédjainak uniója.
+	 * Csak akkor hívódik meg, ha mindkét szoba aktuális kapacitása jelenleg 0.
+	 * A szobákban lévő tárgyak az új szobába kerülnek.
+	 *
+	 * @param r2 A Room, amivel a jelenlegi Room -ot összeolvasztja a metódus.
+	 * */
+	public boolean MergeRooms(Room r1, Room r2) {
+		Logger.started(this, "MergeRooms", r2);
+
+		// Csak akkor egyesíthetünk két szobát, ha egyikben sem tartózkodik egy Person sem.
+		if(r1.GetCurrentCapacity() == 0 && r2.GetCurrentCapacity() == 0){
+
+			// Az egyesült szoba maximális kapacitása a két szoba
+			// maximális kapacitása közül a nagyobbik lesz.
+			if(r2.GetMaxCapacity() > r1.GetMaxCapacity()){
+				r1.SetMaxCapacity(r2.GetMaxCapacity());
+			}
+
+			// Ha az egyik szoba is elátkozott, akkor
+			// az egyesült szoba is az lesz.
+			if(r2.GetIsCursed()){
+				r1.SetIsCursed(r2.GetIsCursed());
+			}
+
+			// Az egyesült szoba poisonDuration változója a két szoba
+			// poisonDuration -je közül a nagyobbik lesz.
+			if(r2.GetPoisonDuration() > r1.GetPoisonDuration()){
+				r1.SetPoisonDuration(r2.GetPoisonDuration());
+			}
+
+			// Minden az r2 -ben lévő tárgyat áthelyezünk az r1 -be.
+			ArrayList<Item> r2ItemsCopy = new ArrayList<>(r2.GetItems());
+			for(Item item : r2ItemsCopy){
+				r2.RemoveItem(item);
+				r1.AddItem(item);
+			}
+
+			// Az ajtók közti összeköttetéseket frissíteni kell
+			// Végigmegyünk a beolvasztandó (r2) szoba összes DoorSide -ján.
+			// Iterátort érdemes használnunk, mivel a ciklus futása közben szeretnénk
+			// változtatni a listán.
+
+			Iterator<DoorSide> iter = r2.GetDoors().iterator();
+
+			while(iter.hasNext()){
+				DoorSide doorSide = iter.next();
+
+				// Ha egy DoorSide az r1 -el köti össze az r2 -t, akkor
+				// már nem lesz szükség ezekre a félajtókra, hiszen az r2 -t
+				// az r1 -be olvasztjuk.
+				if(doorSide.GetPair().GetRoom() == r1){
+					r1.RemoveDoor(doorSide.GetPair());
+					doorSide.SetRoom(null);
+					doorSide.SetRoom(null);
+					iter.remove();
+				}else{
+					// Ha egy DoorSide egy másik szobával köti össze az r2 -t,
+					// akkor azt át kell alakítanunk, hogy a másik szoba az r1 -el
+					// legyen összeköttetésben
+					doorSide.SetRoom(r1);
+					iter.remove();
+				}
+				r1.RemoveNeighbor(r2);
+			}
+
+			Logger.finished(this, "MergeRooms", r2);
+			return true;
+		}
+
+		// Ha van bárki is az egyik szobában, akkor nem hajtódik
+		// végre az egyesítés.
+		Logger.finished(this, "MergeRooms", r2);
+		return false;
 	}
 
 	/**
