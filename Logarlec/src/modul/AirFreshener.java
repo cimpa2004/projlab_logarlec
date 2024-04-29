@@ -70,7 +70,7 @@ public class AirFreshener extends Item implements Usable {
             return false;
         }else{
             isActivated = true;
-            return  true;
+            return true;
         }
     }
 

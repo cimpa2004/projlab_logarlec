@@ -65,24 +65,24 @@ public class Janitor extends Person{
             if (!game.GetIsDeterministic()){
                 List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
                 Collections.shuffle(doorsCopy);
-                    for(Student st : this.GetRoom().GetStudents()){
-                        for (DoorSide dr : doorsCopy){
-                            if (random.nextBoolean())
-                                if (dr.IsDoorUseable()){
-                                    st.Move(dr);//a keresett ajtón átmegy
+                for(Student st : this.GetRoom().GetStudents()){
+                    for (DoorSide dr : doorsCopy){
+                        if (random.nextBoolean())
+                            if (dr.IsDoorUseable()){
+                                st.Move(dr);//a keresett ajtón átmegy
                                 break;
-                                }
-                        }
+                            }
                     }
-                    for(Instructor ins : this.GetRoom().GetInstructors()){
-                        for (DoorSide dr : doorsCopy){
-                            if (random.nextBoolean())
-                                if (dr.IsDoorUseable()){
-                                    ins.Move(dr);//a keresett ajtón átmegy
-                                    break;
-                                }
-                        }
+                }
+                for(Instructor ins : this.GetRoom().GetInstructors()){
+                    for (DoorSide dr : doorsCopy){
+                        if (random.nextBoolean())
+                            if (dr.IsDoorUseable()){
+                                ins.Move(dr);//a keresett ajtón átmegy
+                                break;
+                            }
                     }
+                }
             }else{ //determinisztikus mozgás az első lehetséges szomszéd
                 for(Student st : this.GetRoom().GetStudents()){
                     for (DoorSide dr : this.GetRoom().GetDoors()){

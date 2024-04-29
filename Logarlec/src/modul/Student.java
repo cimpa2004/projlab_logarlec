@@ -60,10 +60,6 @@ public class Student extends Person {
 					}else this.SetIsFainted(false);
 				}
 			}
-			//ha a szoba nem gazos es nincs elkabulva a hallgato, akkor nem kabul el
-			else if(room.GetPoisonDuration() <= 0 && !GetIsFainted()){
-				this.SetIsFainted(false);
-			}
 		} else{
 			return false;
 		}

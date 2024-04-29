@@ -123,6 +123,7 @@ public class Game {
 	 * */
 	public void StartGame() {
 		Logger.started(this, "StartGame");
+		UpdateNeighbors();
 		isEndGame = false;
 		gameTimer = 10;
 		if (currentTurn != null) currentTurn.StartTurn();
@@ -148,8 +149,8 @@ public class Game {
 	 * */
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
-		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
-		else if (currentTurn == null) currentTurn = turnOrder.get(turnOrder.size()-1);
+		if(turnOrder.isEmpty()) throw new RuntimeException("No person was added to game when next turn was called.");
+		if (isEndGame) return;
 
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
@@ -169,8 +170,7 @@ public class Game {
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
-		if(!isEndGame)
-			currentTurn.StartTurn();
+		currentTurn.StartTurn();
 
 		Logger.finished(this, "NextTurn");
 	}
@@ -182,9 +182,6 @@ public class Game {
 	 * */
 	public boolean AnyStudentsAlive() {
 		Logger.started(this, "AnyStudentsAlive");
-		/*boolean toReturn = Reader.GetBooleanInput("Van még élő Student? ");
-		if (!toReturn)
-			this.EndGame(false);*/
 		boolean anyStudentAlive = false;
 		for(IRoom room : rooms) {
 			for(Student student : room.GetStudents()){
@@ -348,9 +345,10 @@ public class Game {
 	 * */
 	public void AddRoom(Room r) {
 		Logger.started(this, "AddRoom", r);
-		if (r != null)
+		if (r != null){
 			r.SetIsDeterministic(isGameDeterministic);
 			this.rooms.add(r);
+		}
 		Logger.finished(this, "AddRoom", r);
 	}
 	
@@ -368,8 +366,22 @@ public class Game {
 		return isGameDeterministic;
 	}
 
-	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
-	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
+
+	/**
+	 * Vegig megy a jatekban talalhato osszes szoban, es beallitja mindegyiknek a szomszedait
+	 */
+	public void UpdateNeighbors() {
+		for (IRoom room : rooms){
+			ArrayList<Room> neighbors = new ArrayList<>();
+			for (DoorSide door: room.GetDoors()){
+				if (door == null || door.GetPair() == null || door.GetPair().GetRoom() == null) continue;
+				Room neighbor = door.GetPair().GetRoom();
+				if (!neighbors.contains(neighbor)) neighbors.add(neighbor);
+			}
+			((Room) room).SetNeighbors(neighbors);
+		}
+	}
+
 
 	/**
 	 * Id alapján megkeresi az adott DoorSidet, ammenyiben benne van vissza adja, egyébként null
