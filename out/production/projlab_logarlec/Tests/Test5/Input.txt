@@ -1,3 +1,0 @@
-CreateGame true Logarlec/Tests/Test5/Map.json
-Pickup Student1 SlideRule1
-DescribeGame

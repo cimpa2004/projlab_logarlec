@@ -1,9 +1,0 @@
-CreateGame true Logarlec/Tests/Test29/Map.json
-Move Student1 Door1
-Move Student2 Door1
-Move Student3 Door1
-Move Student4 Door1
-Move Student5 Door1
-Pickup Student3 FFP2Mask1
-DescribeItem FFP2Mask1
-DescribeRoom Room2

@@ -1,3 +1,0 @@
-CreateGame true Logarlec/Tests/Test14/Map.json
-Move Janitor1 Door1
-DescribePerson Instructor1

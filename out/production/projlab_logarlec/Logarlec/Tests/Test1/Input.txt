@@ -1,1 +1,0 @@
-CreateGame true Logarlec/Tests/Test1/Map.json
