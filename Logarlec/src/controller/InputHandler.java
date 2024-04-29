@@ -315,18 +315,7 @@ public class InputHandler {
                 }
             }
             // Set the neighbors of each Room
-            for(IRoom room : game.GetRooms()){
-                for(DoorSide door : room.GetDoors()){ // We iterate through every door of every room
-                    DoorSide pair = door.GetPair();
-                    if(pair != null){ // if the door has a pair
-                        if(!room.GetNeighbors().contains(pair.GetRoom())){
-                            // and if the other room isn't already in the neighbor list
-                            room.GetNeighbors().add(pair.GetRoom());
-                        }
-
-                    }
-                }
-            }
+            game.UpdateNeighbors();
 
         }
         catch(IOException e) {
@@ -1144,8 +1133,8 @@ public class InputHandler {
         if (paramRoom == null){
             return "message: A megadott szobát nem sikerült szétválasztani, mert a megadott szoba " + roomId + " nem található.";
         }
-        game.SeparateRoom((Room)paramRoom);
-        return "message: A megadott szobát sikeresen sikerült szétválasztani.";
+        boolean isSeperated = game.SeparateRoom((Room)paramRoom);
+        return isSeperated ? "message: A megadott szobát sikeresen sikerült szétválasztani." : "message: A megadott szobát nem sikerült szétválasztani.";
     }
 
 

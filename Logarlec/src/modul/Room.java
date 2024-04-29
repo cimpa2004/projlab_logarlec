@@ -122,6 +122,13 @@ public class Room implements IRoom {
 		maxCapacity = 10;
 	}
 
+	/**
+	 * Beallitja a parameterkent megadott Room listat a jelenlegi szoba szomszedainak
+	 * @param neighbors A megadott Room lista amit beallit szomszedoknak
+	 */
+	public void SetNeighbors(ArrayList<Room> neighbors){
+		this.neighbors = neighbors;
+	}
 
 	/**
 	 * Vissza adja, hogy az adott szoba ragacsos-e.
