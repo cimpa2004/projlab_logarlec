@@ -1,0 +1,56 @@
+message: A letrejott jatek állapotai a többi mezőben.
+gameTimer: 10
+isEndGame: false
+currentTurn: None
+turnOrder: []
+rooms: [Room1]
+doors: []
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
+students: []
+instructors: []
+janitors: []
+
+message: A megadott Room1 szoba részletei a többi mezőben.
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
+doors: []
+neighbors: []
+isCursed: true
+isSticky: true
+poisonDuration: 3
+currentCapacity: 0
+maxCapacity: 10
+numberOfPeopleBeenToRoom: 0
+students: []
+instructors: []
+janitors: []
+
+message: A megadott szobát sikeresen sikerült szétválasztani.
+
+message: A megadott Room1 szoba részletei a többi mezőben.
+items: [AirFreshener1, Camembert1, FFP2Mask1, HolyBeerCup1, SlideRule1, TVSZ1, Transistor1, WetTableCloth1]
+doors: [Door1]
+neighbors: [Room2]
+isCursed: true
+isSticky: true
+poisonDuration: 3
+currentCapacity: 0
+maxCapacity: 10
+numberOfPeopleBeenToRoom: 0
+students: []
+instructors: []
+janitors: []
+
+message: A megadott Room2 szoba részletei a többi mezőben.
+items: []
+doors: [Door2]
+neighbors: [Room1]
+isCursed: true
+isSticky: true
+poisonDuration: 3
+currentCapacity: 0
+maxCapacity: 10
+numberOfPeopleBeenToRoom: 0
+students: []
+instructors: []
+janitors: []
+

@@ -1,0 +1,26 @@
+message: A letrejott jatek állapotai a többi mezőben.
+gameTimer: 10
+isEndGame: false
+currentTurn: Instructor1
+turnOrder: [Instructor1, Student1]
+rooms: [Room1, Room2]
+doors: [Door1, Door2]
+items: [SlideRule1]
+students: [Student1]
+instructors: [Instructor1]
+janitors: []
+
+message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.
+
+message: A megadott Instructor1 személy részletei a többi mezőben.
+room: Room1
+inventory: []
+wetTableClothes: []
+tvszs: []
+holyBeerCups: []
+ffp2Masks: []
+isAlive: true
+isFainted: false
+isStunned: false
+activeTurn: false
+

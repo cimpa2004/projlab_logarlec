@@ -1,0 +1,52 @@
+{
+      "doors": [
+        {
+          "id": "Door1",
+          "canBeOpened": true,
+          "pair": "Door2"
+        },
+        {
+          "id": "Door2",
+          "canBeOpened": true,
+          "pair": "Door1"
+        }
+      ],
+      "rooms": [
+        {
+          "id": "Room1",
+          "poisonDuracion" : 0,
+          "instructors": [],
+          "students":[
+            {
+              "id" : "Student1"
+            }
+          ],
+          "janitors":[],
+          "slideRules":[
+          ],
+          "tvszs": [
+          ],
+          "ffp2Masks": [
+          ],
+          "wetTableClothes": [
+            {
+              "id": "WetTableCloth1",
+              "isActivated":false
+            }
+          ],
+          "holyBeerCups": [
+          ],
+          "airFresheners": [
+          ],
+          "camemberts": [
+            {
+              "id": "Camembert1",
+              "isActivated" :false
+            }
+          ],
+          "transistors": [],
+          "doors": ["Door1"]
+        }
+       
+      ]
+    }

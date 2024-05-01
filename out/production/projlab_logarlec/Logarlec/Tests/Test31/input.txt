@@ -1,0 +1,5 @@
+CreateGame true Logarlec/Tests/Test31/Map.json
+DescribeRoom Room1
+DescribeRoom Room2
+MergeRooms Room1 Room2
+DescribeRoom Room1

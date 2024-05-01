@@ -1,0 +1,125 @@
+{
+    "doors": [
+      {
+        "id": "Door1",
+        "canBeOpened": true,
+        "pair": "Door2"
+      },
+      {
+        "id": "Door2",
+        "canBeOpened": true,
+        "pair": "Door1"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "Room1",
+     "poisonDuration": 0,
+     "isCursed": true,
+     "isSticky": true,
+     "maxCapacity": 5,
+        "Instructors": [
+],
+        "Students" :[
+        ],
+        "Janitors":[],
+        "SlideRules":[
+{
+            "id":"SlideRule1"
+          }],
+        "TVSZs": [
+{
+            "durability": 3,
+            "id":"TVSZ1"
+          }
+        ],
+        "FFP2Masks": [
+{
+            "durability": 5,
+            "id":"FFP2Mask1"
+          }
+        ],
+        "wetTableClothes": [
+{
+            "durability": 3,
+        "id":"WetTableCloth1"
+          }
+        ],
+        "holyBeerCups": [
+{
+            "durability": 3,
+                "id":"HolyBeerCup1"
+          }
+        ],
+        "airFresheners": [
+{
+                  "id":"AirFreshener1"
+          }
+        ],
+        "camemberts": [
+{
+            "id":"Camembert1"
+          }
+        ],
+        "Transistors": [
+{
+            "id":"Transistor1"
+          }],
+        "doors": []
+      },
+{
+        "id": "Room2",
+     "poisonDuration": 5,
+     "isCursed": false,
+     "isSticky": false,
+     "maxCapacity": 3,
+        "Instructors": [
+],
+        "Students" :[
+        ],
+        "Janitors":[],
+        "SlideRules":[
+{
+            "id":"SlideRule2"
+          }],
+        "TVSZs": [
+{
+            "durability": 3,
+            "id":"TVSZ2"
+          }
+        ],
+        "FFP2Masks": [
+{
+            "durability": 5,
+            "id":"FFP2Mask2"
+          }
+        ],
+        "wetTableClothes": [
+{
+            "durability": 3,
+        "id":"WetTableCloth2"
+          }
+        ],
+        "holyBeerCups": [
+{
+            "durability": 3,
+                "id":"HolyBeerCup2"
+          }
+        ],
+        "airFresheners": [
+{
+                  "id":"AirFreshener2"
+          }
+        ],
+        "camemberts": [
+{
+            "id":"Camembert2"        	}
+        ],
+        "Transistors": [
+{
+            "id":"Transistor2"
+          }],
+        "doors": []
+      }
+    ]
+  }
