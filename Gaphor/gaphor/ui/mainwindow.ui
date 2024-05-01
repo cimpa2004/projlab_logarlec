@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkPopoverMenu" id="hamburger">
+  </object>
+  <object class="GtkPopoverMenu" id="recent-files">
+  </object>
+  <object class="GtkPopoverMenu" id="select-modeling-language">
+  </object>
+  <object class="GtkPopoverMenu" id="diagram-types">
+  </object>
+  <object class="GtkApplicationWindow" id="main-window">
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header">
+        <child type="title">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="valign">center</property>
+            <child>
+              <object class="GtkCenterBox">
+                <property name="hexpand">true</property>
+                <child type="start">
+                  <object class="GtkLabel" id="modified">
+                    <property name="halign">end</property>
+                    <property name="hexpand">true</property>
+                    <property name="label">•</property>
+                    <property name="margin-end">6</property>
+                    <property name="visible">false</property>
+                  </object>
+                </child>
+                <child type="center">
+                  <object class="GtkLabel" id="title">
+                    <property name="label">Gaphor</property>
+                    <property name="ellipsize">end</property>
+                    <property name="width-chars">3</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="subtitle">
+                <property name="label" translatable="yes">New model</property>
+                <style>
+                  <class name="subtitle"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuButton" id="modeling-language-name">
+            <property name="focus_on_click">0</property>
+            <property name="popover">select-modeling-language</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuButton">
+            <property name="icon_name">list-add-symbolic</property>
+            <property name="popover">diagram-types</property>
+            <property name="tooltip-text" translatable="yes">New diagram menu</property>
+            <property name="always-show-arrow">1</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="popover">hamburger</property>
+            <property name="icon_name">open-menu-symbolic</property>
+            <property name="tooltip-text" translatable="yes">Open application menu</property>
+            <property name="primary">1</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkToggleButton">
+            <property name="action_name">win.show-editors</property>
+            <property name="tooltip-text" translatable="yes">Toggle Property Editor</property>
+            <child>
+              <object class="GtkImage">
+                <property name="icon_name">sidebar-show-right-symbolic</property>
+              </object>
+            </child>
+            <style>
+              <class name="flat"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkOverlay" id="main-content">
+        <property name="name">overlay</property>
+        <child type="overlay">
+          <object class="GtkRevealer" id="notification-revealer">
+            <property name="halign">center</property>
+            <property name="valign">start</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="halign">center</property>
+                <property name="valign">start</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel" id="notification-message">
+                    <property name="margin-start">6</property>
+                    <property name="label">Here goes a short informative message.</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="notification-close">
+                    <child>
+                      <object class="GtkImage">
+                        <property name="icon_name">window-close-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <style>
+                  <class name="app-notification"/>
+                </style>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

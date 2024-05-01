@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+
+  <object class="GtkBox" id="message-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Message Sort</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="message-combo">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">Call</item>
+              <item translatable="yes">Asynchronous</item>
+              <item translatable="yes">Signal</item>
+              <item translatable="yes">Reply</item>
+              <item translatable="yes">Create</item>
+              <item translatable="yes">Delete</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="message-combo-changed" swapped="no"/>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="lifeline-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Connectable Element</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="element-type">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="LabelValue" name="label" />
+        </property>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+</interface>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+
+  <object class="GtkBox" id="comment-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Comment</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkFrame">
+        <property name="child">
+          <object class="GtkTextView" id="comment">
+            <property name="wrap-mode">word</property>
+            <property name="height-request">96</property>
+          </object>
+        </property>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="name-editor">
+    <property name="orientation">vertical</property>
+    <property name="baseline-position">top</property>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel" id="type-label">
+            <property name="halign">center</property>
+            <property name="hexpand">yes</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label1">
+        <property name="label" translatable="yes">Name</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="name-entry">
+        <property name="focusable">1</property>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkExpander" id="line-editor">
+    <property name="expanded">1</property>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Style</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Rectilinear</property>
+                <property name="halign">start</property>
+                <property name="hexpand">1</property>
+                <property name="hexpand-set">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="line-rectilinear">
+                <property name="halign">end</property>
+                <signal name="notify::active" handler="rectilinear-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Flip orientation</property>
+                <property name="halign">start</property>
+                <property name="hexpand">1</property>
+                <property name="hexpand-set">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="flip-orientation">
+                <property name="halign">end</property>
+                <signal name="notify::active" handler="orientation-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkExpander" id="note-editor">
+    <property name="expanded">1</property>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Note</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFrame">
+            <property name="child">
+              <object class="GtkTextView" id="note">
+                <property name="wrap-mode">word</property>
+                <property name="height-request">96</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <style>
+          <class name="propertypage"/>
+        </style>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+
+
+
+  <object class="GtkBox" id="metadata-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Created By</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="created-by">
+        <signal name="changed" handler="created-by-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Description</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="description">
+        <signal name="changed" handler="description-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Website</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="website">
+        <signal name="changed" handler="website-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Revision</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="revision">
+        <signal name="changed" handler="revision-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">License</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="license">
+        <signal name="changed" handler="license-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Created On</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="created-on">
+        <signal name="changed" handler="created-on-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Updated On</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="updated-on">
+        <signal name="changed" handler="updated-on-changed" swapped="no"/>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="picture-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Picture</property>
+        <property name="halign">center</property>
+        <property name="hexpand">yes</property>
+        <property name="margin-bottom">20</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label" translatable="yes">Select picture...</property>
+        <signal name="clicked" handler="select-picture" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label" translatable="yes">Set default size</property>
+        <signal name="clicked" handler="set-default-size" swapped="no"/>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+</interface>

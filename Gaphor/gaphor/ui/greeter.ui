@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.2"/>
+  <menu id='hamburger-menu'>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Open Model…</attribute>
+        <attribute name='action'>app.file-open</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Keyboard Shortcuts</attribute>
+        <attribute name='action'>app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name='label' translatable='yes'>About Gaphor</attribute>
+        <attribute name='action'>app.about</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <object class="GtkPopoverMenu" id="hamburger">
+    <property name="menu-model">hamburger-menu</property>
+  </object>
+
+  <object class="GtkWindow" id="greeter">
+    <property name="width-request">800</property>
+    <property name="height-request">600</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <child type="title">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="valign">center</property>
+            <child>
+              <object class="GtkLabel" id="title">
+                <property name="label">Gaphor</property>
+                <style>
+                  <class name="title"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label" translatable="yes">Open Model…</property>
+            <property name="action-name">app.file-open</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="popover">hamburger</property>
+            <property name="icon_name">open-menu-symbolic</property>
+            <property name="primary">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <child>
+              <object class="GtkViewport">
+                <child>
+                  <object class="GtkBox">
+                    <property name="halign">center</property>
+                    <property name="vexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">18</property>
+                    <property name="margin-top">18</property>
+                    <property name="margin-bottom">12</property>
+                    <child>
+                      <object class="AdwPreferencesGroup" id="recent-files">
+                        <property name="title" translatable="yes">Recently Opened</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup" id="templates">
+                        <property name="title" translatable="yes">Create New Model</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="greeter"/>
+    </style>
+  </object>
+</interface>

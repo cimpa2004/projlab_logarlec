@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="12.790931"
+   height="15.827679"
+   viewBox="0 0 3.384267 4.1877401"
+   version="1.1"
+   id="svg4268"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4262" />
+  <metadata
+     id="metadata4265">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="house-event"
+     style="display:inline"
+     transform="translate(-94.112292,-44.45979)">
+    <path
+       style="color:#000000;fill:#000000;stroke-width:0.044062;stroke-miterlimit:10;-inkscape-stroke:none"
+       d="m 94.112292,45.940051 c 0,0.902493 0,1.804986 0,2.707479 1.128089,0 2.256178,0 3.384267,0 0,-0.902493 0,-1.804986 0,-2.707479 -0.564131,-0.493348 -1.128031,-0.98728 -1.692302,-1.480261 -0.563983,0.49342 -1.127974,0.986841 -1.691965,1.480261 z m 1.751646,-0.772804 c 0.379647,0.332256 0.759105,0.66472 1.138866,0.996844 0,0.663228 0,1.326457 0,1.989685 -0.798913,0 -1.597835,0 -2.396758,0 0,-0.663228 0,-1.326457 0,-1.989685 0.399634,-0.349484 0.799087,-0.699175 1.198548,-1.048852 0.01978,0.01734 0.03956,0.03467 0.05934,0.05201 z"
+       id="polygon1672" />
+  </g>
+</svg>
