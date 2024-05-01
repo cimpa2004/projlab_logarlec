@@ -1,3 +1,0 @@
-CreateGame true Logarlec/Tests/Test8/Map.json
-Pickup Instructor1 SlideRule1
-DescribePerson Instructor1

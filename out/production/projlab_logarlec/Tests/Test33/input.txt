@@ -1,6 +1,0 @@
-CreateGame true Logarlec/Tests/Test33/Map.json
-StartGame
-Move Instructor1 Door2
-DescribePerson Student1
-DescribePerson Student2
-DescribeGame
