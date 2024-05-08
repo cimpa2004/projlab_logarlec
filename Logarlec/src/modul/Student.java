@@ -55,14 +55,9 @@ public class Student extends Person {
 			if (room.GetPoisonDuration() > 0){
 				//ha van nala ffp2 maszk, akkor megprobal aktivalni egyet
 				if(!ffp2Masks.isEmpty()) {
-					if(!this.DefendFromGas()){
-						this.SetIsFainted(true);
-					}else this.SetIsFainted(false);
-				}
-			}
-			//ha a szoba nem gazos es nincs elkabulva a hallgato, akkor nem kabul el
-			else if(room.GetPoisonDuration() <= 0 && !GetIsFainted()){
-				this.SetIsFainted(false);
+					if(this.DefendFromGas()) this.SetIsFainted(false);
+					else this.SetIsFainted(true);
+				} else this.SetIsFainted(true);
 			}
 		} else{
 			return false;
