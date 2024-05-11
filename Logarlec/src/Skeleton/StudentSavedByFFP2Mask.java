@@ -12,7 +12,7 @@ public class StudentSavedByFFP2Mask {
     private static DoorSide d1, d2;
     private static FFP2Mask f;
 
-    private static Game g;
+    private static Game g = new Game(true, 1);
 
 
     private static void initTest(){

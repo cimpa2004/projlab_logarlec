@@ -11,7 +11,7 @@ public class GasClearsFromRoom {
 
     private static void initTest(){
         r = new Room();
-        g = new Game();
+        g = new Game(true, 1);
         s = new Student(g);
         i = new Instructor(g);
 

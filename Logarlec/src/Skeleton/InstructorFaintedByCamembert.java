@@ -13,6 +13,7 @@ public class InstructorFaintedByCamembert {
     private static Room r;
     private static WetTableCloth w;
     private static TVSZ tvsz;
+    private static Game g = new Game(true, 1);
 
     private static void initTest(){
         i = new Instructor(new Game());

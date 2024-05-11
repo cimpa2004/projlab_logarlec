@@ -14,7 +14,7 @@ public class InstructosInventoryGetsFullTheGameEnds {
     private static Transistor t2;
     private static TVSZ tv1;
     private static TVSZ tv2;
-    private static Game g;
+    private static Game g = new Game(true, 1);
     private static Room r;
 
     private static void Init(){
@@ -26,7 +26,6 @@ public class InstructosInventoryGetsFullTheGameEnds {
         t2 = new Transistor();
         tv1 = new TVSZ();
         tv2 = new TVSZ();
-        g = new Game();
         r = new Room();
 
         g.AddRoom(r);

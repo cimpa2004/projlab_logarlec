@@ -12,11 +12,9 @@ public class StudentItemPickup {
     private static FFP2Mask ffp2;
     private static TVSZ tvsz2;
     private static Room r;
-    private static Game game;
+    private static Game game = new Game(true, 1);
 
     public static void Init(){
-        game = new Game();
-
         r = new Room();
 
         st = new Student(game);

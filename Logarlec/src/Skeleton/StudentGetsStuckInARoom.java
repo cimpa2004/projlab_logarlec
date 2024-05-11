@@ -15,11 +15,10 @@ public class StudentGetsStuckInARoom {
     private static Game g;
     private static TVSZ tv;
     private static Room r0;
-    private static Game game;
+    private static Game game = new Game(true, 1);
 
 
     private static void Init(){
-        game = new Game();
         st = new Student(game);
         invis = new DoorSide();
         oneWay = new DoorSide();

@@ -12,6 +12,7 @@ public class InstructorTriesUsingUsedOrNotAllowedItems {
     private static TVSZ t;
     private static Room r;
 
+    private static Game g = new Game(true, 1);
 
     private static void initTest(){
         i = new Instructor(new Game());

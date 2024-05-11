@@ -1,11 +1,13 @@
 package Skeleton;
 
+import controller.Game;
 import model.*;
 
 public class PoisonedCursedRoomSplit {
 
     private static Room r;
     private static TVSZ t;
+    private static Game g = new Game(true, 1);
 
     private static void initTest(){
         r = new Room();

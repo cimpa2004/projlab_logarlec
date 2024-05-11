@@ -11,11 +11,10 @@ public class StudentSavedByTVSZ {
     private static DoorSide d1;
     private static DoorSide d2;
     private static Instructor i;
-    private static Game g;
+    private static Game g = new Game(true, 1);
 
     private static void initTest(){
         t = new TVSZ();
-        g = new Game();
         s = new Student(g);
         r1 = new Room();
         r2 = new Room();

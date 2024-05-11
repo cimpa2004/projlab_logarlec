@@ -14,7 +14,7 @@ public class StudentSelfGas {
     private static Room r;
     private static Game game;
     public static void Init(){
-        game = new Game();
+        game = new Game(true ,1);
 
         r = new Room();
 

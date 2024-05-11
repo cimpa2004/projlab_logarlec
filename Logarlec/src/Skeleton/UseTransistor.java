@@ -14,7 +14,7 @@ public class UseTransistor {
     private static Game game;
 
     private static void initTest(){
-        game = new Game();
+        game = new Game(true ,1);
         t1 = new Transistor();
         t2 = new Transistor();
         s = new Student(game);

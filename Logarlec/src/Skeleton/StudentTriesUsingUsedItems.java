@@ -15,7 +15,7 @@ public class StudentTriesUsingUsedItems {
 
 
     private static void initTest(){
-        game = new Game();
+        game = new Game(true, 1);
         s = new Student(game);
         c = new Camembert();
         f = new FFP2Mask();

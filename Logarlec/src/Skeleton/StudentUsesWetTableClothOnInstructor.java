@@ -13,7 +13,7 @@ public class StudentUsesWetTableClothOnInstructor {
     private static DoorSide d1, d2;
     private static Room r1, r2;
     private static Instructor i;
-    private static Game g;
+    private static Game g = new Game(true, 1);
 
 
     private static void initTest(){
