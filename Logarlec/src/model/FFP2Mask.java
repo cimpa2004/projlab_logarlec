@@ -197,6 +197,10 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
+		// ha az oktato felvesz egy FFP2Maskot akkor egybol aktivalja
+		if (isAdded) {
+			Activate();
+		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}

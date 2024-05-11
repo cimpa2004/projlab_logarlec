@@ -48,7 +48,7 @@ public class Instructor extends Person {
 					else this.SetIsFainted(true);
 				} else this.SetIsFainted(true);
 			}
-			
+
 			// Megprobalja megolni a hallgatokat
 			ArrayList<Student> studentCopy = new ArrayList<>(room.GetStudents());
 			for(Student student : studentCopy) {
@@ -59,9 +59,7 @@ public class Instructor extends Person {
 				if(!this.GetRoom().GetIsSticky())
 					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size() - 1));
 			}*///Nem szükséges a teszteléshez
-			//mask aktiválása, minimális
-			for (Defendable m: this.GetFFP2Masks())
-				((FFP2Mask) m).Activate();
+
 		} else {
 			return false;
 		}
