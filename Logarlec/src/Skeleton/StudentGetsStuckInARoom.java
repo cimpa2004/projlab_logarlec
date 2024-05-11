@@ -1,6 +1,6 @@
 package Skeleton;
 import controller.Game;
-import modul.*;
+import model.*;
 
 /**
  * 13-as use case teszt esete

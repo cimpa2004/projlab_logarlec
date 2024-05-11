@@ -1,10 +1,10 @@
 package Skeleton;
 
 import controller.Game;
-import modul.DoorSide;
-import modul.FFP2Mask;
-import modul.Student;
-import modul.Room;
+import model.DoorSide;
+import model.FFP2Mask;
+import model.Student;
+import model.Room;
 
 public class StudentSavedByFFP2Mask {
     private static Student s;

@@ -1,6 +1,6 @@
 package Skeleton;
 
-import modul.*;
+import model.*;
 
 public class PoisonedCursedRoomSplit {
 

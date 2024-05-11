@@ -1,10 +1,10 @@
 package Skeleton;
 
-import modul.Student;
-import modul.WetTableCloth;
-import modul.DoorSide;
-import modul.Room;
-import modul.Instructor;
+import model.Student;
+import model.WetTableCloth;
+import model.DoorSide;
+import model.Room;
+import model.Instructor;
 import controller.Game;
 
 public class StudentUsesWetTableClothOnInstructor {

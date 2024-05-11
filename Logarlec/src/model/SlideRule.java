@@ -1,4 +1,4 @@
-package modul;
+package model;
 import controller.Game;
 import util.*;
 

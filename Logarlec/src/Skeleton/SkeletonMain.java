@@ -1,7 +1,5 @@
 package Skeleton;
 
-import modul.*;
-
 import java.util.Scanner;
 
 public class SkeletonMain {

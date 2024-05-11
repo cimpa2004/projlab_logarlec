@@ -1,8 +1,8 @@
 package Skeleton;
 
-import modul.Camembert;
-import modul.DoorSide;
-import modul.Room;
+import model.Camembert;
+import model.DoorSide;
+import model.Room;
 
 public class GasAndCursedRoomMerge {
     

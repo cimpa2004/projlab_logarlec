@@ -1,7 +1,7 @@
 package Skeleton;
 
 import controller.Game;
-import modul.*;
+import model.*;
 
 public class UseTransistor {
     private static Transistor t1;

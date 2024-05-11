@@ -1,7 +1,6 @@
 package viewmodel;
 
-import modul.*;
-import util.Logger;
+import model.*;
 
 import java.util.List;
 

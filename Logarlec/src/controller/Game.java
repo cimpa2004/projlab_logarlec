@@ -1,6 +1,6 @@
 package controller;
 
-import modul.*;
+import model.*;
 import util.Logger;
 import viewmodel.IPerson;
 import viewmodel.IRoom;

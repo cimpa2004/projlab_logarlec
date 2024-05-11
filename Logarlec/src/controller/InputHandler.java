@@ -1,6 +1,6 @@
 package controller;
 
-import modul.*;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import viewmodel.IPerson;

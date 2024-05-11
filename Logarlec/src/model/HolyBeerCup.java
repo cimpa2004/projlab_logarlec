@@ -1,7 +1,6 @@
-package modul;
+package model;
 
 import util.Logger;
-import util.Reader;
 
 import java.util.UUID;
 

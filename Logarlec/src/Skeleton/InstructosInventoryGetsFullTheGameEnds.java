@@ -1,6 +1,6 @@
 package Skeleton;
 import controller.Game;
-import modul.*;
+import model.*;
 
 /**
  * Teszt eset az oktató inveroryának figyelésére és a játék végére

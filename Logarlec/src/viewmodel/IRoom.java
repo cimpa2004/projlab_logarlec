@@ -1,11 +1,8 @@
 package viewmodel;
 
-import modul.*;
-import util.Logger;
-import util.Reader;
+import model.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public interface IRoom {
 

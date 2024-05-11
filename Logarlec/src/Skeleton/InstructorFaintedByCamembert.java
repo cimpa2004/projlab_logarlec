@@ -1,13 +1,11 @@
 package Skeleton;
 
 import controller.Game;
-import modul.Instructor;
-import modul.Camembert;
-import modul.Room;
-import modul.WetTableCloth;
-import modul.TVSZ;
-
-import java.awt.font.GlyphMetrics;
+import model.Instructor;
+import model.Camembert;
+import model.Room;
+import model.WetTableCloth;
+import model.TVSZ;
 
 public class InstructorFaintedByCamembert {
     private static Instructor i;
