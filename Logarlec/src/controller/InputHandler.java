@@ -3,6 +3,8 @@ package controller;
 import modul.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import viewmodel.IPerson;
+import viewmodel.IRoom;
 
 import java.io.File;
 import java.io.IOException;

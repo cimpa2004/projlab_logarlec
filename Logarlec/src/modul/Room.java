@@ -2,7 +2,7 @@ package modul;
 
 
 import util.Logger;
-import util.Reader;
+import viewmodel.IRoom;
 
 import java.util.*;
 

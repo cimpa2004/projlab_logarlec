@@ -1,5 +1,6 @@
-package modul;
+package viewmodel;
 
+import modul.*;
 import util.Logger;
 import util.Reader;
 

@@ -4,7 +4,7 @@ package modul;
 
 import controller.Game;
 import util.Logger;
-import util.Reader;
+import viewmodel.IPerson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.UUID;
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
  * összefoglalja azokat a funkciókat, attribútumokat amiket a Hallgatók és Oktatók is hordoznak.
 */
-public abstract class Person implements IPerson{
+public abstract class Person implements IPerson {
 	/**
 	 * Tárolja a játékot, a teszteléshez van rá szükség
 	 */

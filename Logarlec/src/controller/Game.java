@@ -2,8 +2,9 @@ package controller;
 
 import modul.*;
 import util.Logger;
+import viewmodel.IPerson;
+import viewmodel.IRoom;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
