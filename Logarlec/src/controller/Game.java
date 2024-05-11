@@ -1,16 +1,28 @@
 package controller;
 
+import jdk.jshell.spi.ExecutionControl;
 import model.*;
 import util.Logger;
-import viewmodel.IPerson;
-import viewmodel.IRoom;
+import viewmodel.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
 /** */
-public class Game {
+public class Game implements IVInit {
+	/**
+	 * Tarol egy ICInitet amivel letretud hozni V objektumokat a Viewban.
+	 * */
+	ICInit icInit;
+	/**
+	 * Tárolj IControlt amivel jelezhet a jateknak ha allapotaban valtozas tortent
+	 * */
+	IControl icControl;
+	/**
+	 * Tárol egy ICRoomot amivel jelezhet a Viewban levo V szobanak ha egy szoban tortent allapot valtozas
+	 * */
+	ICRoom icRoom;
 	/**
 	 * Tárolja a hátralévő körök számát.
 	 * */
@@ -119,17 +131,47 @@ public class Game {
 		return rooms;
 	}
 
+	@Override
+	public void AddStudent(String personID) {
+		Logger.started(this, "AddStudent", winSide);
+		IPerson newPerson = new Student(personID,this);
+		AddToGame(newPerson);
+		Logger.finished(this, "AddStudent", winSide);
+
+	}
+
+	@Override
+	public void RemoveStudent(String personID) {
+		Logger.started(this, "RemoveStudent");
+		for (IPerson person : turnOrder){
+			if(person.GetId().equals(personID)) RemoveFromGame(person);
+		}
+		Logger.finished(this, "RemoveStudent");
+	}
+
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
 	 * */
 	public void StartGame() {
 		Logger.started(this, "StartGame");
+		// TODO CreateGame() et vhogy innen hivni?
 		isEndGame = false;
 		gameTimer = 10;
 		if (currentTurn != null) currentTurn.StartTurn();
 		else throw new RuntimeException("No person was added to game when game was started.");
 
 		Logger.finished(this, "StartGame");
+	}
+
+	/**
+	 * Letrehoz egy jatekot, szobakkal, ajtokat, itemekkel, personekkel. Utana lehet hozza adni a jatekhoz
+	 * tovabbi personeket.
+	 */
+	public void CreateGame(String gamePathJSON) {
+		Logger.started(this, "CreateGame");
+		// TODO implement itt, letrehozni jatekot a megadott JSON alapjan. Ha nincs megadva lehet valami alap
+		// TODO icInitet itt hasznalni
+		Logger.finished(this, "CreateGame");
 	}
 
 	/**
@@ -141,6 +183,8 @@ public class Game {
 		Logger.started(this, "EndGame", winSide);
 		isEndGame = true;
 		this.winSide = winSide;
+		if (winSide) icControl.StudentWin();
+		else icControl.InstructorWin();
 		Logger.finished(this, "EndGame", winSide);
 	}
 	
@@ -170,8 +214,10 @@ public class Game {
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
-		if(!isEndGame)
+		if(!isEndGame){
+			icControl.Update(); // jelez a Viewnak h uj kor van, valtozhat a current Student inventoryja
 			currentTurn.StartTurn();
+		}
 
 		Logger.finished(this, "NextTurn");
 	}
@@ -243,6 +289,7 @@ public class Game {
 			r1.AddNeighbor(r2);
 			r2.AddNeighbor(r1);
 			rooms.add(r2);
+			icRoom.Split((IVRoom) r1);
 			return true;
 		}
 
@@ -321,6 +368,7 @@ public class Game {
 			}
 
 			Logger.finished(this, "MergeRooms", r2);
+			icRoom.Merge((IVRoom)r1, (IVRoom)r2);
 			return true;
 		}
 
@@ -335,11 +383,22 @@ public class Game {
 	 *
 	 * @param p Az hozzáadandó Személy.
 	 * */
-	public void AddToGame(Person p) {
+	public void AddToGame(IPerson p) {
 		Logger.started(this, "AddToGame", p);
 		turnOrder.add(p);
 		if(currentTurn == null) currentTurn = p;
 		Logger.finished(this, "AddToGame", p);
+	}
+
+	/**
+	 * Kiveszi azt a Személyt a, akit paraméterként kap.
+	 *
+	 * @param p A torlendo Személy.
+	 * */
+	public void RemoveFromGame(IPerson p) {
+		Logger.started(this, "RemoveFromGame", p);
+		turnOrder.remove(p);
+		Logger.finished(this, "RemoveFromGame", p);
 	}
 
 	/**
@@ -362,6 +421,7 @@ public class Game {
 	 * */
 	public void RemoveRoom(Room r) {
 		Logger.started(this, "RemoveRoom", r);
+		rooms.remove(r);
 		Logger.finished(this, "RemoveRoom", r);
 	}
 
@@ -369,8 +429,6 @@ public class Game {
 		return isGameDeterministic;
 	}
 
-	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
-	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
 
 	/**
 	 * Id alapján megkeresi az adott DoorSidet, ammenyiben benne van vissza adja, egyébként null

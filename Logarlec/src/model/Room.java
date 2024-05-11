@@ -129,8 +129,8 @@ public class Room implements IRoom {
 	 * @return Az isSticky változó értéke.
 	 */
 	public boolean GetIsSticky(){
-		Logger.started(this, "DecrementPoison");
-		Logger.finished(this, "DecrementPoison");
+		Logger.started(this, "GetIsSticky");
+		Logger.finished(this, "GetIsSticky");
 		return isSticky;
 	}
 

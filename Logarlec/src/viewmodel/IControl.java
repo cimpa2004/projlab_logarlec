@@ -2,7 +2,7 @@ package viewmodel;
 
 public interface IControl {
     /**
-     * Ezt a fuggvenyt a View-n hivja meg a Controller, ahol Updatel jelez, amikor egy uj kovetkezik
+     * Ezt a fuggvenyt a View-n hivja meg a Controller, ahol Updatel jelez, amikor egy uj kor kovetkezik
      */
     public void Update(); // TODO maybe later give some parameters here, i guess
 
