@@ -1,12 +1,10 @@
 package controller;
 
-import jdk.jshell.spi.ExecutionControl;
 import model.*;
 import util.Logger;
 import viewmodel.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -19,7 +17,7 @@ public class Game implements IVInit {
 	/**
 	 * Tárolj IControlt amivel jelezhet a jateknak ha allapotaban valtozas tortent
 	 * */
-	IControl icControl;
+	IControl iControl;
 	/**
 	 * Tárol egy ICRoomot amivel jelezhet a Viewban levo V szobanak ha egy szoban tortent allapot valtozas
 	 * */
@@ -131,7 +129,7 @@ public class Game implements IVInit {
 	 * @return a jatekhoz tartozo IControl
 	 */
 	public IControl GetIControl(){
-		return this.icControl;
+		return this.iControl;
 	}
 
 	/**
@@ -177,7 +175,7 @@ public class Game implements IVInit {
 	 * @param icControl megadott IControl
 	 */
 	public void SetIControl(IControl icControl){
-		this.icControl = icControl;
+		this.iControl = icControl;
 	}
 	/**
 	 * Beallit a jatekhoz egy ICRoomt, e fuggveny hivas nekul a grafikus megjelenites nem mukodik
@@ -220,15 +218,23 @@ public class Game implements IVInit {
 		Logger.finished(this, "StartGame");
 	}
 
+	@Override
+	public void CreateGame(String mapPathJSON, ICInit icInit, IControl iControl, ICRoom icRoom) {
+		Logger.started(this, "CreateGame");
+		this.iControl = iControl;
+		this.icInit = icInit;
+		this.icRoom = icRoom;
+		String command = "CreateGame " + "false " + mapPathJSON + " " + logLevel.toString();
+		inputHandler.handleCommand(command, icInit);
+		Logger.finished(this, "CreateGame");
+	}
+
 	/**
 	 * Letrehoz egy jatekot, szobakkal, ajtokat, itemekkel, personekkel. Utana lehet hozza adni a jatekhoz
 	 * tovabbi personeket. A logLevel DISABLED (ha szukseg van ra at lehet adni parameterkent a CreateGamenek).
 	 */
-	public void CreateGame(String gamePathJSON) {
-		Logger.started(this, "CreateGame");
-		String command = "CreateGame " + "false " + gamePathJSON + " " + logLevel.toString();
-		inputHandler.handleCommand(command, icInit);
-		Logger.finished(this, "CreateGame");
+	public void CreateGame(String mapPathJSON) {
+		CreateGame(mapPathJSON, null, null, null);
 	}
 
 	/**
@@ -240,9 +246,9 @@ public class Game implements IVInit {
 		Logger.started(this, "EndGame", winSide);
 		isEndGame = true;
 		this.winSide = winSide;
-		if (icControl != null){
-			if (winSide) icControl.StudentWin();
-			else icControl.InstructorWin();
+		if (iControl != null){
+			if (winSide) iControl.StudentWin();
+			else iControl.InstructorWin();
 		}
 		Logger.finished(this, "EndGame", winSide);
 	}
@@ -274,7 +280,7 @@ public class Game implements IVInit {
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
-		if (icControl != null) icControl.Update(); // jelez a Viewnak h uj kor van, valtozhat a current Student inventoryja
+		if (iControl != null) iControl.Update(); // jelez a Viewnak h uj kor van, valtozhat a current Student inventoryja
 		currentTurn.StartTurn();
 
 

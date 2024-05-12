@@ -11,12 +11,9 @@ public class GameTester {
         MockICInit icInit = new MockICInit();
         MockIControl iControl = new MockIControl();
         MockICRoom icRoom = new MockICRoom();
-        game.SetICInit(icInit);
-        game.SetIControl(iControl);
-        game.SetICRoom(icRoom);
 
         InputHandler inputHandler = game.GetInputHandler();
-        game.CreateGame("Tests/Test17/Map.json");
+        game.CreateGame("Tests/Test17/Map.json", icInit, iControl, icRoom);
 
         while (true) {
             System.out.print("\n> ");
