@@ -70,12 +70,6 @@ public interface ICInit {
     /**
      * Ezt a függvényt a View-n hivja meg a Controller, amivel Viewban letrejon egy V objektum mely a paraméterként kapott
      * IV objektumot tárolja. Itt születik meg a kapcsolat a modellbeli és viewbeli objektumok között. IDvel lehet öket azonosítani
-     * @param ivItem az IV objektom amit tarolni fog a letrehozott V objektum
-     */
-    public void CreateVItem(IVItem ivItem);
-    /**
-     * Ezt a függvényt a View-n hivja meg a Controller, amivel Viewban letrejon egy V objektum mely a paraméterként kapott
-     * IV objektumot tárolja. Itt születik meg a kapcsolat a modellbeli és viewbeli objektumok között. IDvel lehet öket azonosítani
      * @param ivJanitor az IV objektom amit tarolni fog a letrehozott V objektum
      */
     public void CreateVJanitor(IVJanitor ivJanitor);

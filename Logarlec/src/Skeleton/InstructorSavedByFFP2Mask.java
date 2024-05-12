@@ -5,6 +5,7 @@ import model.DoorSide;
 import model.FFP2Mask;
 import model.Instructor;
 import model.Room;
+import util.Logger;
 
 public class InstructorSavedByFFP2Mask {
     private static Instructor i;
@@ -12,7 +13,7 @@ public class InstructorSavedByFFP2Mask {
     private static DoorSide d1, d2;
     private static FFP2Mask f;
 
-    private static Game g = new Game(true, 1);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
 
     private static void initTest(){
         r1 = new Room();

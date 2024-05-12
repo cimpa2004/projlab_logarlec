@@ -2,6 +2,7 @@ package Skeleton;
 
 import controller.Game;
 import model.*;
+import util.Logger;
 
 public class InstructorTriesUsingUsedOrNotAllowedItems {
     private static Instructor i;
@@ -12,7 +13,7 @@ public class InstructorTriesUsingUsedOrNotAllowedItems {
     private static TVSZ t;
     private static Room r;
 
-    private static Game g = new Game(true, 1);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
 
     private static void initTest(){
         i = new Instructor(new Game());

@@ -2,6 +2,7 @@ package Skeleton;
 
 import controller.Game;
 import model.*;
+import util.Logger;
 
 public class StudentItemPickup {
     private static Student st;
@@ -12,7 +13,7 @@ public class StudentItemPickup {
     private static FFP2Mask ffp2;
     private static TVSZ tvsz2;
     private static Room r;
-    private static Game game = new Game(true, 1);
+    private static Game game = new Game(true,  Logger.LogLevel.CALL_FLOWS);
 
     public static void Init(){
         r = new Room();

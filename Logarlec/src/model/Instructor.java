@@ -1,6 +1,7 @@
 package model;
 import controller.Game;
 import util.Logger;
+import viewmodel.IVInstructor;
 
 import java.util.*;
 
@@ -8,7 +9,7 @@ import java.util.*;
  * Az Instructor class valósítja meg a játékban az oktatókat.
  * Ezek az entitások a program által vannak vezérelve.
  */
-public class Instructor extends Person {
+public class Instructor extends Person implements IVInstructor {
 	/**
 	 * Ez a változó tárolja az oktató bénulásának idejét.
 	 * */

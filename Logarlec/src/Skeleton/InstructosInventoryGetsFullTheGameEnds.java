@@ -1,6 +1,7 @@
 package Skeleton;
 import controller.Game;
 import model.*;
+import util.Logger;
 
 /**
  * Teszt eset az oktató inveroryának figyelésére és a játék végére
@@ -14,7 +15,7 @@ public class InstructosInventoryGetsFullTheGameEnds {
     private static Transistor t2;
     private static TVSZ tv1;
     private static TVSZ tv2;
-    private static Game g = new Game(true, 1);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
     private static Room r;
 
     private static void Init(){

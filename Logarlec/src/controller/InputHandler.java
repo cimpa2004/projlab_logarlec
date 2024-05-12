@@ -3,8 +3,11 @@ package controller;
 import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import util.Logger;
+import viewmodel.ICInit;
 import viewmodel.IPerson;
 import viewmodel.IRoom;
+import viewmodel.IVDoorSide;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +31,10 @@ public class InputHandler {
      */
     final private Map<String, Function<ArrayList<String>, String>> commandMap;
     private Game game;
+    private ICInit icInit;
 
-    public InputHandler() {
+    // Itt letreheozzuk es belerakjuk a mapba es konstruktorban nem kell kod ismetelni mindig
+    {
         commandMap = new HashMap<>();
         commandMap.put("creategame", this::createGame);
         commandMap.put("startgame", this::startGame);
@@ -52,12 +57,39 @@ public class InputHandler {
         commandMap.put("separateroom", this::separateRoom);
     }
 
+    public InputHandler(){}
+    public InputHandler(Game game) {
+        this.game = game;
+    }
+
+
     /**
      * Az inputként megadott parancsot végrehajta a megadott játékon. Ha parancs játék létrehozása, akkor a paraméterként
      * megadott játékot hozza létre.
      * @param input A bemenet ami egy parancs megfelelő paraméterekkel, ha van
      * @return Vissza adja a parancs kimenetet
      */
+    public String handleCommand(String input, boolean toLog) throws InvalidParameterException {
+        String[] parts = input.split(" ");
+        String command = parts[0].toLowerCase();
+        String[] parameters = new String[parts.length - 1];
+        System.arraycopy(parts, 1, parameters, 0, parameters.length);
+        ArrayList<String> parameterList = new ArrayList<>(Arrays.asList(parameters));
+
+        Function<ArrayList<String>, String> commandFunction = commandMap.get(command);
+        if (commandFunction != null) {
+            // Check if game is null, and if so, use the supplier to get a new Game object
+            if (!command.equals("creategame") && this.game == null) {
+                return "message: A parancs nem volt sikeres mert meg nem lett letrehozva jatek CreateGame paranccsal.";
+            }
+            String commandOutput = commandFunction.apply(parameterList);
+            if (toLog) Logger.commandLog(commandOutput+"\n");
+            return commandOutput;
+        } else {
+            return "message: A megadott parancs helytelen, nem szerepel a parancsok kozott.";
+        }
+    }
+
     public String handleCommand(String input) throws InvalidParameterException {
         String[] parts = input.split(" ");
         String command = parts[0].toLowerCase();
@@ -71,11 +103,19 @@ public class InputHandler {
             if (!command.equals("creategame") && this.game == null) {
                 return "message: A parancs nem volt sikeres mert meg nem lett letrehozva jatek CreateGame paranccsal.";
             }
-            return commandFunction.apply(parameterList);
+            String commandOutput = commandFunction.apply(parameterList);
+            Logger.commandLog(commandOutput+"\n");
+            return commandOutput;
         } else {
             return "message: A megadott parancs helytelen, nem szerepel a parancsok kozott.";
         }
     }
+
+    public String handleCommand(String input, ICInit icInit) throws InvalidParameterException {
+        this.icInit = icInit;
+        return handleCommand(input);
+    }
+
 
     /** Ez a metodus inicializalja a parameterkent megadott jatekot. Beallithato hogy a jatek determinisztikus legyen,
      * illetve megadhato egy elore definialt jatekterkep. Amennyiben nincs megadva jatekterkep akkor egy alap terkepet
@@ -98,13 +138,20 @@ public class InputHandler {
             mapPath = "Tests/Test16/Map.json";
         }
 
+        if (parameters.size() > 2 && !parameters.get(2).isEmpty()){
+            String logLevel = parameters.get(2).toUpperCase();
+            Logger.setLogLevel(logLevel);
+        } else{
+            Logger.setLogLevel(Logger.LogLevel.INPUT_HANDLER);
+        }
+
         String defaultPath = new File(".").getAbsolutePath();
         defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
         mapPath = defaultPath  + mapPath;
 
         boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
 
-        this.game = new Game(isDeterministic, 0); // by default logLevel 0 tehat nincs logolas
+        if (this.game == null) this.game = new Game(isDeterministic);
 
         try {
             String contents = new String(Files.readAllBytes(Paths.get(mapPath)));
@@ -118,6 +165,7 @@ public class InputHandler {
                 for (int i = 0; i < doors.length(); i++) {
                     JSONObject d = doors.getJSONObject(i);
                     DoorSide door = new DoorSide(d.getString("id"));
+                    if (icInit != null) icInit.CreateVDoorSide(door);
                     door.SetCanBeOpened(d.getBoolean("canBeOpened"));
                     doorsList.add(door);
                     doorSideIDs.add(d.getString("id"));
@@ -142,6 +190,7 @@ public class InputHandler {
                 for (int i = 0; i < rooms.length(); i++) {
                     JSONObject r = rooms.getJSONObject(i);
                     Room room = new Room(r.getString("id"));
+                    if (icInit != null) icInit.CreateVRoom(room);
                     if (r.has("poisonDuration")) room.SetPoisonDuration(r.getInt("poisonDuration"));
                     if (r.has("isCursed")) room.SetIsCursed(r.getBoolean("isCursed"));
                     if (r.has("isSticky")) room.SetIsSticky(r.getBoolean("isSticky"));
@@ -155,6 +204,7 @@ public class InputHandler {
                         JSONArray students = r.getJSONArray("students");
                         for (int j = 0; j < students.length(); j++) {
                             Student st = new Student(students.getJSONObject(j).getString("id"), game);
+                            if (icInit != null) icInit.CreateVStudent(st);
                             game.AddToGame(st);
                             st.SetRoom(room);
                             room.AddStudent(st);
@@ -166,6 +216,7 @@ public class InputHandler {
                         JSONArray instructors = r.getJSONArray("instructors");
                         for (int j = 0; j < instructors.length(); j++) {
                             Instructor in = new Instructor(instructors.getJSONObject(j).getString("id"), this.game);
+                            if (icInit != null) icInit.CreateVInstructor(in);
                             game.AddToGame(in);
                             in.SetRoom(room);
                             room.AddInstructor(in);
@@ -177,6 +228,7 @@ public class InputHandler {
                         JSONArray janitors = r.getJSONArray("janitors");
                         for (int j = 0; j < janitors.length(); j++) {
                             Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVJanitor(jan);
                             game.AddToGame(jan);
                             jan.SetRoom(room);
                             room.AddJanitor(jan);
@@ -190,6 +242,7 @@ public class InputHandler {
                         JSONArray slideRules = r.getJSONArray("slideRules");
                         for (int j = 0; j < slideRules.length(); j++) {
                             SlideRule sl = new SlideRule(slideRules.getJSONObject(j).getString("id"), game);
+                            if (icInit != null) icInit.CreateVSlideRule(sl);
                             sl.SetRoom(room);
                             if (slideRules.getJSONObject(j).has("fake")){
                                 sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
@@ -203,6 +256,7 @@ public class InputHandler {
                         JSONArray tvszs = r.getJSONArray("tvszs");
                         for (int j = 0; j < tvszs.length(); j++) {
                             TVSZ t = new TVSZ(tvszs.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVTVSZ(t);
                             t.SetRoom(room);
                             if (tvszs.getJSONObject(j).has("durability")) {
                                 t.SetDurability(tvszs.getJSONObject(j).getInt("durability"));
@@ -219,6 +273,7 @@ public class InputHandler {
                         JSONArray ffp2masks = r.getJSONArray("ffp2Masks");
                         for (int j = 0; j < ffp2masks.length(); j++) {
                             FFP2Mask fp = new FFP2Mask(ffp2masks.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVFFP2Mask(fp);
                             fp.SetRoom(room);
                             if (ffp2masks.getJSONObject(j).has("isActivated")) {
                                 fp.SetIsActivated(ffp2masks.getJSONObject(j).getBoolean("isActivated"));
@@ -238,6 +293,7 @@ public class InputHandler {
                         JSONArray wetTableClothes = r.getJSONArray("wetTableClothes");
                         for (int j = 0; j < wetTableClothes.length(); j++) {
                             WetTableCloth wt = new WetTableCloth(wetTableClothes.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVWetTableCloth(wt);
                             wt.SetRoom(room);
                             if (wetTableClothes.getJSONObject(j).has("isActivated")) {
                                 wt.SetIsActivated(wetTableClothes.getJSONObject(j).getBoolean("isActivated"));
@@ -254,6 +310,7 @@ public class InputHandler {
                         JSONArray holyBeerCups = r.getJSONArray("holyBeerCups");
                         for (int j = 0; j < holyBeerCups.length(); j++) {
                             HolyBeerCup hb = new HolyBeerCup(holyBeerCups.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVHolyBeerCup(hb);
                             hb.SetRoom(room);
                             if (holyBeerCups.getJSONObject(j).has("isActivated")) {
                                 hb.SetIsActivated(holyBeerCups.getJSONObject(j).getBoolean("isActivated"));
@@ -270,6 +327,7 @@ public class InputHandler {
                         JSONArray airFresheners = r.getJSONArray("airFresheners");
                         for (int j = 0; j < airFresheners.length(); j++) {
                             AirFreshener af = new AirFreshener(airFresheners.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVAirFreshener(af);
                             af.SetRoom(room);
                             if (airFresheners.getJSONObject(j).has("isActivated")) {
                                 if (airFresheners.getJSONObject(j).getBoolean("isActivated")) af.Activate();
@@ -283,6 +341,7 @@ public class InputHandler {
                         JSONArray camemberts = r.getJSONArray("camemberts");
                         for (int j = 0; j < camemberts.length(); j++) {
                             Camembert cb = new Camembert(camemberts.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVCamembert(cb);
                             cb.SetRoom(room);
                             if (camemberts.getJSONObject(j).has("isActivated")) {
                                 cb.SetIsActivated(camemberts.getJSONObject(j).getBoolean("isActivated"));
@@ -299,6 +358,7 @@ public class InputHandler {
                         JSONArray transistors = r.getJSONArray("transistors");
                         for (int j = 0; j < transistors.length(); j++) {
                             Transistor tr = new Transistor(transistors.getJSONObject(j).getString("id"));
+                            if (icInit != null) icInit.CreateVTransistor(tr);
                             tr.SetRoom(room);
                             room.AddItem(tr);
                         }

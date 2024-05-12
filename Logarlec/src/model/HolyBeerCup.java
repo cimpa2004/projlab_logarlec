@@ -1,6 +1,7 @@
 package model;
 
 import util.Logger;
+import viewmodel.IVHolyBeerCup;
 
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  * Továbbá meg tudja állapítani egy HolyBeerCup -ról,
  * hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
-public class HolyBeerCup extends Item implements Usable, Defendable {
+public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerCup {
 
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy még hány körig képes a

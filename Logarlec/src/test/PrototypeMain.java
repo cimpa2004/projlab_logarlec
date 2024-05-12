@@ -1,8 +1,7 @@
-import controller.Tester;
-import util.Reader;
+package test;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import test.Tester;
+import util.Reader;
 
 public class PrototypeMain {
 
