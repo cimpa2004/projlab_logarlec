@@ -1,5 +1,6 @@
 package model;
 import util.Logger;
+import viewmodel.IVCamembert;
 
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
  * hogy hatnak ki a Camembert környezetére (owner és room).
  * {@inheritDoc}
  */
-public class Camembert extends Item implements Usable {
+public class Camembert extends Item implements Usable, IVCamembert {
 
 	/**
 	 * Ez a boolean típusú változó tárolja az adott Camembert példányról,

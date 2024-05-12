@@ -1,6 +1,7 @@
 package model;
 
 import util.Logger;
+import viewmodel.IVAirFreshener;
 
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
  * frissítse a AirFreshener változóit
  * és kezelje, hogy ezen cselekvések, hogy hatnak ki a AirFreshener környezetére (owner és room).
  */
-public class AirFreshener extends Item implements Usable {
+public class AirFreshener extends Item implements Usable, IVAirFreshener {
 
     /**
      * Ez a boolean típusú változó tárolja az adott AirFreshener példányról,

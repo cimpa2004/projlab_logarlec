@@ -2,6 +2,7 @@ package model;
 
 
 import util.Logger;
+import viewmodel.IVWetTableCloth;
 
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
  * hogy hatnak ki a WetTableCloth környezetére (owner és room).
  * Továbbá meg tudja állapítani egy WetTableCloth -ról, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
-public class WetTableCloth extends Item implements Usable, Defendable {
+public class WetTableCloth extends Item implements Usable, Defendable, IVWetTableCloth {
 
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy még hány körig képes a

@@ -2,6 +2,9 @@ package model;
 
 import controller.Game;
 import util.Logger;
+import viewmodel.ICInit;
+import viewmodel.IControl;
+import viewmodel.IVStudent;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -10,7 +13,7 @@ import java.util.UUID;
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat
  * irányítják a játék során.
 */
-public class Student extends Person {
+public class Student extends Person implements IVStudent {
 
 	public Student(String id, Game g){
 		super(id);
@@ -71,7 +74,8 @@ public class Student extends Person {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
-		//if (!isAlive) game.NextTurn();
+		IControl iControl = game.GetIControl();
+		if (iControl != null) iControl.StudentStartedTurn();
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){

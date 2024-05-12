@@ -2,6 +2,8 @@ package model;
 
 
 import util.Logger;
+import viewmodel.IVTVSZ;
+import viewmodel.IVTransistor;
 
 import java.util.UUID;
 
@@ -13,7 +15,7 @@ import java.util.UUID;
  * és kezelje, hogy ezen cselekvések, hogy hatnak ki a TVSZ környezetére (owner és room).
  * Továbbá meg tudja állapítani egy TVSZ -ről, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
-public class TVSZ extends Item implements Defendable{
+public class TVSZ extends Item implements Defendable, IVTVSZ {
 
 	/**
 	 *  Ez az integer typusú változó tárolja, hogy hány alkalommal tudja még a Student életét megmenteni.

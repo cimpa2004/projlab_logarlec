@@ -2,12 +2,13 @@ package model;
 
 import controller.Game;
 import util.Logger;
+import viewmodel.IVJanitor;
 
 import java.util.*;
 
 
 
-public class Janitor extends Person{
+public class Janitor extends Person implements IVJanitor {
     /**
      * Game referencia
      */

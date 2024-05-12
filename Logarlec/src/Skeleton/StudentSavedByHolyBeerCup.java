@@ -2,6 +2,7 @@ package Skeleton;
 
 import controller.Game;
 import model.*;
+import util.Logger;
 
 public class StudentSavedByHolyBeerCup {
     private static Student st;
@@ -10,7 +11,7 @@ public class StudentSavedByHolyBeerCup {
     private static DoorSide d2;
     private static Room r0;
     private static Room r1;
-    private static Game g;
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
     private static Instructor i;
 
     private static void Init(){
@@ -20,7 +21,6 @@ public class StudentSavedByHolyBeerCup {
         d2 = new DoorSide();
         r0 = new Room();
         r1 = new Room();
-        g = new Game();
         i = new Instructor(g);
 
         r0.AddStudent(st);

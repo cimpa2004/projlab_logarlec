@@ -1,6 +1,7 @@
 package model;
 
 import util.Logger;
+import viewmodel.IVTransistor;
 
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
  * hogy hatnak ki a Transistor környezetére (owner és room).
  *  {@inheritDoc}
  */
-public class Transistor extends Item implements Usable {
+public class Transistor extends Item implements Usable, IVTransistor {
 	/**
 	 * Ez a boolean típusú változó tárolja az adott Transistor példányról,
 	 * hogy aktiválva van-e vagy nem.

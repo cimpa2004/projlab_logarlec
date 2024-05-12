@@ -1,6 +1,7 @@
 package model;
 import controller.Game;
 import util.Logger;
+import viewmodel.IVInstructor;
 
 import java.util.*;
 
@@ -8,7 +9,7 @@ import java.util.*;
  * Az Instructor class valósítja meg a játékban az oktatókat.
  * Ezek az entitások a program által vannak vezérelve.
  */
-public class Instructor extends Person {
+public class Instructor extends Person implements IVInstructor {
 	/**
 	 * Ez a változó tárolja az oktató bénulásának idejét.
 	 * */
@@ -40,10 +41,6 @@ public class Instructor extends Person {
 			oldRoom.RemoveInstructor(this);
 			room.AddInstructor(this);
 
-			ArrayList<Student> studentCopy = new ArrayList<>(room.GetStudents());
-			for(Student student : studentCopy) {
-				StealSoul(student);
-			}
 			//megvizsgalja, hogy gazos-e a szoba
 			if (room.GetPoisonDuration() > 0){
 				//ha van nala ffp2 maszk, akkor megprobal aktivalni egyet
@@ -52,14 +49,18 @@ public class Instructor extends Person {
 					else this.SetIsFainted(true);
 				} else this.SetIsFainted(true);
 			}
+
+			// Megprobalja megolni a hallgatokat
+			ArrayList<Student> studentCopy = new ArrayList<>(room.GetStudents());
+			for(Student student : studentCopy) {
+				StealSoul(student);
+			}
 			//tárgyfelvétel
 			/*if (this.inventory.size() <5){
 				if(!this.GetRoom().GetIsSticky())
 					Pickup(this.GetRoom().GetItems().get(GetRoom().GetItems().size() - 1));
 			}*///Nem szükséges a teszteléshez
-			//mask aktiválása, minimális
-			for (Defendable m: this.GetFFP2Masks())
-				((FFP2Mask) m).Activate();
+
 		} else {
 			return false;
 		}

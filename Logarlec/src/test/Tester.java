@@ -1,6 +1,8 @@
-package controller;
+package test;
 
 
+import controller.Game;
+import controller.InputHandler;
 import util.Reader;
 
 import java.io.File;
@@ -34,7 +36,7 @@ public class Tester {
     public void TestManual(int testNumber){
         String path = "Tests/Test"+testNumber;
         System.out.println("--- RUN Test"+testNumber+ " ---");
-        runTest(path + "/Expected.txt");
+        runTestManual(path + "/Expected.txt");
         System.out.println("--- END ---");
     }
 
@@ -50,7 +52,7 @@ public class Tester {
         //String defaultPath = new File(".").getAbsolutePath();
         //defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
         //runTestWithInputFile(defaultPath + "Logarlec/" + path + "/input.txt", defaultPath + "Logarlec/" + path + "/Expected.txt");
-        runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
+        runTestAuto(path+"/Input.txt", path + "/Expected.txt");
         System.out.println("--- END ---");
     }
 
@@ -61,7 +63,7 @@ public class Tester {
         for (int i = 1; i <= 33; i++) {
             String path = "Tests/Test"+ i;
             System.out.println("--- RUN Test"+i+ " ---");
-            runTestWithInputFile(path+"/Input.txt", path + "/Expected.txt");
+            runTestAuto(path+"/Input.txt", path + "/Expected.txt");
             System.out.println("--- END ---");
         }
     }
@@ -77,7 +79,7 @@ public class Tester {
      * @param inputFilePath Az bemeneti parancsokat tartalmazo fajl utvonala
      * @param expectedOutputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
      */
-    public void runTestWithInputFile(String inputFilePath, String expectedOutputFilePath){
+    public void runTestAuto(String inputFilePath, String expectedOutputFilePath){
         ArrayList<String> expectedCommandOutputs = readExpectedOutputFile(expectedOutputFilePath);
         ArrayList<String> actualCommandOutputs = new ArrayList<>();
 
@@ -94,7 +96,7 @@ public class Tester {
         }
 
         for (String command : inputCommands) {
-            String commandOutput = inputHandler.handleCommand(command);
+            String commandOutput = inputHandler.handleCommand(command, false);
             actualCommandOutputs.add(commandOutput);
         }
 
@@ -107,7 +109,7 @@ public class Tester {
      * generalodott kimenetet osszehasonlitja a parameterkent megadott outputFilePath utvonalon talalhato fajl tartalmaval.
      * @param expectedOutputFilePath Az elvart kimenetet tartalmazo fajlt utvonala
      */
-    public void runTest(String expectedOutputFilePath){
+    public void runTestManual(String expectedOutputFilePath){
         ArrayList<String> expectedCommandOutputs = readExpectedOutputFile(expectedOutputFilePath);
         ArrayList<String> actualCommandOutputs = new ArrayList<>();
         String input;
@@ -122,7 +124,6 @@ public class Tester {
             }
             String commandOutput = inputHandler.handleCommand(input);
             actualCommandOutputs.add(commandOutput);
-            System.out.println(commandOutput+"\n");
         }
 
         logOutput(expectedCommandOutputs, actualCommandOutputs, inputCommands);
