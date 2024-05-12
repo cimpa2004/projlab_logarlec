@@ -198,6 +198,7 @@ public class Game implements IVInit {
 		Student newPerson = new Student(personID,this);
 		if (icInit != null) icInit.CreateVStudent(newPerson);
 		AddToGame(newPerson);
+		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID);
 		Logger.finished(this, "AddStudent", winSide);
 
 	}

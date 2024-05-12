@@ -16,7 +16,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class GameStartFrame extends JFrame {
-    private IVInit initer = new Game(false, Logger.LogLevel.DISABLED);
+    private IVInit initer = new Game(false, Logger.LogLevel.INPUT_HANDLER);
     private Window window;
     private JButton startGameButton = new JButton("Játék indítása");
     private JButton addStudentButton = new JButton("Játékos felvétele");

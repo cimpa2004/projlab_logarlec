@@ -89,8 +89,10 @@ public class ControlPanel extends JPanel implements IControl {
     private class EndTurnButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            currentStudent.EndTurn();
-            UpdateCurrentStudent();
+            if (currentStudent != null){
+                currentStudent.EndTurn();
+                UpdateCurrentStudent();
+            }
         }
     }
     //TODO: PickupButtonListener
