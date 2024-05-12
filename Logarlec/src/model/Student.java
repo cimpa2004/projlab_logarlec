@@ -2,6 +2,8 @@ package model;
 
 import controller.Game;
 import util.Logger;
+import view.VStudent;
+import viewmodel.IVStudent;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -10,7 +12,8 @@ import java.util.UUID;
  * Student class reprezentálja a játékban a hallgatókat. A játékot játszó felhasználók ezeket az entitásokat
  * irányítják a játék során.
 */
-public class Student extends Person {
+public class Student extends Person implements IVStudent {
+	private VStudent vStudent;
 
 	public Student(String id, Game g){
 		super(id);
@@ -239,4 +242,13 @@ public class Student extends Person {
 	}
 
 
+	@Override
+	public boolean isActiveTurn() {
+		return this.activeTurn;
+	}
+
+	@Override
+	public void SetVStudent(VStudent vst) {
+		this.vStudent = vst;
+	}
 }

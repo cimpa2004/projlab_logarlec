@@ -1,5 +1,6 @@
 package view;
 
+import controller.Game;
 import viewmodel.ICInit;
 import viewmodel.IVInit;
 
@@ -12,7 +13,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class GameStartFrame extends JFrame {
-    private IVInit initer;
+    private IVInit initer = new Game();
     private Window window;
     private JButton startGameButton = new JButton("Játék indítása");
     private JButton addStudentButton = new JButton("Játékos felvétele");
@@ -84,9 +85,16 @@ public class GameStartFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             //if button is clickable there are valid values
+            //TODO: use real map
+            initer.CreateGame("Tests/Test1/Map.json");
             for (String name: names) {
-                //add the students
+                initer.AddStudent(name);
             }
+            //TODO: uncomment this
+            //initer.StartGame();
+            setVisible(false);
+            window.ShowMainFrame();
+
         }
     }
     private class AddPlayerButtonListener implements ActionListener {

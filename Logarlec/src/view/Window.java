@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public class Window extends JFrame {
     private HelperFrame helperFrame = new HelperFrame(this);
     private GameStartFrame gameStartFrame = new GameStartFrame(this);
+    private MainFrame mainFrame = new MainFrame();
     private JButton gameButton = new JButton("Játék");
     private JButton helpButton = new JButton("Súgó");
     private JButton exitButton = new JButton("Kilépés");
@@ -50,6 +51,10 @@ public class Window extends JFrame {
 
     public void ShowMainWindow(){
         this.setVisible(true);
+    }
+
+    public void ShowMainFrame(){
+        mainFrame.setVisible(true);
     }
 
     //Action Listener-ek:

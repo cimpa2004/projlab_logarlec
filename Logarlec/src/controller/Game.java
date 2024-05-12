@@ -4,13 +4,14 @@ import model.*;
 import util.Logger;
 import viewmodel.IPerson;
 import viewmodel.IRoom;
+import viewmodel.IVInit;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
 /** */
-public class Game {
+public class Game implements IVInit {
 	/**
 	 * Tárolja a hátralévő körök számát.
 	 * */
@@ -117,6 +118,20 @@ public class Game {
 	 */
 	public ArrayList<IRoom> GetRooms(){
 		return rooms;
+	}
+
+
+	//NE használd csak a lefutáshoz írtam idde
+	@Override
+	public void AddStudent(String personID) {
+		if (turnOrder == null)
+			turnOrder = new ArrayList<>();
+		turnOrder.add(new Student(personID,this));
+		currentTurn = turnOrder.get(0);
+	}
+	//TODO: implement this
+	public void CreateGame(String mapPathJSON){
+
 	}
 
 	/**
