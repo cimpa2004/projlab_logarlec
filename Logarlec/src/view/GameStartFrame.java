@@ -1,7 +1,10 @@
 package view;
 
 import controller.Game;
+import util.Logger;
 import viewmodel.ICInit;
+import viewmodel.ICRoom;
+import viewmodel.IControl;
 import viewmodel.IVInit;
 
 import javax.swing.*;
@@ -13,21 +16,27 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class GameStartFrame extends JFrame {
-    private IVInit initer = new Game();
+    private IVInit initer = new Game(false, Logger.LogLevel.DISABLED);
     private Window window;
     private JButton startGameButton = new JButton("Játék indítása");
     private JButton addStudentButton = new JButton("Játékos felvétele");
     private JTextField nameTextBox = new JTextField();
 
     private ArrayList<String> names = new ArrayList<>();
+    private ICInit icInit;
+    private IControl iControl;
+    private ICRoom icRoom;
 
 
 
 
-    public GameStartFrame(Window w) {
+    public GameStartFrame(Window w, ICRoom icRoom, IControl iControl, ICInit icInit) {
         if (w == null) {
             throw new NullPointerException("Received null Window in constructor");
         }
+        this.icInit = icInit;
+        this.iControl = iControl;
+        this.icRoom = icRoom;
         window = w;
         setTitle("JátékosFelvevő");
         setSize(500, 200);
@@ -86,7 +95,7 @@ public class GameStartFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             //if button is clickable there are valid values
             //TODO: use real map
-            initer.CreateGame("Tests/Test1/Map.json");
+            initer.CreateGame("Tests/Test1/Map.json",icInit,iControl,icRoom);
             for (String name: names) {
                 initer.AddStudent(name);
             }

@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
  */
 public class Window extends JFrame {
     private HelperFrame helperFrame = new HelperFrame(this);
-    private GameStartFrame gameStartFrame = new GameStartFrame(this);
     private MainFrame mainFrame = new MainFrame();
+    private GameStartFrame gameStartFrame = new GameStartFrame(this, mainFrame.GetGamePanel(),mainFrame.GetControlPanel(),mainFrame);
     private JButton gameButton = new JButton("Játék");
     private JButton helpButton = new JButton("Súgó");
     private JButton exitButton = new JButton("Kilépés");

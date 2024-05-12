@@ -10,6 +10,12 @@ public class MainFrame extends JFrame implements ICInit {
     private GamePanel gamePanel = new GamePanel();
     private ControlPanel controlPanel = new ControlPanel();
 
+    public GamePanel GetGamePanel(){
+        return gamePanel;
+    }
+    public ControlPanel GetControlPanel(){
+        return controlPanel;
+    }
 
     public MainFrame(){
         setTitle("Logarléc");
