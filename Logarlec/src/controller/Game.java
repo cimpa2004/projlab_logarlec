@@ -2,6 +2,8 @@ package controller;
 
 import model.*;
 import util.Logger;
+
+
 import viewmodel.*;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.UUID;
 
 /** */
 public class Game implements IVInit {
+
 	/**
 	 * Tarol egy ICInitet amivel letretud hozni V objektumokat a Viewban.
 	 * */
@@ -162,6 +165,9 @@ public class Game implements IVInit {
 	public ArrayList<IRoom> GetRooms(){
 		return rooms;
 	}
+
+
+	
 
 	/**
 	 * Beallit a jatekhoz egy ICInitet, e fuggveny hivas nekul a grafikus megjelenites nem mukodik

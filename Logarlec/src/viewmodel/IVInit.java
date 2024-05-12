@@ -1,5 +1,6 @@
 package viewmodel;
 
+
 public interface IVInit {
     /**
      * Hozza ad egy Studentet a jatekhoz

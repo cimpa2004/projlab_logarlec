@@ -2,6 +2,8 @@ package model;
 
 import controller.Game;
 import util.Logger;
+
+import view.VStudent;
 import viewmodel.ICInit;
 import viewmodel.IControl;
 import viewmodel.IVStudent;
@@ -14,6 +16,9 @@ import java.util.UUID;
  * irányítják a játék során.
 */
 public class Student extends Person implements IVStudent {
+
+	private VStudent vStudent;
+
 
 	public Student(String id, Game g){
 		super(id);
@@ -243,4 +248,13 @@ public class Student extends Person implements IVStudent {
 	}
 
 
+	@Override
+	public boolean isActiveTurn() {
+		return this.activeTurn;
+	}
+
+	@Override
+	public void SetVStudent(VStudent vst) {
+		this.vStudent = vst;
+	}
 }
