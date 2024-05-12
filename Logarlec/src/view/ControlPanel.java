@@ -65,6 +65,27 @@ public class ControlPanel extends JPanel implements IControl {
         }
     }
 
+    //TODO implement these
+    @Override
+    public void Update() {
+
+    }
+
+    @Override
+    public void StudentStartedTurn() {
+
+    }
+
+    @Override
+    public void InstructorWin() {
+
+    }
+
+    @Override
+    public void StudentWin() {
+
+    }
+
     private class EndTurnButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

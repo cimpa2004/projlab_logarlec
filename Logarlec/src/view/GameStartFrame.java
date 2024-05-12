@@ -91,7 +91,7 @@ public class GameStartFrame extends JFrame {
                 initer.AddStudent(name);
             }
             //TODO: uncomment this
-            //initer.StartGame();
+            initer.StartGame();
             setVisible(false);
             window.ShowMainFrame();
 
