@@ -3,6 +3,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IRoom;
+import viewmodel.IVRoom;
 
 import java.util.*;
 
@@ -10,7 +11,7 @@ import java.util.*;
  * A Room osztály felelős egy szoba reprezentálásáért és annak működéséért a játékban.
  * Kezeli a szoba kapacitását, tartalmát, állapotát és a szobához kapcsolódó tevékenységeket.
  * */
-public class Room implements IRoom {
+public class Room implements IRoom, IVRoom {
 	/**
 	 *  Ez egy string típusú változó, amely egyértelműen azonosít egy Room -ot.
 	 */
@@ -129,8 +130,8 @@ public class Room implements IRoom {
 	 * @return Az isSticky változó értéke.
 	 */
 	public boolean GetIsSticky(){
-		Logger.started(this, "DecrementPoison");
-		Logger.finished(this, "DecrementPoison");
+		Logger.started(this, "GetIsSticky");
+		Logger.finished(this, "GetIsSticky");
 		return isSticky;
 	}
 

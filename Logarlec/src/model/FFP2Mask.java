@@ -1,6 +1,7 @@
 package model;
 
 import util.Logger;
+import viewmodel.IVFFP2Mask;
 
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
  * hogy képes -e megvédeni egy Person -t egy gázos szobától.
  * {@inheritDoc}
  */
-public class FFP2Mask extends Item implements Usable, Defendable {
+public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy az adott FFP2Mask
 	 * még hány körig használható, azaz hány körig tudja még a Person -t
@@ -197,6 +198,10 @@ public class FFP2Mask extends Item implements Usable, Defendable {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
+		// ha az oktato felvesz egy FFP2Maskot akkor egybol aktivalja
+		if (isAdded) {
+			Activate();
+		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}

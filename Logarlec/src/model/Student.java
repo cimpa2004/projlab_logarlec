@@ -2,7 +2,10 @@ package model;
 
 import controller.Game;
 import util.Logger;
+
 import view.VStudent;
+import viewmodel.ICInit;
+import viewmodel.IControl;
 import viewmodel.IVStudent;
 
 import java.util.ArrayList;
@@ -13,7 +16,9 @@ import java.util.UUID;
  * irányítják a játék során.
 */
 public class Student extends Person implements IVStudent {
+
 	private VStudent vStudent;
+
 
 	public Student(String id, Game g){
 		super(id);
@@ -74,7 +79,8 @@ public class Student extends Person implements IVStudent {
 	*/
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
-		//if (!isAlive) game.NextTurn();
+		IControl iControl = game.GetIControl();
+		if (iControl != null) iControl.StudentStartedTurn();
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){

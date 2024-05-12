@@ -1,17 +1,32 @@
 package controller;
 
+import jdk.jshell.spi.ExecutionControl;
 import model.*;
 import util.Logger;
-import viewmodel.IPerson;
-import viewmodel.IRoom;
-import viewmodel.IVInit;
+
+
+import viewmodel.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.UUID;
 
 /** */
 public class Game implements IVInit {
+
+	/**
+	 * Tarol egy ICInitet amivel letretud hozni V objektumokat a Viewban.
+	 * */
+	ICInit icInit;
+	/**
+	 * Tárolj IControlt amivel jelezhet a jateknak ha allapotaban valtozas tortent
+	 * */
+	IControl icControl;
+	/**
+	 * Tárol egy ICRoomot amivel jelezhet a Viewban levo V szobanak ha egy szoban tortent allapot valtozas
+	 * */
+	ICRoom icRoom;
 	/**
 	 * Tárolja a hátralévő körök számát.
 	 * */
@@ -20,7 +35,12 @@ public class Game implements IVInit {
 	/**
 	 * Tarolja, hogy milyen szintu legyen a logolas. Jelenleg ket szint van: 0 ha nincs, 1 ha van logolas
 	 */
-	private int logLevel;
+	private Logger.LogLevel logLevel;
+
+	/**
+	 * InputHandler amivel lehet kezelni
+	 */
+	private InputHandler inputHandler;
 
 	/**
 	 * Tárolja, hogy a játék végetért-e.
@@ -56,12 +76,24 @@ public class Game implements IVInit {
 
 	public Game(){
 		isGameDeterministic = false;
-		this.logLevel = 1;
-		Logger.setLogLevel(this.logLevel);
 		isEndGame = false;
 		gameTimer = 10;
+
+		this.rooms = new ArrayList<>();
+		this.turnOrder = new ArrayList<>();
+		inputHandler = new InputHandler(this);
 	}
-	public Game(boolean isGameDeterministic, int logLevel){
+
+	public Game(boolean isGameDeterministic){
+		this.isGameDeterministic = isGameDeterministic;
+		isEndGame = false;
+		gameTimer = 10;
+
+		this.rooms = new ArrayList<>();
+		this.turnOrder = new ArrayList<>();
+		inputHandler = new InputHandler(this);
+	}
+	public Game(boolean isGameDeterministic, Logger.LogLevel logLevel){
 		this.isGameDeterministic = isGameDeterministic;
 		this.logLevel = logLevel;
 		Logger.setLogLevel(this.logLevel);
@@ -70,6 +102,7 @@ public class Game implements IVInit {
 
 		this.rooms = new ArrayList<>();
 		this.turnOrder = new ArrayList<>();
+		inputHandler = new InputHandler(this);
 	}
 
 	/**
@@ -97,6 +130,14 @@ public class Game implements IVInit {
 	}
 
 	/**
+	 * Vissza adja a jatekhoz tartozo IControlt
+	 * @return a jatekhoz tartozo IControl
+	 */
+	public IControl GetIControl(){
+		return this.icControl;
+	}
+
+	/**
 	 * Vissza tudja adni, hogy a jatek veget ert e mar
 	 * @return Ertek ami jelzi, hogy vege van-e mar a jateknak
 	 */
@@ -113,6 +154,13 @@ public class Game implements IVInit {
 	}
 
 	/**
+	 * Vissza adja a jatek InputHandleret, ezen lehet parancsokat hivni a jatekon.
+	 */
+	public InputHandler GetInputHandler(){
+		return inputHandler;
+	}
+
+	/**
 	 * Vissz adja a jatekokat tartalmazo szobakat
 	 * @return Egy List<IRoom> ami tartalmazza a jatekban levo szobakat
 	 */
@@ -121,17 +169,48 @@ public class Game implements IVInit {
 	}
 
 
-	//NE használd csak a lefutáshoz írtam idde
+	
+
+	/**
+	 * Beallit a jatekhoz egy ICInitet, e fuggveny hivas nekul a grafikus megjelenites nem mukodik
+	 * @param icInit megadott ICInit
+	 */
+	public void SetICInit(ICInit icInit){
+		this.icInit = icInit;
+	}
+	/**
+	 * Beallit a jatekhoz egy IControlt, e fuggveny hivas nekul a grafikus megjelenites nem mukodik
+	 * @param icControl megadott IControl
+	 */
+	public void SetIControl(IControl icControl){
+		this.icControl = icControl;
+	}
+	/**
+	 * Beallit a jatekhoz egy ICRoomt, e fuggveny hivas nekul a grafikus megjelenites nem mukodik
+	 * @param icRoom megadott ICRoom
+	 */
+	public void SetICRoom(ICRoom icRoom){
+		this.icRoom = icRoom;
+	}
+
+
 	@Override
 	public void AddStudent(String personID) {
-		if (turnOrder == null)
-			turnOrder = new ArrayList<>();
-		turnOrder.add(new Student(personID,this));
-		currentTurn = turnOrder.get(0);
-	}
-	//TODO: implement this
-	public void CreateGame(String mapPathJSON){
+		Logger.started(this, "AddStudent", winSide);
+		Student newPerson = new Student(personID,this);
+		if (icInit != null) icInit.CreateVStudent(newPerson);
+		AddToGame(newPerson);
+		Logger.finished(this, "AddStudent", winSide);
 
+	}
+
+	@Override
+	public void RemoveStudent(String personID) {
+		Logger.started(this, "RemoveStudent");
+		for (IPerson person : turnOrder){
+			if(person.GetId().equals(personID)) RemoveFromGame(person);
+		}
+		Logger.finished(this, "RemoveStudent");
 	}
 
 	/**
@@ -148,6 +227,17 @@ public class Game implements IVInit {
 	}
 
 	/**
+	 * Letrehoz egy jatekot, szobakkal, ajtokat, itemekkel, personekkel. Utana lehet hozza adni a jatekhoz
+	 * tovabbi personeket. A logLevel DISABLED (ha szukseg van ra at lehet adni parameterkent a CreateGamenek).
+	 */
+	public void CreateGame(String gamePathJSON) {
+		Logger.started(this, "CreateGame");
+		String command = "CreateGame " + "false " + gamePathJSON + " " + logLevel.toString();
+		inputHandler.handleCommand(command, icInit);
+		Logger.finished(this, "CreateGame");
+	}
+
+	/**
 	 * Lezárja a játékot, a paraméterben megkapott érték alapján pedig a nyertes oldalt.
 	 *
 	 * @param winSide 0 érték ha Oktató, 1 ha Hallgató
@@ -156,6 +246,10 @@ public class Game implements IVInit {
 		Logger.started(this, "EndGame", winSide);
 		isEndGame = true;
 		this.winSide = winSide;
+		if (icControl != null){
+			if (winSide) icControl.StudentWin();
+			else icControl.InstructorWin();
+		}
 		Logger.finished(this, "EndGame", winSide);
 	}
 	
@@ -164,6 +258,7 @@ public class Game implements IVInit {
 	 * */
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
+		if (isEndGame) return;
 		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
 		else if (currentTurn == null) currentTurn = turnOrder.get(turnOrder.size()-1);
 
@@ -185,8 +280,9 @@ public class Game implements IVInit {
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
-		if(!isEndGame)
-			currentTurn.StartTurn();
+		if (icControl != null) icControl.Update(); // jelez a Viewnak h uj kor van, valtozhat a current Student inventoryja
+		currentTurn.StartTurn();
+
 
 		Logger.finished(this, "NextTurn");
 	}
@@ -258,6 +354,7 @@ public class Game implements IVInit {
 			r1.AddNeighbor(r2);
 			r2.AddNeighbor(r1);
 			rooms.add(r2);
+			if (icRoom != null) icRoom.Split(r1);
 			return true;
 		}
 
@@ -336,6 +433,7 @@ public class Game implements IVInit {
 			}
 
 			Logger.finished(this, "MergeRooms", r2);
+			if (icRoom != null) icRoom.Merge(r1, r2);
 			return true;
 		}
 
@@ -350,11 +448,22 @@ public class Game implements IVInit {
 	 *
 	 * @param p Az hozzáadandó Személy.
 	 * */
-	public void AddToGame(Person p) {
+	public void AddToGame(IPerson p) {
 		Logger.started(this, "AddToGame", p);
 		turnOrder.add(p);
 		if(currentTurn == null) currentTurn = p;
 		Logger.finished(this, "AddToGame", p);
+	}
+
+	/**
+	 * Kiveszi azt a Személyt a, akit paraméterként kap.
+	 *
+	 * @param p A torlendo Személy.
+	 * */
+	public void RemoveFromGame(IPerson p) {
+		Logger.started(this, "RemoveFromGame", p);
+		turnOrder.remove(p);
+		Logger.finished(this, "RemoveFromGame", p);
 	}
 
 	/**
@@ -377,6 +486,7 @@ public class Game implements IVInit {
 	 * */
 	public void RemoveRoom(Room r) {
 		Logger.started(this, "RemoveRoom", r);
+		rooms.remove(r);
 		Logger.finished(this, "RemoveRoom", r);
 	}
 
@@ -384,8 +494,6 @@ public class Game implements IVInit {
 		return isGameDeterministic;
 	}
 
-	//TODO: csinálni egy UpdateNeighbors függvényt ami végigmegy az összes szobán és beállítja mindegyiknek a szomszédait
-	// ezt lehet hivni játék létrehozása után, meg mergeRooms vagy seperateRoomsnál
 
 	/**
 	 * Id alapján megkeresi az adott DoorSidet, ammenyiben benne van vissza adja, egyébként null

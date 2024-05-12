@@ -2,6 +2,7 @@ package model;
 
 
 import util.Logger;
+import viewmodel.IVItem;
 
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
  * Az Item osztály összefoglalja azokat az attribútumokta és metódusokat,
  * amelyekkel az összes tárgy rendelkezik.
  * */
-public abstract class Item {
+public abstract class Item implements IVItem {
 	/**
 	 * Ez egy string típusú változó, amely egyértelműen azonosít egy Item -et.
 	 */

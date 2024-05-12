@@ -1,6 +1,7 @@
 package model;
 import controller.Game;
 import util.*;
+import viewmodel.IVSlideRule;
 
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
  * Felelőssége, hogy kezelje mit történik a tárggyal és a környezetével (game),
  * abban az esetben, ha a tárgyat fel akarja valaki venni, vagy eldobni.
  */
-public class SlideRule extends Item {
+public class SlideRule extends Item implements IVSlideRule {
 	/**
 	 * A játék ami számon tartja a játék paramétereit.
 	 * A logarléc képes így üzenni a játéknak ha megtalálta őt egy hallgató, hogy így véget ér a játék.

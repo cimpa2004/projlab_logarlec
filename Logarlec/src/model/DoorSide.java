@@ -2,11 +2,12 @@ package model;
 
 
 import util.Logger;
+import viewmodel.IVDoorSide;
 
 import java.util.UUID;
 
 /** */
-public class DoorSide {
+public class DoorSide implements IVDoorSide {
 	/**
 	 * Az adott DoorSidet egyertelmuen azonositja
 	 */
