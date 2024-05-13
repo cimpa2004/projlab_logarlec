@@ -103,4 +103,12 @@ public interface IRoom {
      * Visszaadja a szobában tartózkodó takaritokat.
      * */
     ArrayList<Janitor> GetJanitors();
+
+    /**
+	 * Hozzáadja a paraméterként kapott Studentet a szobához (amikor belép),
+	 * és elájul, hogyha a szoba gázos, és nincsen aktív FFP2-es maszk nála.
+	 *
+	 * @param s A hozzáadandó Student.
+	 * */
+	public void AddStudent(Student s);
 }

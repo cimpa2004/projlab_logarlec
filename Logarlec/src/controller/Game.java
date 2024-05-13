@@ -8,6 +8,7 @@ import viewmodel.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.UUID;
 
 /** */
@@ -195,9 +196,15 @@ public class Game implements IVInit {
 	@Override
 	public void AddStudent(String personID) {
 		Logger.started(this, "AddStudent", winSide);
-		Student newPerson = new Student(personID,this);
-		if (icInit != null) icInit.CreateVStudent(newPerson, inputHandler);
-		AddToGame(newPerson);
+		Student newStudent = new Student(personID,this);
+		if (isGameDeterministic) rooms.get(0).AddStudent(newStudent);
+		else {
+			Random rnd = new Random();
+			int indexOfRoom = rnd.nextInt(GetRooms().size());
+			rooms.get(indexOfRoom).AddStudent(newStudent);
+		}
+		if (icInit != null) icInit.CreateVStudent(newStudent, inputHandler);
+		AddToGame(newStudent);
 		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID + "\n");
 		Logger.finished(this, "AddStudent", winSide);
 

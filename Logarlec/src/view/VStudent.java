@@ -14,7 +14,7 @@ public class VStudent extends VPerson{
         return null;
     }
     public boolean getIsActiveTurn(){
-        return ivStudent.isActiveTurn(); //TODO: valamiert ez az ivStudent lehet null, miert?
+        return ivStudent.isActiveTurn(); 
     }
     public void EndTurn(){
         ivStudent.EndTurn();
@@ -39,6 +39,7 @@ public class VStudent extends VPerson{
         this.input = input;
         //NE töröld
         this.controlPanel.AddVStudent(this);
+        this.ivStudent = ivStudent;
     }
 
 }
