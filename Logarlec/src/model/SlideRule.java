@@ -14,6 +14,10 @@ import java.util.UUID;
  * abban az esetben, ha a tárgyat fel akarja valaki venni, vagy eldobni.
  */
 public class SlideRule extends Item implements IVSlideRule {
+	@Override
+	public String GetID() {
+		return id;
+	}
 	/**
 	 * A játék ami számon tartja a játék paramétereit.
 	 * A logarléc képes így üzenni a játéknak ha megtalálta őt egy hallgató, hogy így véget ér a játék.

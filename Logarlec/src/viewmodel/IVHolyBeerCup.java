@@ -1,4 +1,4 @@
 package viewmodel;
 
-public interface IVHolyBeerCup {
+public interface IVHolyBeerCup{
 }

@@ -9,26 +9,34 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ControlPanel extends JPanel implements IControl {
+    //TODO: valahogy ne legyen üres, elvileg a VStudentek beteszik magukat
     private ArrayList<VStudent> students = new ArrayList<>();
+    private JButton EndTurnButton = new JButton("Kör vége");
+    private JButton PickUpButton = new JButton("Kijelölt tárgy felvétele");
+    private JLabel infoLabel = new JLabel();
+    private JLabel nameLabel = new JLabel();
+    private VItem selectedItem;
     private VStudent currentStudent;
+    private JPanel itemsPanel = new JPanel();
+
+
+    public void AddVStudent(VStudent new_){
+        students.add(new_);
+    }
     public ControlPanel() {
         setLayout(new BorderLayout());
 
         // Panel for items on the left
-        JPanel itemsPanel = new JPanel();
         itemsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10)); // Left-align items with gap
         itemsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
 
         UpdateCurrentStudent();
-
-
 
         //Rendes függvény
         //TODO: ha minden kész ezt komentteleníteni az alatta lévőt meg törölni
         //for (VItem item: currentStudent.getItems()){
         //    item.DrawInInventory(itemsPanel);
         //}
-
         // Add 5 items (placeholders)
         for (int i = 0; i < 5; i++) {
             JPanel box = new JPanel();
@@ -43,19 +51,25 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
 
         // Create buttons
-        JButton EndTurnButton = new JButton("Kör vége");
         EndTurnButton.addActionListener(new EndTurnButtonListener());
-        JButton PickUpButton = new JButton("Kijelölt tárgy felvétele");
+        PickUpButton.addActionListener(new PickupButtonListener());
 
         // Add buttons to the panel
         buttonsPanel.add(EndTurnButton);
         buttonsPanel.add(Box.createVerticalStrut(10)); // Add vertical gap
         buttonsPanel.add(PickUpButton);
+        buttonsPanel.add(Box.createVerticalStrut(10));
+        buttonsPanel.add(infoLabel);
 
         // Add panels to the main panel
-        add(itemsPanel, BorderLayout.WEST); // Place items on the left
-        add(buttonsPanel, BorderLayout.EAST); // Place buttons on the right
+        add(nameLabel, BorderLayout.NORTH);
+        add(itemsPanel, BorderLayout.WEST);
+        add(buttonsPanel, BorderLayout.EAST);
     }
+
+    /**
+     * frissiti az aktiv körön lévő hallgatót (privát)
+     */
     private void UpdateCurrentStudent(){
         for (VStudent student : students){
             if (student.getIsActiveTurn()){
@@ -65,25 +79,49 @@ public class ControlPanel extends JPanel implements IControl {
         }
     }
 
-    //TODO implement these
-    @Override
-    public void Update() {
-
+    /**
+     * beállítja a kiválasztott tárgyat
+     * @param item a kiválasztott tárgy
+     */
+    public void SetSelectedItem(VItem item){
+        this.selectedItem = item;
     }
 
+    /**
+     * Újra rajzolja az inventory-t
+     */
+    @Override
+    public void Update() {
+        //TODO: uncomment this
+        //for (VItem item: currentStudent.getItems()){
+            //item.DrawInInventory(itemsPanel);
+        //}
+        if (currentStudent != null)
+            nameLabel.setText(currentStudent.toString());
+        else nameLabel.setText("Senki köre");
+    }
+
+    /**
+     *Frissíti az éppen körön lévő játékost és kirajzolja az új inventory-t
+     */
     @Override
     public void StudentStartedTurn() {
-
+        UpdateCurrentStudent();
+        Update();
     }
 
     @Override
     public void InstructorWin() {
-
+        infoLabel.setText("A játék véget ért, az oktatók nyertek!");
+        EndTurnButton.setEnabled(false);
+        PickUpButton.setEnabled(false);
     }
 
     @Override
     public void StudentWin() {
-
+        infoLabel.setText("A játék véget ért, a hallgatók nyertek!");
+        EndTurnButton.setEnabled(false);
+        PickUpButton.setEnabled(false);
     }
 
     private class EndTurnButtonListener implements ActionListener {
@@ -95,6 +133,14 @@ public class ControlPanel extends JPanel implements IControl {
             }
         }
     }
-    //TODO: PickupButtonListener
+    private class PickupButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(selectedItem != null){
+                currentStudent.Pickup(selectedItem);
+                selectedItem = null;
+            }
+        }
+    }
 
 }

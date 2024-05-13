@@ -3,6 +3,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IRoom;
+import viewmodel.IVItemUpdate;
 import viewmodel.IVRoom;
 
 import java.util.*;
@@ -85,6 +86,7 @@ public class Room implements IRoom, IVRoom {
 	 */
 	private int numberOfPeopleBeenToRoom;
 
+	private IVItemUpdate ivItemUpdate;
 	/**
 	 * A Room osztály konstruktora.
 	 * A Room id változóját a paraméterben kapott értékre állítja.
@@ -608,5 +610,13 @@ public class Room implements IRoom, IVRoom {
 		Logger.started(this, "GetIsCursed");
 		Logger.finished(this, "GetIsCursed");
 		return isCursed;
+	}
+
+	@Override
+	public Room GetRoom() {
+		return this;
+	}
+	public void SetIVRoomUpdate(IVItemUpdate ivItemUpdate){
+		this.ivItemUpdate = ivItemUpdate;
 	}
 }

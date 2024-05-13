@@ -64,7 +64,12 @@ public class MockICInit implements ICInit {
     }
 
     @Override
+    public void CreateVStudent(IVStudent ivStudent, ICInput icInput) {
+        CreateVStudent(ivStudent);
+    }
+
+    //TODO: Megoldani hogy jó legyen
     public void CreateVStudent(IVStudent ivStudent) {
-        System.out.println("CreateVStudent");
+       System.out.println("CreateVStudent");
     }
 }

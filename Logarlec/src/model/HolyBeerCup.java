@@ -245,4 +245,9 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		Logger.finished(this, "CanDefend");
 		return isActivated && effectDuration > 0;
 	}
+
+	@Override
+	public String GetID() {
+		return this.id;
+	}
 }

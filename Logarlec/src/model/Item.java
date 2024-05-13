@@ -2,7 +2,9 @@ package model;
 
 
 import util.Logger;
+import view.VItem;
 import viewmodel.IVItem;
+import viewmodel.IVItemUpdate;
 
 import java.util.UUID;
 
@@ -16,6 +18,7 @@ public abstract class Item implements IVItem {
 	 * Ez egy string típusú változó, amely egyértelműen azonosít egy Item -et.
 	 */
 	protected String id;
+
 
 	/**
 	 * Ez a Room típusú változó eltárolja azt a Room -ot, amelyben az adott tárgy van.

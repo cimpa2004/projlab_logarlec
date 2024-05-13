@@ -18,6 +18,10 @@ import java.util.UUID;
  * {@inheritDoc}
  */
 public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
+	@Override
+	public String GetID() {
+		return id;
+	}
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy az adott FFP2Mask
 	 * még hány körig használható, azaz hány körig tudja még a Person -t

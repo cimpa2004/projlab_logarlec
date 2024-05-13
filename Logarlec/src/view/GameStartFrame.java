@@ -21,14 +21,10 @@ public class GameStartFrame extends JFrame {
     private JButton startGameButton = new JButton("Játék indítása");
     private JButton addStudentButton = new JButton("Játékos felvétele");
     private JTextField nameTextBox = new JTextField();
-
     private ArrayList<String> names = new ArrayList<>();
     private ICInit icInit;
     private IControl iControl;
     private ICRoom icRoom;
-
-
-
 
     public GameStartFrame(Window w, ICRoom icRoom, IControl iControl, ICInit icInit) {
         if (w == null) {
@@ -95,11 +91,10 @@ public class GameStartFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             //if button is clickable there are valid values
             //TODO: use real map
-            initer.CreateGame("Tests/Test1/Map.json",icInit,iControl,icRoom);
+            initer.CreateGame("Tests/Test16/Map.json",icInit,iControl,icRoom);
             for (String name: names) {
                 initer.AddStudent(name);
             }
-            //TODO: uncomment this
             initer.StartGame();
             setVisible(false);
             window.ShowMainFrame();

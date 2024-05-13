@@ -80,8 +80,8 @@ public class Student extends Person implements IVStudent {
 	public void StartTurn() {
 		Logger.started(this, "StartTurn");
 		IControl iControl = game.GetIControl();
-		if (iControl != null) iControl.StudentStartedTurn();
 		activeTurn = true;
+		if (iControl != null) iControl.StudentStartedTurn();
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){
 			if(!ffp2Masks.isEmpty()){
@@ -256,5 +256,10 @@ public class Student extends Person implements IVStudent {
 	@Override
 	public void SetVStudent(VStudent vst) {
 		this.vStudent = vst;
+	}
+
+	@Override
+	public String GetID(){
+		return this.id;
 	}
 }

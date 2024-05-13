@@ -216,6 +216,10 @@ public class Transistor extends Item implements Usable, IVTransistor {
 		Logger.started(this, "UsedByInstructor", i);
 		Logger.finished(this, "UsedByInstructor", i);
 	}
-	
 
+
+	@Override
+	public String GetID() {
+		return id;
+	}
 }
