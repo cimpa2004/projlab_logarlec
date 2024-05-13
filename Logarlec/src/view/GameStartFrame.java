@@ -2,6 +2,7 @@ package view;
 
 import controller.Game;
 import util.Logger;
+import util.Logger.LogLevel;
 import viewmodel.ICInit;
 import viewmodel.ICRoom;
 import viewmodel.IControl;
@@ -16,7 +17,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class GameStartFrame extends JFrame {
-    private IVInit initer = new Game(false, Logger.LogLevel.INPUT_HANDLER);
+    private IVInit initer;
     private Window window;
     private JButton startGameButton = new JButton("Játék indítása");
     private JButton addStudentButton = new JButton("Játékos felvétele");
@@ -26,13 +27,14 @@ public class GameStartFrame extends JFrame {
     private IControl iControl;
     private ICRoom icRoom;
 
-    public GameStartFrame(Window w, ICRoom icRoom, IControl iControl, ICInit icInit) {
+    public GameStartFrame(Window w, ICRoom icRoom, IControl iControl, ICInit icInit, LogLevel logLevel) {
         if (w == null) {
             throw new NullPointerException("Received null Window in constructor");
         }
         this.icInit = icInit;
         this.iControl = iControl;
         this.icRoom = icRoom;
+        this.initer = new Game(false, logLevel);
         window = w;
         setTitle("JátékosFelvevő");
         setSize(500, 200);

@@ -1,5 +1,8 @@
 package view;
 import javax.swing.*;
+
+import util.Logger.LogLevel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,11 +13,12 @@ import java.awt.event.ActionListener;
 public class Window extends JFrame {
     private HelperFrame helperFrame = new HelperFrame(this);
     private MainFrame mainFrame = new MainFrame();
-    private GameStartFrame gameStartFrame = new GameStartFrame(this, mainFrame.GetGamePanel(),mainFrame.GetControlPanel(),mainFrame);
+    private GameStartFrame gameStartFrame;
     private JButton gameButton = new JButton("Játék");
     private JButton helpButton = new JButton("Súgó");
     private JButton exitButton = new JButton("Kilépés");
-    public Window() {
+    public Window(LogLevel logLevel) {
+        this.gameStartFrame = new GameStartFrame(this, mainFrame.GetGamePanel(),mainFrame.GetControlPanel(),mainFrame,logLevel);
         setTitle("Logarléc");
         setSize(300, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -156,6 +156,8 @@ public class DoorSide implements IVDoorSide {
 	public boolean IsDoorUseable(){
 		return (this.GetCanBeOpened() &&
 				this.GetIsVisible()&&
+				this.GetPair() != null&&
+				this.GetPair().GetRoom() != null&&
 				this.GetPair().GetRoom().GetMaxCapacity() > this.GetPair().GetRoom().GetCurrentCapacity());
 	}
 
