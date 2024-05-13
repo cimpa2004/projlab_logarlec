@@ -405,7 +405,7 @@ public class InputHandler implements ICInput {
         if (game.GetTurnOrder().isEmpty()) return "message: Nincs személy a játékban";
         StringBuilder str = new StringBuilder();
         str.append("message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.");
-        str.append("\ncurrentTurn: ").append(game.GetCurrentTurn().GetId());
+        str.append("\ncurrentTurn: ").append(game.GetCurrentTurn().GetID());
         game.StartGame();
         return str.toString();
     }
@@ -433,27 +433,27 @@ public class InputHandler implements ICInput {
 
         // currentTurn
         IPerson currentTurn = game.GetCurrentTurn();
-        if (currentTurn != null) str.append("\ncurrentTurn: ").append(currentTurn.GetId());
+        if (currentTurn != null) str.append("\ncurrentTurn: ").append(currentTurn.GetID());
         else str.append("\ncurrentTurn: ").append("None");
 
 
 
         // turnOrder
         ArrayList<IPerson> turnOrder = game.GetTurnOrder();
-        turnOrder.sort(Comparator.comparing(IPerson::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        turnOrder.sort(Comparator.comparing(IPerson::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\nturnOrder: [");
         for (IPerson person : turnOrder){
-            str.append(person.GetId());
+            str.append(person.GetID());
             if(person != turnOrder.get(turnOrder.size()-1)) str.append(", ");
         }
         str.append("]");
 
         // rooms
         ArrayList<IRoom> rooms = game.GetRooms();
-        rooms.sort(Comparator.comparing(IRoom::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        rooms.sort(Comparator.comparing(IRoom::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\nrooms: [");
         for (IRoom room : rooms){
-            str.append(room.GetId());
+            str.append(room.GetID());
             if(room != rooms.get(rooms.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -463,10 +463,10 @@ public class InputHandler implements ICInput {
         for (IRoom room : rooms){
             allDoors.addAll(room.GetDoors());
         }
-        allDoors.sort(Comparator.comparing(DoorSide::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        allDoors.sort(Comparator.comparing(DoorSide::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\ndoors: [");
         for (DoorSide door : allDoors){
-            str.append(door.GetId());
+            str.append(door.GetID());
             if(door != allDoors.get(allDoors.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -483,10 +483,10 @@ public class InputHandler implements ICInput {
         for (IRoom room : allRooms){
             allItems.addAll(room.GetItems());
         }
-        allItems.sort(Comparator.comparing(Item::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        allItems.sort(Comparator.comparing(Item::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\nitems: [");
         for (Item item : allItems){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != allItems.get(allItems.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -501,26 +501,26 @@ public class InputHandler implements ICInput {
             janitors.addAll(room.GetJanitors());
         }
         //     students
-        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        students.sort(Comparator.comparing(Student::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\nstudents: [");
         for (Student student : students){
-            str.append(student.GetId());
+            str.append(student.GetID());
             if(student != students.get(students.size()-1)) str.append(", ");
         }
         str.append("]");
         //     instructors
-        instructors.sort(Comparator.comparing(Instructor::GetId));
+        instructors.sort(Comparator.comparing(Instructor::GetID));
         str.append("\ninstructors: [");
         for (Instructor instructor : instructors){
-            str.append(instructor.GetId());
+            str.append(instructor.GetID());
             if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
         }
         str.append("]");
         //     janitor
-        janitors.sort(Comparator.comparing(Janitor::GetId));
+        janitors.sort(Comparator.comparing(Janitor::GetID));
         str.append("\njanitors: [");
         for (Janitor janitor : janitors){
-            str.append(janitor.GetId());
+            str.append(janitor.GetID());
             if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -547,10 +547,10 @@ public class InputHandler implements ICInput {
             students.addAll(room.GetStudents());
         }
 
-        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        students.sort(Comparator.comparing(Student::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\nstudents: [");
         for (Student student : students){
-            str.append(student.GetId());
+            str.append(student.GetID());
             if(student != students.get(students.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -580,10 +580,10 @@ public class InputHandler implements ICInput {
             janitors.addAll(room.GetJanitors());
         }
 
-        instructors.sort(Comparator.comparing(Instructor::GetId));
+        instructors.sort(Comparator.comparing(Instructor::GetID));
         str.append("\ninstructors: [");
         for (Instructor instructor : instructors){
-            str.append(instructor.GetId());
+            str.append(instructor.GetID());
             if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -609,10 +609,10 @@ public class InputHandler implements ICInput {
             janitors.addAll(room.GetJanitors());
         }
 
-        janitors.sort(Comparator.comparing(Janitor::GetId));
+        janitors.sort(Comparator.comparing(Janitor::GetID));
         str.append("\njanitors: [");
         for (Janitor janitor : janitors){
-            str.append(janitor.GetId());
+            str.append(janitor.GetID());
             if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -643,32 +643,32 @@ public class InputHandler implements ICInput {
         str.append("message: A megadott ").append(roomId).append(" szoba részletei a többi mezőben.");
         // items
         ArrayList<Item> items = paramRoom.GetItems();
-        items.sort(Comparator.comparing(Item::GetId));
+        items.sort(Comparator.comparing(Item::GetID));
         str.append("\nitems: [");
         for (Item item : items){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != items.get(items.size()-1)) str.append(", ");
         }
         str.append("]");
 
         // doors
         ArrayList<DoorSide> doors = paramRoom.GetDoors();
-        doors.sort(Comparator.comparing(DoorSide::GetId));
+        doors.sort(Comparator.comparing(DoorSide::GetID));
         str.append("\ndoors: [");
         for (DoorSide door : doors){
-            str.append(door.GetId());
+            str.append(door.GetID());
             if(door != doors.get(doors.size()-1)) str.append(", ");
         }
         str.append("]");
 
         // neighbors
         ArrayList<Room> neighbors = paramRoom.GetNeighbors();
-        neighbors.sort(Comparator.comparing(Room::GetId));
+        neighbors.sort(Comparator.comparing(Room::GetID));
         str.append("\nneighbors: [");
         if (!neighbors.isEmpty()){
             for (Room neighbor : neighbors){
                 if (neighbor == null) continue;
-                str.append(neighbor.GetId());
+                str.append(neighbor.GetID());
                 if(neighbor != neighbors.get(neighbors.size()-1)) str.append(", ");
             }
         }
@@ -702,26 +702,26 @@ public class InputHandler implements ICInput {
         ArrayList<Student> students = new ArrayList<>(paramRoom.GetStudents());
 
         //     students
-        students.sort(Comparator.comparing(Student::GetId)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
+        students.sort(Comparator.comparing(Student::GetID)); // rendezes, hogy kiirasnal nem szamitson, kesobb egyszerubb stringkent osszehasonlitani
         str.append("\nstudents: [");
         for (Student student : students){
-            str.append(student.GetId());
+            str.append(student.GetID());
             if(student != students.get(students.size()-1)) str.append(", ");
         }
         str.append("]");
         //     instructors
-        instructors.sort(Comparator.comparing(Instructor::GetId));
+        instructors.sort(Comparator.comparing(Instructor::GetID));
         str.append("\ninstructors: [");
         for (Instructor instructor : instructors){
-            str.append(instructor.GetId());
+            str.append(instructor.GetID());
             if(instructor != instructors.get(instructors.size()-1)) str.append(", ");
         }
         str.append("]");
         //     janitor
-        janitors.sort(Comparator.comparing(Janitor::GetId));
+        janitors.sort(Comparator.comparing(Janitor::GetID));
         str.append("\njanitors: [");
         for (Janitor janitor : janitors){
-            str.append(janitor.GetId());
+            str.append(janitor.GetID());
             if(janitor != janitors.get(janitors.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -755,14 +755,14 @@ public class InputHandler implements ICInput {
         str.append("message: A megadott ").append(personId).append(" személy részletei a többi mezőben.");
 
         // room
-        str.append("\nroom: ").append(paramPerson.GetRoom().GetId());
+        str.append("\nroom: ").append(paramPerson.GetRoom().GetID());
 
         // inventory
         ArrayList<Item> inventory = new ArrayList<>(paramPerson.GetInventory());
-        inventory.sort(Comparator.comparing(Item::GetId));
+        inventory.sort(Comparator.comparing(Item::GetID));
         str.append("\ninventory: [");
         for (Item item : inventory){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != inventory.get(inventory.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -772,10 +772,10 @@ public class InputHandler implements ICInput {
         for (Defendable wetTableCloth : paramPerson.GetWetTableClothes()){
             wetTableClothes.add((Item)wetTableCloth);
         }
-        wetTableClothes.sort(Comparator.comparing(Item::GetId));
+        wetTableClothes.sort(Comparator.comparing(Item::GetID));
         str.append("\nwetTableClothes: [");
         for (Item item : wetTableClothes){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != wetTableClothes.get(wetTableClothes.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -785,10 +785,10 @@ public class InputHandler implements ICInput {
         for (Defendable tvsz : paramPerson.GetTVSZs()){
             tvszs.add((Item)tvsz);
         }
-        tvszs.sort(Comparator.comparing(Item::GetId));
+        tvszs.sort(Comparator.comparing(Item::GetID));
         str.append("\ntvszs: [");
         for (Item item : tvszs){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != tvszs.get(tvszs.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -798,10 +798,10 @@ public class InputHandler implements ICInput {
         for (Defendable holyBeerCup : paramPerson.GetHolyBeerCups()){
             holyBeerCups.add((Item)holyBeerCup);
         }
-        holyBeerCups.sort(Comparator.comparing(Item::GetId));
+        holyBeerCups.sort(Comparator.comparing(Item::GetID));
         str.append("\nholyBeerCups: [");
         for (Item item : holyBeerCups){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != holyBeerCups.get(holyBeerCups.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -811,10 +811,10 @@ public class InputHandler implements ICInput {
         for (Defendable ffp2Mask : paramPerson.GetFFP2Masks()){
             ffp2Masks.add((Item)ffp2Mask);
         }
-        ffp2Masks.sort(Comparator.comparing(Item::GetId));
+        ffp2Masks.sort(Comparator.comparing(Item::GetID));
         str.append("\nffp2Masks: [");
         for (Item item : ffp2Masks){
-            str.append(item.GetId());
+            str.append(item.GetID());
             if(item != ffp2Masks.get(ffp2Masks.size()-1)) str.append(", ");
         }
         str.append("]");
@@ -861,12 +861,12 @@ public class InputHandler implements ICInput {
 
         // owner
         Person ownerObj = paramItem.GetOwner();
-        String owner = ownerObj == null ? "None" : ownerObj.GetId();
+        String owner = ownerObj == null ? "None" : ownerObj.GetID();
         str.append("\nowner: ").append(owner);
 
         // room
         Room roomObj = paramItem.GetRoom();
-        String room = roomObj == null ? "None" : roomObj.GetId();
+        String room = roomObj == null ? "None" : roomObj.GetID();
         str.append("\nroom: ").append(room);
 
         // isActive
@@ -885,7 +885,7 @@ public class InputHandler implements ICInput {
 
         // pair
         Transistor pairObj = paramItem.GetPair();
-        String pair = pairObj == null ? "None" : pairObj.GetId();
+        String pair = pairObj == null ? "None" : pairObj.GetID();
         str.append("\npair: ").append(pair);
 
         // isFake
@@ -927,13 +927,13 @@ public class InputHandler implements ICInput {
         str.append("\ncanBeOpened: ").append(canBeOpened);
 
         // pair
-        str.append("\npair: ").append(paramDoor.GetPair().GetId());
+        str.append("\npair: ").append(paramDoor.GetPair().GetID());
 
         // room
-        str.append("\nroom: ").append(paramDoor.GetRoom().GetId());
+        str.append("\nroom: ").append(paramDoor.GetRoom().GetID());
 
         // neighbor
-        str.append("\nneighbor: ").append(paramDoor.GetPair().GetRoom().GetId());
+        str.append("\nneighbor: ").append(paramDoor.GetPair().GetRoom().GetID());
 
         return str.toString();
     }
@@ -1210,27 +1210,32 @@ public class InputHandler implements ICInput {
 
     @Override
     public void ThrowItem(String personID, IVItem item) {
-
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, item.GetID()));
+        throwItem(command);
     }
 
     @Override
     public void PickupItem(String personID, IVItem item) {
-
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, item.GetID()));
+        pickup(command);
     }
 
     @Override
     public void Move(String personID, IVDoorSide doorSide) {
-
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, doorSide.GetID()));
+        move(command);
     }
 
     @Override
     public void EndTurn(String personID) {
-
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID));
+        endTurn(command);
     }
 
     @Override
     public void UseItem(String personID, IVItem item) {
-
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, item.GetID()));
+        useItem(command);
     }
 }
 

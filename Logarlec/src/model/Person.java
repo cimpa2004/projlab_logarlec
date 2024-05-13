@@ -481,7 +481,7 @@ public abstract class Person implements IPerson {
 
 
 	@Override
-	public String GetId() {
+	public String GetID() {
 		return id;
 	}
 }

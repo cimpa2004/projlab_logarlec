@@ -597,7 +597,7 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room id változója.
 	 */
 	@Override
-	public String GetId() {
+	public String GetID() {
 		return id;
 	}
 

@@ -77,7 +77,7 @@ public interface IPerson {
      * Vissza adja a Persont egyertelmuen azonosito id-t
      * @return Persont egyertelmuen azonosito id
      */
-    String GetId();
+    String GetID();
 
     /**
      * Vissza adja a szemelynel talalhato targyakat.

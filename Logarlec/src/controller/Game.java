@@ -207,7 +207,7 @@ public class Game implements IVInit {
 	public void RemoveStudent(String personID) {
 		Logger.started(this, "RemoveStudent");
 		for (IPerson person : turnOrder){
-			if(person.GetId().equals(personID)) RemoveFromGame(person);
+			if(person.GetID().equals(personID)) RemoveFromGame(person);
 		}
 		Logger.finished(this, "RemoveStudent");
 	}
@@ -511,7 +511,7 @@ public class Game implements IVInit {
 		ArrayList<IRoom> rooms = GetRooms();
 		for (IRoom room : rooms){
 			for (DoorSide door : room.GetDoors()){
-				if (door.GetId().equals(doorId)) {
+				if (door.GetID().equals(doorId)) {
 					return door;
 				}
 			}
@@ -526,7 +526,7 @@ public class Game implements IVInit {
 	 */
 	public IRoom findRoomById(String roomId){
 		for (IRoom room : GetRooms()){
-			if (room.GetId().equals(roomId)){
+			if (room.GetID().equals(roomId)){
 				return room;
 			}
 		}
@@ -541,7 +541,7 @@ public class Game implements IVInit {
 	public IPerson findPersonById(String personId){
 		ArrayList<IPerson> persons = GetTurnOrder();
 		for (IPerson person : persons){
-			if (person.GetId().equals(personId)){
+			if (person.GetID().equals(personId)){
 				return person;
 			}
 		}
@@ -558,13 +558,13 @@ public class Game implements IVInit {
 		//     items from persons
 		for (IPerson person : GetTurnOrder()){
 			for (Item item : person.GetInventory()){
-				if (item.GetId().equals(itemId)) return item;
+				if (item.GetID().equals(itemId)) return item;
 			}
 		}
 		//     items from rooms
 		for (IRoom room : GetRooms()){
 			for (Item item : room.GetItems()){
-				if (item.GetId().equals(itemId)) return item;
+				if (item.GetID().equals(itemId)) return item;
 			}
 		}
 		return null;
