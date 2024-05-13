@@ -14,7 +14,7 @@ public class VStudent extends VPerson{
         return null;
     }
     public boolean getIsActiveTurn(){
-        return ivStudent.isActiveTurn();
+        return ivStudent.isActiveTurn(); //TODO: valamiert ez az ivStudent lehet null, miert?
     }
     public void EndTurn(){
         ivStudent.EndTurn();

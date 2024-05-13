@@ -145,7 +145,7 @@ public class DoorSide implements IVDoorSide {
 	}
 
 
-	public String GetId() {
+	public String GetID() {
 		return id;
 	}
 
@@ -158,4 +158,5 @@ public class DoorSide implements IVDoorSide {
 				this.GetIsVisible()&&
 				this.GetPair().GetRoom().GetMaxCapacity() > this.GetPair().GetRoom().GetCurrentCapacity());
 	}
+
 }

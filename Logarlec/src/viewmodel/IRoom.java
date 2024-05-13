@@ -50,7 +50,7 @@ public interface IRoom {
      * Vissza adja a Roomot egyertelmuen azonosito id-t
      * @return Roomot egyertelmuen azonosito id
      */
-    String GetId();
+    String GetID();
 
     /**
      * Visszaadja a szobában található tárgyakat.

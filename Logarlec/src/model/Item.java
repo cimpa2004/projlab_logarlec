@@ -79,7 +79,7 @@ public abstract class Item implements IVItem {
 	 *
 	 * @return A tárgyhoz tartozó egyedi id.
 	 */
-	public String GetId(){
+	public String GetID(){
 		return id;
 	}
 
