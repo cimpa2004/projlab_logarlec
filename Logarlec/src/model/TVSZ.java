@@ -17,6 +17,10 @@ import java.util.UUID;
  * */
 public class TVSZ extends Item implements Defendable, IVTVSZ {
 
+	@Override
+	public String GetID() {
+		return id;
+	}
 	/**
 	 *  Ez az integer typusú változó tárolja, hogy hány alkalommal tudja még a Student életét megmenteni.
 	 * */

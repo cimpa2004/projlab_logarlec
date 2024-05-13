@@ -189,4 +189,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		if(Activate()) i.GetRoom().SetPoisonDuration(5);
 		Logger.finished(this, "UsedByInstructor", i);
 	}
+
+	@Override
+	public String GetID() {
+		return id;
+	}
 }

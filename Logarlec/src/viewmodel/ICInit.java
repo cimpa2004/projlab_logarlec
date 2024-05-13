@@ -78,6 +78,6 @@ public interface ICInit {
      * IV objektumot tárolja. Itt születik meg a kapcsolat a modellbeli és viewbeli objektumok között. IDvel lehet öket azonosítani
      * @param ivStudent az IV objektom amit tarolni fog a letrehozott V objektum
      */
-    public void CreateVStudent(IVStudent ivStudent);
+    public void CreateVStudent(IVStudent ivStudent, ICInput icInput);
 
 }

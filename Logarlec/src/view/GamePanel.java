@@ -10,9 +10,19 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements ICRoom {
 
     private ArrayList<VRoom> rooms = new ArrayList<>();
-    private ArrayList<VPerson> People = new ArrayList<VPerson>();
+    private ArrayList<VPerson> people = new ArrayList<VPerson>();
     public GamePanel(){
 
+    }
+
+    public void AddVPerson(VPerson _new){
+        people.add(_new);
+    }
+    public void AddVRoom(VRoom _new){
+        rooms.add(_new);
+    }
+    public ArrayList<VRoom> GetRooms(){
+        return rooms;
     }
 
     //TODO: impelemt these

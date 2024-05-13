@@ -4,10 +4,7 @@ import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.Logger;
-import viewmodel.ICInit;
-import viewmodel.IPerson;
-import viewmodel.IRoom;
-import viewmodel.IVDoorSide;
+import viewmodel.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +19,7 @@ import java.util.function.Function;
  * Ez képes beolvasni az előre definált parancsokat átalános bemenetről vagy fájlból. A parancsokat a megadott jatekon vegrehajtja,
  * majd a parancsok kimenetet vissza adja.
  */
-public class InputHandler {
+public class InputHandler implements ICInput {
 
     /**
      * Egy map ami az előre definiált parancsokhoz (Stringek) mappolja hozzá a végrehajtadó parancsok metódusait, melyek
@@ -204,7 +201,7 @@ public class InputHandler {
                         JSONArray students = r.getJSONArray("students");
                         for (int j = 0; j < students.length(); j++) {
                             Student st = new Student(students.getJSONObject(j).getString("id"), game);
-                            if (icInit != null) icInit.CreateVStudent(st);
+                            if (icInit != null) icInit.CreateVStudent(st,this);
                             game.AddToGame(st);
                             st.SetRoom(room);
                             room.AddStudent(st);
@@ -1211,5 +1208,29 @@ public class InputHandler {
     }
 
 
+    @Override
+    public void ThrowItem(String personID, IVItem item) {
+
+    }
+
+    @Override
+    public void PickupItem(String personID, IVItem item) {
+
+    }
+
+    @Override
+    public void Move(String personID, IVDoorSide doorSide) {
+
+    }
+
+    @Override
+    public void EndTurn(String personID) {
+
+    }
+
+    @Override
+    public void UseItem(String personID, IVItem item) {
+
+    }
 }
 

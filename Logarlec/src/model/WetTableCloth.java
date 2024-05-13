@@ -16,6 +16,10 @@ import java.util.UUID;
  * */
 public class WetTableCloth extends Item implements Usable, Defendable, IVWetTableCloth {
 
+	@Override
+	public String GetID() {
+		return id;
+	}
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy még hány körig képes a
 	 * WetTableCloth megvédeni a Studentet, akihez tartozik

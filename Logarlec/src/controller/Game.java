@@ -196,7 +196,7 @@ public class Game implements IVInit {
 	public void AddStudent(String personID) {
 		Logger.started(this, "AddStudent", winSide);
 		Student newPerson = new Student(personID,this);
-		if (icInit != null) icInit.CreateVStudent(newPerson);
+		if (icInit != null) icInit.CreateVStudent(newPerson, inputHandler);
 		AddToGame(newPerson);
 		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID + "\n");
 		Logger.finished(this, "AddStudent", winSide);
