@@ -380,7 +380,7 @@ public class Game implements IVInit {
 			r1.AddNeighbor(r2);
 			r2.AddNeighbor(r1);
 			rooms.add(r2);
-			if (icRoom != null) icRoom.Split(r1);
+			if (icRoom != null) icRoom.Split(r1,r2);
 			return true;
 		}
 
