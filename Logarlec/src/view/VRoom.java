@@ -3,11 +3,12 @@ package view;
 import model.Room;
 import viewmodel.IVItemUpdate;
 import viewmodel.IVRoom;
+import viewmodel.IVRoomUpdate;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class VRoom extends JPanel implements IVItemUpdate {
+public class VRoom extends JPanel implements IVRoomUpdate {
     /**
      * Inithez kell
      * @param ivRoom
@@ -17,6 +18,14 @@ public class VRoom extends JPanel implements IVItemUpdate {
         ivRoom.GetRoom().SetIVRoomUpdate(this);
     }
     public void AddDoorSide(VDoorSide vDoorSide){
+
+    }
+
+    /**
+     * Kirajzolató függvény
+     * @param panelToDrawOn a panel amire rajzolja magát
+     */
+    public void Draw(JPanel panelToDrawOn){
 
     }
     private ArrayList<VItem> items;
@@ -32,4 +41,8 @@ public class VRoom extends JPanel implements IVItemUpdate {
         return ivRoom.GetRoom();
     }
 
+    @Override
+    public VRoom GetVRoom() {
+        return this;
+    }
 }

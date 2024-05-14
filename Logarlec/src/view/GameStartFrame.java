@@ -93,7 +93,7 @@ public class GameStartFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             //if button is clickable there are valid values
             //TODO: use real map
-            initer.CreateGame("Tests/Test16/Map.json",icInit,iControl,icRoom);
+            initer.CreateGame("Map.json",icInit,iControl,icRoom);
             for (String name: names) {
                 initer.AddStudent(name);
             }

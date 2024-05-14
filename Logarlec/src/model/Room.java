@@ -2,9 +2,11 @@ package model;
 
 
 import util.Logger;
+import view.VRoom;
 import viewmodel.IRoom;
 import viewmodel.IVItemUpdate;
 import viewmodel.IVRoom;
+import viewmodel.IVRoomUpdate;
 
 import java.util.*;
 
@@ -17,6 +19,7 @@ public class Room implements IRoom, IVRoom {
 	 *  Ez egy string típusú változó, amely egyértelműen azonosít egy Room -ot.
 	 */
 	protected String id;
+	private IVRoomUpdate ivRoomUpdate;
 
 	/**
 	 * Ez az integer typusú változó tárolja, hogy a szobának hány körig tart még a mérgesgáz-effektje.
@@ -105,6 +108,10 @@ public class Room implements IRoom, IVRoom {
 
 		currentCapacity = 0;
 		maxCapacity = 10;
+	}
+
+	public void SetIVRoomUpdate(IVRoomUpdate ivRoomUpdate){
+		this.ivRoomUpdate = ivRoomUpdate;
 	}
 
 	/**
@@ -619,6 +626,9 @@ public class Room implements IRoom, IVRoom {
 	@Override
 	public Room GetRoom() {
 		return this;
+	}
+	public VRoom GetVRoom(){
+		return ivRoomUpdate.GetVRoom();
 	}
 	public void SetIVRoomUpdate(IVItemUpdate ivItemUpdate){
 		this.ivItemUpdate = ivItemUpdate;
