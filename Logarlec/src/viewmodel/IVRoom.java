@@ -1,9 +1,9 @@
 package viewmodel;
 
-import model.Room;
+import view.VRoom;
 
 public interface IVRoom {
     public String GetID();
-    public Room GetRoom();
+    public VRoom GetVRoom();
     public void SetIVRoomUpdate(IVRoomUpdate ivRoomUpdate);
 }

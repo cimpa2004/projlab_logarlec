@@ -4,7 +4,6 @@ package model;
 import util.Logger;
 import view.VRoom;
 import viewmodel.IRoom;
-import viewmodel.IVItemUpdate;
 import viewmodel.IVRoom;
 import viewmodel.IVRoomUpdate;
 
@@ -19,6 +18,7 @@ public class Room implements IRoom, IVRoom {
 	 *  Ez egy string típusú változó, amely egyértelműen azonosít egy Room -ot.
 	 */
 	protected String id;
+	
 	private IVRoomUpdate ivRoomUpdate;
 
 	/**
@@ -89,7 +89,6 @@ public class Room implements IRoom, IVRoom {
 	 */
 	private int numberOfPeopleBeenToRoom;
 
-	private IVItemUpdate ivItemUpdate;
 	/**
 	 * A Room osztály konstruktora.
 	 * A Room id változóját a paraméterben kapott értékre állítja.
@@ -110,9 +109,11 @@ public class Room implements IRoom, IVRoom {
 		maxCapacity = 10;
 	}
 
+	@Override
 	public void SetIVRoomUpdate(IVRoomUpdate ivRoomUpdate){
 		this.ivRoomUpdate = ivRoomUpdate;
 	}
+
 
 	/**
 	 * A Room osztály konstruktora.
@@ -624,13 +625,9 @@ public class Room implements IRoom, IVRoom {
 	}
 
 	@Override
-	public Room GetRoom() {
-		return this;
-	}
 	public VRoom GetVRoom(){
 		return ivRoomUpdate.GetVRoom();
 	}
-	public void SetIVRoomUpdate(IVItemUpdate ivItemUpdate){
-		this.ivItemUpdate = ivItemUpdate;
-	}
+
+	
 }

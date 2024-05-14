@@ -4,6 +4,7 @@ package model;
 import util.Logger;
 import viewmodel.IVTVSZ;
 import viewmodel.IVTransistor;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -206,5 +207,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		Logger.finished(this, "CanDefend");
 		if(isFake) return false;
 		return usesLeft > 0;
+	}
+	
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
 	}
 }

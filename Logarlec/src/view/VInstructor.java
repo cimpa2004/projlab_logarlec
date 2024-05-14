@@ -3,7 +3,9 @@ package view;
 import viewmodel.IVInstructor;
 
 public class VInstructor extends VPerson{
-    public VInstructor(IVInstructor ivInstructor){
+    IVInstructor ivInstructor;
 
+    public VInstructor(IVInstructor ivInstructor){
+        ivInstructor = ivInstructor;
     }
 }

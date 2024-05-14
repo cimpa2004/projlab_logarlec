@@ -19,18 +19,20 @@ public abstract class Item implements IVItem {
 	 */
 	protected String id;
 
+	protected IVItemUpdate ivItemUpdate;
+
 
 	/**
 	 * Ez a Room típusú változó eltárolja azt a Room -ot, amelyben az adott tárgy van.
 	 * Amennyiben már egy Person felvette a tárgyat, null értéket vesz fel a változó.
 	 * */
-	private Room room;
+	protected Room room;
 
 	/**
 	 * Ez a Person típusú változó eltárolja azt a Person -t, akihez az adott Item tartozik.
 	 * Amennyiben senkihez sem tartozik a tárgy, null értéket vesz fel a változó.
 	 * */
-	private Person owner;
+	protected Person owner;
 
 	/**
 	 * Az Item osztály konstruktora.
@@ -195,4 +197,8 @@ public abstract class Item implements IVItem {
 	 * @param i Azon Instructor, aki használná az adott tárgyat.
 	 */
 	public abstract void UsedByInstructor(Instructor i);
+
+	public void SetIVItemUpdate(IVItemUpdate ivItemUpdate){
+		this.ivItemUpdate = ivItemUpdate;
+	}
 }

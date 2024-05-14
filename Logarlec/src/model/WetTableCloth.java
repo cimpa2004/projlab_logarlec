@@ -3,6 +3,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVWetTableCloth;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -250,5 +251,10 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		Logger.started(this, "CanDefend");
 		Logger.finished(this, "CanDefend");
 		return isActivated && effectDuration > 0;
+	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
 	}
 }

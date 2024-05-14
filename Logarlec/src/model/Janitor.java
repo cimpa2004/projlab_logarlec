@@ -3,6 +3,8 @@ package model;
 import controller.Game;
 import util.Logger;
 import viewmodel.IVJanitor;
+import viewmodel.IVJanitorUpdate;
+import viewmodel.IVRoom;
 
 import java.util.*;
 
@@ -28,6 +30,8 @@ public class Janitor extends Person implements IVJanitor {
     public Janitor() {
         super(UUID.randomUUID().toString());
     }
+
+    private IVJanitorUpdate ivJanitorUpdate;
 
     /**
      * Megjelenik a takarító a megadott szobában
@@ -221,5 +225,15 @@ public class Janitor extends Person implements IVJanitor {
     @Override
     public void ConnectTransistors(Transistor t1, Transistor t2) {
 
+    }
+
+    @Override
+	public IVRoom GetIVRoom() {
+		return room;
+	}
+
+    @Override
+    public void SetIVJanitorUpdate(IVJanitorUpdate ivJanitorUpdate) {
+        this.ivJanitorUpdate = ivJanitorUpdate;
     }
 }

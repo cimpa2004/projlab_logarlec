@@ -1,7 +1,5 @@
 package view;
 
-import model.Room;
-import viewmodel.IVItemUpdate;
 import viewmodel.IVRoom;
 import viewmodel.IVRoomUpdate;
 
@@ -9,13 +7,16 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class VRoom extends JPanel implements IVRoomUpdate {
+    private ArrayList<VItem> items = new ArrayList<>();
+    private IVRoom ivRoom;
+
     /**
      * Inithez kell
      * @param ivRoom
      */
     public VRoom(IVRoom ivRoom){
         this.ivRoom = ivRoom;
-        ivRoom.GetRoom().SetIVRoomUpdate(this);
+        ivRoom.SetIVRoomUpdate(this);
     }
     public void AddDoorSide(VDoorSide vDoorSide){
 
@@ -28,8 +29,6 @@ public class VRoom extends JPanel implements IVRoomUpdate {
     public void Draw(JPanel panelToDrawOn){
 
     }
-    private ArrayList<VItem> items;
-    private IVRoom ivRoom;
 
     public ArrayList<VItem> GetItems(){
         return items;
@@ -37,8 +36,9 @@ public class VRoom extends JPanel implements IVRoomUpdate {
     public void AddVItem(VItem item){
         items.add(item);
     }
-    public Room GetRoom(){
-        return ivRoom.GetRoom();
+
+    public IVRoom GetIVRoom(){
+        return ivRoom;
     }
 
     @Override

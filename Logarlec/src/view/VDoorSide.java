@@ -3,7 +3,9 @@ package view;
 import viewmodel.IVDoorSide;
 
 public class VDoorSide {
-    public VDoorSide(IVDoorSide ivDoorSide){
+    IVDoorSide ivDoorSide;
 
+    public VDoorSide(IVDoorSide ivDoorSide){
+        this.ivDoorSide = ivDoorSide;
     }
 }

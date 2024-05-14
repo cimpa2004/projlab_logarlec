@@ -3,7 +3,9 @@ package view;
 import viewmodel.IVHolyBeerCup;
 
 public class VHolyBeerCup extends VItem {
-    public VHolyBeerCup(IVHolyBeerCup ivHolyBeerCup) {
+    IVHolyBeerCup ivHolyBeerCup;
 
+    public VHolyBeerCup(IVHolyBeerCup ivHolyBeerCup) {
+        this.ivHolyBeerCup = ivHolyBeerCup;
     }
 }

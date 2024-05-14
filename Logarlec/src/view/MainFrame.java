@@ -1,12 +1,8 @@
 package view;
 
-import model.DoorSide;
-import model.Item;
 import viewmodel.*;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MainFrame extends JFrame implements ICInit {
     private GamePanel gamePanel = new GamePanel();
@@ -31,7 +27,6 @@ public class MainFrame extends JFrame implements ICInit {
 
     }
 
-    //TODO: .equalsokban lehet hiba
     @Override
     public void CreateVInstructor(IVInstructor ivInstructor) {
         gamePanel.AddVPerson(new VInstructor(ivInstructor));
@@ -39,99 +34,50 @@ public class MainFrame extends JFrame implements ICInit {
 
     @Override
     public void CreateVDoorSide(IVDoorSide ivDoorSide) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (DoorSide doorSide:room.GetRoom().GetDoors()) {
-                if (doorSide.equals(ivDoorSide)){
-                    room.AddDoorSide(new VDoorSide(ivDoorSide));
-                    break;
-                }
-            }
-        }
+        VRoom doorSideVRoom = ivDoorSide.GetIVRoom().GetVRoom();
+        doorSideVRoom.AddDoorSide(new VDoorSide(ivDoorSide));
     }
 
     @Override
     public void CreateVAirFreshener(IVAirFreshener ivAirFreshener) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivAirFreshener)){
-                    room.AddVItem(new VAirFreshener(ivAirFreshener));
-                    break;
-                }
-            }
-        }
-
+        VRoom airFreshenerVRoom = ivAirFreshener.GetIVRoom().GetVRoom();
+        airFreshenerVRoom.AddVItem(new VAirFreshener(ivAirFreshener));
     }
 
     @Override
     public void CreateVTVSZ(IVTVSZ ivTVSZ) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivTVSZ)){
-                    room.AddVItem(new VTVSZ(ivTVSZ));
-                    break;
-                }
-            }
-        }
+        VRoom tvszVRoom = ivTVSZ.GetIVRoom().GetVRoom();
+        tvszVRoom.AddVItem(new VTVSZ(ivTVSZ));
     }
 
     @Override
     public void CreateVHolyBeerCup(IVHolyBeerCup ivHolyBeerCup) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivHolyBeerCup)){
-                    room.AddVItem(new VHolyBeerCup(ivHolyBeerCup));
-                    break;
-                }
-            }
-        }
+        VRoom holyBeerCupVRoom = ivHolyBeerCup.GetIVRoom().GetVRoom();
+        holyBeerCupVRoom.AddVItem(new VHolyBeerCup(ivHolyBeerCup));
     }
 
     @Override
     public void CreateVWetTableCloth(IVWetTableCloth ivWetTableCloth) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivWetTableCloth)){
-                    room.AddVItem(new VWetTableCloth(ivWetTableCloth));
-                    break;
-                }
-            }
-        }
+        VRoom wetTableClothVRoom = ivWetTableCloth.GetIVRoom().GetVRoom();
+        wetTableClothVRoom.AddVItem(new VWetTableCloth(ivWetTableCloth));
     }
 
     @Override
     public void CreateVCamembert(IVCamembert ivCamembert) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivCamembert)){
-                    room.AddVItem(new VCamembert(ivCamembert));
-                    break;
-                }
-            }
-        }
+        VRoom camembertVRoom = ivCamembert.GetIVRoom().GetVRoom();
+        camembertVRoom.AddVItem(new VCamembert(ivCamembert));
     }
 
     @Override
     public void CreateVFFP2Mask(IVFFP2Mask ivFFP2Mask) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivFFP2Mask)){
-                    room.AddVItem(new VFFP2Mask(ivFFP2Mask));
-                    break;
-                }
-            }
-        }
+        VRoom ffp2MaskVRoom = ivFFP2Mask.GetIVRoom().GetVRoom();
+        ffp2MaskVRoom.AddVItem(new VFFP2Mask(ivFFP2Mask));
     }
 
     @Override
     public void CreateVSlideRule(IVSlideRule ivSlideRule) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivSlideRule)){
-                    room.AddVItem(new VSlideRule(ivSlideRule));
-                    break;
-                }
-            }
-        }
+        VRoom slideRuleVRoom = ivSlideRule.GetIVRoom().GetVRoom();
+        slideRuleVRoom.AddVItem(new VSlideRule(ivSlideRule));
     }
 
     @Override
@@ -141,14 +87,8 @@ public class MainFrame extends JFrame implements ICInit {
 
     @Override
     public void CreateVTransistor(IVTransistor ivTransistor) {
-        for (VRoom room: gamePanel.GetRooms()) {
-            for (Item item:room.GetRoom().GetItems()) {
-                if (item.equals(ivTransistor)){
-                    room.AddVItem(new VTransistor(ivTransistor));
-                    break;
-                }
-            }
-        }
+        VRoom transistorVRoom = ivTransistor.GetIVRoom().GetVRoom();
+        transistorVRoom.AddVItem(new VTransistor(ivTransistor));
     }
 
     @Override
