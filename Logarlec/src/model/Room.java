@@ -455,6 +455,7 @@ public class Room implements IRoom, IVRoom {
 	 * */
 	public void RemoveInstructor(Instructor i) {
 		Logger.started(this, "RemoveInstructor", i);
+		i.SetRoom(null);
 		instructors.remove(i);
 		currentCapacity--;
 		Logger.finished(this, "RemoveInstructor", i);
@@ -484,6 +485,7 @@ public class Room implements IRoom, IVRoom {
 	 * */
 	public void RemoveStudent(Student s) {
 		Logger.started(this, "RemoveStudent", s);
+		s.SetRoom(null);
 		students.remove(s);
 		currentCapacity--;
 		Logger.finished(this, "RemoveStudent", s);
@@ -500,6 +502,7 @@ public class Room implements IRoom, IVRoom {
 	 * */
 	public void AddJanitor(Janitor j) {
 		Logger.started(this, "AddJanitor", j);
+		j.SetRoom(this);
 		currentCapacity++;
 		janitors.add(j);
 		Logger.finished(this, "AddJanitor", j);
@@ -513,6 +516,7 @@ public class Room implements IRoom, IVRoom {
 	 * */
 	public void RemoveJanitor(Janitor j) {
 		Logger.started(this, "RemoveJanitor", j);
+		j.SetRoom(null);
 		janitors.remove(j);
 		currentCapacity--;
 		Logger.finished(this, "RemoveJanitor", j);

@@ -29,6 +29,7 @@ public class InputHandler implements ICInput {
     final private Map<String, Function<ArrayList<String>, String>> commandMap;
     private Game game;
     private ICInit icInit;
+    private boolean isTesting;
 
     // Itt letreheozzuk es belerakjuk a mapba es konstruktorban nem kell kod ismetelni mindig
     {
@@ -54,8 +55,11 @@ public class InputHandler implements ICInput {
         commandMap.put("separateroom", this::separateRoom);
     }
 
-    public InputHandler(){}
+    public InputHandler(){
+        isTesting = true;
+    }
     public InputHandler(Game game) {
+        isTesting = false;
         this.game = game;
     }
 
@@ -148,7 +152,7 @@ public class InputHandler implements ICInput {
 
         boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
 
-        if (this.game == null) this.game = new Game(isDeterministic);
+        if (isTesting) this.game = new Game(isDeterministic);
 
         try {
             String contents = new String(Files.readAllBytes(Paths.get(mapPath)));
@@ -203,7 +207,6 @@ public class InputHandler implements ICInput {
                             Student st = new Student(students.getJSONObject(j).getString("id"), game);
                             if (icInit != null) icInit.CreateVStudent(st,this);
                             game.AddToGame(st);
-                            st.SetRoom(room);
                             room.AddStudent(st);
                         }
                     }
@@ -215,7 +218,6 @@ public class InputHandler implements ICInput {
                             Instructor in = new Instructor(instructors.getJSONObject(j).getString("id"), this.game);
                             if (icInit != null) icInit.CreateVInstructor(in);
                             game.AddToGame(in);
-                            in.SetRoom(room);
                             room.AddInstructor(in);
                         }
                     }
@@ -227,7 +229,6 @@ public class InputHandler implements ICInput {
                             Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
                             if (icInit != null) icInit.CreateVJanitor(jan);
                             game.AddToGame(jan);
-                            jan.SetRoom(room);
                             room.AddJanitor(jan);
                         }
                     }
@@ -755,7 +756,8 @@ public class InputHandler implements ICInput {
         str.append("message: A megadott ").append(personId).append(" személy részletei a többi mezőben.");
 
         // room
-        str.append("\nroom: ").append(paramPerson.GetRoom().GetID());
+        if (paramPerson.GetRoom() == null) str.append("\nroom: ").append("None");
+        else str.append("\nroom: ").append(paramPerson.GetRoom().GetID());
 
         // inventory
         ArrayList<Item> inventory = new ArrayList<>(paramPerson.GetInventory());

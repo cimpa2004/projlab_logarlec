@@ -40,9 +40,8 @@ public class Janitor extends Person implements IVJanitor {
         int maxC = r.GetMaxCapacity();
         if(currentC < maxC) {
             Room oldRoom = room;
-            room = r; // atlepes a masik szobaba
             oldRoom.RemoveJanitor(this);
-            room.AddJanitor(this);
+            r.AddJanitor(this);
 
             //kitessékelés
             MakeThemLeave();

@@ -205,6 +205,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		// ha az oktato felvesz egy FFP2Maskot akkor egybol aktivalja
 		if (isAdded) {
 			Activate();
+			if (isActivated) i.AddFFP2Mask(this);
 		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;

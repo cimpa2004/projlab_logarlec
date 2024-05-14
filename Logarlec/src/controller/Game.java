@@ -195,27 +195,22 @@ public class Game implements IVInit {
 
 	@Override
 	public void AddStudent(String personID) {
-		Logger.started(this, "AddStudent", winSide);
+		Logger.started(this, "AddStudent", personID);
 		Student newStudent = new Student(personID,this);
-		if (isGameDeterministic) rooms.get(0).AddStudent(newStudent);
-		else {
-			Random rnd = new Random();
-			int indexOfRoom = rnd.nextInt(GetRooms().size());
-			rooms.get(indexOfRoom).AddStudent(newStudent);
-		}
+		rooms.get(0).AddStudent(newStudent);
 		if (icInit != null) icInit.CreateVStudent(newStudent, inputHandler);
 		AddToGame(newStudent);
 		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID + "\n");
-		Logger.finished(this, "AddStudent", winSide);
+		Logger.finished(this, "AddStudent", personID);
 
 	}
 
 	@Override
 	public void RemoveStudent(String personID) {
 		Logger.started(this, "RemoveStudent");
-		for (IPerson person : turnOrder){
-			if(person.GetID().equals(personID)) RemoveFromGame(person);
-		}
+		IPerson student = findPersonById(personID);
+		RemoveFromGame(student);
+		student.GetRoom().RemoveStudent((Student) student);
 		Logger.finished(this, "RemoveStudent");
 	}
 
@@ -272,13 +267,17 @@ public class Game implements IVInit {
 	 * */
 	public void NextTurn() {
 		Logger.started(this, "NextTurn");
-		if (isEndGame) return;
+		if (isEndGame){
+			Logger.finished(this, "NextTurn");
+			return;
+		}
 		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
 		else if (currentTurn == null) currentTurn = turnOrder.get(turnOrder.size()-1);
 
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
+			Logger.finished(this, "NextTurn");
 			return;
 		}
 
@@ -290,10 +289,15 @@ public class Game implements IVInit {
 		}
 		if(gameTimer == 0){
 			EndGame(false);
+			Logger.finished(this, "NextTurn");
 			return;
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
+		if (!currentTurn.GetIsAlive()){
+			Logger.finished(this, "NextTurn");
+			return;
+		}
 		if (iControl != null) iControl.Update(); // jelez a Viewnak h uj kor van, valtozhat a current Student inventoryja
 		currentTurn.StartTurn();
 

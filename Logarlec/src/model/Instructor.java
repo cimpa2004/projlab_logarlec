@@ -37,12 +37,11 @@ public class Instructor extends Person implements IVInstructor {
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
 			Room oldRoom = room;
-			room = r; // atlepes a masik szobaba
 			oldRoom.RemoveInstructor(this);
-			room.AddInstructor(this);
+			r.AddInstructor(this);
 
 			//megvizsgalja, hogy gazos-e a szoba
-			if (room.GetPoisonDuration() > 0){
+			if (r.GetPoisonDuration() > 0){
 				//ha van nala ffp2 maszk, akkor megprobal aktivalni egyet
 				if(!ffp2Masks.isEmpty()) {
 					if(this.DefendFromGas()) this.SetIsFainted(false);
@@ -51,7 +50,7 @@ public class Instructor extends Person implements IVInstructor {
 			}
 
 			// Megprobalja megolni a hallgatokat
-			ArrayList<Student> studentCopy = new ArrayList<>(room.GetStudents());
+			ArrayList<Student> studentCopy = new ArrayList<>(r.GetStudents());
 			for(Student student : studentCopy) {
 				StealSoul(student);
 			}

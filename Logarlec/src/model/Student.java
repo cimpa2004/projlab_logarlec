@@ -48,18 +48,17 @@ public class Student extends Person implements IVStudent {
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
 			Room oldRoom = room;
-			room = r; // atlepes a masik szobaba
 			oldRoom.RemoveStudent(this);
-			room.AddStudent(this); // belepes a masik szobaba
+			r.AddStudent(this); // belepes a masik szobaba
 
-			ArrayList<Instructor> instructors = room.GetInstructors();
+			ArrayList<Instructor> instructors = r.GetInstructors();
 			// belep a szobaba es minden oktato megprobalja elvenni a lelket, de vedekezhet
 			for(Instructor instructor : instructors){
 				instructor.StealSoul(this);
 				if(!isAlive) break;
 			}
 			//megvizsgalja, hogy gazos-e a szoba
-			if (room.GetPoisonDuration() > 0){
+			if (r.GetPoisonDuration() > 0){
 				//ha van nala ffp2 maszk, akkor megprobal aktivalni egyet
 				if(!ffp2Masks.isEmpty()) {
 					if(this.DefendFromGas()) this.SetIsFainted(false);
@@ -168,7 +167,7 @@ public class Student extends Person implements IVStudent {
 		Logger.started(this, "Die");
 		isAlive = false;
 		room.RemoveStudent(this);
-		EndTurn();
+		if(isActiveTurn()) EndTurn();
 		Logger.finished(this, "Die");
 		return isAlive;
 	}
