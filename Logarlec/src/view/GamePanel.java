@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements ICRoom {
     //TODO: fix these
 
     /**
-     *  Felveszi az új szobát
+     *  Felveszi az új szobát, nem lesz jó így
      * @param ivRoom the old room, already exists
      * @param _new the new room, needs to be created
      */
@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements ICRoom {
     }
 
     /**
-     *
+     * Nem lesz jó így
      * @param ivRoom1
      * @param ivRoom2
      */
