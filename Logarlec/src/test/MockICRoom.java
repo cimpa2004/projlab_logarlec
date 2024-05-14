@@ -5,7 +5,7 @@ import viewmodel.IVRoom;
 
 public class MockICRoom implements ICRoom {
     @Override
-    public void Split(IVRoom ivRoom) {
+    public void Split(IVRoom ivRoom, IVRoom _new) {
         System.out.println("Split");
     }
 
