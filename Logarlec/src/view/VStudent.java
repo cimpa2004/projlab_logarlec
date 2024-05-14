@@ -1,5 +1,6 @@
 package view;
 
+import model.Room;
 import viewmodel.ICInput;
 import viewmodel.IVStudent;
 
@@ -40,6 +41,10 @@ public class VStudent extends VPerson{
         //NE töröld
         this.controlPanel.AddVStudent(this);
         this.ivStudent = ivStudent;
+    }
+
+    public Room GetRoom(){
+        return ivStudent.GetRoom();
     }
 
 }

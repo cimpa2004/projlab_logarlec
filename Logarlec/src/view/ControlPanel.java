@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ControlPanel extends JPanel implements IControl {
-    //TODO: valahogy ne legyen üres, elvileg a VStudentek beteszik magukat
     private ArrayList<VStudent> students = new ArrayList<>();
     private JButton EndTurnButton = new JButton("Kör vége");
     private JButton PickUpButton = new JButton("Kijelölt tárgy felvétele");
@@ -18,12 +17,14 @@ public class ControlPanel extends JPanel implements IControl {
     private VItem selectedItem;
     private VStudent currentStudent;
     private JPanel itemsPanel = new JPanel();
+    private GamePanel gamePanel;
 
 
     public void AddVStudent(VStudent new_){
         students.add(new_);
     }
-    public ControlPanel() {
+    public ControlPanel(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
         setLayout(new BorderLayout());
 
         // Panel for items on the left
@@ -88,7 +89,7 @@ public class ControlPanel extends JPanel implements IControl {
     }
 
     /**
-     * Újra rajzolja az inventory-t
+     * Újra rajzolja az inventory-t és a gamePanelt
      */
     @Override
     public void Update() {
@@ -96,8 +97,10 @@ public class ControlPanel extends JPanel implements IControl {
         //for (VItem item: currentStudent.getItems()){
             //item.DrawInInventory(itemsPanel);
         //}
-        if (currentStudent != null)
+        if (currentStudent != null){
             nameLabel.setText(currentStudent.toString());
+            gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
+        }
         else nameLabel.setText("Senki köre");
     }
 
@@ -139,6 +142,7 @@ public class ControlPanel extends JPanel implements IControl {
             if(selectedItem != null){
                 currentStudent.Pickup(selectedItem);
                 selectedItem = null;
+                gamePanel.Redraw();//eltűnjön a felvett tárgy
             }
         }
     }
