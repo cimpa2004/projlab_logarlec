@@ -148,7 +148,7 @@ public class InputHandler implements ICInput {
 
         String defaultPath = new File(".").getAbsolutePath();
         defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
-        mapPath = defaultPath  + mapPath;
+        mapPath = defaultPath.contains("Logarlec") ? defaultPath  + mapPath :  defaultPath + "Logarlec/" + mapPath;
 
         boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
 
