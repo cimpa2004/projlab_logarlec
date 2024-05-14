@@ -2,6 +2,7 @@ package view;
 
 import controller.Game;
 import viewmodel.ICRoom;
+import viewmodel.IVDoorSide;
 import viewmodel.IVRoom;
 
 import javax.swing.*;
@@ -41,14 +42,26 @@ public class GamePanel extends JPanel implements ICRoom {
         currentRoom.Draw(this);
     }
 
-    //TODO: impelemt these
-    @Override
-    public void Split(IVRoom ivRoom) {
+    //TODO: fix these
 
+    /**
+     *  Felveszi az új szobát
+     * @param ivRoom the old room, already exists
+     * @param _new the new room, needs to be created
+     */
+    @Override
+    public void Split(IVRoom ivRoom, IVRoom _new) {
+        VRoom newRoom = new VRoom(_new);
+        _new.GetRoom().SetIVRoomUpdate(newRoom);
     }
 
+    /**
+     *
+     * @param ivRoom1
+     * @param ivRoom2
+     */
     @Override
     public void Merge(IVRoom ivRoom1, IVRoom ivRoom2) {
-
+        rooms.remove(ivRoom2);
     }
 }
