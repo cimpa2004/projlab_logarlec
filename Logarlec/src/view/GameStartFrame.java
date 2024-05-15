@@ -16,6 +16,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+/**
+ * A játékos felvevő és játék elindító ablak, fool proof!!!
+ */
 public class GameStartFrame extends JFrame {
     private IVInit initer;
     private Window window;
@@ -65,12 +68,18 @@ public class GameStartFrame extends JFrame {
         setVisible(false);
     }
 
+    /**
+     * JFrame művelet felülírása
+     */
     @Override
     public void dispose() {
         this.setVisible(false);
         window.ShowMainWindow();
     }
 
+    /**
+     * Ha nincs felvéve játékos nem lehet játszani
+     */
     public void SetClickableIfNeededStartButton() {
         boolean containsNonEmpty = false;
         for (String name : names) {
@@ -81,6 +90,10 @@ public class GameStartFrame extends JFrame {
         }
         startGameButton.setEnabled(containsNonEmpty);
     }
+
+    /**
+     * Ha nincs megadva rendes név nem lehet felvenni a játékost
+     */
     public void SetClickableIfNeededAddButton() {
         boolean containsNonEmpty = false;
         if (!nameTextBox.getText().trim().isEmpty())
@@ -88,6 +101,9 @@ public class GameStartFrame extends JFrame {
         addStudentButton.setEnabled(containsNonEmpty);
     }
 
+    /**
+     * Action listener
+     */
     private class StartButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -103,6 +119,9 @@ public class GameStartFrame extends JFrame {
 
         }
     }
+    /**
+     * Action listener
+     */
     private class AddPlayerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -115,6 +134,9 @@ public class GameStartFrame extends JFrame {
         }
     }
 
+    /**
+     * Key lisener, kell az add gomb lezárásához és feloldásához
+     */
     private class NameTextBoxKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {}
