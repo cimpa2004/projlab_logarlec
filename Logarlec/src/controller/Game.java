@@ -2,13 +2,9 @@ package controller;
 
 import model.*;
 import util.Logger;
-
-
 import viewmodel.*;
-
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.UUID;
 
 /** */
@@ -316,6 +312,7 @@ public class Game implements IVInit {
 		currentTurn = turnOrder.get(currentIndex);
 		if (!currentTurn.GetIsAlive()){
 			Logger.finished(this, "NextTurn");
+			NextTurn();
 			return;
 		}
 		currentTurn.StartTurn();
