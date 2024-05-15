@@ -3,10 +3,6 @@ package test;
 import viewmodel.IControl;
 
 public class MockIControl implements IControl {
-    @Override
-    public void Update() {
-        System.out.println("Update");
-    }
 
     @Override
     public void StudentStartedTurn()  {

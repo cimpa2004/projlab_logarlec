@@ -94,8 +94,7 @@ public class ControlPanel extends JPanel implements IControl {
     /**
      * Újra rajzolja az inventory-t és a gamePanelt
      */
-    @Override
-    public void Update() {
+    private void Update() {
         //TODO: uncomment this
         //for (VItem item: currentStudent.getItems()){
             //item.DrawInInventory(itemsPanel);
