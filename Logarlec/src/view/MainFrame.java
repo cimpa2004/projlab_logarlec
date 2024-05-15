@@ -29,7 +29,6 @@ public class MainFrame extends JFrame implements ICInit {
         add(controlPanel);
 
     }
-
     @Override
     public void CreateVInstructor(IVInstructor ivInstructor) {
         gamePanel.AddVPerson(new VInstructor(ivInstructor));

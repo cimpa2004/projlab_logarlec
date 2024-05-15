@@ -318,7 +318,6 @@ public class Game implements IVInit {
 			Logger.finished(this, "NextTurn");
 			return;
 		}
-		if (iControl != null) iControl.Update(); // jelez a Viewnak h uj kor van, valtozhat a current Student inventoryja
 		currentTurn.StartTurn();
 
 
