@@ -18,8 +18,9 @@ jobs:
 
     - name: Compile and run the Java code
       run: |
+        cd Logarlec
         mkdir -p build/classes/test
-        javac -cp "Logarlec/lib/json-20240303.jar;Logarlec/src/test" -d build/classes/test Logarlec/src/test/PrototypeMain.java
-        java -cp "build/classes/test;Logarlec/lib/json-20240303.jar" PrototypeMain || (grep -q 'FAILED' <<< "$OUTPUT" && exit 1)
+        javac -cp "lib/json-20240303.jar;src/test" -d build/classes/test src/test/PrototypeMain.java
+        java -cp "build/classes/test;lib/json-20240303.jar" PrototypeMain || (grep -q 'FAILED' <<< "$OUTPUT" && exit 1)
       env:
         OUTPUT: ${{ steps.build.outputs.output }}
