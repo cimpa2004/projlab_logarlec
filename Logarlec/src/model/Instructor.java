@@ -2,6 +2,8 @@ package model;
 import controller.Game;
 import util.Logger;
 import viewmodel.IVInstructor;
+import viewmodel.IVInstructorUpdate;
+import viewmodel.IVRoom;
 
 import java.util.*;
 
@@ -14,6 +16,8 @@ public class Instructor extends Person implements IVInstructor {
 	 * Ez a változó tárolja az oktató bénulásának idejét.
 	 * */
 	private int stunDuration;
+
+	private IVInstructorUpdate ivInstructorUpdate;
 
 	public Instructor(String id, Game g) {
 		super(id);
@@ -266,6 +270,16 @@ public class Instructor extends Person implements IVInstructor {
 		boolean isAppeared = AppearInRoom(r2);
 		Logger.finished(this, "Move", d);
 		return isAppeared;
+	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
+	}
+
+	@Override
+	public void SetIVInstructorUpdate(IVInstructorUpdate ivInstructorUpdate) {
+		this.ivInstructorUpdate = ivInstructorUpdate;
 	}
 
 }

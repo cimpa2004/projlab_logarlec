@@ -22,7 +22,7 @@ class HelperFrame extends JFrame {
      */
     public HelperFrame(Window w) {
         if (w == null){
-            throw new NullPointerException("Recived null Window in constructor");
+            throw new NullPointerException("Received null Window in constructor");
         }
         window = w;
         setTitle("Súgó");

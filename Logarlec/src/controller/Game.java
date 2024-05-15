@@ -42,6 +42,12 @@ public class Game implements IVInit {
 	private InputHandler inputHandler;
 
 	/**
+	 * Tarolja, hogy mennyi elo Student van a jatekban. Ez az ertek StartGamenel inicializalodik es amikor egy Student meghal akkor a Die
+	 * metodusa csokkenti ezt az erteket
+	 */
+	private int numberOfAliveStudents;
+
+	/**
 	 * Tárolja, hogy a játék végetért-e.
 	 * */
 	private boolean isEndGame;
@@ -168,8 +174,6 @@ public class Game implements IVInit {
 	}
 
 
-	
-
 	/**
 	 * Beallit a jatekhoz egy ICInitet, e fuggveny hivas nekul a grafikus megjelenites nem mukodik
 	 * @param icInit megadott ICInit
@@ -190,6 +194,12 @@ public class Game implements IVInit {
 	 */
 	public void SetICRoom(ICRoom icRoom){
 		this.icRoom = icRoom;
+	}
+
+	public void NotifyStudentDied(){
+		Logger.started(this, "NotifyStudentDied");
+		numberOfAliveStudents--;
+		Logger.finished(this, "NotifyStudentDied");
 	}
 
 
@@ -221,6 +231,14 @@ public class Game implements IVInit {
 		Logger.started(this, "StartGame");
 		isEndGame = false;
 		gameTimer = 10;
+		numberOfAliveStudents = 0;
+		for(IRoom room : rooms) {
+			for(Student student : room.GetStudents()){
+				if(student.GetIsAlive()) {
+					numberOfAliveStudents++;
+				}
+			}
+		}
 		if (currentTurn != null) currentTurn.StartTurn();
 		else throw new RuntimeException("No person was added to game when game was started.");
 
@@ -229,13 +247,13 @@ public class Game implements IVInit {
 
 	@Override
 	public void CreateGame(String mapPathJSON, ICInit icInit, IControl iControl, ICRoom icRoom) {
-		Logger.started(this, "CreateGame");
+		Logger.started(this, "CreateGame", mapPathJSON, icInit, iControl, icRoom);
 		this.iControl = iControl;
 		this.icInit = icInit;
 		this.icRoom = icRoom;
 		String command = "CreateGame " + "false " + mapPathJSON + " " + logLevel.toString();
 		inputHandler.handleCommand(command, icInit);
-		Logger.finished(this, "CreateGame");
+		Logger.finished(this, "CreateGame", mapPathJSON, icInit, iControl, icRoom);
 	}
 
 	/**
@@ -243,7 +261,9 @@ public class Game implements IVInit {
 	 * tovabbi personeket. A logLevel DISABLED (ha szukseg van ra at lehet adni parameterkent a CreateGamenek).
 	 */
 	public void CreateGame(String mapPathJSON) {
+		Logger.started(this, "CreateGame", mapPathJSON);
 		CreateGame(mapPathJSON, null, null, null);
+		Logger.finished(this, "CreateGame", mapPathJSON);
 	}
 
 	/**
@@ -312,20 +332,8 @@ public class Game implements IVInit {
 	 * */
 	public boolean AnyStudentsAlive() {
 		Logger.started(this, "AnyStudentsAlive");
-		/*boolean toReturn = Reader.GetBooleanInput("Van még élő Student? ");
-		if (!toReturn)
-			this.EndGame(false);*/
-		boolean anyStudentAlive = false;
-		for(IRoom room : rooms) {
-			for(Student student : room.GetStudents()){
-				if(student.GetIsAlive()) {
-					anyStudentAlive = true;
-					break;
-				}
-			}
-		}
 		Logger.finished(this, "AnyStudentsAlive");
-		return anyStudentAlive;
+		return numberOfAliveStudents > 0;
 	}
 
 	/**

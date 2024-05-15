@@ -2,6 +2,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVHolyBeerCup;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -249,5 +250,10 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	@Override
 	public String GetID() {
 		return this.id;
+	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
 	}
 }

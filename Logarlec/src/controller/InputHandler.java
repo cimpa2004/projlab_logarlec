@@ -148,7 +148,7 @@ public class InputHandler implements ICInput {
 
         String defaultPath = new File(".").getAbsolutePath();
         defaultPath = defaultPath.substring(0, defaultPath.length() - 1);
-        mapPath = defaultPath  + mapPath;
+        mapPath = defaultPath.contains("Logarlec") ? defaultPath  + mapPath :  defaultPath + "Logarlec/" + mapPath;
 
         boolean isDeterministic = Boolean.parseBoolean(parameters.get(0));
 
@@ -166,7 +166,6 @@ public class InputHandler implements ICInput {
                 for (int i = 0; i < doors.length(); i++) {
                     JSONObject d = doors.getJSONObject(i);
                     DoorSide door = new DoorSide(d.getString("id"));
-                    if (icInit != null) icInit.CreateVDoorSide(door);
                     door.SetCanBeOpened(d.getBoolean("canBeOpened"));
                     doorsList.add(door);
                     doorSideIDs.add(d.getString("id"));
@@ -205,9 +204,9 @@ public class InputHandler implements ICInput {
                         JSONArray students = r.getJSONArray("students");
                         for (int j = 0; j < students.length(); j++) {
                             Student st = new Student(students.getJSONObject(j).getString("id"), game);
-                            if (icInit != null) icInit.CreateVStudent(st,this);
                             game.AddToGame(st);
                             room.AddStudent(st);
+                            if (icInit != null) icInit.CreateVStudent(st,this);
                         }
                     }
 
@@ -216,9 +215,9 @@ public class InputHandler implements ICInput {
                         JSONArray instructors = r.getJSONArray("instructors");
                         for (int j = 0; j < instructors.length(); j++) {
                             Instructor in = new Instructor(instructors.getJSONObject(j).getString("id"), this.game);
-                            if (icInit != null) icInit.CreateVInstructor(in);
                             game.AddToGame(in);
                             room.AddInstructor(in);
+                            if (icInit != null) icInit.CreateVInstructor(in);
                         }
                     }
 
@@ -227,9 +226,9 @@ public class InputHandler implements ICInput {
                         JSONArray janitors = r.getJSONArray("janitors");
                         for (int j = 0; j < janitors.length(); j++) {
                             Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVJanitor(jan);
                             game.AddToGame(jan);
                             room.AddJanitor(jan);
+                            if (icInit != null) icInit.CreateVJanitor(jan);
                         }
                     }
 
@@ -240,12 +239,11 @@ public class InputHandler implements ICInput {
                         JSONArray slideRules = r.getJSONArray("slideRules");
                         for (int j = 0; j < slideRules.length(); j++) {
                             SlideRule sl = new SlideRule(slideRules.getJSONObject(j).getString("id"), game);
-                            if (icInit != null) icInit.CreateVSlideRule(sl);
-                            sl.SetRoom(room);
                             if (slideRules.getJSONObject(j).has("fake")){
                                 sl.SetIsFake(slideRules.getJSONObject(j).getBoolean("fake"));
                             }
                             room.AddItem(sl);
+                            if (icInit != null) icInit.CreateVSlideRule(sl);
                         }
                     }
 
@@ -254,8 +252,6 @@ public class InputHandler implements ICInput {
                         JSONArray tvszs = r.getJSONArray("tvszs");
                         for (int j = 0; j < tvszs.length(); j++) {
                             TVSZ t = new TVSZ(tvszs.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVTVSZ(t);
-                            t.SetRoom(room);
                             if (tvszs.getJSONObject(j).has("durability")) {
                                 t.SetDurability(tvszs.getJSONObject(j).getInt("durability"));
                             }
@@ -263,6 +259,7 @@ public class InputHandler implements ICInput {
                                 t.SetIsFake(tvszs.getJSONObject(j).getBoolean("fake"));
                             }
                             room.AddItem(t);
+                            if (icInit != null) icInit.CreateVTVSZ(t);
                         }
                     }
 
@@ -271,8 +268,6 @@ public class InputHandler implements ICInput {
                         JSONArray ffp2masks = r.getJSONArray("ffp2Masks");
                         for (int j = 0; j < ffp2masks.length(); j++) {
                             FFP2Mask fp = new FFP2Mask(ffp2masks.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVFFP2Mask(fp);
-                            fp.SetRoom(room);
                             if (ffp2masks.getJSONObject(j).has("isActivated")) {
                                 fp.SetIsActivated(ffp2masks.getJSONObject(j).getBoolean("isActivated"));
                             }
@@ -283,6 +278,7 @@ public class InputHandler implements ICInput {
                                 fp.SetIsFake(ffp2masks.getJSONObject(j).getBoolean("fake"));
                             }
                             room.AddItem(fp);
+                            if (icInit != null) icInit.CreateVFFP2Mask(fp);
                         }
                     }
 
@@ -291,8 +287,6 @@ public class InputHandler implements ICInput {
                         JSONArray wetTableClothes = r.getJSONArray("wetTableClothes");
                         for (int j = 0; j < wetTableClothes.length(); j++) {
                             WetTableCloth wt = new WetTableCloth(wetTableClothes.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVWetTableCloth(wt);
-                            wt.SetRoom(room);
                             if (wetTableClothes.getJSONObject(j).has("isActivated")) {
                                 wt.SetIsActivated(wetTableClothes.getJSONObject(j).getBoolean("isActivated"));
                             }
@@ -300,6 +294,7 @@ public class InputHandler implements ICInput {
                                 wt.SetDurability(wetTableClothes.getJSONObject(j).getInt("durability"));
                             }
                             room.AddItem(wt);
+                            if (icInit != null) icInit.CreateVWetTableCloth(wt);
                         }
                     }
 
@@ -308,8 +303,6 @@ public class InputHandler implements ICInput {
                         JSONArray holyBeerCups = r.getJSONArray("holyBeerCups");
                         for (int j = 0; j < holyBeerCups.length(); j++) {
                             HolyBeerCup hb = new HolyBeerCup(holyBeerCups.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVHolyBeerCup(hb);
-                            hb.SetRoom(room);
                             if (holyBeerCups.getJSONObject(j).has("isActivated")) {
                                 hb.SetIsActivated(holyBeerCups.getJSONObject(j).getBoolean("isActivated"));
                             }
@@ -317,6 +310,7 @@ public class InputHandler implements ICInput {
                                 hb.SetDurability(holyBeerCups.getJSONObject(j).getInt("durability"));
                             }
                             room.AddItem(hb);
+                            if (icInit != null) icInit.CreateVHolyBeerCup(hb);
                         }
                     }
 
@@ -325,12 +319,11 @@ public class InputHandler implements ICInput {
                         JSONArray airFresheners = r.getJSONArray("airFresheners");
                         for (int j = 0; j < airFresheners.length(); j++) {
                             AirFreshener af = new AirFreshener(airFresheners.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVAirFreshener(af);
-                            af.SetRoom(room);
                             if (airFresheners.getJSONObject(j).has("isActivated")) {
                                 if (airFresheners.getJSONObject(j).getBoolean("isActivated")) af.Activate();
                             }
                             room.AddItem(af);
+                            if (icInit != null) icInit.CreateVAirFreshener(af);
                         }
                     }
 
@@ -339,8 +332,6 @@ public class InputHandler implements ICInput {
                         JSONArray camemberts = r.getJSONArray("camemberts");
                         for (int j = 0; j < camemberts.length(); j++) {
                             Camembert cb = new Camembert(camemberts.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVCamembert(cb);
-                            cb.SetRoom(room);
                             if (camemberts.getJSONObject(j).has("isActivated")) {
                                 cb.SetIsActivated(camemberts.getJSONObject(j).getBoolean("isActivated"));
                             }
@@ -348,6 +339,7 @@ public class InputHandler implements ICInput {
                                 if (camemberts.getJSONObject(j).getBoolean("isActivated")) cb.Activate();
                             }
                             room.AddItem(cb);
+                            if (icInit != null) icInit.CreateVCamembert(cb);
                         }
                     }
 
@@ -356,9 +348,8 @@ public class InputHandler implements ICInput {
                         JSONArray transistors = r.getJSONArray("transistors");
                         for (int j = 0; j < transistors.length(); j++) {
                             Transistor tr = new Transistor(transistors.getJSONObject(j).getString("id"));
-                            if (icInit != null) icInit.CreateVTransistor(tr);
-                            tr.SetRoom(room);
                             room.AddItem(tr);
+                            if (icInit != null) icInit.CreateVTransistor(tr);
                         }
                     }
 
@@ -369,6 +360,7 @@ public class InputHandler implements ICInput {
                             int doorIndex = doorSideIDs.indexOf(roomDoors.getString(j));
                             DoorSide dPair = doorsList.get(doorIndex);
                             dPair.SetRoom(room);
+                            if (icInit != null) icInit.CreateVDoorSide(dPair);
                         }
                     }
                     game.AddRoom(room);

@@ -1,7 +1,7 @@
 package model;
 
 import util.Logger;
-import view.VRoom;
+import viewmodel.IVRoom;
 import viewmodel.IVAirFreshener;
 
 import java.util.UUID;
@@ -199,5 +199,10 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     public String GetID() {
         return id;
     }
+
+    @Override
+	public IVRoom GetIVRoom() {
+		return room;
+	}
 }
 

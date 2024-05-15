@@ -2,6 +2,7 @@ package model;
 import controller.Game;
 import util.*;
 import viewmodel.IVSlideRule;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -154,4 +155,9 @@ public class SlideRule extends Item implements IVSlideRule {
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
+	}
 }

@@ -40,6 +40,7 @@ public class Logger {
             indentLevel--;
             String indent = generateIndent();
             System.out.println(indent + "FINISHED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
+            if(indent.length() == 0) System.out.println();
         }
     }
 

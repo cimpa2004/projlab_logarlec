@@ -2,6 +2,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVTransistor;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -221,5 +222,10 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	@Override
 	public String GetID() {
 		return id;
+	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
 	}
 }

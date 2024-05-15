@@ -2,6 +2,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVFFP2Mask;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -271,6 +272,11 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		Logger.finished(this, "CanDefend");
 		if(isFake) return false;
 		return isActivated && durability > 0;
+	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
 	}
 
 }

@@ -1,8 +1,7 @@
 package view;
 
-import controller.Game;
+
 import viewmodel.ICRoom;
-import viewmodel.IVDoorSide;
 import viewmodel.IVRoom;
 
 import javax.swing.*;
@@ -11,11 +10,10 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements ICRoom {
 
     private ArrayList<VRoom> rooms = new ArrayList<>();
-    private ArrayList<VPerson> people = new ArrayList<VPerson>();
+    private ArrayList<VPerson> people = new ArrayList<>();
     private VRoom currentRoom;
 
     public GamePanel(){
-
     }
 
     public void AddVPerson(VPerson _new){
@@ -52,16 +50,16 @@ public class GamePanel extends JPanel implements ICRoom {
     @Override
     public void Split(IVRoom ivRoom, IVRoom _new) {
         VRoom newRoom = new VRoom(_new);
-        _new.GetRoom().SetIVRoomUpdate(newRoom);
+        rooms.add(newRoom);
     }
 
     /**
-     * Nem lesz jó így
+     * Osszeolvasztja a ket szobat, pontosabban az ivRoom2-t olvasztja bele az ivRoom1-be. Igy az ivRoom2 megszunik.
      * @param ivRoom1
      * @param ivRoom2
      */
     @Override
     public void Merge(IVRoom ivRoom1, IVRoom ivRoom2) {
-        rooms.remove(ivRoom2);
+        rooms.remove(ivRoom2.GetVRoom());
     }
 }

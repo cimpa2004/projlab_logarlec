@@ -3,7 +3,9 @@ package view;
 import viewmodel.IVCamembert;
 
 public class VCamembert extends VItem{
-    public VCamembert(IVCamembert ivCamembert){
+    IVCamembert ivCamembert;
 
+    public VCamembert(IVCamembert ivCamembert){
+        this.ivCamembert = ivCamembert;
     }
 }

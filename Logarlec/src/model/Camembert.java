@@ -1,6 +1,7 @@
 package model;
 import util.Logger;
 import viewmodel.IVCamembert;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -193,5 +194,10 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	@Override
 	public String GetID() {
 		return id;
+	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
 	}
 }

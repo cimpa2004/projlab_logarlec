@@ -3,6 +3,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVDoorSide;
+import viewmodel.IVRoom;
 
 import java.util.UUID;
 
@@ -161,4 +162,8 @@ public class DoorSide implements IVDoorSide {
 				this.GetPair().GetRoom().GetMaxCapacity() > this.GetPair().GetRoom().GetCurrentCapacity());
 	}
 
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
+	}
 }

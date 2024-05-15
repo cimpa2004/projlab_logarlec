@@ -7,6 +7,8 @@ import view.VStudent;
 import viewmodel.ICInit;
 import viewmodel.IControl;
 import viewmodel.IVStudent;
+import viewmodel.IVStudentUpdate;
+import viewmodel.IVRoom;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,7 +19,7 @@ import java.util.UUID;
 */
 public class Student extends Person implements IVStudent {
 
-	private VStudent vStudent;
+	private IVStudentUpdate ivStudentUpdate;
 
 
 	public Student(String id, Game g){
@@ -167,6 +169,7 @@ public class Student extends Person implements IVStudent {
 		Logger.started(this, "Die");
 		isAlive = false;
 		room.RemoveStudent(this);
+		game.NotifyStudentDied();
 		if(isActiveTurn()) EndTurn();
 		Logger.finished(this, "Die");
 		return isAlive;
@@ -253,12 +256,18 @@ public class Student extends Person implements IVStudent {
 	}
 
 	@Override
-	public void SetVStudent(VStudent vst) {
-		this.vStudent = vst;
+	public void SetIVStudentUpdate(IVStudentUpdate ivStudentUpdate) {
+		this.ivStudentUpdate = ivStudentUpdate;
 	}
 
 	@Override
 	public String GetID(){
 		return this.id;
 	}
+
+	@Override
+	public IVRoom GetIVRoom() {
+		return room;
+	}
+
 }
