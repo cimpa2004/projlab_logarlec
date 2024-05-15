@@ -1,6 +1,7 @@
 package Skeleton;
 import controller.Game;
-import modul.*;
+import model.*;
+import util.Logger;
 
 /**
  * 13-as use case teszt esete
@@ -15,11 +16,10 @@ public class StudentGetsStuckInARoom {
     private static Game g;
     private static TVSZ tv;
     private static Room r0;
-    private static Game game;
+    private static Game game = new Game(true,  Logger.LogLevel.CALL_FLOWS);
 
 
     private static void Init(){
-        game = new Game();
         st = new Student(game);
         invis = new DoorSide();
         oneWay = new DoorSide();

@@ -1,0 +1,4 @@
+CreateGame true Logarlec/Tests/Test13/Map.json
+Move Janitor1 Door1
+DescribePerson Student1
+DescribeRoom Room2

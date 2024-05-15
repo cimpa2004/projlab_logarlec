@@ -1,34 +1,36 @@
 message: A letrejott jatek állapotai a többi mezőben.
 gameTimer: 10
 isEndGame: false
-currentTurn: Student1
-turnOrder: [Instructor1,Student1]
+currentTurn: Instructor1
+turnOrder: [Instructor1, Student1]
 rooms: [Room1, Room2]
-doorsides: [Door1, Door2]
-items: [FFP2Mask1,FFP2Mask2,FFP2Mask3,FFP2Mask4,FFP2Mask5,FFP2Mask6]
+doors: [Door1, Door2]
+items: [FFP2Mask1, FFP2Mask2, FFP2Mask3, FFP2Mask4, FFP2Mask5, FFP2Mask6]
 students: [Student1]
 instructors: [Instructor1]
 janitors: []
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A személynek sikerült felvenni a tárgyat amely már megtálható az inventoryjában
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A tárgyat nem sikerült felvenni. A személy nem tud több tárgyat felvenni, vagy a tárgy nincs abban a szobában ahol a személy, vagy megadott személy/tárgy nem létezik.
-message: A megadott Instructor1 oktató részletei a többi mezőben.
+message: A tárgyat nem sikerült felvenni, nincs több hely a személy inventoryjában vagy ragacsos a szoba.
+
+message: A megadott Instructor1 személy részletei a többi mezőben.
 room: Room1
-inventory: [FFP2Mask1,FFP2Mask2,FFP2Mask3,FFP2Mask4,FFP2Mask5]
-ffp2Masks: [FFP2Mask1,FFP2Mask2,FFP2Mask3,FFP2Mask4,FFP2Mask5]
+inventory: [FFP2Mask1, FFP2Mask2, FFP2Mask3, FFP2Mask4, FFP2Mask5]
 wetTableClothes: []
 tvszs: []
 holyBeerCups: []
-airFresheners: []
+ffp2Masks: [FFP2Mask1, FFP2Mask2, FFP2Mask3, FFP2Mask4, FFP2Mask5]
+isAlive: true
 isFainted: false
 isStunned: false
 activeTurn: false
+

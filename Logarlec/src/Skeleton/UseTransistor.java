@@ -1,7 +1,8 @@
 package Skeleton;
 
 import controller.Game;
-import modul.*;
+import model.*;
+import util.Logger;
 
 public class UseTransistor {
     private static Transistor t1;
@@ -14,7 +15,7 @@ public class UseTransistor {
     private static Game game;
 
     private static void initTest(){
-        game = new Game();
+        game = new Game(true , Logger.LogLevel.CALL_FLOWS);
         t1 = new Transistor();
         t2 = new Transistor();
         s = new Student(game);

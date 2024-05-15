@@ -14,17 +14,15 @@
         "rooms": [
           {
             "id": "Room1",
-            "poisonDuracion" :0,
-            "instructors": [
-            ],
-            "students":[
+            "poisonDuration" :0,
+            "instructors": [],
+            "students": [
                 {
-                    "id" : "Student1"
+                    "id" :"Student1"
                 }
             ],
             "janitors":[],
-            "slideRules":[
-            ],
+            "slideRules":[],
             "tvszs": [
             ],
             "ffp2Masks": [
@@ -46,7 +44,7 @@
           },
           {
             "id": "Room2",
-            "poisonDuracion" :5,
+            "poisonDuration" :5,
             "instructors": [],
             "students":[
             ],
@@ -71,4 +69,3 @@
          
         ]
       }
-    

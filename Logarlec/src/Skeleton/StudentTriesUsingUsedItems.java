@@ -1,7 +1,8 @@
 package Skeleton;
 
 import controller.Game;
-import modul.*;
+import model.*;
+import util.Logger;
 
 public class StudentTriesUsingUsedItems {
     private static Student s;
@@ -15,7 +16,7 @@ public class StudentTriesUsingUsedItems {
 
 
     private static void initTest(){
-        game = new Game();
+        game = new Game(true,  Logger.LogLevel.CALL_FLOWS);
         s = new Student(game);
         c = new Camembert();
         f = new FFP2Mask();

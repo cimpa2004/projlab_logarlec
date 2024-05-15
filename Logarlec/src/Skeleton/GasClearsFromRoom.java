@@ -1,7 +1,8 @@
 package Skeleton;
 
 import controller.Game;
-import modul.*;
+import model.*;
+import util.Logger;
 
 public class GasClearsFromRoom {
     private static Room r;
@@ -11,7 +12,7 @@ public class GasClearsFromRoom {
 
     private static void initTest(){
         r = new Room();
-        g = new Game();
+        g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
         s = new Student(g);
         i = new Instructor(g);
 

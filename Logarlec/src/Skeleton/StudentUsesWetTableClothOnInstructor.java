@@ -1,11 +1,12 @@
 package Skeleton;
 
-import modul.Student;
-import modul.WetTableCloth;
-import modul.DoorSide;
-import modul.Room;
-import modul.Instructor;
+import model.Student;
+import model.WetTableCloth;
+import model.DoorSide;
+import model.Room;
+import model.Instructor;
 import controller.Game;
+import util.Logger;
 
 public class StudentUsesWetTableClothOnInstructor {
     private static Student s;
@@ -13,7 +14,7 @@ public class StudentUsesWetTableClothOnInstructor {
     private static DoorSide d1, d2;
     private static Room r1, r2;
     private static Instructor i;
-    private static Game g;
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
 
 
     private static void initTest(){

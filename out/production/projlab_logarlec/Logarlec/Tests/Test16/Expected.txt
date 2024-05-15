@@ -1,0 +1,106 @@
+message: A letrejott jatek állapotai a többi mezőben.
+gameTimer: 10
+isEndGame: false
+currentTurn: Instructor1
+turnOrder: [Instructor1, Student1]
+rooms: [Room1, Room2, Room3, Room4, Room5, Room6, Room7, Room8]
+doors: [Door1, Door10, Door11, Door12, Door13, Door14, Door15, Door16, Door17, Door18, Door19, Door2, Door20, Door3, Door4, Door5, Door6, Door6, Door8, Door9]
+items: [FFP2Mask1, SlideRule1, TVSZ1]
+students: [Student1]
+instructors: [Instructor1]
+janitors: []
+
+message: A játék elindult. A személykre vonatkozó parancsok közül azokra kell meghívni aki a soron következő, majd arra EndTurn paranccsal fejezhető be a kör.
+currentTurn: Instructor1
+
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
+
+message: A megadott TVSZ1 részletei a többi mezőben.
+owner: Student1
+room: None
+isActivated: false
+durability: 1
+pair: None
+isFake: false
+
+message: A megadott Student1 személy részletei a többi mezőben.
+room: Room7
+inventory: [TVSZ1]
+wetTableClothes: []
+tvszs: [TVSZ1]
+holyBeerCups: []
+ffp2Masks: []
+isAlive: true
+isFainted: false
+isStunned: false
+activeTurn: true
+
+message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
+
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
+
+message: A megadott Instructor1 személy részletei a többi mezőben.
+room: Room2
+inventory: [FFP2Mask1]
+wetTableClothes: []
+tvszs: []
+holyBeerCups: []
+ffp2Masks: []
+isAlive: true
+isFainted: false
+isStunned: false
+activeTurn: false
+
+message: A megadott FFP2Mask1 részletei a többi mezőben.
+owner: Instructor1
+room: None
+isActivated: false
+durability: 3
+pair: None
+isFake: false
+
+message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
+
+message: A megadott Room2 szoba részletei a többi mezőben.
+items: []
+doors: [Door14, Door16, Door2, Door20, Door3]
+neighbors: [Room1, Room3, Room5, Room6, Room7]
+isCursed: false
+isSticky: false
+poisonDuration: 0
+currentCapacity: 2
+maxCapacity: 10
+numberOfPeopleBeenToRoom: 2
+students: [Student1]
+instructors: [Instructor1]
+janitors: []
+
+message: A megadott Student1 személy részletei a többi mezőben.
+room: Room2
+inventory: [TVSZ1]
+wetTableClothes: []
+tvszs: [TVSZ1]
+holyBeerCups: []
+ffp2Masks: []
+isAlive: true
+isFainted: false
+isStunned: false
+activeTurn: true
+
+message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
+
+message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
+
+message: A letrejott jatek állapotai a többi mezőben.
+gameTimer: 10
+isEndGame: true
+winSide: true
+currentTurn: Student1
+turnOrder: [Instructor1, Student1]
+rooms: [Room1, Room2, Room3, Room4, Room5, Room6, Room7, Room8]
+doors: [Door1, Door10, Door11, Door12, Door13, Door14, Door15, Door16, Door17, Door18, Door19, Door2, Door20, Door3, Door4, Door5, Door6, Door6, Door8, Door9]
+items: [FFP2Mask1, SlideRule1, TVSZ1]
+students: [Student1]
+instructors: [Instructor1]
+janitors: []
+

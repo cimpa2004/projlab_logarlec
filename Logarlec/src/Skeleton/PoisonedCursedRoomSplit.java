@@ -1,11 +1,14 @@
 package Skeleton;
 
-import modul.*;
+import controller.Game;
+import model.*;
+import util.Logger;
 
 public class PoisonedCursedRoomSplit {
 
     private static Room r;
     private static TVSZ t;
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
 
     private static void initTest(){
         r = new Room();
@@ -24,7 +27,7 @@ public class PoisonedCursedRoomSplit {
         System.out.println("Run");
 
         //Függvényhívások a szekvencia diagramon
-        r.SeparateRoom();
+        //r.SeparateRoom();
 
         System.out.println("--------");
     }
