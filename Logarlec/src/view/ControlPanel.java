@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Az irányításhoz szükséges gombokat és az inventory-t jeleníti meg
+ */
 public class ControlPanel extends JPanel implements IControl {
     private ArrayList<VStudent> students = new ArrayList<>();
     private JButton EndTurnButton = new JButton("Kör vége");
@@ -91,8 +94,7 @@ public class ControlPanel extends JPanel implements IControl {
     /**
      * Újra rajzolja az inventory-t és a gamePanelt
      */
-    @Override
-    public void Update() {
+    private void Update() {
         //TODO: uncomment this
         //for (VItem item: currentStudent.getItems()){
             //item.DrawInInventory(itemsPanel);

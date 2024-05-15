@@ -7,8 +7,10 @@ import viewmodel.IVRoom;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/**
+ * A pálya részét jelenítetti meg a játéknak
+ */
 public class GamePanel extends JPanel implements ICRoom {
-
     private ArrayList<VRoom> rooms = new ArrayList<>();
     private ArrayList<VPerson> people = new ArrayList<>();
     private VRoom currentRoom;
@@ -26,11 +28,19 @@ public class GamePanel extends JPanel implements ICRoom {
         return rooms;
     }
 
+    /**
+     * Változás esetén érdemes meghívni, újra rajzolja a szobát
+     */
     public void Redraw(){
         if (currentRoom != null){
             Draw(currentRoom);
         }
     }
+
+    /**
+     * Kirajzoltatja a szobát
+     * @param room a kirajzolandó VRoom
+     */
 
     public void Draw(VRoom room){
         if (room == null){
@@ -40,10 +50,10 @@ public class GamePanel extends JPanel implements ICRoom {
         currentRoom.Draw(this);
     }
 
-    //TODO: fix these
+    //TODO:az itemek és az emberek lehet nem jól lesznek átrakva
 
     /**
-     *  Felveszi az új szobát
+     *  Felveszi az új szobát, nem lesz jó így
      * @param ivRoom the old room, already exists
      * @param _new the new room, needs to be created
      */

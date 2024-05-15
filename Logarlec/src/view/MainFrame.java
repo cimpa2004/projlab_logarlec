@@ -4,6 +4,9 @@ import viewmodel.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A játék fő ablaka tárolja a gamePanelt és a ControlPanelt
+ */
 public class MainFrame extends JFrame implements ICInit {
     private GamePanel gamePanel = new GamePanel();
     private ControlPanel controlPanel = new ControlPanel(gamePanel);
@@ -26,7 +29,6 @@ public class MainFrame extends JFrame implements ICInit {
         add(controlPanel);
 
     }
-
     @Override
     public void CreateVRoom(IVRoom ivRoom) {
         gamePanel.AddVRoom(new VRoom(ivRoom));

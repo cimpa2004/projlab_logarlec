@@ -1,8 +1,9 @@
 package view;
 
+import viewmodel.IVItemUpdate;
+
 import javax.swing.*;
 
-import viewmodel.IVItemUpdate;
 
 public class VItem implements IVItemUpdate {
     private String ID;
