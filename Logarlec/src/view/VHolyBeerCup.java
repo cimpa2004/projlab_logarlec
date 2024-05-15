@@ -7,5 +7,6 @@ public class VHolyBeerCup extends VItem {
 
     public VHolyBeerCup(IVHolyBeerCup ivHolyBeerCup) {
         this.ivHolyBeerCup = ivHolyBeerCup;
+        this.ivHolyBeerCup.SetIVItemUpdate(this);
     }
 }

@@ -3,7 +3,6 @@ package model;
 
 import util.Logger;
 import viewmodel.IVTVSZ;
-import viewmodel.IVTransistor;
 import viewmodel.IVRoom;
 
 import java.util.UUID;

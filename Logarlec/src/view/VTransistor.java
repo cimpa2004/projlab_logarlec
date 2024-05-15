@@ -3,7 +3,10 @@ package view;
 import viewmodel.IVTransistor;
 
 public class VTransistor extends VItem{
-    public VTransistor(IVTransistor ivTransistor){
+    IVTransistor ivTransistor;
 
+    public VTransistor(IVTransistor ivTransistor){
+        this.ivTransistor = ivTransistor;
+        this.ivTransistor.SetIVItemUpdate(this);
     }
 }

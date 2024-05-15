@@ -7,5 +7,6 @@ public class VAirFreshener extends VItem {
 
     public VAirFreshener(IVAirFreshener ivAirFreshener) {
         this.ivAirFreshener = ivAirFreshener;
+        this.ivAirFreshener.SetIVItemUpdate(this);
     }
 }

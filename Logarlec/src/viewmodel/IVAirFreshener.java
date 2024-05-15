@@ -1,8 +1,6 @@
 package viewmodel;
 
-import view.VRoom;
-
-public interface IVAirFreshener {
+public interface IVAirFreshener extends IVItem {
     public String GetID();
     public IVRoom GetIVRoom();
 }

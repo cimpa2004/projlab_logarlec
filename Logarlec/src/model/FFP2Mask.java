@@ -2,6 +2,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVFFP2Mask;
+import viewmodel.IVItem;
 import viewmodel.IVRoom;
 
 import java.util.UUID;

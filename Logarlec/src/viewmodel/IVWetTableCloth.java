@@ -1,6 +1,6 @@
 package viewmodel;
 
-public interface IVWetTableCloth {
+public interface IVWetTableCloth extends IVItem {
     public String GetID();
     public IVRoom GetIVRoom();
 }
