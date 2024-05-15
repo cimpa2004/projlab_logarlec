@@ -1,0 +1,25 @@
+name: Java CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '1.8'
+        distribution: 'adopt'
+
+    - name: Compile and run the Java code
+      run: |
+        mkdir -p build/classes/test
+        javac -d build/classes/test Logarlec/src/test/PrototypeMain.java
+        java -cp build/classes/test PrototypeMain || (grep -q 'FAILED' <<< "$OUTPUT" && exit 1)
+      env:
+        OUTPUT: ${{ steps.build.outputs.output }}
