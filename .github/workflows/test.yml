@@ -22,5 +22,6 @@ jobs:
         mkdir -p build/classes/test
         javac -cp "lib/json-20240303.jar:src" -d build/classes/test src/util/Reader.java src/test/Tester.java src/test/PrototypeMain.java
         java -cp "build/classes/test:lib/json-20240303.jar" test.PrototypeMain || (grep -q 'FAILED' <<< "$OUTPUT" && exit 1)
+        run all
       env:
         OUTPUT: ${{ steps.build.outputs.output }}
