@@ -104,7 +104,11 @@
   "rooms": [
     {
       "id": "Room1",
-      "instructors": [],
+      "instructors": [
+        {
+          "id": "Instructor1"
+        }
+      ],
       "students": [],
       "janitors": [],
       "slideRules": [],
