@@ -26,7 +26,7 @@ jobs:
       
     - name: Check for FAIL in the output
       run: |
-        if echo "${{ steps.run_tests.outputs.output }}" | grep -q 'FAIL'; then
+        if echo ${{ steps.run_tests.outputs.output }} | grep -q 'FAIL'; then
           echo "The output contains FAIL"
           exit 1
         else
