@@ -20,8 +20,7 @@ jobs:
       run: |
         cd Logarlec
         mkdir -p build/classes/test
-        javac -cp "lib/json-20240303.jar:src" -d build/classes/test src/util/Reader.java src/test/Tester.java src/test/PrototypeMain.java
-        java -cp "build/classes/test:lib/json-20240303.jar" test.PrototypeMain 
-        run all || (grep -q 'FAILED' <<< "$OUTPUT" && exit 1)
+        javac -cp "lib/json-20240303.jar:src" -d build/classes/test src/test/Tester.java src/test/TestRunAllMain.java
+        java -cp "build/classes/test:lib/json-20240303.jar" test.TestRunAllMain || (grep -q 'FAILED' <<< "$OUTPUT" && exit 1)
       env:
         OUTPUT: ${{ steps.build.outputs.output }}
