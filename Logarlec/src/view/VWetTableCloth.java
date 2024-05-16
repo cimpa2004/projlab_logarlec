@@ -6,8 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VWetTableCloth extends VItem {
-    public VWetTableCloth(IVWetTableCloth ivWetTableCloth) {
+    IVWetTableCloth ivWetTableCloth;
 
+    public VWetTableCloth(IVWetTableCloth ivWetTableCloth) {
+        this.ivWetTableCloth = ivWetTableCloth;
+        ivWetTableCloth.SetIVItemUpdate(this);
     }
 
     /**

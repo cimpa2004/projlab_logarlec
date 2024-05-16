@@ -1,6 +1,6 @@
 package viewmodel;
 
-public interface IVSlideRule {
+public interface IVSlideRule extends IVItem {
     public String GetID();
     public IVRoom GetIVRoom();
 }

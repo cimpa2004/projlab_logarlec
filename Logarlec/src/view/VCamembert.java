@@ -10,6 +10,7 @@ public class VCamembert extends VItem{
 
     public VCamembert(IVCamembert ivCamembert){
         this.ivCamembert = ivCamembert;
+        this.ivCamembert.SetIVItemUpdate(this);
     }
 
     /**

@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements ICRoom {
         currentRoom.Draw(this);
     }
 
-    //TODO:az itemek és az emberek lehet nem jó lesznek átrakva
+    //TODO:az itemek és az emberek lehet nem jól lesznek átrakva
 
     /**
      *  Felveszi az új szobát, nem lesz jó így

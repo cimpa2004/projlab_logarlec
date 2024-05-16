@@ -29,10 +29,9 @@ public class MainFrame extends JFrame implements ICInit {
         add(controlPanel);
 
     }
-
     @Override
-    public void CreateVInstructor(IVInstructor ivInstructor) {
-        gamePanel.AddVPerson(new VInstructor(ivInstructor));
+    public void CreateVRoom(IVRoom ivRoom) {
+        gamePanel.AddVRoom(new VRoom(ivRoom));
     }
 
     @Override
@@ -84,11 +83,6 @@ public class MainFrame extends JFrame implements ICInit {
     }
 
     @Override
-    public void CreateVRoom(IVRoom ivRoom) {
-        gamePanel.AddVRoom(new VRoom(ivRoom));
-    }
-
-    @Override
     public void CreateVTransistor(IVTransistor ivTransistor) {
         VRoom transistorVRoom = ivTransistor.GetIVRoom().GetVRoom();
         transistorVRoom.AddVItem(new VTransistor(ivTransistor));
@@ -104,5 +98,10 @@ public class MainFrame extends JFrame implements ICInit {
         //konstuktorban hozzá adja magát a control panelhez
         VStudent student = new VStudent(ivStudent,controlPanel,icInput);
         gamePanel.AddVPerson(student);
+    }
+
+    @Override
+    public void CreateVInstructor(IVInstructor ivInstructor) {
+        gamePanel.AddVPerson(new VInstructor(ivInstructor));
     }
 }
