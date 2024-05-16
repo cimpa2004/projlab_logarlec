@@ -8,8 +8,9 @@ import java.awt.*;
 
 public class VTransistor extends VItem{
 
-    private Transistor ClickedT;
+    private static VTransistor ClickedT;
     IVTransistor ivTransistor;
+    VStudent owner;
 
     public VTransistor(IVTransistor ivTransistor){
         this.ivTransistor = ivTransistor;
@@ -18,7 +19,7 @@ public class VTransistor extends VItem{
 
     @Override
     public void PickedUp() {
-
+        owner.input.PickupItem(owner.getID(), ivTransistor);
     }
 
     @Override
@@ -27,23 +28,9 @@ public class VTransistor extends VItem{
     }
 
     @Override
-    public void DrawInInventory(JPanel panel) {
-        JPanel itemPanel = new JPanel();
-        itemPanel.setPreferredSize(new Dimension(100, 50)); // Set preferred size
-        itemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
-
-        BoxLayout boxlayout = new BoxLayout(itemPanel, BoxLayout.Y_AXIS);
-        itemPanel.setLayout(boxlayout);
-
-        CirclePanel circlePanel = new CirclePanel(new Color(0,0,0));
-        JButton useButton = new JButton();
-        JButton throwButton = new JButton();
-        JButton connectButton = new JButton();
-
-        itemPanel.add(circlePanel);
-        itemPanel.add(useButton);
-        itemPanel.add(throwButton);
-        itemPanel.add(connectButton);
+    public void DrawInInventory(JPanel panel, VStudent student) {
+        owner = student;
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,0), true, true, this);
 
         panel.add(itemPanel);
     }
@@ -53,8 +40,35 @@ public class VTransistor extends VItem{
         return true;
     }
 
+    /**
+     *
+     */
     @Override
-    public void Throw() {
+    public void Used() {
+        owner.input.UseItem(owner.getID(), ivTransistor);
+    }
 
+    @Override
+    public void Thrown() {
+        owner.input.ThrowItem(owner.getID(), ivTransistor);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void Connected() {
+        owner.input.Connect(owner.getID(), ivTransistor, ClickedT.ivTransistor);
+        SetClickedT(null);
+    }
+
+    public VTransistor GetClickedT(){return ClickedT;}
+
+    /**
+     * @param t
+     */
+    @Override
+    public void SetClickedT(VTransistor t) {
+        ClickedT = t;
     }
 }

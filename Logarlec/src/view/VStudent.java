@@ -10,7 +10,7 @@ import java.util.List;
 public class VStudent extends VPerson{
     private IVStudent ivStudent;
     private ControlPanel controlPanel;
-    private ICInput input;
+    public ICInput input;
 
     public List<VItem> getItems(){
         return null;

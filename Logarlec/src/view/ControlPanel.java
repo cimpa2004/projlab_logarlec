@@ -40,16 +40,9 @@ public class ControlPanel extends JPanel implements IControl {
         //TODO: maybe it will work
         if(currentStudent != null && currentStudent.getItems() != null){
             for (VItem item: currentStudent.getItems()){
-                item.DrawInInventory(itemsPanel);
+                item.DrawInInventory(itemsPanel, currentStudent);
             }
         }
-        // Add 5 items (placeholders)
-        /*for (int i = 0; i < 5; i++) {
-            JPanel box = new JPanel();
-            box.setPreferredSize(new Dimension(100, 50)); // Set preferred size
-            box.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
-            itemsPanel.add(box);
-        }*/
 
         // Panel for buttons on the right
         JPanel buttonsPanel = new JPanel();
@@ -101,7 +94,7 @@ public class ControlPanel extends JPanel implements IControl {
         if (currentStudent != null){
             if(currentStudent.getItems() != null){
                 for(VItem item: currentStudent.getItems()){
-                    item.DrawInInventory(itemsPanel);
+                    item.DrawInInventory(itemsPanel, currentStudent);
                 }
             }
             nameLabel.setText(currentStudent.toString());

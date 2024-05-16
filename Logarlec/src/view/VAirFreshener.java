@@ -8,6 +8,8 @@ import java.awt.*;
 public class VAirFreshener extends VItem {
     IVAirFreshener ivAirFreshener;
 
+    VStudent owner;
+
     public VAirFreshener(IVAirFreshener ivAirFreshener) {
         this.ivAirFreshener = ivAirFreshener;
         this.ivAirFreshener.SetIVItemUpdate(this);
@@ -18,7 +20,7 @@ public class VAirFreshener extends VItem {
      */
     @Override
     public void PickedUp() {
-
+        owner.input.PickupItem(owner.getID(), ivAirFreshener);
     }
 
     /**
@@ -33,21 +35,9 @@ public class VAirFreshener extends VItem {
      * @param panel
      */
     @Override
-    public void DrawInInventory(JPanel panel) {
-        JPanel itemPanel = new JPanel();
-        itemPanel.setPreferredSize(new Dimension(100, 50)); // Set preferred size
-        itemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
-
-        BoxLayout boxlayout = new BoxLayout(itemPanel, BoxLayout.Y_AXIS);
-        itemPanel.setLayout(boxlayout);
-
-        CirclePanel circlePanel = new CirclePanel(new Color(0,0,255));
-        JButton useButton = new JButton();
-        JButton throwButton = new JButton();
-
-        itemPanel.add(circlePanel);
-        itemPanel.add(useButton);
-        itemPanel.add(throwButton);
+    public void DrawInInventory(JPanel panel, VStudent student) {
+        owner = student;
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,255), true, false, this);
 
         panel.add(itemPanel);
     }
@@ -64,7 +54,35 @@ public class VAirFreshener extends VItem {
      *
      */
     @Override
-    public void Throw() {
-
+    public void Used() {
+        owner.input.UseItem(owner.getID(), ivAirFreshener);
     }
+
+    /**
+     *
+     */
+    @Override
+    public void Thrown() {
+        owner.input.ThrowItem(owner.getID(), ivAirFreshener);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void Connected() {}
+
+    /**
+     * @return
+     */
+    @Override
+    public VTransistor GetClickedT() {
+        return null;
+    }
+
+    /**
+     * @param t
+     */
+    @Override
+    public void SetClickedT(VTransistor t) {}
 }
