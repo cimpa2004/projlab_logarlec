@@ -6,8 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VTVSZ extends VItem {
-    public VTVSZ(IVTVSZ ivTVSZ) {
+    IVTVSZ ivTVSZ;
 
+    public VTVSZ(IVTVSZ ivTVSZ) {
+        this.ivTVSZ = ivTVSZ;
+        this.ivTVSZ.SetIVItemUpdate(this);
     }
 
     @Override

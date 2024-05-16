@@ -96,8 +96,7 @@ public class ControlPanel extends JPanel implements IControl {
     /**
      * Újra rajzolja az inventory-t és a gamePanelt
      */
-    @Override
-    public void Update() {
+    private void Update() {
         //TODO: uncomment this
         if (currentStudent != null){
             if(currentStudent.getItems() != null){

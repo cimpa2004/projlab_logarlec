@@ -1,6 +1,6 @@
 package viewmodel;
 
-public interface IVHolyBeerCup{
+public interface IVHolyBeerCup extends IVItem {
     public String GetID();
     public IVRoom GetIVRoom();
 }

@@ -2,7 +2,6 @@ package model;
 
 
 import util.Logger;
-import view.VItem;
 import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 

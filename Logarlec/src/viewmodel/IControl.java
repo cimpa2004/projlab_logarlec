@@ -1,10 +1,6 @@
 package viewmodel;
 
 public interface IControl {
-    /**
-     * Ezt a fuggvenyt a View-n hivja meg a Controller, ahol Updatel jelez, amikor egy uj kor kovetkezik
-     */
-    public void Update(); // TODO maybe later give some parameters here, i guess
 
     /**
      * Ezt a fuggvenyt a View-n hivja meg a Controller, ahol jelzi, hogy egy uj Studentnek kezdodik a kore

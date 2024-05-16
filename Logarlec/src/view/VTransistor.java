@@ -7,9 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VTransistor extends VItem{
-    private Transistor ClickedT;
-    public VTransistor(IVTransistor ivTransistor){
 
+    private Transistor ClickedT;
+    IVTransistor ivTransistor;
+
+    public VTransistor(IVTransistor ivTransistor){
+        this.ivTransistor = ivTransistor;
+        this.ivTransistor.SetIVItemUpdate(this);
     }
 
     @Override

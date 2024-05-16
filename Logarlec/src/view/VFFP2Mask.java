@@ -10,6 +10,7 @@ public class VFFP2Mask extends VItem{
     
     public VFFP2Mask(IVFFP2Mask ivffp2Mask){
         this.ivFFP2Mask = ivffp2Mask;
+        this.ivFFP2Mask.SetIVItemUpdate(this);
     }
 
     /**
