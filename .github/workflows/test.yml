@@ -23,10 +23,12 @@ jobs:
         mkdir -p build/classes/test
         javac -cp "lib/json-20240303.jar:src" -d build/classes/test src/test/Tester.java src/test/TestRunAllMain.java
         output=$(java -cp "build/classes/test:lib/json-20240303.jar" test.TestRunAllMain)
+        echo "$output"
+        echo "::set-output name=output::$output"
       
     - name: Check for FAIL in the output
       run: |
-        if echo ${{ steps.run_tests.outputs.output }} | grep -q 'FAIL'; then
+        if echo "${{ steps.run_tests.outputs.output }}" | grep -q 'FAIL'; then
           echo "The output contains FAIL"
           exit 1
         else
