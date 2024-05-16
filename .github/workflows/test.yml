@@ -28,10 +28,12 @@ jobs:
       
     - name: Check for FAIL in the output
       run: |
-        if grep -q 'FAIL' Logarlec/full_output.txt | grep -q 'FAIL'; then
+        while IFS= read -r line; do
+        if [[ $line == *"FAIL"* ]]; then
           echo "The output contains FAIL"
           exit 1
-        else
-          echo "The output does not contain FAIL"
         fi
+        done < full_output.txt
+        echo "The output does not contain FAIL"
+
   
