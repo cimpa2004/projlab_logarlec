@@ -10,9 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: List files in Tests directory
-      run: ls -R .
-
     - name: Set up JDK 22.0.1+8
       uses: actions/setup-java@v2
       with:
@@ -20,10 +17,19 @@ jobs:
         distribution: 'adopt'
 
     - name: Compile and run the Java code
+      id: run_tests
       run: |
         cd Logarlec
         mkdir -p build/classes/test
         javac -cp "lib/json-20240303.jar:src" -d build/classes/test src/test/Tester.java src/test/TestRunAllMain.java
-        java -cp "build/classes/test:lib/json-20240303.jar" test.TestRunAllMain || (grep -q 'FAIL' <<< "$OUTPUT" && exit 1)
-      env:
-        OUTPUT: ${{ steps.build.outputs.output }}
+        output=$(java -cp "build/classes/test:lib/json-20240303.jar" test.TestRunAllMain)
+      
+    - name: Check for FAIL in the output
+      run: |
+        if echo "${{ steps.run_tests.outputs.output }}" | grep -q 'FAIL'; then
+          echo "The output contains FAIL"
+          exit 1
+        else
+          echo "The output does not contain FAIL"
+        fi
+  
