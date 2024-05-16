@@ -8,10 +8,9 @@ import java.awt.*;
 
 public abstract class VItem implements IVItemUpdate {
     private String ID;
-    public void DrawInInventory(JPanel panel){
 
     private VRoom room;
-    private String ID;
+
     public String GetID(){
         return ID;
     }
