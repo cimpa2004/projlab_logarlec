@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class VFFP2Mask extends VItem{
     IVFFP2Mask ivFFP2Mask;
-    
+    VStudent owner;
     public VFFP2Mask(IVFFP2Mask ivffp2Mask){
         this.ivFFP2Mask = ivffp2Mask;
         this.ivFFP2Mask.SetIVItemUpdate(this);
@@ -18,7 +18,7 @@ public class VFFP2Mask extends VItem{
      */
     @Override
     public void PickedUp() {
-
+        owner.input.PickupItem(owner.getID(), ivFFP2Mask);
     }
 
     /**
@@ -33,21 +33,9 @@ public class VFFP2Mask extends VItem{
      * @param panel
      */
     @Override
-    public void DrawInInventory(JPanel panel) {
-        JPanel itemPanel = new JPanel();
-        itemPanel.setPreferredSize(new Dimension(100, 50)); // Set preferred size
-        itemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
-
-        BoxLayout boxlayout = new BoxLayout(itemPanel, BoxLayout.Y_AXIS);
-        itemPanel.setLayout(boxlayout);
-
-        CirclePanel circlePanel = new CirclePanel(new Color(255,255,255));
-        JButton useButton = new JButton();
-        JButton throwButton = new JButton();
-
-        itemPanel.add(circlePanel);
-        itemPanel.add(useButton);
-        itemPanel.add(throwButton);
+    public void DrawInInventory(JPanel panel, VStudent student) {
+        owner = student;
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this);
 
         panel.add(itemPanel);
     }
@@ -64,7 +52,37 @@ public class VFFP2Mask extends VItem{
      *
      */
     @Override
-    public void Throw() {
+    public void Used() {
+        owner.input.UseItem(owner.getID(), ivFFP2Mask);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void Thrown() {
+        owner.input.ThrowItem(owner.getID(), ivFFP2Mask);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void Connected() {}
+
+    /**
+     * @return
+     */
+    @Override
+    public VTransistor GetClickedT() {
+        return null;
+    }
+
+    /**
+     * @param t
+     */
+    @Override
+    public void SetClickedT(VTransistor t) {
 
     }
 }

@@ -3,7 +3,6 @@ package view;
 import viewmodel.IVItemUpdate;
 
 import javax.swing.*;
-import java.awt.*;
 
 
 public abstract class VItem implements IVItemUpdate {
@@ -16,12 +15,13 @@ public abstract class VItem implements IVItemUpdate {
     }
     public abstract void PickedUp();
     public abstract CirclePanel DrawOnMap();
-    public abstract void DrawInInventory(JPanel panel);
-
+    public abstract void DrawInInventory(JPanel panel, VStudent student);
     public abstract boolean HasNullable();
-
-    public abstract void Throw();
-
+    public abstract void Used();
+    public abstract void Thrown();
+    public abstract void Connected();
+    public abstract VTransistor GetClickedT();
+    public abstract void SetClickedT(VTransistor t);
     @Override
     public void ThrownUpdate() {
         // TODO: implement
