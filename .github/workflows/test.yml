@@ -33,7 +33,7 @@ jobs:
           echo "The output contains FAIL"
           exit 1
         fi
-        done < full_output.txt
+        done < Logarlec/full_output.txt
         echo "The output does not contain FAIL"
 
   
