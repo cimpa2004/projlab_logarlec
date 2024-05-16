@@ -82,9 +82,6 @@ public class Tester {
     public void runTestAuto(String inputFilePath, String expectedOutputFilePath){
         ArrayList<String> expectedCommandOutputs = readExpectedOutputFile(expectedOutputFilePath);
         ArrayList<String> actualCommandOutputs = new ArrayList<>();
-        
-        System.out.println("inputFilePath: " + inputFilePath);
-        System.out.println("expectedOutputFilePath: " + expectedOutputFilePath);
 
         // Read input commands from inputFilePath
         ArrayList<String> inputCommands = new ArrayList<>();
