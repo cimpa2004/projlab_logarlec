@@ -1,6 +1,5 @@
 package test;
 
-import test.Tester;
 import util.Reader;
 
 public class PrototypeMain {
