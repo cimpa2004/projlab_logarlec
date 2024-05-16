@@ -1,13 +1,20 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class VItem {
+public abstract class VItem {
+
+    private VRoom room;
     private String ID;
-    public void DrawInInventory(JPanel panel){
-
-    }
     public String GetID(){
         return ID;
     }
+    public abstract void PickedUp();
+    public abstract CirclePanel DrawOnMap();
+    public abstract void DrawInInventory(JPanel panel);
+
+    public abstract boolean HasNullable();
+
+    public abstract void Throw();
 }
