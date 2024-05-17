@@ -4,6 +4,7 @@ import util.Logger;
 import viewmodel.IControl;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,9 +51,10 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS)); // Vertical alignment
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
 
-        // Create buttons
+        // Create button listeners
         EndTurnButton.addActionListener(new EndTurnButtonListener());
         PickUpButton.addActionListener(new PickupButtonListener());
+
 
         // Add buttons to the panel
         buttonsPanel.add(EndTurnButton);
@@ -103,7 +105,8 @@ public class ControlPanel extends JPanel implements IControl {
                     item.DrawInInventory(itemsPanel, currentStudent);
                 }
             }
-            nameLabel.setText(currentStudent.toString());
+            nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
+            nameLabel.setBorder(new EmptyBorder(10,10,10,10));
             gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
         else nameLabel.setText("Senki köre");

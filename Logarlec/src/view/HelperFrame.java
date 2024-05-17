@@ -42,7 +42,8 @@ class HelperFrame extends JFrame {
 
 
         //Back gomb
-        backButton = new JButton("Back");
+        backButton = new JButton("Vissza");
+        backButton.setPreferredSize(new Dimension(50,50));
         backButton.addActionListener(new BackButtonListener());
         add(backButton, BorderLayout.SOUTH);
 
