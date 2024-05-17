@@ -12,11 +12,6 @@ import java.util.*;
 
 public class Janitor extends Person implements IVJanitor {
     /**
-     * Game referencia
-     */
-    private Game game;
-
-    /**
      * Konstruktor
      * @param id - azonosíto teszteléshez
      */
@@ -69,11 +64,10 @@ public class Janitor extends Person implements IVJanitor {
         Random random = new Random();
         if(game!=null) {
             if (!game.GetIsDeterministic()){
-                List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
+                final List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
                 Collections.shuffle(doorsCopy);
                     for(Student st : this.GetRoom().GetStudents()){
                         for (DoorSide dr : doorsCopy){
-                            if (random.nextBoolean())
                                 if (dr.IsDoorUseable()){
                                     st.Move(dr);//a keresett ajtón átmegy
                                 break;
@@ -82,7 +76,6 @@ public class Janitor extends Person implements IVJanitor {
                     }
                     for(Instructor ins : this.GetRoom().GetInstructors()){
                         for (DoorSide dr : doorsCopy){
-                            if (random.nextBoolean())
                                 if (dr.IsDoorUseable()){
                                     ins.Move(dr);//a keresett ajtón átmegy
                                     break;
@@ -157,6 +150,7 @@ public class Janitor extends Person implements IVJanitor {
 
         //Mozgató logika
         Random random = new Random();
+        if(game != null)
         if (!game.GetIsDeterministic()){
             List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
             Collections.shuffle(doorsCopy);

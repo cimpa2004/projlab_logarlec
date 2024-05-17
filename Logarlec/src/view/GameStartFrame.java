@@ -116,7 +116,7 @@ public class GameStartFrame extends JFrame {
             Logger.startedView(this, "StartButtonListener.actionPerformed", e);
             //if button is clickable there are valid values
             //TODO: use real map
-            initer.CreateGame("Map.json",icInit,iControl,icRoom);
+            initer.CreateGame("DemoMap.json",icInit,iControl,icRoom);
             for (String name: names) {
                 initer.AddStudent(name);
             }

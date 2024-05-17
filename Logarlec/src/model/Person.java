@@ -102,6 +102,10 @@ public abstract class Person implements IPerson {
 	*/
 	protected List<Defendable> ffp2Masks;
 
+	public void SetGame(Game  g){
+		this.game = g;
+	}
+
 	public Person(String id){
 		this.id = id;
 		inventory = new ArrayList<>();
