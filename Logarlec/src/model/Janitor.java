@@ -27,8 +27,9 @@ public class Janitor extends Person implements IVJanitor {
     /**
      * Nem teszteléshez használt konstruktor
      */
-    public Janitor() {
+    public Janitor(Game game) {
         super(UUID.randomUUID().toString());
+        this.game = game;
     }
 
     private IVJanitorUpdate ivJanitorUpdate;
@@ -71,7 +72,8 @@ public class Janitor extends Person implements IVJanitor {
             if (!game.GetIsDeterministic()){
                 final List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
                 Collections.shuffle(doorsCopy);
-                    for(Student st : this.GetRoom().GetStudents()){
+                    ArrayList<Student> studentsCopy = new ArrayList<>(this.GetRoom().GetStudents());
+                    for(Student st : studentsCopy){
                         for (DoorSide dr : doorsCopy){
                                 if (dr.IsDoorUseable()){
                                     st.Move(dr);//a keresett ajtón átmegy
