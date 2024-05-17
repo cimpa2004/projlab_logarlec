@@ -171,7 +171,9 @@ public class Student extends Person implements IVStudent {
 		Logger.startedModel(this, "Die");
 		isAlive = false;
 		room.RemoveStudent(this);
-		ivStudentUpdate.Died();
+		if(ivStudentUpdate != null){
+			ivStudentUpdate.Died();
+		}
 		game.NotifyStudentDied();
 		if(IsActiveTurn()) EndTurn();
 		Logger.finishedModel(this, "Die");
