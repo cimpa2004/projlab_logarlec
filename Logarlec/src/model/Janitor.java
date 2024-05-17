@@ -67,7 +67,6 @@ public class Janitor extends Person implements IVJanitor {
      */
     private void MakeThemLeave(){
         Logger.startedModel(this, "MakeThemLeave");
-        Random random = new Random();
         if(game!=null) {
             if (!game.GetIsDeterministic()){
                 final List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
@@ -90,7 +89,8 @@ public class Janitor extends Person implements IVJanitor {
                         }
                     }
             }else{ //determinisztikus mozgás az első lehetséges szomszéd
-                for(Student st : this.GetRoom().GetStudents()){
+                ArrayList<Student> studentsCopy = new ArrayList<>(this.GetRoom().GetStudents());
+                for(Student st : studentsCopy){
                     for (DoorSide dr : this.GetRoom().GetDoors()){
                         if (dr.IsDoorUseable()){
                             st.Move(dr);//a keresett ajtón átmegy
