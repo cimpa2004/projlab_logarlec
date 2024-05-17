@@ -39,7 +39,7 @@ public class GameStartFrame extends JFrame {
         this.icRoom = icRoom;
         this.initer = new Game(false, logLevel);
         window = w;
-        setTitle("JátékosFelvevő");
+        setTitle("Új játékos felvétele");
         setSize(500, 200);
         setLayout(new BorderLayout()); // Use BorderLayout for better organization
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
