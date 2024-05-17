@@ -28,13 +28,13 @@ public class Logger {
         if (logLevel == LogLevel.INPUT_HANDLER || logLevel == LogLevel.ALL) System.out.println(message);
     }
 
-    public static void started(Object obj, String methodName, Object... params) {
+    private static void started(Object obj, String methodName, Object... params) {
         String indent = generateIndent();
         System.out.println(indent + "STARTED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
         indentLevel++;
     }
 
-    public static void finished(Object obj, String methodName, Object... params) {
+    private static void finished(Object obj, String methodName, Object... params) {
         indentLevel--;
         String indent = generateIndent();
         System.out.println(indent + "FINISHED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");

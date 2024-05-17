@@ -109,6 +109,10 @@ public class SlideRule extends Item implements IVSlideRule {
 	public boolean PickedUpStudent(Student st) {
 		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
+		if (isAdded && ivItemUpdate != null){
+			ivItemUpdate.PickedUpUpdate();
+		}
+
 		if(isAdded && !isFake) game.EndGame(true);
 		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
@@ -138,6 +142,9 @@ public class SlideRule extends Item implements IVSlideRule {
 	public void Thrown(Person p) {
 		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFromInventory(this);
+		if(ivItemUpdate != null){
+			ivItemUpdate.ThrownUpdate();
+		}
 		Logger.finishedModel(this, "Thrown", p);
 	}
 

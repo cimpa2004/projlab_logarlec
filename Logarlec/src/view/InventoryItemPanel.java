@@ -67,8 +67,6 @@ public class InventoryItemPanel extends JPanel {
             }else{
                 item.Connected();
             }
-
-            item.Connected();
             Logger.finishedView(this, "ConnectButtonListener.actionPerformed", e);
         }
     }
