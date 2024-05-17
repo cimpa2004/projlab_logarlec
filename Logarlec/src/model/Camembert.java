@@ -63,6 +63,8 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -196,13 +198,6 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		if(Activate()) i.GetRoom().SetPoisonDuration(5);
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
-
-	@Override
-	public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
 
 	@Override
 	public IVRoom GetIVRoom() {

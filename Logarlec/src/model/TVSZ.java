@@ -16,13 +16,6 @@ import java.util.UUID;
  * Továbbá meg tudja állapítani egy TVSZ -ről, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
 public class TVSZ extends Item implements Defendable, IVTVSZ {
-
-	@Override
-	public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
 	/**
 	 *  Ez az integer typusú változó tárolja, hogy hány alkalommal tudja még a Student életét megmenteni.
 	 * */
@@ -73,6 +66,8 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 */
 	@Override
 	public boolean GetIsActive() {
+		Logger.startedModel(this, "GetIsActive");
+		Logger.finishedModel(this, "GetIsActive");
 		return false;
 	}
 
@@ -95,7 +90,9 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param b Az isFake leendő értéke.
 	 * */
 	public void SetIsFake(boolean b){
+		Logger.startedModel(this, "SetIsFake", b);
 		isFake = b;
+		Logger.finishedModel(this, "SetIsFake", b);
 	}
 
 	/**
@@ -117,6 +114,8 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 */
 	@Override
 	public int GetDurability() {
+		Logger.startedModel(this, "GetDurability");
+		Logger.finishedModel(this, "GetDurability");
 		return usesLeft;
 	}
 
@@ -127,7 +126,9 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * */
 	@Override
 	public void SetDurability(int durability) {
+		Logger.startedModel(this, "SetDurability", durability);
 		this.usesLeft = durability;
+		Logger.finishedModel(this, "SetDurability", durability);
 	}
 
 	/**
@@ -188,7 +189,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param s Azon Student, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByStudent(Student s) {}
+	public void UsedByStudent(Student s) {
+		Logger.startedModel(this, "UsedByStudent");
+		Logger.finishedModel(this, "UsedByStudent");
+	}
 
 	/**
 	 * Egy SlideRule -t nem lehet használni, ezért ez egy üres metódus.
@@ -196,7 +200,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param i Azon Instructor, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByInstructor(Instructor i) {}
+	public void UsedByInstructor(Instructor i) {
+		Logger.startedModel(this, "UsedByInstructor");
+		Logger.finishedModel(this, "UsedByInstructor");
+	}
 
 	/**
 	 * Ez a metódus megállapítja, hogy az adott TVSZ

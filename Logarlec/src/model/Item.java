@@ -80,7 +80,9 @@ public abstract class Item implements IVItem {
 	 *
 	 * @return A tárgyhoz tartozó egyedi id.
 	 */
-	public String GetID(){
+	public String GetID() {
+		Logger.startedModel(this, "GetID");
+		Logger.finishedModel(this, "GetID");
 		return id;
 	}
 
@@ -136,7 +138,6 @@ public abstract class Item implements IVItem {
 	 * */
 	public Room GetRoom() {
 		Logger.startedModel(this, "GetRoom");
-
 		Logger.finishedModel(this, "GetRoom");
 		return room;
 	}
@@ -198,6 +199,8 @@ public abstract class Item implements IVItem {
 	public abstract void UsedByInstructor(Instructor i);
 
 	public void SetIVItemUpdate(IVItemUpdate ivItemUpdate){
+		Logger.startedModel(this, "SetIVItemUpdate", ivItemUpdate);
+		Logger.finishedModel(this, "SetIVItemUpdate", ivItemUpdate);
 		this.ivItemUpdate = ivItemUpdate;
 	}
 }

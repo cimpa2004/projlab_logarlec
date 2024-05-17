@@ -1,10 +1,6 @@
 package view;
 
-public class VPerson {
+public abstract class VPerson {
 
-    private String ID;
-
-    public String getID() {
-        return ID;
-    }
+    public abstract String GetID();
 }

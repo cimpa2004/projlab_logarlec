@@ -73,14 +73,17 @@ public class GameStartFrame extends JFrame {
      */
     @Override
     public void dispose() {
+        Logger.startedView(this, "dispose");
         this.setVisible(false);
         window.ShowMainWindow();
+        Logger.finishedView(this, "dispose");
     }
 
     /**
      * Ha nincs felvéve játékos nem lehet játszani
      */
     public void SetClickableIfNeededStartButton() {
+        Logger.startedView(this, "SetClickableIfNeededStartButton");
         boolean containsNonEmpty = false;
         for (String name : names) {
             if (name != null && !name.trim().isEmpty()) {
@@ -89,16 +92,19 @@ public class GameStartFrame extends JFrame {
             }
         }
         startGameButton.setEnabled(containsNonEmpty);
+        Logger.finishedView(this, "dispose");
     }
 
     /**
      * Ha nincs megadva rendes név nem lehet felvenni a játékost
      */
     public void SetClickableIfNeededAddButton() {
+        Logger.startedView(this, "SetClickableIfNeededAddButton");
         boolean containsNonEmpty = false;
         if (!nameTextBox.getText().trim().isEmpty())
             containsNonEmpty = true;
         addStudentButton.setEnabled(containsNonEmpty);
+        Logger.finishedView(this, "SetClickableIfNeededAddButton");
     }
 
     /**
@@ -107,6 +113,7 @@ public class GameStartFrame extends JFrame {
     private class StartButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "StartButtonListener.actionPerformed", e);
             //if button is clickable there are valid values
             //TODO: use real map
             initer.CreateGame("Map.json",icInit,iControl,icRoom);
@@ -116,7 +123,7 @@ public class GameStartFrame extends JFrame {
             initer.StartGame();
             setVisible(false);
             window.ShowMainFrame();
-
+            Logger.finishedView(this, "StartButtonListener.actionPerformed", e);
         }
     }
     /**
@@ -125,12 +132,14 @@ public class GameStartFrame extends JFrame {
     private class AddPlayerButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "AddPlayerButtonListener.actionPerformed", e);
             //When it can be clicked the value is valid
             String temp = nameTextBox.getText().trim();
             names.add(temp);
             SetClickableIfNeededStartButton();
             nameTextBox.setText("");
             addStudentButton.setEnabled(false);
+            Logger.finishedView(this, "AddPlayerButtonListener.actionPerformed", e);
         }
     }
 
@@ -139,14 +148,22 @@ public class GameStartFrame extends JFrame {
      */
     private class NameTextBoxKeyListener implements KeyListener {
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+            Logger.startedView(this, "NameTextBoxKeyListener.keyTyped", e);
+            Logger.finishedView(this, "NameTextBoxKeyListener.keyTyped", e);
+        }
 
         @Override
-        public void keyPressed(KeyEvent e) {}
+        public void keyPressed(KeyEvent e) {
+            Logger.startedView(this, "NameTextBoxKeyListener.keyPressed", e);
+            Logger.finishedView(this, "NameTextBoxKeyListener.keyPressed", e);
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
+            Logger.startedView(this, "NameTextBoxKeyListener.keyPressed", e);
             SetClickableIfNeededAddButton();
+            Logger.finishedView(this, "NameTextBoxKeyListener.keyPressed", e);
         }
     }
 

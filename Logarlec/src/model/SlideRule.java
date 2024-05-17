@@ -15,12 +15,6 @@ import java.util.UUID;
  * abban az esetben, ha a tárgyat fel akarja valaki venni, vagy eldobni.
  */
 public class SlideRule extends Item implements IVSlideRule {
-	@Override
-	public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
 	/**
 	 * A játék ami számon tartja a játék paramétereit.
 	 * A logarléc képes így üzenni a játéknak ha megtalálta őt egy hallgató, hogy így véget ér a játék.
@@ -94,7 +88,9 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param b Az isFake leendő értéke.
 	 * */
 	public void SetIsFake(boolean b){
+		Logger.startedModel(this, "SetIsFake", b);
 		isFake = b;
+		Logger.finishedModel(this, "SetIsFake", b);
 	}
 
 	/**
@@ -112,11 +108,8 @@ public class SlideRule extends Item implements IVSlideRule {
 	 */
 	public boolean PickedUpStudent(Student st) {
 		Logger.startedModel(this, "PickedUpStudent", st);
-
 		boolean isAdded = st.AddToInventory(this);
-
 		if(isAdded && !isFake) game.EndGame(true);
-		
 		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -154,7 +147,10 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param s Azon Student, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByStudent(Student s) {}
+	public void UsedByStudent(Student s) {
+		Logger.startedModel(this, "UsedByStudent");
+		Logger.finishedModel(this, "UsedByStudent");
+	}
 
 	/**
 	 * Egy SlideRule -t nem lehet használni, ezért ez egy üres metódus.
@@ -162,7 +158,10 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param i Azon Instructor, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByInstructor(Instructor i) {}
+	public void UsedByInstructor(Instructor i) {
+		Logger.startedModel(this, "UsedByInstructor");
+		Logger.finishedModel(this, "UsedByInstructor");
+	}
 
 	@Override
 	public IVRoom GetIVRoom() {

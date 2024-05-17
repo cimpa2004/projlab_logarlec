@@ -65,6 +65,7 @@ public class Instructor extends Person implements IVInstructor {
 			}*///Nem szükséges a teszteléshez
 
 		} else {
+			Logger.finishedModel(this, "AppearInRoom", r);
 			return false;
 		}
 		Logger.finishedModel(this, "AppearInRoom", r);
@@ -113,12 +114,13 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public void StartTurn() {
+		Logger.startedModel(this, "StartTurn");
 		if (isFainted || stunDuration > 0){
 			this.EndTurn();
+			Logger.finishedModel(this, "StartTurn");
 			return;
 		}
 
-		Logger.startedModel(this, "StartTurn");
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){
@@ -140,6 +142,7 @@ public class Instructor extends Person implements IVInstructor {
 		// ha az oktato meg van benulva vagy el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
 		if(stunDuration > 0 || isFainted){
 			EndTurn();
+			Logger.finishedModel(this, "StartTurn");
 			return;
 		}
 
@@ -195,6 +198,8 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public boolean GetIsFainted() {
+		Logger.startedModel(this, "GetIsFainted");
+		Logger.finishedModel(this, "GetIsFainted");
 		return isFainted;
 	}
 
@@ -204,6 +209,8 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public boolean GetIsStunned() {
+		Logger.startedModel(this, "GetIsStunned");
+		Logger.finishedModel(this, "GetIsStunned");
 		return stunDuration > 0;
 	}
 
@@ -213,11 +220,15 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public boolean GetIsActiveTurn() {
+		Logger.startedModel(this, "GetIsActiveTurn");
+		Logger.finishedModel(this, "GetIsActiveTurn");
 		return activeTurn;
 	}
 
 	@Override
 	public boolean GetIsAlive() {
+		Logger.startedModel(this, "GetIsAlive");
+		Logger.finishedModel(this, "GetIsAlive");
 		return true;
 	}
 
@@ -281,7 +292,9 @@ public class Instructor extends Person implements IVInstructor {
 
 	@Override
 	public void SetIVInstructorUpdate(IVInstructorUpdate ivInstructorUpdate) {
+		Logger.startedModel(this, "SetIVInstructorUpdate", ivInstructorUpdate);
 		this.ivInstructorUpdate = ivInstructorUpdate;
+		Logger.finishedModel(this, "SetIVInstructorUpdate", ivInstructorUpdate);
 	}
 
 }

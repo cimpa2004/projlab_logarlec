@@ -1,6 +1,7 @@
 package view;
 import javax.swing.*;
 
+import util.Logger;
 import util.Logger.LogLevel;
 
 import java.awt.*;
@@ -41,43 +42,59 @@ public class Window extends JFrame {
      * Megjeleníti a súgót
      */
     public void ShowHelperFrame(){
+        Logger.startedView(this, "ShowHelperFrame");
         helperFrame.setVisible(true);
         this.setVisible(false);
+        Logger.finishedView(this, "ShowHelperFrame");
     }
 
     public void Exit(){
+        Logger.startedView(this, "Exit");
+        Logger.finishedView(this, "Exit");
         System.exit(1);
     }
     public void ShowGameStartFrame(){
+        Logger.startedView(this, "ShowGameStartFrame");
         this.setVisible(false);
         gameStartFrame.setVisible(true);
+        Logger.finishedView(this, "ShowGameStartFrame");
     }
 
     public void ShowMainWindow(){
+        Logger.startedView(this, "ShowMainWindow");
         this.setVisible(true);
+        Logger.finishedView(this, "ShowMainWindow");
     }
 
     public void ShowMainFrame(){
+        Logger.startedView(this, "ShowMainFrame");
         mainFrame.setVisible(true);
+        Logger.finishedView(this, "ShowMainFrame");
     }
 
     //Action Listener-ek:
     private class HelpButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "HelpButtonListener.actionPerformed", e);
             ShowHelperFrame();
+            Logger.finishedView(this, "HelpButtonListener.actionPerformed", e);
         }
     }
     private class ExitButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "ExitButtonListener.actionPerformed", e);
             Exit();
+            Logger.finishedView(this, "ExitButtonListener.actionPerformed", e);
         }
     }
     private class PlayButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "PlayButtonListener.actionPerformed", e);
             ShowGameStartFrame();
+            Logger.finishedView(this, "PlayButtonListener.actionPerformed", e);
         }
     }
 

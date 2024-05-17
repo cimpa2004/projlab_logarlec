@@ -202,13 +202,6 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
 
 
     @Override
-    public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
-
-    @Override
     public IVRoom GetIVRoom() {
         Logger.startedModel(this, "GetIVRoom");
         Logger.finishedModel(this, "GetIVRoom");

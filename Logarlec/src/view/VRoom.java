@@ -1,5 +1,6 @@
 package view;
 
+import util.Logger;
 import viewmodel.IVRoom;
 import viewmodel.IVRoomUpdate;
 
@@ -19,7 +20,8 @@ public class VRoom extends JPanel implements IVRoomUpdate {
         ivRoom.SetIVRoomUpdate(this);
     }
     public void AddDoorSide(VDoorSide vDoorSide){
-
+        Logger.startedView(this, "AddDoorSide", vDoorSide);
+        Logger.finishedView(this, "AddDoorSide", vDoorSide);
     }
 
     /**
@@ -27,22 +29,31 @@ public class VRoom extends JPanel implements IVRoomUpdate {
      * @param panelToDrawOn a panel amire rajzolja magát
      */
     public void Draw(JPanel panelToDrawOn){
-
+        Logger.startedView(this, "Draw", panelToDrawOn);
+        Logger.finishedView(this, "Draw", panelToDrawOn);
     }
 
     public ArrayList<VItem> GetItems(){
+        Logger.startedView(this, "GetItems");
+        Logger.finishedView(this, "GetItems");
         return items;
     }
     public void AddVItem(VItem item){
+        Logger.startedView(this, "AddVItem", item);
+        Logger.finishedView(this, "AddVItem", item);
         items.add(item);
     }
 
     public IVRoom GetIVRoom(){
+        Logger.startedView(this, "GetIVRoom");
+        Logger.finishedView(this, "GetIVRoom");
         return ivRoom;
     }
 
     @Override
     public VRoom GetVRoom() {
+        Logger.startedView(this, "GetVRoom");
+        Logger.finishedView(this, "GetVRoom");
         return this;
     }
 }

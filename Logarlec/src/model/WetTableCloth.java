@@ -16,13 +16,6 @@ import java.util.UUID;
  * Továbbá meg tudja állapítani egy WetTableCloth -ról, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
 public class WetTableCloth extends Item implements Usable, Defendable, IVWetTableCloth {
-
-	@Override
-	public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy még hány körig képes a
 	 * WetTableCloth megvédeni a Studentet, akihez tartozik
@@ -70,6 +63,8 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -141,8 +136,11 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 */
 	@Override
 	public int GetDurability() {
+		Logger.startedModel(this, "GetDurability");
+		Logger.finishedModel(this, "GetDurability");
 		return effectDuration;
 	}
+
 
 	/**
 	 * Az effectDuration értékét a paraméterben kapott értékre állítja.
@@ -151,7 +149,9 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 */
 	@Override
 	public void SetDurability(int durability) {
+		Logger.startedModel(this, "SetDurability", durability);
 		this.effectDuration = durability;
+		Logger.finishedModel(this, "SetDurability", durability);
 	}
 
 	/**

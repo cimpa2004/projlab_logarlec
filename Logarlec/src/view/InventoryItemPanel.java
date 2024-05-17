@@ -1,5 +1,7 @@
 package view;
 
+import util.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,20 +42,25 @@ public class InventoryItemPanel extends JPanel {
     private class ThrowButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
+            Logger.startedView(this, "ThrowButtonListener.actionPerformed", e);
             item.Thrown();
+            Logger.finishedView(this, "ThrowButtonListener.actionPerformed", e);
         }
     }
 
     private class UseButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
+            Logger.startedView(this, "UseButtonListener.actionPerformed", e);
             item.Used();
+            Logger.finishedView(this, "UseButtonListener.actionPerformed", e);
         }
     }
 
     private class ConnectButtonListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
+            Logger.startedView(this, "ConnectButtonListener.actionPerformed", e);
             if(item.GetClickedT() == null){
                 item.SetClickedT((VTransistor)item);
                 connectButton.setEnabled(false);
@@ -62,6 +69,7 @@ public class InventoryItemPanel extends JPanel {
             }
 
             item.Connected();
+            Logger.finishedView(this, "ConnectButtonListener.actionPerformed", e);
         }
     }
 }

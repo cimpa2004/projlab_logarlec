@@ -126,7 +126,9 @@ public abstract class Person implements IPerson {
 	 * @param b Az érték amire az activeTurn változó értékét állítja a metódus
 	 */
 	public void SetActiveTurn(boolean b){
+		Logger.startedModel(this, "SetActiveTurn", b);
 		activeTurn = b;
+		Logger.finishedModel(this, "SetActiveTurn", b);
 	}
 
 	/**

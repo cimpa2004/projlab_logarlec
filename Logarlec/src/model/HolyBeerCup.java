@@ -63,6 +63,8 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -77,7 +79,6 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	@Override
 	public boolean Activate() {
 		Logger.startedModel(this, "Activate");
-
 		Logger.finishedModel(this, "Activate");
 		if(isActivated){
 			return false;
@@ -137,6 +138,8 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 */
 	@Override
 	public int GetDurability() {
+		Logger.startedModel(this, "GetDurability");
+		Logger.finishedModel(this, "GetDurability");
 		return effectDuration;
 	}
 
@@ -147,7 +150,9 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 */
 	@Override
 	public void SetDurability(int durability) {
+		Logger.startedModel(this, "SetDurability", durability);
 		this.effectDuration = durability;
+		Logger.finishedModel(this, "SetDurability", durability);
 	}
 
 	/**
@@ -251,11 +256,6 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		Logger.startedModel(this, "CanDefend");
 		Logger.finishedModel(this, "CanDefend");
 		return isActivated && effectDuration > 0;
-	}
-
-	@Override
-	public String GetID() {
-		return this.id;
 	}
 
 	@Override

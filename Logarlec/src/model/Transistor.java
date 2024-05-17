@@ -59,6 +59,8 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -87,6 +89,8 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public boolean GetIsActive() {
+		Logger.startedModel(this, "GetIsActive");
+		Logger.finishedModel(this, "GetIsActive");
 		return isActive;
 	}
 
@@ -218,13 +222,6 @@ public class Transistor extends Item implements Usable, IVTransistor {
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 
-
-	@Override
-	public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
 
 	@Override
 	public IVRoom GetIVRoom() {

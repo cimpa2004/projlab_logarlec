@@ -96,8 +96,11 @@ public class Logger {
             case "INPUT_HANDLER":
                 logLevel = LogLevel.INPUT_HANDLER;
                 break;
-            case "CALL_FLOWS":
+            case "CALL_FLOWS_MODEL":
                 logLevel = LogLevel.CALL_FLOWS_MODEL;
+                break;
+            case "CALL_FLOWS_VIEW":
+                logLevel = LogLevel.CALL_FLOWS_VIEW;
                 break;
             case "ALL":
                 logLevel = LogLevel.ALL;

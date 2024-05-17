@@ -19,12 +19,6 @@ import java.util.UUID;
  * {@inheritDoc}
  */
 public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
-	@Override
-	public String GetID() {
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return this.id;
-    }
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy az adott FFP2Mask
 	 * még hány körig használható, azaz hány körig tudja még a Person -t
@@ -85,7 +79,9 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @param b Az isFake leendő értéke.
 	 * */
 	public void SetIsFake(boolean b){
+		Logger.startedModel(this, "SetIsFake", b);
 		isFake = b;
+		Logger.finishedModel(this, "SetIsFake", b);
 	}
 
 	/**
@@ -182,6 +178,8 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	@Override
 	public int GetDurability() {
+		Logger.startedModel(this, "GetDurability");
+		Logger.finishedModel(this, "GetDurability");
 		return durability;
 	}
 

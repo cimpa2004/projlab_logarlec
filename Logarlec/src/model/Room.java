@@ -111,7 +111,9 @@ public class Room implements IRoom, IVRoom {
 
 	@Override
 	public void SetIVRoomUpdate(IVRoomUpdate ivRoomUpdate){
+		Logger.startedModel(this, "SetIVRoomUpdate", ivRoomUpdate);
 		this.ivRoomUpdate = ivRoomUpdate;
+		Logger.finishedModel(this, "SetIVRoomUpdate", ivRoomUpdate);
 	}
 
 
@@ -153,9 +155,10 @@ public class Room implements IRoom, IVRoom {
 	 * @param value az isSticky változó új értéke.
 	 */
 	public void SetIsSticky(boolean value){
+		Logger.startedModel(this, "SetIsSticky", value);
 		this.isSticky = value;
-		if (!value)
-			this.numberOfPeopleBeenToRoom = 0;
+		if (!value)  this.numberOfPeopleBeenToRoom = 0;
+		Logger.finishedModel(this, "SetIsSticky", value);
 	}
 
 	/**
@@ -249,8 +252,10 @@ public class Room implements IRoom, IVRoom {
 	 * @param r: A hozzáadandó szoba
 	 * */
 	public void AddNeighbor(Room r) {
+		Logger.startedModel(this, "AddNeighbor", r);
 		neighbors.add(r);
         neighbors.remove(this);
+		Logger.finishedModel(this, "AddNeighbor", r);
 	}
 
 	/**
@@ -259,7 +264,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param r: Az elvevendő szoba (szerintem ez létező szó)
 	 * */
 	public void RemoveNeighbor(Room r) {
+		Logger.startedModel(this, "RemoveNeighbor", r);
 		neighbors.remove(r);
+		Logger.finishedModel(this, "RemoveNeighbor", r);
 	}
 
 	/**
@@ -539,13 +546,14 @@ public class Room implements IRoom, IVRoom {
 	 * */
 	public boolean RandomBool() {
 		Logger.startedModel(this, "RandomBool");
-		Logger.finishedModel(this, "RandomBool");
 
 		if(isDeterministic){
+			Logger.finishedModel(this, "RandomBool");
 			return true;
 		}
 
 		Random rand = new Random();
+		Logger.finishedModel(this, "RandomBool");
 		return rand.nextBoolean();
 	}
 
@@ -557,17 +565,18 @@ public class Room implements IRoom, IVRoom {
 	 * */
 	public Room SelectRoom(ArrayList<Room> r) {
 		Logger.startedModel(this, "SelectRoom", r);
-		Logger.finishedModel(this, "SelectRoom", r);
 		if(r.isEmpty()){
 			throw  new IllegalArgumentException("Error: Üres lista lett megadva!");
 		}
 		// Ha a játék determinisztikus akkor mindig az első szobát adja vissza.
 		if(isDeterministic){
+			Logger.finishedModel(this, "SelectRoom", r);
 			return r.get(0);
 		}
 
 		// Ha a játék nem determinisztikus akkor véletlenszerűen kiválaszt egy DoorSide -ot
 		Random randInt = new Random();
+		Logger.finishedModel(this, "SelectRoom", r);
 		return r.get(randInt.nextInt(r.size()));
 	}
 
@@ -628,6 +637,8 @@ public class Room implements IRoom, IVRoom {
 
 	@Override
 	public VRoom GetVRoom(){
+		Logger.startedModel(this, "GetVRoom");
+		Logger.finishedModel(this, "GetVRoom");
 		return ivRoomUpdate.GetVRoom();
 	}
 

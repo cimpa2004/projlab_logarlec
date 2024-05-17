@@ -157,6 +157,8 @@ public class DoorSide implements IVDoorSide {
 	 * @return igaz, ha az ajtón valóban át lehet menni
 	 */
 	public boolean IsDoorUseable(){
+		Logger.startedModel(this, "IsDoorUseable");
+		Logger.finishedModel(this, "IsDoorUseable");
 		return (this.GetCanBeOpened() &&
 				this.GetIsVisible()&&
 				this.GetPair() != null&&

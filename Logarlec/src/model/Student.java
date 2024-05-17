@@ -66,6 +66,7 @@ public class Student extends Person implements IVStudent {
 				} else this.SetIsFainted(true);
 			}
 		} else{
+			Logger.finishedModel(this, "AppearInRoom", r);
 			return false;
 		}
 		Logger.finishedModel(this, "AppearInRoom", r);
@@ -97,11 +98,12 @@ public class Student extends Person implements IVStudent {
 			SetIsFainted(false);
 		}
 		// ha el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
-		if(isFainted) EndTurn();
-
-		// itt kezdheti meg a hallgato a lepeseit
-
-
+		if(isFainted){
+			EndTurn();
+			Logger.finishedModel(this, "StartTurn");
+			return;
+		}
+		// ezutan kezdheti meg a hallgato a lepeseit
 		Logger.finishedModel(this, "StartTurn");
 	}
 
@@ -142,16 +144,22 @@ public class Student extends Person implements IVStudent {
 
 	@Override
 	public boolean GetIsFainted() {
+		Logger.startedModel(this, "GetIsFainted");
+		Logger.finishedModel(this, "GetIsFainted");
 		return isFainted;
 	}
 
 	@Override
 	public boolean GetIsStunned() {
+		Logger.startedModel(this, "GetIsStunned");
+		Logger.finishedModel(this, "GetIsStunned");
 		return false;
 	}
 
 	@Override
 	public boolean GetIsActiveTurn() {
+		Logger.startedModel(this, "GetIsActiveTurn");
+		Logger.finishedModel(this, "GetIsActiveTurn");
 		return activeTurn;
 	}
 
@@ -168,7 +176,7 @@ public class Student extends Person implements IVStudent {
 		isAlive = false;
 		room.RemoveStudent(this);
 		game.NotifyStudentDied();
-		if(isActiveTurn()) EndTurn();
+		if(IsActiveTurn()) EndTurn();
 		Logger.finishedModel(this, "Die");
 		return isAlive;
 	}
@@ -249,19 +257,19 @@ public class Student extends Person implements IVStudent {
 
 
 	@Override
-	public boolean isActiveTurn() {
+	public boolean IsActiveTurn() {
+		Logger.startedModel(this, "isActiveTurn");
+		Logger.finishedModel(this, "isActiveTurn");
 		return this.activeTurn;
 	}
 
 	@Override
 	public void SetIVStudentUpdate(IVStudentUpdate ivStudentUpdate) {
+		Logger.startedModel(this, "SetIVStudentUpdate", ivStudentUpdate);
 		this.ivStudentUpdate = ivStudentUpdate;
+		Logger.finishedModel(this, "SetIVStudentUpdate", ivStudentUpdate);
 	}
 
-	@Override
-	public String GetID(){
-		return this.id;
-	}
 
 	@Override
 	public IVRoom GetIVRoom() {
