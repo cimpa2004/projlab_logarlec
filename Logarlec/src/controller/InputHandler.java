@@ -204,7 +204,6 @@ public class InputHandler implements ICInput {
                         JSONArray students = r.getJSONArray("students");
                         for (int j = 0; j < students.length(); j++) {
                             Student st = new Student(students.getJSONObject(j).getString("id"), game);
-                            //st.SetGame(game);
                             game.AddToGame(st);
                             room.AddStudent(st);
 
@@ -217,7 +216,6 @@ public class InputHandler implements ICInput {
                         JSONArray instructors = r.getJSONArray("instructors");
                         for (int j = 0; j < instructors.length(); j++) {
                             Instructor in = new Instructor(instructors.getJSONObject(j).getString("id"), this.game);
-                            //in.SetGame(game);
                             game.AddToGame(in);
                             room.AddInstructor(in);
                             if (icInit != null) icInit.CreateVInstructor(in);
@@ -228,8 +226,7 @@ public class InputHandler implements ICInput {
                     if (r.has("janitors")) {
                         JSONArray janitors = r.getJSONArray("janitors");
                         for (int j = 0; j < janitors.length(); j++) {
-                            Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
-                            //jan.SetGame(game);
+                            Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"),this.game);
                             game.AddToGame(jan);
                             room.AddJanitor(jan);
                             if (icInit != null) icInit.CreateVJanitor(jan);

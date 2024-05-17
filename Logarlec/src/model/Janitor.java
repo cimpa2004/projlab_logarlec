@@ -16,7 +16,12 @@ public class Janitor extends Person implements IVJanitor {
      * @param id - azonosíto teszteléshez
      */
     public Janitor(String id) {
+
         super(id);
+    }
+    public Janitor(String id, Game game) {
+        super(id);
+        this.game = game;
     }
 
     /**
