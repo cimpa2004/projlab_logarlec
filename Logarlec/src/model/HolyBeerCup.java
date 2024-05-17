@@ -4,6 +4,7 @@ import util.Logger;
 import viewmodel.IVHolyBeerCup;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -52,6 +53,14 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		super(UUID.randomUUID().toString());
 		isActivated = false;
 		effectDuration = 3;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(218, 0, 99);
 	}
 
 	/**

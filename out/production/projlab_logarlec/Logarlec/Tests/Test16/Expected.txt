@@ -45,7 +45,7 @@ inventory: [FFP2Mask1]
 wetTableClothes: []
 tvszs: []
 holyBeerCups: []
-ffp2Masks: []
+ffp2Masks: [FFP2Mask1]
 isAlive: true
 isFainted: false
 isStunned: false
@@ -54,7 +54,7 @@ activeTurn: false
 message: A megadott FFP2Mask1 részletei a többi mezőben.
 owner: Instructor1
 room: None
-isActivated: false
+isActivated: true
 durability: 3
 pair: None
 isFake: false

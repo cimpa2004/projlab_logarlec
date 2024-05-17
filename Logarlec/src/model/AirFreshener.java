@@ -4,6 +4,7 @@ import util.Logger;
 import viewmodel.IVRoom;
 import viewmodel.IVAirFreshener;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -31,6 +32,14 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     public AirFreshener(String id){
         super(id);
         isActivated = false;
+    }
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(45, 156, 240);
     }
 
     /**

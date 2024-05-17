@@ -4,6 +4,7 @@ import util.Logger;
 import viewmodel.IVFFP2Mask;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -59,6 +60,14 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		super(UUID.randomUUID().toString());
 		isActivated = false;
 		durability = 3;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(255, 255, 255);
 	}
 
 	/**

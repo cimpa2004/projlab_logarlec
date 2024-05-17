@@ -22,7 +22,7 @@ isFake: false
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
 message: A megadott Student1 személy részletei a többi mezőben.
-room: Room2
+room: None
 inventory: [WetTableCloth1]
 wetTableClothes: []
 tvszs: []

@@ -1,4 +1,4 @@
-CreateGame true Logarlec/Tests/Test9/Map.json
+CreateGame true Tests/Test9/Map.json
 startGame
 Pickup Student1 Transistor1
 Pickup Student1 Transistor2

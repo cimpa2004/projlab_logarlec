@@ -1,4 +1,4 @@
-CreateGame True Logarlec/Tests/Test16/Map.json
+CreateGame True Tests/Test16/Map.json
 StartGame
 Pickup Student1 TVSZ1
 DescribeItem TVSZ1

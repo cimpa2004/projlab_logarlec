@@ -16,7 +16,7 @@ currentTurn: Student1
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
 message: A megadott Student1 személy részletei a többi mezőben.
-room: Room1
+room: None
 inventory: []
 wetTableClothes: []
 tvszs: []
@@ -28,7 +28,7 @@ isStunned: false
 activeTurn: false
 
 message: A megadott Student2 személy részletei a többi mezőben.
-room: Room1
+room: None
 inventory: []
 wetTableClothes: []
 tvszs: []

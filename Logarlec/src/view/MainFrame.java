@@ -25,7 +25,7 @@ public class MainFrame extends JFrame implements ICInit {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
-        setLayout(new FlowLayout());
+        setLayout(new GridLayout(0, 1));
         add(gamePanel);
         add(controlPanel);
 

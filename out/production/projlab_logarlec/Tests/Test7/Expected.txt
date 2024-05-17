@@ -28,7 +28,7 @@ inventory: [FFP2Mask1, FFP2Mask2, FFP2Mask3, FFP2Mask4, FFP2Mask5]
 wetTableClothes: []
 tvszs: []
 holyBeerCups: []
-ffp2Masks: []
+ffp2Masks: [FFP2Mask1, FFP2Mask2, FFP2Mask3, FFP2Mask4, FFP2Mask5]
 isAlive: true
 isFainted: false
 isStunned: false

@@ -6,6 +6,7 @@ import viewmodel.ICRoom;
 import viewmodel.IVRoom;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -15,8 +16,14 @@ public class GamePanel extends JPanel implements ICRoom {
     private ArrayList<VRoom> rooms = new ArrayList<>();
     private ArrayList<VPerson> people = new ArrayList<>();
     private VRoom currentRoom;
+    private ArrayList<RectPanel> rects = new ArrayList<>();
+    private ArrayList<MapCirclePanel> circles = new ArrayList<>();
+    private ArrayList<JButton> itemButtons = new ArrayList<>();
+    private ArrayList<JButton> doorButtons = new ArrayList<>();
+    //private JPanel buttonsPanel;
 
     public GamePanel(){
+        setLayout(null);
     }
 
     public void AddVPerson(VPerson _new){
@@ -61,6 +68,16 @@ public class GamePanel extends JPanel implements ICRoom {
         Logger.finishedView(this, "Draw", room);
     }
 
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(RectPanel rect : rects) {
+            rect.draw(g);
+        }
+        for(MapCirclePanel circle : circles) {
+            circle.draw(g);
+        }
+    }
+
     //TODO:az itemek és az emberek lehet nem jól lesznek átrakva
 
     /**
@@ -75,6 +92,35 @@ public class GamePanel extends JPanel implements ICRoom {
         rooms.add(newRoom);
         Logger.finishedView(this, "Split", ivRoom, _new);
     }
+
+    public void AddRect(RectPanel rect) { rects.add(rect); }
+
+    public void RemoveRect(RectPanel rect) {
+        rects.remove(rect);
+    }
+
+    public void AddCircle(MapCirclePanel circle) {
+        circles.add(circle);
+    }
+
+    public void RemoveCircle(MapCirclePanel circle) {
+        circles.remove(circle);
+    }
+
+    public void AddDoorButton(JButton button) { doorButtons.add(button); }
+
+    public void RemoveDoorButton(JButton button) {
+        doorButtons.remove(button);
+    }
+
+    public void AddItemButton(JButton button) { itemButtons.add(button); }
+
+    public void RemoveItemButton(JButton button) {
+        itemButtons.remove(button);
+    }
+    /*public JPanel GetButtonsPanel() {
+        return buttonsPanel;
+    }*/
 
     /**
      * Osszeolvasztja a ket szobat, pontosabban az ivRoom2-t olvasztja bele az ivRoom1-be. Igy az ivRoom2 megszunik.

@@ -3,6 +3,7 @@ import util.Logger;
 import viewmodel.IVCamembert;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -41,6 +42,14 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public Camembert(){
 		super(UUID.randomUUID().toString());
 		isActivated = false;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(254, 244, 68);
 	}
 
 	/**
