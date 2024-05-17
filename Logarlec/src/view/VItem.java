@@ -1,5 +1,6 @@
 package view;
 
+import util.Logger;
 import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
@@ -43,7 +44,7 @@ public abstract class VItem implements IVItemUpdate {
     }
 
     @Override
-    public void UsedUpdated() {
+    public void UsedUpdate() {
         Logger.startedView(this, "UsedUpdated");
         Logger.finishedView(this, "UsedUpdated");
         // TODO:
@@ -53,12 +54,4 @@ public abstract class VItem implements IVItemUpdate {
         // SlideRule?? --> ez már jelezve van szerintem, itt nem kell kitérni rá
     }
 
-    @Override
-    public void UsedUpdate() {
-        // TODO: implement
-        // Általános:
-        // Nem csinál semmit igazából
-        // AirFreshener?? --> szoba redraw
-        // Camembert?? --> szoba redraw
-    }
 }
