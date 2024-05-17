@@ -29,7 +29,7 @@
         "rooms": [
           {
             "id": "Room1",
-            "poisonDuracion" :0,
+            "poisonDuration" :0,
             "instructors": [
             ],
             "students":[
@@ -59,7 +59,7 @@
           },
           {
             "id": "Room2",
-            "poisonDuracion" :0,
+            "poisonDuration" :0,
             "numberOfPeopleToRoom" : 1,
             "instructors": [
                 {
@@ -87,7 +87,7 @@
             "doors": ["Door2","Door5"]
           },
           {"id": "Room3",
-          "poisonDuracion" :0,
+          "poisonDuration" :0,
           "numberOfPeopleToRoom" : 1,
           "maxCapacity": 0,
           "curentCap": 0,
@@ -115,7 +115,7 @@
        
         {
           "id": "Room4",
-            "poisonDuracion" :0,
+            "poisonDuration" :0,
             "numberOfPeopleToRoom" : 1,
             "instructors": [],
             "students":[

@@ -12,23 +12,24 @@ import java.util.*;
 
 public class Janitor extends Person implements IVJanitor {
     /**
-     * Game referencia
-     */
-    private Game game;
-
-    /**
      * Konstruktor
      * @param id - azonosíto teszteléshez
      */
     public Janitor(String id) {
+
         super(id);
+    }
+    public Janitor(String id, Game game) {
+        super(id);
+        this.game = game;
     }
 
     /**
      * Nem teszteléshez használt konstruktor
      */
-    public Janitor() {
+    public Janitor(Game game) {
         super(UUID.randomUUID().toString());
+        this.game = game;
     }
 
     private IVJanitorUpdate ivJanitorUpdate;
@@ -66,14 +67,13 @@ public class Janitor extends Person implements IVJanitor {
      */
     private void MakeThemLeave(){
         Logger.startedModel(this, "MakeThemLeave");
-        Random random = new Random();
         if(game!=null) {
             if (!game.GetIsDeterministic()){
-                List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
+                final List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
                 Collections.shuffle(doorsCopy);
-                    for(Student st : this.GetRoom().GetStudents()){
+                    ArrayList<Student> studentsCopy = new ArrayList<>(this.GetRoom().GetStudents());
+                    for(Student st : studentsCopy){
                         for (DoorSide dr : doorsCopy){
-                            if (random.nextBoolean())
                                 if (dr.IsDoorUseable()){
                                     st.Move(dr);//a keresett ajtón átmegy
                                 break;
@@ -82,7 +82,6 @@ public class Janitor extends Person implements IVJanitor {
                     }
                     for(Instructor ins : this.GetRoom().GetInstructors()){
                         for (DoorSide dr : doorsCopy){
-                            if (random.nextBoolean())
                                 if (dr.IsDoorUseable()){
                                     ins.Move(dr);//a keresett ajtón átmegy
                                     break;
@@ -90,7 +89,8 @@ public class Janitor extends Person implements IVJanitor {
                         }
                     }
             }else{ //determinisztikus mozgás az első lehetséges szomszéd
-                for(Student st : this.GetRoom().GetStudents()){
+                ArrayList<Student> studentsCopy = new ArrayList<>(this.GetRoom().GetStudents());
+                for(Student st : studentsCopy){
                     for (DoorSide dr : this.GetRoom().GetDoors()){
                         if (dr.IsDoorUseable()){
                             st.Move(dr);//a keresett ajtón átmegy
@@ -157,6 +157,7 @@ public class Janitor extends Person implements IVJanitor {
 
         //Mozgató logika
         Random random = new Random();
+        if(game != null)
         if (!game.GetIsDeterministic()){
             List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
             Collections.shuffle(doorsCopy);
