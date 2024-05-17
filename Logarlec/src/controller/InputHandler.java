@@ -1231,5 +1231,11 @@ public class InputHandler implements ICInput {
         ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, item.GetID()));
         useItem(command);
     }
+
+    @Override
+    public void Connect(String personID, IVTransistor t1, IVTransistor t2){
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, t1.GetID(), t2.GetID()));
+        connectTransistors(command);
+    }
 }
 

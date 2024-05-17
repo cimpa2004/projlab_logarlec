@@ -49,7 +49,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 * @param isActivated Az isActivated értékét erre az értékre állítja.
 	 * */
 	public void SetIsActivated(boolean isActivated) {
+		Logger.startedModel(this, "SetIsActivated", isActivated);
 		this.isActivated = isActivated;
+		Logger.finishedModel(this, "SetIsActivated", isActivated);
 	}
 
 	/**
@@ -61,6 +63,8 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -75,9 +79,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public boolean Activate() {
-		Logger.started(this, "Activate");
+		Logger.startedModel(this, "Activate");
 
-		Logger.finished(this, "Activate");
+		Logger.finishedModel(this, "Activate");
 		if(isActivated){
 			return false;
 		}else{
@@ -94,8 +98,10 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public boolean GetIsActive() {
-		return isActivated;
-	}
+        Logger.startedModel(this, "GetIsActive");
+        Logger.finishedModel(this, "GetIsActive");
+        return isActivated;
+    }
 
 	/**
 	 * Ezen metódussal le lehet kérdezni, hogy az
@@ -105,6 +111,8 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public Transistor GetPair() {
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return null;
 	}
 
@@ -120,9 +128,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public boolean PickedUpStudent(Student st) {
-		Logger.started(this, "PickedUpStudent", st);
+		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		Logger.finished(this, "PickedUpStudent", st);
+		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
@@ -138,9 +146,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
-		Logger.started(this, "PickedUpInstructor", i);
+		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		Logger.finished(this, "PickedUpInstructor", i);
+		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
@@ -154,9 +162,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public void Thrown(Person p) {
-		Logger.started(this, "Thrown", p);
+		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFromInventory(this);
-		Logger.finished(this, "Thrown", p);
+		Logger.finishedModel(this, "Thrown", p);
 	}
 
 	/**
@@ -170,9 +178,14 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public void UsedByStudent(Student s) {
-		Logger.started(this, "UsedByStudent", s);
-		if(Activate())s.GetRoom().SetPoisonDuration(5);
-		Logger.finished(this, "UsedByStudent", s);
+		Logger.startedModel(this, "UsedByStudent", s);
+		if(Activate()) {
+			s.GetRoom().SetPoisonDuration(5);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate();
+			}
+		}
+		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
 	/**
@@ -186,9 +199,12 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
-		Logger.started(this, "UsedByInstructor", i);
+		Logger.startedModel(this, "UsedByInstructor", i);
 		if(Activate()) i.GetRoom().SetPoisonDuration(5);
-		Logger.finished(this, "UsedByInstructor", i);
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate();
+		}
+		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 
 	@Override
@@ -198,6 +214,8 @@ public class Camembert extends Item implements Usable, IVCamembert {
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 }

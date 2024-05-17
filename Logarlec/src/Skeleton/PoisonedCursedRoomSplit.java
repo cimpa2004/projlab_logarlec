@@ -8,7 +8,7 @@ public class PoisonedCursedRoomSplit {
 
     private static Room r;
     private static TVSZ t;
-    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
 
     private static void initTest(){
         r = new Room();

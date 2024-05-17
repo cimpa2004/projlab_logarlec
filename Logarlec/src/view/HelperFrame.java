@@ -1,5 +1,7 @@
 package view;
 
+import util.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -60,21 +62,26 @@ class HelperFrame extends JFrame {
      */
     @Override
     public void dispose() {
+        Logger.startedView(this, "dispose");
         Back();
+        Logger.finishedView(this, "dispose");
     }
 
     /**
      * Vissza a főmenübe
      */
     private void Back(){
+        Logger.startedView(this, "Back");
         this.setVisible(false);
         window.ShowMainWindow();
+        Logger.finishedView(this, "Back");
     }
 
     /**
      * Kép skálázása
      */
     private void updateImageSize() {
+        Logger.startedView(this, "updateImageSize");
         if (imageLabel != null) {
             // Get the size of the frame
             int width = getWidth();
@@ -90,12 +97,15 @@ class HelperFrame extends JFrame {
             // Update the image label with the scaled image
             imageLabel.setIcon(scaledIcon);
         }
+        Logger.finishedView(this, "updateImageSize");
     }
 
     private class BackButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "BackButtonListener.actionPerformed", e);
             Back();
+            Logger.finishedView(this, "BackButtonListener.actionPerformed", e);
         }
     }
 }

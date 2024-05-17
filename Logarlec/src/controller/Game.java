@@ -193,38 +193,38 @@ public class Game implements IVInit {
 	}
 
 	public void NotifyStudentDied(){
-		Logger.started(this, "NotifyStudentDied");
+		Logger.startedModel(this, "NotifyStudentDied");
 		numberOfAliveStudents--;
-		Logger.finished(this, "NotifyStudentDied");
+		Logger.finishedModel(this, "NotifyStudentDied");
 	}
 
 
 	@Override
 	public void AddStudent(String personID) {
-		Logger.started(this, "AddStudent", personID);
+		Logger.startedModel(this, "AddStudent", personID);
 		Student newStudent = new Student(personID,this);
 		rooms.get(0).AddStudent(newStudent);
 		if (icInit != null) icInit.CreateVStudent(newStudent, inputHandler);
 		AddToGame(newStudent);
 		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID + "\n");
-		Logger.finished(this, "AddStudent", personID);
+		Logger.finishedModel(this, "AddStudent", personID);
 
 	}
 
 	@Override
 	public void RemoveStudent(String personID) {
-		Logger.started(this, "RemoveStudent");
+		Logger.startedModel(this, "RemoveStudent");
 		IPerson student = findPersonById(personID);
 		RemoveFromGame(student);
 		student.GetRoom().RemoveStudent((Student) student);
-		Logger.finished(this, "RemoveStudent");
+		Logger.finishedModel(this, "RemoveStudent");
 	}
 
 	/**
 	 * Elindítja a játékot, incializálja a játékmenetet.
 	 * */
 	public void StartGame() {
-		Logger.started(this, "StartGame");
+		Logger.startedModel(this, "StartGame");
 		isEndGame = false;
 		gameTimer = 10;
 		numberOfAliveStudents = 0;
@@ -238,18 +238,18 @@ public class Game implements IVInit {
 		if (currentTurn != null) currentTurn.StartTurn();
 		else throw new RuntimeException("No person was added to game when game was started.");
 
-		Logger.finished(this, "StartGame");
+		Logger.finishedModel(this, "StartGame");
 	}
 
 	@Override
 	public void CreateGame(String mapPathJSON, ICInit icInit, IControl iControl, ICRoom icRoom) {
-		Logger.started(this, "CreateGame", mapPathJSON, icInit, iControl, icRoom);
+		Logger.startedModel(this, "CreateGame", mapPathJSON, icInit, iControl, icRoom);
 		this.iControl = iControl;
 		this.icInit = icInit;
 		this.icRoom = icRoom;
 		String command = "CreateGame " + "false " + mapPathJSON + " " + logLevel.toString();
 		inputHandler.handleCommand(command, icInit);
-		Logger.finished(this, "CreateGame", mapPathJSON, icInit, iControl, icRoom);
+		Logger.finishedModel(this, "CreateGame", mapPathJSON, icInit, iControl, icRoom);
 	}
 
 	/**
@@ -257,9 +257,9 @@ public class Game implements IVInit {
 	 * tovabbi personeket. A logLevel DISABLED (ha szukseg van ra at lehet adni parameterkent a CreateGamenek).
 	 */
 	public void CreateGame(String mapPathJSON) {
-		Logger.started(this, "CreateGame", mapPathJSON);
+		Logger.startedModel(this, "CreateGame", mapPathJSON);
 		CreateGame(mapPathJSON, null, null, null);
-		Logger.finished(this, "CreateGame", mapPathJSON);
+		Logger.finishedModel(this, "CreateGame", mapPathJSON);
 	}
 
 	/**
@@ -268,23 +268,23 @@ public class Game implements IVInit {
 	 * @param winSide 0 érték ha Oktató, 1 ha Hallgató
 	 * */
 	public void EndGame(boolean winSide) {
-		Logger.started(this, "EndGame", winSide);
+		Logger.startedModel(this, "EndGame", winSide);
 		isEndGame = true;
 		this.winSide = winSide;
 		if (iControl != null){
 			if (winSide) iControl.StudentWin();
 			else iControl.InstructorWin();
 		}
-		Logger.finished(this, "EndGame", winSide);
+		Logger.finishedModel(this, "EndGame", winSide);
 	}
 	
 	/**
 	 * Átlépteti a játékot a következő körre.
 	 * */
 	public void NextTurn() {
-		Logger.started(this, "NextTurn");
+		Logger.startedModel(this, "NextTurn");
 		if (isEndGame){
-			Logger.finished(this, "NextTurn");
+			Logger.finishedModel(this, "NextTurn");
 			return;
 		}
 		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
@@ -293,7 +293,7 @@ public class Game implements IVInit {
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
 			EndGame(false);
-			Logger.finished(this, "NextTurn");
+			Logger.finishedModel(this, "NextTurn");
 			return;
 		}
 
@@ -305,20 +305,20 @@ public class Game implements IVInit {
 		}
 		if(gameTimer == 0){
 			EndGame(false);
-			Logger.finished(this, "NextTurn");
+			Logger.finishedModel(this, "NextTurn");
 			return;
 		}
 
 		currentTurn = turnOrder.get(currentIndex);
 		if (!currentTurn.GetIsAlive()){
-			Logger.finished(this, "NextTurn");
+			Logger.finishedModel(this, "NextTurn");
 			NextTurn();
 			return;
 		}
 		currentTurn.StartTurn();
 
 
-		Logger.finished(this, "NextTurn");
+		Logger.finishedModel(this, "NextTurn");
 	}
 	
 	/** 
@@ -327,8 +327,8 @@ public class Game implements IVInit {
 	 * @return true abban az esetben ha van élő játékos, false ha nincs további játékos.
 	 * */
 	public boolean AnyStudentsAlive() {
-		Logger.started(this, "AnyStudentsAlive");
-		Logger.finished(this, "AnyStudentsAlive");
+		Logger.startedModel(this, "AnyStudentsAlive");
+		Logger.finishedModel(this, "AnyStudentsAlive");
 		return numberOfAliveStudents > 0;
 	}
 
@@ -342,7 +342,7 @@ public class Game implements IVInit {
 	 * @return Igaz ha sikerült osztódnia a Szobának és hamis ha nem.
 	 * */
 	public boolean SeparateRoom(Room r1) {
-		Logger.started(this, "SeparateRoom");
+		Logger.startedModel(this, "SeparateRoom");
 		// A Room csak akkor tud osztódni ha nincs egy személy se benne.
 		if(r1.GetCurrentCapacity() == 0)
 		{
@@ -381,7 +381,7 @@ public class Game implements IVInit {
 		}
 
 		// A Room nem tud osztódni, ha tartózkodik valaki a Room -ban.
-		Logger.finished(this, "SeparateRoom");
+		Logger.finishedModel(this, "SeparateRoom");
 		return false;
 	}
 
@@ -396,7 +396,7 @@ public class Game implements IVInit {
 	 * @param r2 A Room, amivel a jelenlegi Room -ot összeolvasztja a metódus.
 	 * */
 	public boolean MergeRooms(Room r1, Room r2) {
-		Logger.started(this, "MergeRooms", r2);
+		Logger.startedModel(this, "MergeRooms", r2);
 
 		// Csak akkor egyesíthetünk két szobát, ha egyikben sem tartózkodik egy Person sem.
 		if(r1.GetCurrentCapacity() == 0 && r2.GetCurrentCapacity() == 0){
@@ -454,14 +454,14 @@ public class Game implements IVInit {
 				r1.RemoveNeighbor(r2);
 			}
 
-			Logger.finished(this, "MergeRooms", r2);
+			Logger.finishedModel(this, "MergeRooms", r2);
 			if (icRoom != null) icRoom.Merge(r1, r2);
 			return true;
 		}
 
 		// Ha van bárki is az egyik szobában, akkor nem hajtódik
 		// végre az egyesítés.
-		Logger.finished(this, "MergeRooms", r2);
+		Logger.finishedModel(this, "MergeRooms", r2);
 		return false;
 	}
 
@@ -471,10 +471,10 @@ public class Game implements IVInit {
 	 * @param p Az hozzáadandó Személy.
 	 * */
 	public void AddToGame(IPerson p) {
-		Logger.started(this, "AddToGame", p);
+		Logger.startedModel(this, "AddToGame", p);
 		turnOrder.add(p);
 		if(currentTurn == null) currentTurn = p;
-		Logger.finished(this, "AddToGame", p);
+		Logger.finishedModel(this, "AddToGame", p);
 	}
 
 	/**
@@ -483,9 +483,9 @@ public class Game implements IVInit {
 	 * @param p A torlendo Személy.
 	 * */
 	public void RemoveFromGame(IPerson p) {
-		Logger.started(this, "RemoveFromGame", p);
+		Logger.startedModel(this, "RemoveFromGame", p);
 		turnOrder.remove(p);
-		Logger.finished(this, "RemoveFromGame", p);
+		Logger.finishedModel(this, "RemoveFromGame", p);
 	}
 
 	/**
@@ -494,11 +494,11 @@ public class Game implements IVInit {
 	 * @param r Hozzáadandó szoba.
 	 * */
 	public void AddRoom(Room r) {
-		Logger.started(this, "AddRoom", r);
+		Logger.startedModel(this, "AddRoom", r);
 		if (r != null)
 			r.SetIsDeterministic(isGameDeterministic);
 			this.rooms.add(r);
-		Logger.finished(this, "AddRoom", r);
+		Logger.finishedModel(this, "AddRoom", r);
 	}
 	
 	/**
@@ -507,9 +507,9 @@ public class Game implements IVInit {
 	 * @param r  Eltávolítandó szoba.
 	 * */
 	public void RemoveRoom(Room r) {
-		Logger.started(this, "RemoveRoom", r);
+		Logger.startedModel(this, "RemoveRoom", r);
 		rooms.remove(r);
-		Logger.finished(this, "RemoveRoom", r);
+		Logger.finishedModel(this, "RemoveRoom", r);
 	}
 
 	public boolean GetIsDeterministic(){

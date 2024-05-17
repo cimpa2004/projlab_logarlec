@@ -15,7 +15,7 @@ public class UseTransistor {
     private static Game game;
 
     private static void initTest(){
-        game = new Game(true , Logger.LogLevel.CALL_FLOWS);
+        game = new Game(true , Logger.LogLevel.CALL_FLOWS_MODEL);
         t1 = new Transistor();
         t2 = new Transistor();
         s = new Student(game);

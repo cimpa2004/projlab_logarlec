@@ -15,10 +15,6 @@ import java.util.UUID;
  * abban az esetben, ha a tárgyat fel akarja valaki venni, vagy eldobni.
  */
 public class SlideRule extends Item implements IVSlideRule {
-	@Override
-	public String GetID() {
-		return id;
-	}
 	/**
 	 * A játék ami számon tartja a játék paramétereit.
 	 * A logarléc képes így üzenni a játéknak ha megtalálta őt egy hallgató, hogy így véget ér a játék.
@@ -56,8 +52,10 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * */
 	@Override
 	public boolean GetIsFake() {
-		return isFake;
-	}
+        Logger.startedModel(this, "GetIsFake");
+        Logger.finishedModel(this, "GetIsFake");
+        return isFake;
+    }
 
 	/**
 	 * Ezen metódussal le lehet kérdezni, hogy egy SlideRule példány aktív-e.
@@ -66,6 +64,8 @@ public class SlideRule extends Item implements IVSlideRule {
 	 */
 	@Override
 	public boolean GetIsActive() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -77,6 +77,8 @@ public class SlideRule extends Item implements IVSlideRule {
 	 */
 	@Override
 	public Transistor GetPair() {
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return null;
 	}
 
@@ -86,7 +88,9 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param b Az isFake leendő értéke.
 	 * */
 	public void SetIsFake(boolean b){
+		Logger.startedModel(this, "SetIsFake", b);
 		isFake = b;
+		Logger.finishedModel(this, "SetIsFake", b);
 	}
 
 	/**
@@ -103,13 +107,14 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpStudent(Student st) {
-		Logger.started(this, "PickedUpStudent", st);
-
+		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
+		if (isAdded && ivItemUpdate != null){
+			ivItemUpdate.PickedUpUpdate();
+		}
 
 		if(isAdded && !isFake) game.EndGame(true);
-		
-		Logger.finished(this, "PickedUpStudent", st);
+		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
@@ -121,8 +126,8 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @return mindig hamis érték
 	 * */
 	public boolean PickedUpInstructor(Instructor i) {
-		Logger.started(this, "PickedUpInstructor", i);
-		Logger.finished(this, "PickedUpInstructor", i);
+		Logger.startedModel(this, "PickedUpInstructor", i);
+		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return false;
 	}
 
@@ -135,9 +140,12 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param p Az eldobó személy
 	 */
 	public void Thrown(Person p) {
-		Logger.started(this, "Thrown", p);
+		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFromInventory(this);
-		Logger.finished(this, "Thrown", p);
+		if(ivItemUpdate != null){
+			ivItemUpdate.ThrownUpdate();
+		}
+		Logger.finishedModel(this, "Thrown", p);
 	}
 
 	/**
@@ -146,7 +154,10 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param s Azon Student, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByStudent(Student s) {}
+	public void UsedByStudent(Student s) {
+		Logger.startedModel(this, "UsedByStudent");
+		Logger.finishedModel(this, "UsedByStudent");
+	}
 
 	/**
 	 * Egy SlideRule -t nem lehet használni, ezért ez egy üres metódus.
@@ -154,10 +165,15 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * @param i Azon Instructor, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByInstructor(Instructor i) {}
+	public void UsedByInstructor(Instructor i) {
+		Logger.startedModel(this, "UsedByInstructor");
+		Logger.finishedModel(this, "UsedByInstructor");
+	}
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 }

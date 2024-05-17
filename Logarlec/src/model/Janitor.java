@@ -39,7 +39,7 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean AppearInRoom(Room r) {
-        Logger.started(this, "AppearInRoom", r);
+        Logger.startedModel(this, "AppearInRoom", r);
         int currentC = r.GetCurrentCapacity();
         int maxC = r.GetMaxCapacity();
         if(currentC < maxC) {
@@ -54,9 +54,10 @@ public class Janitor extends Person implements IVJanitor {
             this.GetRoom().SetPoisonDuration(0);
             this.GetRoom().SetIsSticky(false);
         } else{
+            Logger.finishedModel(this, "AppearInRoom", r);
             return false;
         }
-        Logger.finished(this, "AppearInRoom", r);
+        Logger.finishedModel(this, "AppearInRoom", r);
         return true;
     }
 
@@ -64,6 +65,7 @@ public class Janitor extends Person implements IVJanitor {
      * Oktatók és hallgatók kitesékelése amenyiben ez lehetséges
      */
     private void MakeThemLeave(){
+        Logger.startedModel(this, "MakeThemLeave");
         Random random = new Random();
         if(game!=null) {
             if (!game.GetIsDeterministic()){
@@ -106,6 +108,7 @@ public class Janitor extends Person implements IVJanitor {
                 }
             }
         }
+        Logger.finishedModel(this, "MakeThemLeave");
     }
 
     /**
@@ -114,12 +117,12 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean Move(DoorSide d) {
-        Logger.started(this, "Move", d);
+        Logger.startedModel(this, "Move", d);
         if (!room.GetDoors().contains(d)) return false;
         DoorSide d2 = d.GetPair();
         Room r2 = d2.GetRoom();
         boolean isAppeared = AppearInRoom(r2);
-        Logger.finished(this, "Move", d);
+        Logger.finishedModel(this, "Move", d);
         return isAppeared;
     }
 
@@ -132,7 +135,6 @@ public class Janitor extends Person implements IVJanitor {
     @Override
     public boolean Pickup(Item i) {
         throw new RuntimeException("A takarito nem vehet fel targyakat");
-        //return false;
     }
 
     /**
@@ -150,7 +152,7 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public void StartTurn() {
-        Logger.started(this, "StartTurn");
+        Logger.startedModel(this, "StartTurn");
         activeTurn = true;
 
         //Mozgató logika
@@ -176,7 +178,7 @@ public class Janitor extends Person implements IVJanitor {
         }
 
         EndTurn();
-        Logger.finished(this, "StartTurn");
+        Logger.finishedModel(this, "StartTurn");
     }
 
     /**
@@ -184,10 +186,10 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public void EndTurn() {
-        Logger.started(this,"EndTurn");
+        Logger.startedModel(this,"EndTurn");
         this.activeTurn = false;
         game.NextTurn();
-        Logger.finished(this, "EndTurn");
+        Logger.finishedModel(this, "EndTurn");
     }
 
     /**
@@ -196,6 +198,8 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean GetIsFainted() {
+        Logger.startedModel(this, "GetIsFainted");
+        Logger.finishedModel(this, "GetIsFainted");
         return false;
     }
 
@@ -205,6 +209,8 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean GetIsStunned() {
+        Logger.startedModel(this, "GetIsStunned");
+        Logger.finishedModel(this, "GetIsStunned");
         return false;
     }
 
@@ -214,26 +220,34 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean GetIsActiveTurn() {
+        Logger.startedModel(this, "GetIsActiveTurn");
+        Logger.finishedModel(this, "GetIsActiveTurn");
         return this.activeTurn;
     }
 
     @Override
     public boolean GetIsAlive() {
+        Logger.startedModel(this, "GetIsAlive");
+        Logger.finishedModel(this, "GetIsAlive");
         return true;
     }
 
     @Override
     public void ConnectTransistors(Transistor t1, Transistor t2) {
-
+        throw new RuntimeException("A janitor nem csatlakoztathat ossze tranzisztorokat.");
     }
 
     @Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 
     @Override
     public void SetIVJanitorUpdate(IVJanitorUpdate ivJanitorUpdate) {
+        Logger.startedModel(this, "SetIVJanitorUpdate", ivJanitorUpdate);
         this.ivJanitorUpdate = ivJanitorUpdate;
+        Logger.finishedModel(this, "SetIVJanitorUpdate", ivJanitorUpdate);
     }
 }
