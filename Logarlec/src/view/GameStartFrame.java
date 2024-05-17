@@ -44,7 +44,7 @@ public class GameStartFrame extends JFrame {
         setLayout(new BorderLayout()); // Use BorderLayout for better organization
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        Image icon = Toolkit.getDefaultToolkit().getImage("src/util/sliderule.jpg");
+        Image icon = Toolkit.getDefaultToolkit().getImage("sliderule.jpg");
         setIconImage(icon);
 
         startGameButton.setEnabled(false);

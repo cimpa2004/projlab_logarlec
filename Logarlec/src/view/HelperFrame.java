@@ -28,7 +28,6 @@ class HelperFrame extends JFrame {
         }
         window = w;
         setTitle("Súgó");
-        setSize(500, 500);
         //kinagyítva lesz egyből:
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -41,7 +40,7 @@ class HelperFrame extends JFrame {
         add(imageLabel, BorderLayout.CENTER);
 
         //Ikon
-        Image icon = Toolkit.getDefaultToolkit().getImage("src/util/sliderule.jpg");
+        Image icon = Toolkit.getDefaultToolkit().getImage("sliderule.jpg");
         setIconImage(icon);
 
         //Back gomb

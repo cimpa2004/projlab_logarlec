@@ -10,12 +10,13 @@ import javax.swing.*;
 public abstract class VItem implements IVItemUpdate {
     private String ID;
     private VRoom room;
+    VStudent owner;
     public String GetID(){
         Logger.startedModel(this, "GetID");
         Logger.finishedModel(this, "GetID");
         return ID;
     }
-    public abstract void PickedUp();
+    public abstract void PickedUp(VStudent owner);
     public abstract CirclePanel DrawOnMap();
     public abstract void DrawInInventory(JPanel panel, VStudent student);
     public abstract boolean HasNullable();
@@ -24,34 +25,29 @@ public abstract class VItem implements IVItemUpdate {
     public abstract void Connected();
     public abstract VTransistor GetClickedT();
     public abstract void SetClickedT(VTransistor t);
+
+    /***
+     * Redraws control and game panel
+     */
     @Override
     public void ThrownUpdate() {
         Logger.startedView(this, "ThrownUpdate");
+        owner.GetControlPanel().Update();
         Logger.finishedView(this, "ThrownUpdate");
-        // TODO: implement
-        // Általános:
-        // Ha currentStudent dobta el ne rajzolódjon ki az inventoryban
-        // Rajzolódjon ki a szobában, (ha az a megjelenített szoba?)
-        // Transistor?? --> Minden redraw, inv -ből eltűnik,szoba lehet változik
     }
 
     @Override
     public void PickedUpUpdate() {
         Logger.startedView(this, "PickedUpUpdate");
+        owner.GetControlPanel().Update();
         Logger.finishedView(this, "PickedUpUpdate");
-        // TODO: implement
-        throw new UnsupportedOperationException("Unimplemented method 'PickedUpUpdate'");
     }
 
     @Override
     public void UsedUpdate() {
         Logger.startedView(this, "UsedUpdated");
+        owner.GetControlPanel().Update();
         Logger.finishedView(this, "UsedUpdated");
-        // TODO:
-        // Általános:
-        // Ne rajzolódjon ki a szobában, szoba redraw (ha az a megjelenített szoba?)
-        // Ha currentStudent vette fel, akkor rajzolja ki az inventoryban, inv redraw
-        // SlideRule?? --> ez már jelezve van szerintem, itt nem kell kitérni rá
     }
 
 }

@@ -3,20 +3,32 @@ package view;
 import model.Room;
 import util.Logger;
 import viewmodel.ICInput;
+import viewmodel.IVItem;
 import viewmodel.IVStudent;
+import viewmodel.IVStudentUpdate;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class VStudent extends VPerson{
+public class VStudent extends VPerson implements IVStudentUpdate {
     private IVStudent ivStudent;
     private ControlPanel controlPanel;
+
     public ICInput input;
 
     public List<VItem> GetItems(){
         Logger.startedView(this, "GetItems");
         Logger.finishedView(this, "GetItems");
 
-        return null;
+        // TODO ez jó?
+        List<IVItem> ivItems = input.GetInventory(GetID());
+        List<VItem> vItems = new ArrayList<>();
+
+        for(IVItem item : ivItems){
+            vItems.add((VItem) item);
+        }
+
+        return vItems;
     }
     public boolean GetIsActiveTurn(){
         Logger.startedView(this, "GetIsActiveTurn");
@@ -36,6 +48,7 @@ public class VStudent extends VPerson{
      */
     public void Pickup(VItem item) {
         Logger.startedView(this, "Pickup", item);
+        item.PickedUp(this);
         Logger.finishedView(this, "Pickup", item);
     }
 
@@ -64,5 +77,17 @@ public class VStudent extends VPerson{
         Logger.startedView(this, "GetID");
         Logger.finishedView(this, "GetID");
         return ivStudent.GetID();
+    }
+
+    public ControlPanel GetControlPanel(){
+        return controlPanel;
+    }
+
+    /**
+     * amikor die következik be xd
+     */
+    @Override
+    public void Died() {
+        controlPanel.Update();
     }
 }

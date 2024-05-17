@@ -18,10 +18,11 @@ public class VFFP2Mask extends VItem{
      *
      */
     @Override
-    public void PickedUp() {
+    public void PickedUp(VStudent st) {
         Logger.startedView(this, "PickedUp");
-        Logger.finishedView(this, "PickedUp");
+        owner = st;
         owner.input.PickupItem(owner.GetID(), ivFFP2Mask);
+        Logger.finishedView(this, "PickedUp");
     }
 
     /**

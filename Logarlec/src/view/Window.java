@@ -27,7 +27,7 @@ public class Window extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
-        Image icon = Toolkit.getDefaultToolkit().getImage("src/util/sliderule.jpg");
+        Image icon = Toolkit.getDefaultToolkit().getImage("sliderule.jpg");
         setIconImage(icon);
 
         panel = new JPanel();

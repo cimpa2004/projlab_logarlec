@@ -96,7 +96,7 @@ public class ControlPanel extends JPanel implements IControl {
     /**
      * Újra rajzolja az inventory-t és a gamePanelt
      */
-    private void Update() {
+    public void Update() {
         Logger.startedView(this, "Update");
         //TODO: maybe it will work
         if (currentStudent != null){

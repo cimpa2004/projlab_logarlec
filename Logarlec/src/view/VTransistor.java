@@ -19,10 +19,11 @@ public class VTransistor extends VItem{
     }
 
     @Override
-    public void PickedUp() {
+    public void PickedUp(VStudent st) {
         Logger.startedView(this, "PickedUp");
-        Logger.finishedView(this, "PickedUp");
+        owner = st;
         owner.input.PickupItem(owner.GetID(), ivTransistor);
+        Logger.finishedView(this, "PickedUp");
     }
 
     @Override

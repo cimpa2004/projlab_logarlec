@@ -3,10 +3,7 @@ package model;
 import controller.Game;
 import util.Logger;
 
-import viewmodel.IControl;
-import viewmodel.IVStudent;
-import viewmodel.IVStudentUpdate;
-import viewmodel.IVRoom;
+import viewmodel.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -174,6 +171,7 @@ public class Student extends Person implements IVStudent {
 		Logger.startedModel(this, "Die");
 		isAlive = false;
 		room.RemoveStudent(this);
+		ivStudentUpdate.Died();
 		game.NotifyStudentDied();
 		if(IsActiveTurn()) EndTurn();
 		Logger.finishedModel(this, "Die");

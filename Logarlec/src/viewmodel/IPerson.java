@@ -86,6 +86,8 @@ public interface IPerson {
      */
     List<Item> GetInventory();
 
+    List<IVItem> GetIVItems();
+
     /**
      * Vissza adja a szemelynel talalhato WetTableClothesokat.
      *
