@@ -40,6 +40,9 @@ class HelperFrame extends JFrame {
         imageLabel = new JLabel();
         add(imageLabel, BorderLayout.CENTER);
 
+        //Ikon
+        Image icon = Toolkit.getDefaultToolkit().getImage("src/util/sliderule.jpg");
+        setIconImage(icon);
 
         //Back gomb
         backButton = new JButton("Vissza");

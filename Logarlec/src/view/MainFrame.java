@@ -26,6 +26,8 @@ public class MainFrame extends JFrame implements ICInit {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(0, 1));
+        Image icon = Toolkit.getDefaultToolkit().getImage("src/util/sliderule.jpg");
+        setIconImage(icon);
         add(gamePanel);
         add(controlPanel);
 

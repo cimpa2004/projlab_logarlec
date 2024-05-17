@@ -43,6 +43,10 @@ public class GameStartFrame extends JFrame {
         setSize(500, 200);
         setLayout(new BorderLayout()); // Use BorderLayout for better organization
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        Image icon = Toolkit.getDefaultToolkit().getImage("src/util/sliderule.jpg");
+        setIconImage(icon);
+
         startGameButton.setEnabled(false);
         addStudentButton.setEnabled(false);
         nameTextBox.addKeyListener(new NameTextBoxKeyListener());

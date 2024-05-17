@@ -15,6 +15,7 @@ public class VStudent extends VPerson{
     public List<VItem> GetItems(){
         Logger.startedView(this, "GetItems");
         Logger.finishedView(this, "GetItems");
+
         return null;
     }
     public boolean GetIsActiveTurn(){
