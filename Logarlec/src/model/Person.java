@@ -135,8 +135,8 @@ public abstract class Person implements IPerson {
 	 *  @return  Egy lista ami tartalmazza a szemelynel talahato WetTableClothesokat
 	 */
 	public List<Defendable> GetWetTableClothes() {
-		Logger.started(this, "GetWetTableClothes");
-		Logger.finished(this, "GetWetTableClothes");
+		Logger.startedModel(this, "GetWetTableClothes");
+		Logger.finishedModel(this, "GetWetTableClothes");
 		return wetTableClothes;
 	}
 
@@ -146,8 +146,8 @@ public abstract class Person implements IPerson {
 	 *  @return  Egy lista ami tartalmazza a szemelynel talahato TVSZeket
 	 */
 	public List<Defendable> GetTVSZs() {
-		Logger.started(this, "GetTVSZs");
-		Logger.finished(this, "GetTVSZs");
+		Logger.startedModel(this, "GetTVSZs");
+		Logger.finishedModel(this, "GetTVSZs");
 		return tvszs;
 	}
 
@@ -157,8 +157,8 @@ public abstract class Person implements IPerson {
 	 *  @return  Egy lista ami tartalmazza a szemelynel talahato HolyBeerCupsokat
 	 */
 	public List<Defendable> GetHolyBeerCups() {
-		Logger.started(this, "GetHolyBeerCups");
-		Logger.finished(this, "GetHolyBeerCups");
+		Logger.startedModel(this, "GetHolyBeerCups");
+		Logger.finishedModel(this, "GetHolyBeerCups");
 		return holyBeerCups;
 	}
 
@@ -168,8 +168,8 @@ public abstract class Person implements IPerson {
 	 *  @return  Egy lista ami tartalmazza a szemelynel talahato FFP2Maskokat
 	 */
 	public List<Defendable> GetFFP2Masks() {
-		Logger.started(this, "GetFFP2Masks");
-		Logger.finished(this, "GetFFP2Masks");
+		Logger.startedModel(this, "GetFFP2Masks");
+		Logger.finishedModel(this, "GetFFP2Masks");
 		return ffp2Masks;
 	}
 	
@@ -181,7 +181,7 @@ public abstract class Person implements IPerson {
 	 * @param  b  Egy boolean típusú változó, mely az adja meg, hogy az isFainted értéke mire változzon.
 	 */
 	public void SetIsFainted(boolean b) {
-		Logger.started(this, "SetIsFainted", b);
+		Logger.startedModel(this, "SetIsFainted", b);
 
 		if(b){
 			ThrowAllItems();
@@ -190,7 +190,7 @@ public abstract class Person implements IPerson {
 			isFainted = false;
 		}
 
-		Logger.finished(this, "SetIsFainted", b);
+		Logger.finishedModel(this, "SetIsFainted", b);
 	}
 		
 	/** 
@@ -203,13 +203,13 @@ public abstract class Person implements IPerson {
 
 
 	public void Throw(Item i) {
-		Logger.started(this, "Throw", i);
+		Logger.startedModel(this, "Throw", i);
 
 		if(inventory.contains(i)){
 			i.Thrown(this);
 		}
 
-		Logger.finished(this, "Throw", i);
+		Logger.finishedModel(this, "Throw", i);
 	}
 	
 	/** 
@@ -217,14 +217,14 @@ public abstract class Person implements IPerson {
 	 * kiürül az adott Person inventoryja.
 	*/
 	public void ThrowAllItems() {
-		Logger.started(this, "ThrowAllItems");
+		Logger.startedModel(this, "ThrowAllItems");
 
 		ArrayList<Item> inventoryCopy = new ArrayList<>(inventory);
 		for(Item item : inventoryCopy){
 			Throw(item);
 		}
 
-		Logger.finished(this, "ThrowAllItems");
+		Logger.finishedModel(this, "ThrowAllItems");
 	}
 
 
@@ -234,9 +234,9 @@ public abstract class Person implements IPerson {
 	 *  @param  r  Az a szoba, amely szobában a Person tartózkodni fog
 	*/
 	public void SetRoom(Room r) {
-		Logger.started(this, "SetRoom", r);
+		Logger.startedModel(this, "SetRoom", r);
 		room = r;
-		Logger.finished(this, "SetRoom", r);
+		Logger.finishedModel(this, "SetRoom", r);
 	}
 
 	/**
@@ -245,8 +245,8 @@ public abstract class Person implements IPerson {
 	 *  @return  Az a szoba ahol jenleg tartózkodik
 	 */
 	public Room GetRoom() {
-		Logger.started(this, "GetRoom");
-		Logger.finished(this, "GetRoom");
+		Logger.startedModel(this, "GetRoom");
+		Logger.finishedModel(this, "GetRoom");
 		return room;
 	}
 
@@ -256,8 +256,8 @@ public abstract class Person implements IPerson {
 	 *  @return  Egy lista ami tartalmazza a szemelynel talahato targyakat
 	 */
 	public List<Item> GetInventory() {
-		Logger.started(this, "GetInventory");
-		Logger.finished(this, "GetInventory");
+		Logger.startedModel(this, "GetInventory");
+		Logger.finishedModel(this, "GetInventory");
 		return inventory;
 	}
 
@@ -270,14 +270,14 @@ public abstract class Person implements IPerson {
 	 *  @return    A visszatérési érték, ami mutatja, hogy sikerült-e hozzáadni a paraméterként megadott Itemet az inventoryhoz
 	*/
 	public boolean AddToInventory(Item i) {
-		Logger.started(this, "AddToInventory", i);
+		Logger.startedModel(this, "AddToInventory", i);
 		boolean canAdd = inventory.size() < 5 && !room.GetIsSticky();
 		if(canAdd) {
 			inventory.add(i);
 			room.RemoveItem(i);
 			i.SetOwner(this);
 		}
-		Logger.finished(this, "AddToInventory", i);
+		Logger.finishedModel(this, "AddToInventory", i);
 		return canAdd;
 	}
 	
@@ -289,13 +289,13 @@ public abstract class Person implements IPerson {
 	 *  @return    A visszatérési érték, ami mutatja, hogy sikerült-e törölni az i Itemet az inventoryból
 	*/
 	public boolean RemoveFromInventory(Item i) {
-		Logger.started(this, "RemoveFromInventory", i);
+		Logger.startedModel(this, "RemoveFromInventory", i);
 		boolean canRemove = inventory.remove(i);
 		if(canRemove){
 			room.AddItem(i);
 			i.SetOwner(null);
 		}
-		Logger.finished(this, "RemoveFromInventory", i);
+		Logger.finishedModel(this, "RemoveFromInventory", i);
 		return canRemove;
 	}
 	
@@ -306,11 +306,11 @@ public abstract class Person implements IPerson {
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a gyilkosságtól.
 	*/
 	public boolean DefendFromKill(Instructor instructor) {
-		Logger.started(this, "DefendFromKill");
+		Logger.startedModel(this, "DefendFromKill");
 		if(hasWetTableCloth) {
 			Defendable wtc = GetRandomActive(wetTableClothes);
 			instructor.Stun(3);
-			Logger.finished(this, "DefendFromKill");
+			Logger.finishedModel(this, "DefendFromKill");
 			return true;
 		}
 		else if(hasHolyBeerCup) {
@@ -323,18 +323,18 @@ public abstract class Person implements IPerson {
 					Throw(GetInventory().get(indexOfItem));
 				}
 			}
-			Logger.finished(this, "DefendFromKill");
+			Logger.finishedModel(this, "DefendFromKill");
 			return true;
 		}
 		else if(hasTVSZ) {
 			Defendable tvsz = GetRandomActive(tvszs);
 			if(tvsz==null) return false;
 			tvsz.Decrement();
-			Logger.finished(this, "DefendFromKill");
+			Logger.finishedModel(this, "DefendFromKill");
 			return true;
 		}
 
-		Logger.finished(this, "DefendFromKill");
+		Logger.finishedModel(this, "DefendFromKill");
 		return false;
 	}
 	
@@ -345,14 +345,14 @@ public abstract class Person implements IPerson {
 	 *  @return    Boolean visszatérési érték mely jelzi, hogy sikerült-e megvédeni a Person-t a kábulástól.
 	*/
 	public boolean DefendFromGas() {
-		Logger.started(this, "DefendFromGas");
+		Logger.startedModel(this, "DefendFromGas");
 		Defendable randActive = GetRandomActive(ffp2Masks);
 		if (randActive != null) {
 			randActive.Decrement();
-			Logger.finished(this, "DefendFromGas");
+			Logger.finishedModel(this, "DefendFromGas");
 			return true;
 		}
-		Logger.finished(this, "DefendFromGas");
+		Logger.finishedModel(this, "DefendFromGas");
 		return false;
 	}
 	
@@ -362,10 +362,10 @@ public abstract class Person implements IPerson {
 	 *  @param  w  A WetTableCloth melyet hozzá ad a listához
 	*/
 	public void AddWetTableCloth(Defendable w) {
-		Logger.started(this, "AddWetTableCloth", w);
+		Logger.startedModel(this, "AddWetTableCloth", w);
 		wetTableClothes.add(w);
 		hasWetTableCloth = true;
-		Logger.finished(this, "AddWetTableCloth", w);
+		Logger.finishedModel(this, "AddWetTableCloth", w);
 	}
 	
 	/** 
@@ -374,10 +374,10 @@ public abstract class Person implements IPerson {
 	 *  @param  t  A TVSZ melyet hozzá ad a listához
 	*/
 	public void AddTVSZ(Defendable t) {
-		Logger.started(this, "AddTVSZ", t);
+		Logger.startedModel(this, "AddTVSZ", t);
 		tvszs.add(t);
 		hasTVSZ = true;
-		Logger.finished(this, "AddTVSZ", t);
+		Logger.finishedModel(this, "AddTVSZ", t);
 	}
 	
 	/** 
@@ -386,10 +386,10 @@ public abstract class Person implements IPerson {
 	 *  @param  f  Az FFP2Mask melyet hozzá ad a listához
 	*/
 	public void AddFFP2Mask(Defendable f) {
-		Logger.started(this, "AddFFP2Mask", f);
+		Logger.startedModel(this, "AddFFP2Mask", f);
 		ffp2Masks.add(f);
 		hasFFP2Mask = true;
-		Logger.finished(this, "AddFFP2Mask", f);
+		Logger.finishedModel(this, "AddFFP2Mask", f);
 	}
 	
 	/** 
@@ -398,10 +398,10 @@ public abstract class Person implements IPerson {
 	 *  @param  h  A HolyBeerCup melyet hozzá ad a listához
 	*/
 	public void AddHolyBeerCup(Defendable h) {
-		Logger.started(this, "AddHolyBeerCup", h);
+		Logger.startedModel(this, "AddHolyBeerCup", h);
 		this.holyBeerCups.add(h);
 		hasHolyBeerCup = true;
-		Logger.finished(this, "AddHolyBeerCup", h);
+		Logger.finishedModel(this, "AddHolyBeerCup", h);
 	}
 	
 	/** 
@@ -410,10 +410,10 @@ public abstract class Person implements IPerson {
 	 *  @param  w  A WetTableCloth melyet kivesz a listából
 	*/
 	public void RemoveWetTableCloth(Defendable w) {
-		Logger.started(this, "RemoveWetTableCloth", w);
+		Logger.startedModel(this, "RemoveWetTableCloth", w);
 		wetTableClothes.remove(w);
 		if(wetTableClothes.isEmpty()) hasWetTableCloth = false;
-		Logger.finished(this, "RemoveWetTableCloth", w);
+		Logger.finishedModel(this, "RemoveWetTableCloth", w);
 	}
 	
 	/** 
@@ -422,10 +422,10 @@ public abstract class Person implements IPerson {
 	 *  @param  t  A TVSZ melyet kivesz a listából
 	*/
 	public void RemoveTVSZ(Defendable t) {
-		Logger.started(this, "RemoveTVSZ", t);
+		Logger.startedModel(this, "RemoveTVSZ", t);
 		tvszs.remove(t);
 		if(tvszs.isEmpty()) hasTVSZ = false;
-		Logger.finished(this, "RemoveTVSZ", t);
+		Logger.finishedModel(this, "RemoveTVSZ", t);
 	}
 
 
@@ -435,10 +435,10 @@ public abstract class Person implements IPerson {
 	 *  @param  f  Az FFP2Mask melyet kivesz a listából
 	*/
 	public void RemoveFFP2Mask(Defendable f) {
-		Logger.started(this, "RemoveFFP2Mask", f);
+		Logger.startedModel(this, "RemoveFFP2Mask", f);
 		ffp2Masks.remove(f);
 		if(ffp2Masks.isEmpty()) hasFFP2Mask = false;
-		Logger.finished(this, "RemoveFFP2Mask", f);
+		Logger.finishedModel(this, "RemoveFFP2Mask", f);
 	}
 	
 	/** 
@@ -447,10 +447,10 @@ public abstract class Person implements IPerson {
 	 *  @param  h  A HolyBeerCup melyet kivesz a listából
 	*/
 	public void RemoveHolyBeerCup(Defendable h) {
-		Logger.started(this, "RemoveHolyBeerCup", h);
+		Logger.startedModel(this, "RemoveHolyBeerCup", h);
 		holyBeerCups.remove(h);
 		if(holyBeerCups.isEmpty()) hasHolyBeerCup = false;
-		Logger.finished(this, "RemoveHolyBeerCup", h);
+		Logger.finishedModel(this, "RemoveHolyBeerCup", h);
 	}
 	
 	/** 
@@ -460,14 +460,14 @@ public abstract class Person implements IPerson {
 	 *  @param  list  Az a lista amelyből kiválasz egy olyan Defendable, ami még képes megvédeni.
 	*/
 	public Defendable GetRandomActive(List<Defendable> list) {
-		Logger.started(this, "GetRandomActive", list);
+		Logger.startedModel(this, "GetRandomActive", list);
 		for (Defendable d : list) {
 			if (d.CanDefend()) {
-				Logger.finished(this, "GetRandomActive", list);
+				Logger.finishedModel(this, "GetRandomActive", list);
 				return d;
 			}
 		}
-		Logger.finished(this, "GetRandomActive", list);
+		Logger.finishedModel(this, "GetRandomActive", list);
 		return null;
 	}
 
@@ -482,8 +482,10 @@ public abstract class Person implements IPerson {
 
 	@Override
 	public String GetID() {
-		return id;
-	}
+        Logger.startedModel(this, "GetID");
+        Logger.finishedModel(this, "GetID");
+        return this.id;
+    }
 }
 
 

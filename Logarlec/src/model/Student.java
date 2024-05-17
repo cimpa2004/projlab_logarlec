@@ -3,8 +3,6 @@ package model;
 import controller.Game;
 import util.Logger;
 
-import view.VStudent;
-import viewmodel.ICInit;
 import viewmodel.IControl;
 import viewmodel.IVStudent;
 import viewmodel.IVStudentUpdate;
@@ -45,7 +43,7 @@ public class Student extends Person implements IVStudent {
 	 *  @param  r  Az a szoba ahol megjelenik a Student
 	*/
 	public boolean AppearInRoom(Room r) {
-		Logger.started(this, "AppearInRoom", r);
+		Logger.startedModel(this, "AppearInRoom", r);
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
@@ -70,7 +68,7 @@ public class Student extends Person implements IVStudent {
 		} else{
 			return false;
 		}
-		Logger.finished(this, "AppearInRoom", r);
+		Logger.finishedModel(this, "AppearInRoom", r);
 		return true;
 	}
 	
@@ -79,7 +77,7 @@ public class Student extends Person implements IVStudent {
 	 * ezen belül adhatja meg a lépéseit. Ekkor az activeTurn true értékre változik.
 	*/
 	public void StartTurn() {
-		Logger.started(this, "StartTurn");
+		Logger.startedModel(this, "StartTurn");
 		IControl iControl = game.GetIControl();
 		activeTurn = true;
 		if (iControl != null) iControl.StudentStartedTurn();
@@ -104,7 +102,7 @@ public class Student extends Person implements IVStudent {
 		// itt kezdheti meg a hallgato a lepeseit
 
 
-		Logger.finished(this, "StartTurn");
+		Logger.finishedModel(this, "StartTurn");
 	}
 
 
@@ -113,8 +111,8 @@ public class Student extends Person implements IVStudent {
 	 */
 	@Override
 	public boolean GetIsAlive() {
-		Logger.started(this, "GetIsAlive");
-		Logger.finished(this, "GetIsAlive");
+		Logger.startedModel(this, "GetIsAlive");
+		Logger.finishedModel(this, "GetIsAlive");
 		return isAlive;
 	}
 
@@ -122,7 +120,7 @@ public class Student extends Person implements IVStudent {
 	 * A Student ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor a activeTurn értékre false-ra vált.
 	*/
 	public void EndTurn() {
-		Logger.started(this, "EndTurn");
+		Logger.startedModel(this, "EndTurn");
 		ArrayList<Defendable> holyBeerCupsCopy = new ArrayList<>(this.holyBeerCups);
 		for (Defendable h : holyBeerCupsCopy) {
 			h.Decrement();
@@ -139,7 +137,7 @@ public class Student extends Person implements IVStudent {
 
 		activeTurn = false;
 		game.NextTurn();
-		Logger.finished(this, "EndTurn");
+		Logger.finishedModel(this, "EndTurn");
 	}
 
 	@Override
@@ -166,12 +164,12 @@ public class Student extends Person implements IVStudent {
 	 *  @return    Egy boolean érték, amely azt jelzi, hogy a hallgató meghalt, vagy sikerült valahogy túlélni
 	*/
 	public boolean Die() {
-		Logger.started(this, "Die");
+		Logger.startedModel(this, "Die");
 		isAlive = false;
 		room.RemoveStudent(this);
 		game.NotifyStudentDied();
 		if(isActiveTurn()) EndTurn();
-		Logger.finished(this, "Die");
+		Logger.finishedModel(this, "Die");
 		return isAlive;
 	}
 	
@@ -184,10 +182,10 @@ public class Student extends Person implements IVStudent {
 	 *  @param  i  A Usable amit a Student használni szeretne
 	*/
 	public void UseItem(Item i) {
-		Logger.started(this, "UseItem", i);
+		Logger.startedModel(this, "UseItem", i);
 		// Any Usable must be an Item as well
 		if(inventory.contains(i)) i.UsedByStudent(this);
-		Logger.finished(this, "UseItem", i);
+		Logger.finishedModel(this, "UseItem", i);
 	}
 	
 	/** 
@@ -198,7 +196,7 @@ public class Student extends Person implements IVStudent {
 	 *  @param t2  A másik tranzisztor amit a t1-hez szeretne csatlakoztatni
 	*/
 	public void ConnectTransistors(Transistor t1, Transistor t2) {
-		Logger.started(this, "ConnectTransistors", t1, t2);
+		Logger.startedModel(this, "ConnectTransistors", t1, t2);
 		// ha nem hamisak a tranzisztorok
 		if(!t1.GetIsFake() && !t2.GetIsFake()){
 			//ha nem aktivak a tranzisztorok
@@ -206,7 +204,7 @@ public class Student extends Person implements IVStudent {
 				t1.SetPairs(t2);
 			}
 		}
-		Logger.finished(this, "ConnectTransistors", t1, t2);
+		Logger.finishedModel(this, "ConnectTransistors", t1, t2);
 	}
 	
 	/** 
@@ -218,9 +216,9 @@ public class Student extends Person implements IVStudent {
 	 * @return    Visszatérési érték egy boolean, ami jelzi, hogy sikerült-e felvenni az i Itemet vagy sem
 	*/
 	public boolean Pickup(Item i) {
-		Logger.started(this, "Pickup", i);
+		Logger.startedModel(this, "Pickup", i);
 		boolean isPickedUp = i.PickedUpStudent(this);
-		Logger.finished(this, "Pickup", i);
+		Logger.finishedModel(this, "Pickup", i);
 		return isPickedUp;
 	}
 
@@ -234,18 +232,18 @@ public class Student extends Person implements IVStudent {
 	*/
 	@Override
 	public boolean Move(DoorSide d) {
-		Logger.started(this, "Move", d);
+		Logger.startedModel(this, "Move", d);
 		if (!room.GetDoors().contains(d)) return false;
 		boolean canBeOpened = d.GetCanBeOpened();
 		boolean isVisible = d.GetIsVisible();
 		if (!canBeOpened || !isVisible) {
-			Logger.finished(this, "Move", d);
+			Logger.finishedModel(this, "Move", d);
 			return false;
 		}
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		boolean isAppeared = AppearInRoom(r2);
-		Logger.finished(this, "Move", d);
+		Logger.finishedModel(this, "Move", d);
 		return isAppeared;
 	}
 
@@ -267,7 +265,9 @@ public class Student extends Person implements IVStudent {
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 
 }

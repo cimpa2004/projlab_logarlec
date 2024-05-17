@@ -92,11 +92,11 @@ public abstract class Item implements IVItem {
 	 * Item owner változóját beállítja a metódus.
 	 */
 	public void SetOwner(Person p){
-		Logger.started(this, "SetOwner");
+		Logger.startedModel(this, "SetOwner");
 
 		owner = p;
 
-		Logger.finished(this, "SetOwner");
+		Logger.finishedModel(this, "SetOwner");
 	}
 
 	/**
@@ -106,9 +106,9 @@ public abstract class Item implements IVItem {
 	 * null értéket is ha senkihez sem tartozik a tárgy.
 	 */
 	public Person GetOwner(){
-		Logger.started(this, "GetOwner");
+		Logger.startedModel(this, "GetOwner");
 
-		Logger.finished(this, "GetOwner");
+		Logger.finishedModel(this, "GetOwner");
 		return owner;
 	}
 
@@ -120,11 +120,11 @@ public abstract class Item implements IVItem {
 	 * @param	r	Azon szoba, amelyre át szeretnénk állítani az adott Item room változóját.
 	 * */
 	public void SetRoom(Room r) {
-		Logger.started(this, "SetRoom");
+		Logger.startedModel(this, "SetRoom");
 
 		room = r;
 
-		Logger.finished(this, "SetRoom");
+		Logger.finishedModel(this, "SetRoom");
 	}
 	
 	/**
@@ -135,9 +135,9 @@ public abstract class Item implements IVItem {
 	 * Ha egy személynél van akkor null értéket ad vissza.
 	 * */
 	public Room GetRoom() {
-		Logger.started(this, "GetRoom");
+		Logger.startedModel(this, "GetRoom");
 
-		Logger.finished(this, "GetRoom");
+		Logger.finishedModel(this, "GetRoom");
 		return room;
 	}
 	

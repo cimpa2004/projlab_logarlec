@@ -2,7 +2,6 @@ package model;
 
 import util.Logger;
 import viewmodel.IVFFP2Mask;
-import viewmodel.IVItem;
 import viewmodel.IVRoom;
 
 import java.util.UUID;
@@ -22,8 +21,10 @@ import java.util.UUID;
 public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	@Override
 	public String GetID() {
-		return id;
-	}
+        Logger.startedModel(this, "GetID");
+        Logger.finishedModel(this, "GetID");
+        return this.id;
+    }
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy az adott FFP2Mask
 	 * még hány körig használható, azaz hány körig tudja még a Person -t
@@ -73,8 +74,10 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * */
 	@Override
 	public boolean GetIsFake() {
-		return isFake;
-	}
+        Logger.startedModel(this, "GetIsFake");
+        Logger.finishedModel(this, "GetIsFake");
+        return isFake;
+    }
 
 	/**
 	 * 	Ezen metódus a paraméterként kapott értékre állítja a FFP2Mask isFake változóját.
@@ -91,7 +94,9 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @param durability A durability értékét erre az értékre állítja.
 	 * */
 	public void SetDurability(int durability) {
+		Logger.startedModel(this, "SetDurability", durability);
 		this.durability = durability;
+		Logger.finishedModel(this, "SetDurability", durability);
 	}
 
 	/**
@@ -100,7 +105,9 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @param isActivated Az isActivated értékét erre az értékre állítja.
 	 * */
 	public void SetIsActivated(boolean isActivated) {
+		Logger.startedModel(this, "SetIsActivated", isActivated);
 		this.isActivated = isActivated;
+		Logger.finishedModel(this, "SetIsActivated", isActivated);
 	}
 
 	/**
@@ -113,8 +120,8 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @return Igaz ha sikerült aktiválni és hamis ha nem.
 	 */
 	public boolean Activate() {
-		Logger.started(this, "Activate");
-		Logger.finished(this, "Activate");
+		Logger.startedModel(this, "Activate");
+		Logger.finishedModel(this, "Activate");
 
 		if(isFake) return false;
 
@@ -133,8 +140,10 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	@Override
 	public boolean GetIsActive() {
-		return isActivated;
-	}
+        Logger.startedModel(this, "GetIsActive");
+        Logger.finishedModel(this, "GetIsActive");
+        return isActivated;
+    }
 
 	/**
 	 * Ezen metódussal le lehet kérdezni, hogy az
@@ -144,6 +153,8 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	@Override
 	public Transistor GetPair() {
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return null;
 	}
 
@@ -155,12 +166,12 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * akkor el lett használva az FFP2Mask és az isActivated értékét hamisra állítja.
 	 */
 	public void Decrement() {
-		Logger.started(this, "Decrement");
+		Logger.startedModel(this, "Decrement");
 		if(isActivated) {
 			if (durability > 0) durability = durability - 1;
 			else isActivated = false;
 		}
-		Logger.finished(this, "Decrement");
+		Logger.finishedModel(this, "Decrement");
 	}
 
 	/**
@@ -185,9 +196,9 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpStudent(Student st) {
-		Logger.started(this, "PickedUpStudent", st);
+		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		Logger.finished(this, "PickedUpStudent", st);
+		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
@@ -202,14 +213,14 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpInstructor(Instructor i) {
-		Logger.started(this, "PickedUpInstructor", i);
+		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
 		// ha az oktato felvesz egy FFP2Maskot akkor egybol aktivalja
 		if (isAdded) {
 			Activate();
 			if (isActivated) i.AddFFP2Mask(this);
 		}
-		Logger.finished(this, "PickedUpInstructor", i);
+		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
@@ -222,10 +233,10 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @param p Az eldobó személy
 	 */
 	public void Thrown(Person p) {
-		Logger.started(this, "Thrown", p);
+		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFFP2Mask(this);
 		p.RemoveFromInventory(this);
-		Logger.finished(this, "Thrown", p);
+		Logger.finishedModel(this, "Thrown", p);
 	}
 
 	/**
@@ -238,10 +249,10 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @param s Az FFP2-t használó hallgató
 	 */
 	public void UsedByStudent(Student s) {
-		Logger.started(this, "UsedByStudent", s);
+		Logger.startedModel(this, "UsedByStudent", s);
 		Activate();
 		if (isActivated) s.AddFFP2Mask(this);
-		Logger.finished(this, "UsedByStudent", s);
+		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
 	/**
@@ -254,10 +265,10 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * @param i Az FFP2-t használó oktató
 	 */
 	public void UsedByInstructor(Instructor i) {
-		Logger.started(this, "UsedByInstructor", i);
+		Logger.startedModel(this, "UsedByInstructor", i);
 		Activate();
 		if (isActivated) i.AddFFP2Mask(this);
-		Logger.finished(this, "UsedByInstructor", i);
+		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 
 	/**
@@ -269,16 +280,18 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	@Override
 	public boolean CanDefend() {
-		Logger.started(this, "CanDefend");
-		Logger.finished(this, "CanDefend");
+		Logger.startedModel(this, "CanDefend");
+		Logger.finishedModel(this, "CanDefend");
 		if(isFake) return false;
 		return isActivated && durability > 0;
 	}
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 
 }
 

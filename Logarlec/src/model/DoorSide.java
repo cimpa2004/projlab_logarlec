@@ -52,11 +52,11 @@ public class DoorSide implements IVDoorSide {
 	 * másolja át a paraméterben megadott ajtóra. A szobák egyesülésénél/osztódásánál hívódik meg.
 	 * */
 	public void CloneAttributes(DoorSide d) {
-		Logger.started(this, "CloneAttributes", d);
+		Logger.startedModel(this, "CloneAttributes", d);
 		this.canBeOpened = d.canBeOpened;
 		this.isVisible = d.isVisible;
 		this.room = d.room;
-		Logger.finished(this, "CloneAttributes", d);
+		Logger.finishedModel(this, "CloneAttributes", d);
 	}
 
 	/**
@@ -64,18 +64,18 @@ public class DoorSide implements IVDoorSide {
 	 * meg a SetPair() függvényeket. A szobák egyesülésénél/osztódásánál hívódik meg.
 	 * */
 	public void ConnectDoors(DoorSide d) {
-		Logger.started(this, "ConnectDoors", d);
+		Logger.startedModel(this, "ConnectDoors", d);
 		this.SetPair(d);
 		d.SetPair(this);
-		Logger.finished(this, "ConnectDoors", d);
+		Logger.finishedModel(this, "ConnectDoors", d);
 	}
 
 	/**
 	 * Visszaadja, hogy az ajtó-oldal melyik másikhoz tartozik, azaz ami már a szomszéd szobából látszik.
 	 * */
 	public DoorSide GetPair() {
-		Logger.started(this, "GetPair");
-		Logger.finished(this, "GetPair");
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return pair;
 	}
 
@@ -83,17 +83,17 @@ public class DoorSide implements IVDoorSide {
 	 * Beállítja az ajtó-oldal párját. A szobák egyesülésénél/osztódásánál hívódik meg.
 	 * */
 	public void SetPair(DoorSide d) {
-		Logger.started(this, "SetPair", d);
+		Logger.startedModel(this, "SetPair", d);
 		pair = d;
-		Logger.finished(this, "SetPair", d);
+		Logger.finishedModel(this, "SetPair", d);
 	}
 
 	/**
 	 * Visszaadja, hogy az ajtó oldala melyik szobához tartozik.
 	 * */
 	public Room GetRoom() {
-		Logger.started(this, "GetRoom");
-		Logger.finished(this, "GetRoom");
+		Logger.startedModel(this, "GetRoom");
+		Logger.finishedModel(this, "GetRoom");
 		return room;
 	}
 
@@ -101,38 +101,38 @@ public class DoorSide implements IVDoorSide {
 	 * Beállítja, hogy az ajtó oldala melyik szobához tartozzon.
 	 * */
 	public void SetRoom(Room r) {
-		Logger.started(this, "SetRoom", r);
+		Logger.startedModel(this, "SetRoom", r);
 		room = r;
 		if(r != null){
 			r.AddDoor(this);
 		}
-		Logger.finished(this, "SetRoom", r);
+		Logger.finishedModel(this, "SetRoom", r);
 	}
 
 	/**
 	 * Beállítja, hogy az ajtót ki lehessen-e nyitni, azaz zárt-e ebből az irányból.
 	 * */
 	public void SetCanBeOpened(boolean b) {
-		Logger.started(this, "SetCanBeOpened", b);
+		Logger.startedModel(this, "SetCanBeOpened", b);
 		this.canBeOpened = b;
-		Logger.finished(this, "SetCanBeOpened", b);
+		Logger.finishedModel(this, "SetCanBeOpened", b);
 	}
 
 	/**
 	 * Beállítja, hogy az ajtó látható legyen. (Elátkozott szobákban)
 	 * */
 	public void SetIsVisible(boolean b) {
-		Logger.started(this, "SetIsVisible", b);
+		Logger.startedModel(this, "SetIsVisible", b);
 		this.isVisible = b;
-		Logger.finished(this, "SetIsVisible", b);
+		Logger.finishedModel(this, "SetIsVisible", b);
 	}
 
 	/**
 	 * Visszaadja, hogy az ajtót ki lehet-e nyitni, azaz zárt-e ebből az irányból.
 	 * */
 	public boolean GetCanBeOpened() {
-		Logger.started(this, "GetCanBeOpened");
-		Logger.finished(this, "GetCanBeOpened");
+		Logger.startedModel(this, "GetCanBeOpened");
+		Logger.finishedModel(this, "GetCanBeOpened");
 		return this.canBeOpened;
 	}
 
@@ -140,15 +140,17 @@ public class DoorSide implements IVDoorSide {
 	 * Visszaadja, hogy az ajtó látható-e. (Elátkozott szobákban)
 	 * */
 	public boolean GetIsVisible() {
-		Logger.started(this, "GetIsVisible");
-		Logger.finished(this, "GetIsVisible");
+		Logger.startedModel(this, "GetIsVisible");
+		Logger.finishedModel(this, "GetIsVisible");
 		return this.isVisible;
 	}
 
 
 	public String GetID() {
-		return id;
-	}
+        Logger.startedModel(this, "GetID");
+        Logger.finishedModel(this, "GetID");
+        return this.id;
+    }
 
 	/**
 	 *	Használható e az ajtó
@@ -164,6 +166,8 @@ public class DoorSide implements IVDoorSide {
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 }

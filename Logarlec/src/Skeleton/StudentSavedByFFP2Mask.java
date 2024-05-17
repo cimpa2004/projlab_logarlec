@@ -13,7 +13,7 @@ public class StudentSavedByFFP2Mask {
     private static DoorSide d1, d2;
     private static FFP2Mask f;
 
-    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
 
 
     private static void initTest(){

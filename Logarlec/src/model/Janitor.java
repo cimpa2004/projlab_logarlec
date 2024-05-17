@@ -39,7 +39,7 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean AppearInRoom(Room r) {
-        Logger.started(this, "AppearInRoom", r);
+        Logger.startedModel(this, "AppearInRoom", r);
         int currentC = r.GetCurrentCapacity();
         int maxC = r.GetMaxCapacity();
         if(currentC < maxC) {
@@ -56,7 +56,7 @@ public class Janitor extends Person implements IVJanitor {
         } else{
             return false;
         }
-        Logger.finished(this, "AppearInRoom", r);
+        Logger.finishedModel(this, "AppearInRoom", r);
         return true;
     }
 
@@ -114,12 +114,12 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public boolean Move(DoorSide d) {
-        Logger.started(this, "Move", d);
+        Logger.startedModel(this, "Move", d);
         if (!room.GetDoors().contains(d)) return false;
         DoorSide d2 = d.GetPair();
         Room r2 = d2.GetRoom();
         boolean isAppeared = AppearInRoom(r2);
-        Logger.finished(this, "Move", d);
+        Logger.finishedModel(this, "Move", d);
         return isAppeared;
     }
 
@@ -150,7 +150,7 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public void StartTurn() {
-        Logger.started(this, "StartTurn");
+        Logger.startedModel(this, "StartTurn");
         activeTurn = true;
 
         //Mozgató logika
@@ -176,7 +176,7 @@ public class Janitor extends Person implements IVJanitor {
         }
 
         EndTurn();
-        Logger.finished(this, "StartTurn");
+        Logger.finishedModel(this, "StartTurn");
     }
 
     /**
@@ -184,10 +184,10 @@ public class Janitor extends Person implements IVJanitor {
      */
     @Override
     public void EndTurn() {
-        Logger.started(this,"EndTurn");
+        Logger.startedModel(this,"EndTurn");
         this.activeTurn = false;
         game.NextTurn();
-        Logger.finished(this, "EndTurn");
+        Logger.finishedModel(this, "EndTurn");
     }
 
     /**
@@ -229,8 +229,10 @@ public class Janitor extends Person implements IVJanitor {
 
     @Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 
     @Override
     public void SetIVJanitorUpdate(IVJanitorUpdate ivJanitorUpdate) {
