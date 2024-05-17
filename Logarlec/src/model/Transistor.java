@@ -196,7 +196,9 @@ public class Transistor extends Item implements Usable, IVTransistor {
 			}
 		}else{
 			p.RemoveFromInventory(this);
-			ivItemUpdate.ThrownUpdate();
+			if(ivItemUpdate != null){
+				ivItemUpdate.ThrownUpdate();
+			}
 		}
 		Logger.finished(this, "Thrown", p);
 	}
