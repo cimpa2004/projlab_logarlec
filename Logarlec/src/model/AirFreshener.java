@@ -119,6 +119,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     public boolean PickedUpStudent(Student st) {
         Logger.started(this, "PickedUpStudent", st);
         boolean isAdded = st.AddToInventory(this);
+        if (isAdded && ivItemUpdate != null){
+            ivItemUpdate.PickedUpUpdate();
+        }
         Logger.finished(this, "PickedUpStudent", st);
         return isAdded;
     }
@@ -137,6 +140,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     public boolean PickedUpInstructor(Instructor i) {
         Logger.started(this, "PickedUpInstructor", i);
         boolean isAdded = i.AddToInventory(this);
+        if (isAdded && ivItemUpdate != null){
+            ivItemUpdate.PickedUpUpdate();
+        }
         Logger.finished(this, "PickedUpInstructor", i);
         return isAdded;
     }
@@ -153,6 +159,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     public void Thrown(Person p) {
         Logger.started(this, "Thrown", p);
         p.RemoveFromInventory(this);
+        if(ivItemUpdate != null) {
+            ivItemUpdate.ThrownUpdate();
+        }
         Logger.finished(this, "Thrown", p);
     }
 
@@ -171,6 +180,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
         Logger.started(this, "UsedByStudent", s);
         if(Activate()){
             s.GetRoom().SetPoisonDuration(0);
+            if(ivItemUpdate != null){
+                ivItemUpdate.UsedUpdate();
+            }
         }
         Logger.finished(this, "UsedByStudent", s);
     }
@@ -190,6 +202,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
         Logger.started(this, "UsedByInstructor", i);
         if(Activate()){
             i.GetRoom().SetPoisonDuration(0);
+            if(ivItemUpdate != null) {
+                ivItemUpdate.UsedUpdate();
+            }
         }
         Logger.finished(this, "UsedByInstructor", i);
     }

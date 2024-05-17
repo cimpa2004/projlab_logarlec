@@ -122,6 +122,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
+		if (isAdded && ivItemUpdate != null){
+			ivItemUpdate.PickedUpUpdate();
+		}
 		Logger.finished(this, "PickedUpStudent", st);
 		return isAdded;
 	}
@@ -140,6 +143,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
+		if (isAdded && ivItemUpdate != null){
+			ivItemUpdate.PickedUpUpdate();
+		}
 		Logger.finished(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
@@ -156,6 +162,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public void Thrown(Person p) {
 		Logger.started(this, "Thrown", p);
 		p.RemoveFromInventory(this);
+		if(ivItemUpdate != null){
+			ivItemUpdate.ThrownUpdate();
+		}
 		Logger.finished(this, "Thrown", p);
 	}
 
@@ -171,7 +180,12 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.started(this, "UsedByStudent", s);
-		if(Activate())s.GetRoom().SetPoisonDuration(5);
+		if(Activate()) {
+			s.GetRoom().SetPoisonDuration(5);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate();
+			}
+		}
 		Logger.finished(this, "UsedByStudent", s);
 	}
 
@@ -188,6 +202,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public void UsedByInstructor(Instructor i) {
 		Logger.started(this, "UsedByInstructor", i);
 		if(Activate()) i.GetRoom().SetPoisonDuration(5);
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate();
+		}
 		Logger.finished(this, "UsedByInstructor", i);
 	}
 

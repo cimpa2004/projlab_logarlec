@@ -1,5 +1,6 @@
 package view;
 
+import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
 import javax.swing.*;
@@ -7,9 +8,7 @@ import javax.swing.*;
 
 public abstract class VItem implements IVItemUpdate {
     private String ID;
-
     private VRoom room;
-
     public String GetID(){
         return ID;
     }
@@ -25,18 +24,27 @@ public abstract class VItem implements IVItemUpdate {
     @Override
     public void ThrownUpdate() {
         // TODO: implement
-        throw new UnsupportedOperationException("Unimplemented method 'ThrownUpdate'");
+        // Általános:
+        // Ha currentStudent dobta el ne rajzolódjon ki az inventoryban
+        // Rajzolódjon ki a szobában, (ha az a megjelenített szoba?)
+        // Transistor?? --> Minden redraw, inv -ből eltűnik,szoba lehet változik
     }
 
     @Override
     public void PickedUpUpdate() {
-        // TODO: implement
-        throw new UnsupportedOperationException("Unimplemented method 'PickedUpUpdate'");
+        // TODO:
+        // Általános:
+        // Ne rajzolódjon ki a szobában, szoba redraw (ha az a megjelenített szoba?)
+        // Ha currentStudent vette fel, akkor rajzolja ki az inventoryban, inv redraw
+        // SlideRule?? --> ez már jelezve van szerintem, itt nem kell kitérni rá
     }
 
     @Override
-    public void UsedUpdated() {
+    public void UsedUpdate() {
         // TODO: implement
-        throw new UnsupportedOperationException("Unimplemented method 'UsedUpdated'");
+        // Általános:
+        // Nem csinál semmit igazából
+        // AirFreshener?? --> szoba redraw
+        // Camembert?? --> szoba redraw
     }
 }
