@@ -4,6 +4,7 @@ import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.Logger;
+import view.VItem;
 import viewmodel.*;
 
 import java.io.File;
@@ -1237,6 +1238,22 @@ public class InputHandler implements ICInput {
     public void Connect(String personID, IVTransistor t1, IVTransistor t2){
         ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, t1.GetID(), t2.GetID()));
         connectTransistors(command);
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<IVItem> GetInventory(String personId) {
+
+        IPerson paramPerson = game.findPersonById(personId);
+
+        // check if person exists in game
+        if (paramPerson == null) {
+            throw new IllegalArgumentException("message: A szemely " + personId + " nem letezik a jatekban.");
+        }
+
+        return paramPerson.GetIVItems();
     }
 }
 

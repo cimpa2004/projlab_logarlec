@@ -5,6 +5,7 @@ package model;
 import controller.Game;
 import util.Logger;
 import viewmodel.IPerson;
+import viewmodel.IVItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -264,7 +265,16 @@ public abstract class Person implements IPerson {
 	public List<Item> GetInventory() {
 		Logger.startedModel(this, "GetInventory");
 		Logger.finishedModel(this, "GetInventory");
+
 		return inventory;
+	}
+
+	public List<IVItem> GetIVItems(){
+		List<IVItem> ivItems = new ArrayList<>();
+
+		ivItems.addAll(inventory);
+
+		return ivItems;
 	}
 
 	

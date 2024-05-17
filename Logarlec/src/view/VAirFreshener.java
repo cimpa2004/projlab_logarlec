@@ -20,8 +20,9 @@ public class VAirFreshener extends VItem {
      *
      */
     @Override
-    public void PickedUp() {
+    public void PickedUp(VStudent st) {
         Logger.startedView(this, "PickedUp");
+        owner = st;
         owner.input.PickupItem(owner.GetID(), ivAirFreshener);
         Logger.finishedView(this, "PickedUp");
     }

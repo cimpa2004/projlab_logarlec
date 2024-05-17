@@ -20,10 +20,11 @@ public class VCamembert extends VItem{
      *
      */
     @Override
-    public void PickedUp() {
+    public void PickedUp(VStudent st) {
         Logger.startedView(this, "PickedUp");
-        Logger.finishedView(this, "PickedUp");
+        owner = st;
         owner.input.PickupItem(owner.GetID(), ivCamembert);
+        Logger.finishedView(this, "PickedUp");
     }
 
     /**

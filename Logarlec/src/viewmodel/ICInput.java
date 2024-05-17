@@ -1,5 +1,9 @@
 package viewmodel;
 
+import view.VItem;
+
+import java.util.List;
+
 public interface ICInput {
     /**
      * Ezt a fuggvenyt a Controlleren hivja meg a View, amikor a bemenetrol egy parancs erkezett.
@@ -33,4 +37,6 @@ public interface ICInput {
     public void UseItem(String personID, IVItem item);
 
     public void Connect(String personID, IVTransistor t1, IVTransistor t2);
+
+    List<IVItem> GetInventory(String personId);
 }

@@ -16,10 +16,11 @@ public class VTVSZ extends VItem {
     }
 
     @Override
-    public void PickedUp() {
+    public void PickedUp(VStudent st) {
         Logger.startedView(this, "PickedUp");
-        Logger.finishedView(this, "PickedUp");
+        owner = st;
         owner.input.PickupItem(owner.GetID(), ivTVSZ);
+        Logger.finishedView(this, "PickedUp");
     }
 
     @Override
