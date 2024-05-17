@@ -25,18 +25,30 @@ public abstract class VItem implements IVItemUpdate {
     @Override
     public void ThrownUpdate() {
         // TODO: implement
+        // Általános:
+        // Ha currentStudent dobta el ne rajzolódjon ki az inventoryban
+        // Rajzolódjon ki a szobában, (ha az a megjelenített szoba?)
+        // Transistor?? --> Minden redraw, inv -ből eltűnik,szoba lehet változik
         throw new UnsupportedOperationException("Unimplemented method 'ThrownUpdate'");
     }
 
     @Override
     public void PickedUpUpdate() {
-        // TODO: implement
+        // TODO:
+        // Általános:
+        // Ne rajzolódjon ki a szobában, szoba redraw (ha az a megjelenített szoba?)
+        // Ha currentStudent vette fel, akkor rajzolja ki az inventoryban, inv redraw
+        // SlideRule?? --> ez már jelezve van szerintem, itt nem kell kitérni rá
         throw new UnsupportedOperationException("Unimplemented method 'PickedUpUpdate'");
     }
 
     @Override
-    public void UsedUpdated() {
+    public void UsedUpdate() {
         // TODO: implement
+        // Általános:
+        // Nem csinál semmit igazából
+        // AirFreshener?? --> szoba redraw
+        // Camembert?? --> szoba redraw
         throw new UnsupportedOperationException("Unimplemented method 'UsedUpdated'");
     }
 }
