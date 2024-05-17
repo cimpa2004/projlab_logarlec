@@ -1,5 +1,6 @@
 package view;
 
-public class VPerson {
+public abstract class VPerson {
 
+    public abstract String GetID();
 }

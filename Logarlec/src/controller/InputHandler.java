@@ -206,6 +206,7 @@ public class InputHandler implements ICInput {
                             Student st = new Student(students.getJSONObject(j).getString("id"), game);
                             game.AddToGame(st);
                             room.AddStudent(st);
+
                             if (icInit != null) icInit.CreateVStudent(st,this);
                         }
                     }
@@ -225,7 +226,7 @@ public class InputHandler implements ICInput {
                     if (r.has("janitors")) {
                         JSONArray janitors = r.getJSONArray("janitors");
                         for (int j = 0; j < janitors.length(); j++) {
-                            Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"));
+                            Janitor jan = new Janitor(janitors.getJSONObject(j).getString("id"),this.game);
                             game.AddToGame(jan);
                             room.AddJanitor(jan);
                             if (icInit != null) icInit.CreateVJanitor(jan);
@@ -1230,6 +1231,12 @@ public class InputHandler implements ICInput {
     public void UseItem(String personID, IVItem item) {
         ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, item.GetID()));
         useItem(command);
+    }
+
+    @Override
+    public void Connect(String personID, IVTransistor t1, IVTransistor t2){
+        ArrayList<String> command = new ArrayList<>(Arrays.asList(personID, t1.GetID(), t2.GetID()));
+        connectTransistors(command);
     }
 }
 

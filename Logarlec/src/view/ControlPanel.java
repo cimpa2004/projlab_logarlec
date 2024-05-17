@@ -1,5 +1,6 @@
 package view;
 
+import util.Logger;
 import viewmodel.IControl;
 
 import javax.swing.*;
@@ -37,19 +38,12 @@ public class ControlPanel extends JPanel implements IControl {
         UpdateCurrentStudent();
 
         //Rendes függvény
-        //TODO: ha minden kész ezt komentteleníteni az alatta lévőt meg törölni
-        if(currentStudent != null && currentStudent.getItems() != null){
-            for (VItem item: currentStudent.getItems()){
-                item.DrawInInventory(itemsPanel);
+        //TODO: maybe it will work
+        if(currentStudent != null && currentStudent.GetItems() != null){
+            for (VItem item: currentStudent.GetItems()){
+                item.DrawInInventory(itemsPanel, currentStudent);
             }
         }
-        // Add 5 items (placeholders)
-        /*for (int i = 0; i < 5; i++) {
-            JPanel box = new JPanel();
-            box.setPreferredSize(new Dimension(100, 50)); // Set preferred size
-            box.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
-            itemsPanel.add(box);
-        }*/
 
         // Panel for buttons on the right
         JPanel buttonsPanel = new JPanel();
@@ -77,12 +71,14 @@ public class ControlPanel extends JPanel implements IControl {
      * frissiti az aktiv körön lévő hallgatót (privát)
      */
     private void UpdateCurrentStudent(){
+        Logger.startedView(this, "UpdateCurrentStudent");
         for (VStudent student : students){
-            if (student.getIsActiveTurn()){
+            if (student.GetIsActiveTurn()){
                 currentStudent = student;
                 break;
             }
         }
+        Logger.finishedView(this, "UpdateCurrentStudent");
     }
 
     /**
@@ -90,24 +86,28 @@ public class ControlPanel extends JPanel implements IControl {
      * @param item a kiválasztott tárgy
      */
     public void SetSelectedItem(VItem item){
+        Logger.startedView(this, "SetSelectedItem", item);
         this.selectedItem = item;
+        Logger.finishedView(this, "SetSelectedItem", item);
     }
 
     /**
      * Újra rajzolja az inventory-t és a gamePanelt
      */
     private void Update() {
-        //TODO: uncomment this
+        Logger.startedView(this, "Update");
+        //TODO: maybe it will work
         if (currentStudent != null){
-            if(currentStudent.getItems() != null){
-                for(VItem item: currentStudent.getItems()){
-                    item.DrawInInventory(itemsPanel);
+            if(currentStudent.GetItems() != null){
+                for(VItem item: currentStudent.GetItems()){
+                    item.DrawInInventory(itemsPanel, currentStudent);
                 }
             }
             nameLabel.setText(currentStudent.toString());
             gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
         else nameLabel.setText("Senki köre");
+        Logger.finishedView(this, "Update");
     }
 
     /**
@@ -115,41 +115,51 @@ public class ControlPanel extends JPanel implements IControl {
      */
     @Override
     public void StudentStartedTurn() {
+        Logger.startedView(this, "StudentStartedTurn");
         UpdateCurrentStudent();
         Update();
+        Logger.finishedView(this, "StudentStartedTurn");
     }
 
     @Override
     public void InstructorWin() {
+        Logger.startedView(this, "InstructorWin");
         infoLabel.setText("A játék véget ért, az oktatók nyertek!");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
+        Logger.finishedView(this, "InstructorWin");
     }
 
     @Override
     public void StudentWin() {
+        Logger.startedView(this, "StudentWin");
         infoLabel.setText("A játék véget ért, a hallgatók nyertek!");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
+        Logger.finishedView(this, "StudentWin");
     }
 
     private class EndTurnButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "EndTurnButtonListener.actionPerformed", e);
             if (currentStudent != null){
                 currentStudent.EndTurn();
                 UpdateCurrentStudent();
             }
+            Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }
     }
     private class PickupButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "PickupButtonListener.actionPerformed", e);
             if(selectedItem != null){
                 currentStudent.Pickup(selectedItem);
                 selectedItem = null;
                 gamePanel.Redraw();//eltűnjön a felvett tárgy
             }
+            Logger.finishedView(this, "PickupButtonListener.actionPerformed", e);
         }
     }
 

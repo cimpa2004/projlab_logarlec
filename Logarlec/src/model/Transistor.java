@@ -59,6 +59,8 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -71,12 +73,12 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public boolean Activate() {
-		Logger.started(this, "Activate");
+		Logger.startedModel(this, "Activate");
 		if(!isActive && this.GetPair() != null)
 			isActive = true;
 		else
 			isActive = false;
-		Logger.finished(this, "Activate");
+		Logger.finishedModel(this, "Activate");
 		return isActive;
 	}
 
@@ -87,6 +89,8 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public boolean GetIsActive() {
+		Logger.startedModel(this, "GetIsActive");
+		Logger.finishedModel(this, "GetIsActive");
 		return isActive;
 	}
 
@@ -98,10 +102,10 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 * @param t a másik transistor
 	 */
 	public void SetPairs(Transistor t) {
-		Logger.started(this, "SetPairs", t);
+		Logger.startedModel(this, "SetPairs", t);
 		this.SetPair(t);
 		t.SetPair(this);
-		Logger.finished(this, "SetPairs", t);
+		Logger.finishedModel(this, "SetPairs", t);
 	}
 
 	/**
@@ -110,9 +114,9 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 * @param t a transistor új párja
 	 */
 	public void SetPair(Transistor t) {
-		Logger.started(this, "SetPair", t);
+		Logger.startedModel(this, "SetPair", t);
 		pair = t;
-		Logger.finished(this, "SetPair", t);
+		Logger.finishedModel(this, "SetPair", t);
 	}
 
 	/**
@@ -122,8 +126,8 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 * @return Pair értéke, null ha nincs párja
 	 */
 	public Transistor GetPair() {
-		Logger.started(this, "GetPair");
-		Logger.finished(this, "GetPair");
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return this.pair;
 	}
 
@@ -139,9 +143,12 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public boolean PickedUpStudent(Student st) {
-		Logger.started(this, "PickedUpStudent", st);
+		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		Logger.finished(this, "PickedUpStudent", st);
+		if (isAdded && ivItemUpdate != null){
+			ivItemUpdate.PickedUpUpdate();
+		}
+		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
@@ -157,9 +164,12 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public boolean PickedUpInstructor(Instructor i) {
-		Logger.started(this, "PickedUpInstructor", i);
+		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		Logger.finished(this, "PickedUpInstructor", i);
+		if (isAdded && ivItemUpdate != null){
+			ivItemUpdate.PickedUpUpdate();
+		}
+		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
@@ -178,17 +188,23 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public void Thrown(Person p) {
-		Logger.started(this, "Thrown", p);
+		Logger.startedModel(this, "Thrown", p);
 		if(pair != null && isActive && pair.isActive &&
 				pair.GetRoom() != null && pair.GetRoom() != p.GetRoom()){
 			this.Activate();
 			pair.Activate();
 			p.RemoveFromInventory(this);
 			p.AppearInRoom(pair.GetRoom());
+			if(ivItemUpdate != null){
+				ivItemUpdate.ThrownUpdate();
+			}
 		}else{
 			p.RemoveFromInventory(this);
+			if(ivItemUpdate != null){
+				ivItemUpdate.ThrownUpdate();
+			}
 		}
-		Logger.finished(this, "Thrown", p);
+		Logger.finishedModel(this, "Thrown", p);
 	}
 
 	/**
@@ -200,9 +216,9 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public void UsedByStudent(Student s) {
-		Logger.started(this, "UsedByStudent", s);
+		Logger.startedModel(this, "UsedByStudent", s);
 		this.Activate();
-		Logger.finished(this, "UsedByStudent", s);
+		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
 	/**
@@ -214,18 +230,15 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
-		Logger.started(this, "UsedByInstructor", i);
-		Logger.finished(this, "UsedByInstructor", i);
+		Logger.startedModel(this, "UsedByInstructor", i);
+		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 
-
-	@Override
-	public String GetID() {
-		return id;
-	}
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 }

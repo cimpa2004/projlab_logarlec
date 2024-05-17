@@ -31,4 +31,6 @@ public interface ICInput {
      * @param item Az item amit hasznalna a Person
      */
     public void UseItem(String personID, IVItem item);
+
+    public void Connect(String personID, IVTransistor t1, IVTransistor t2);
 }

@@ -15,7 +15,7 @@ public class StudentSelfGas {
     private static Room r;
     private static Game game;
     public static void Init(){
-        game = new Game(true , Logger.LogLevel.CALL_FLOWS);
+        game = new Game(true , Logger.LogLevel.CALL_FLOWS_MODEL);
 
         r = new Room();
 

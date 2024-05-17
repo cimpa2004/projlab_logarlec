@@ -1,10 +1,9 @@
 package viewmodel;
 
 import model.Room;
-import view.VStudent;
 
 public interface IVStudent {
-    public boolean isActiveTurn();
+    public boolean IsActiveTurn();
     public IVRoom GetIVRoom();
     public void SetIVStudentUpdate(IVStudentUpdate ivRoomUpdate);
     public void EndTurn();

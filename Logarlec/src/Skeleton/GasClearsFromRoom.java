@@ -12,7 +12,7 @@ public class GasClearsFromRoom {
 
     private static void initTest(){
         r = new Room();
-        g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+        g = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
         s = new Student(g);
         i = new Instructor(g);
 

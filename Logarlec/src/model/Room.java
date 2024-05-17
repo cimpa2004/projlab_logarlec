@@ -111,7 +111,9 @@ public class Room implements IRoom, IVRoom {
 
 	@Override
 	public void SetIVRoomUpdate(IVRoomUpdate ivRoomUpdate){
+		Logger.startedModel(this, "SetIVRoomUpdate", ivRoomUpdate);
 		this.ivRoomUpdate = ivRoomUpdate;
+		Logger.finishedModel(this, "SetIVRoomUpdate", ivRoomUpdate);
 	}
 
 
@@ -140,8 +142,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return Az isSticky változó értéke.
 	 */
 	public boolean GetIsSticky(){
-		Logger.started(this, "GetIsSticky");
-		Logger.finished(this, "GetIsSticky");
+		Logger.startedModel(this, "GetIsSticky");
+		Logger.finishedModel(this, "GetIsSticky");
 		return isSticky;
 	}
 
@@ -153,9 +155,10 @@ public class Room implements IRoom, IVRoom {
 	 * @param value az isSticky változó új értéke.
 	 */
 	public void SetIsSticky(boolean value){
+		Logger.startedModel(this, "SetIsSticky", value);
 		this.isSticky = value;
-		if (!value)
-			this.numberOfPeopleBeenToRoom = 0;
+		if (!value)  this.numberOfPeopleBeenToRoom = 0;
+		Logger.finishedModel(this, "SetIsSticky", value);
 	}
 
 	/**
@@ -164,8 +167,8 @@ public class Room implements IRoom, IVRoom {
 	 * @param isDeterministic az isDeterministic változó új értéke.
 	 */
 	public void SetIsDeterministic(boolean isDeterministic){
-		Logger.started(this, "SetIsDeterministic");
-		Logger.finished(this, "SetIsDeterministic");
+		Logger.startedModel(this, "SetIsDeterministic");
+		Logger.finishedModel(this, "SetIsDeterministic");
 		this.isDeterministic = isDeterministic;
 	}
 
@@ -175,7 +178,7 @@ public class Room implements IRoom, IVRoom {
 	 * Ha a poisonDuration elérte a nullát, akkor felébreszti az elájult oktatókat és hallgatókat.
 	 * */
 	public void DecrementPoison() {
-		Logger.started(this, "DecrementPoison");
+		Logger.startedModel(this, "DecrementPoison");
 		if(poisonDuration > 0) {
 			poisonDuration--;
 			if (poisonDuration == 0){
@@ -187,7 +190,7 @@ public class Room implements IRoom, IVRoom {
 				}
 			}
 		}
-		Logger.finished(this, "DecrementPoison");
+		Logger.finishedModel(this, "DecrementPoison");
 	}
 
 	/**
@@ -198,10 +201,10 @@ public class Room implements IRoom, IVRoom {
 	 * @param i A hozzáadandó tárgy.
 	 * */
 	public void AddItem(Item i) {
-		Logger.started(this, "AddItem", i);
+		Logger.startedModel(this, "AddItem", i);
 		items.add(i);
 		i.SetRoom(this);
-		Logger.finished(this, "AddItem", i);
+		Logger.finishedModel(this, "AddItem", i);
 	}
 
 	/**
@@ -211,10 +214,10 @@ public class Room implements IRoom, IVRoom {
 	 * @param i Az eltávolítandó tárgy
 	 * */
 	public void RemoveItem(Item i) {
-		Logger.started(this, "RemoveItem", i);
+		Logger.startedModel(this, "RemoveItem", i);
 		items.remove(i);
 		i.SetRoom(null);
-		Logger.finished(this, "RemoveItem", i);
+		Logger.finishedModel(this, "RemoveItem", i);
 	}
 
 	/**
@@ -224,12 +227,12 @@ public class Room implements IRoom, IVRoom {
 	 * @param r A Room, amely a jelenlegi Room klónja lesz.
 	 * */
 	public void CloneAttributes(Room r) {
-		Logger.started(this, "CloneAttributes", r);
+		Logger.startedModel(this, "CloneAttributes", r);
 		this.poisonDuration = r.GetPoisonDuration();
 		this.isCursed = r.GetIsCursed();
 		this.isSticky = r.GetIsSticky();
 		this.maxCapacity = r.GetMaxCapacity();
-		Logger.finished(this, "CloneAttributes", r);
+		Logger.finishedModel(this, "CloneAttributes", r);
 	}
 
 	/**
@@ -238,8 +241,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room items listája.
 	 * */
 	public ArrayList<Item> GetItems() {
-		Logger.started(this, "GetItems");
-		Logger.finished(this, "GetItems");
+		Logger.startedModel(this, "GetItems");
+		Logger.finishedModel(this, "GetItems");
 		return items;
 	}
 
@@ -249,8 +252,10 @@ public class Room implements IRoom, IVRoom {
 	 * @param r: A hozzáadandó szoba
 	 * */
 	public void AddNeighbor(Room r) {
+		Logger.startedModel(this, "AddNeighbor", r);
 		neighbors.add(r);
         neighbors.remove(this);
+		Logger.finishedModel(this, "AddNeighbor", r);
 	}
 
 	/**
@@ -259,7 +264,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param r: Az elvevendő szoba (szerintem ez létező szó)
 	 * */
 	public void RemoveNeighbor(Room r) {
+		Logger.startedModel(this, "RemoveNeighbor", r);
 		neighbors.remove(r);
+		Logger.finishedModel(this, "RemoveNeighbor", r);
 	}
 
 	/**
@@ -268,8 +275,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room students listája.
 	 * */
 	public ArrayList<Student> GetStudents() {
-		Logger.started(this, "GetStudents");
-		Logger.finished(this, "GetStudents");
+		Logger.startedModel(this, "GetStudents");
+		Logger.finishedModel(this, "GetStudents");
 		return students;
 	}
 
@@ -279,8 +286,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room instructors listája.
 	 * */
 	public ArrayList<Instructor> GetInstructors() {
-		Logger.started(this, "GetInstructors");
-		Logger.finished(this, "GetInstructors");
+		Logger.startedModel(this, "GetInstructors");
+		Logger.finishedModel(this, "GetInstructors");
 		return instructors;
 	}
 
@@ -290,8 +297,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room janitors listája.
 	 * */
 	public ArrayList<Janitor> GetJanitors() {
-		Logger.started(this, "GetJanitors");
-		Logger.finished(this, "GetJanitors");
+		Logger.startedModel(this, "GetJanitors");
+		Logger.finishedModel(this, "GetJanitors");
 		return janitors;
 	}
 
@@ -301,8 +308,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room currentCapacity változója.
 	 * */
 	public int GetCurrentCapacity() {
-		Logger.started(this, "GetCurrentCapacity");
-		Logger.finished(this, "GetCurrentCapacity");
+		Logger.startedModel(this, "GetCurrentCapacity");
+		Logger.finishedModel(this, "GetCurrentCapacity");
 		return currentCapacity;
 	}
 
@@ -312,8 +319,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room maxCapacity változója.
 	 * */
 	public int GetMaxCapacity() {
-		Logger.started(this, "GetMaxCapacity");
-		Logger.finished(this, "GetMaxCapacity");
+		Logger.startedModel(this, "GetMaxCapacity");
+		Logger.finishedModel(this, "GetMaxCapacity");
 		return maxCapacity;
 	}
 
@@ -324,8 +331,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room numberOfPeopleBeenToRoom változója.
 	 * */
 	public int GetNumberOfPeopleBeenToRoom() {
-		Logger.started(this, "NumberOfPeopleBeenToRoom");
-		Logger.finished(this, "NumberOfPeopleBeenToRoom");
+		Logger.startedModel(this, "NumberOfPeopleBeenToRoom");
+		Logger.finishedModel(this, "NumberOfPeopleBeenToRoom");
 		return numberOfPeopleBeenToRoom;
 	}
 
@@ -335,9 +342,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param number A numberOfPeopleBeenToRoom változó új értéke.
 	 * */
 	public void SetNumberOfPeopleBeenToRoom(int number) {
-		Logger.started(this, "NumberOfPeopleBeenToRoom");
+		Logger.startedModel(this, "NumberOfPeopleBeenToRoom");
 		numberOfPeopleBeenToRoom = number;
-		Logger.finished(this, "NumberOfPeopleBeenToRoom");
+		Logger.finishedModel(this, "NumberOfPeopleBeenToRoom");
 	}
 
 	/**
@@ -346,9 +353,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param cc A currentCapacity változó új értéke.
 	 * */
 	public void SetCurrentCapacity(int cc) {
-		Logger.started(this, "GetMaxCapacity");
+		Logger.startedModel(this, "GetMaxCapacity");
 		currentCapacity = cc;
-		Logger.finished(this, "GetMaxCapacity");
+		Logger.finishedModel(this, "GetMaxCapacity");
 	}
 
 	/**
@@ -357,8 +364,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room neighbors listája.
 	 * */
 	public ArrayList<Room> GetNeighbors() {
-		Logger.started(this, "GetNeighbors");
-		Logger.finished(this, "GetNeighbors");
+		Logger.startedModel(this, "GetNeighbors");
+		Logger.finishedModel(this, "GetNeighbors");
 		return neighbors;
 	}
 
@@ -368,9 +375,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param mc A maxCapacity változó új értéke.
 	 * */
 	public void SetMaxCapacity(int mc) {
-		Logger.started(this, "SetMaxCapacity", mc);
+		Logger.startedModel(this, "SetMaxCapacity", mc);
 		maxCapacity = mc;
-		Logger.finished(this, "SetMaxCapacity", mc);
+		Logger.finishedModel(this, "SetMaxCapacity", mc);
 	}
 
 	/**
@@ -379,8 +386,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A poisonDuration változó értéke.
 	 * */
 	public int GetPoisonDuration() {
-		Logger.started(this, "GetPoisonDuration");
-		Logger.finished(this, "GetPoisonDuration");
+		Logger.startedModel(this, "GetPoisonDuration");
+		Logger.finishedModel(this, "GetPoisonDuration");
 		return poisonDuration;
 	}
 
@@ -392,7 +399,7 @@ public class Room implements IRoom, IVRoom {
 	 * @param pd A poisonDuration változó új értéke.
 	 * */
 	public void SetPoisonDuration(int pd) {
-		Logger.started(this, "SetPoisonDuration", pd);
+		Logger.startedModel(this, "SetPoisonDuration", pd);
 		poisonDuration = pd;
 		if(poisonDuration > 0){
 			for (Student s : students) {
@@ -404,7 +411,7 @@ public class Room implements IRoom, IVRoom {
 				if (!isPersonDefended) i.SetIsFainted(true);
 			}
 		}
-		Logger.finished(this, "SetPoisonDuration", pd);
+		Logger.finishedModel(this, "SetPoisonDuration", pd);
 	}
 
 	/**
@@ -413,9 +420,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param d A Room -hoz hozzáadandó ajtó.
 	 * */
 	public void AddDoor(DoorSide d) {
-		Logger.started(this, "AddDoor", d);
+		Logger.startedModel(this, "AddDoor", d);
 		doors.add(d);
-		Logger.finished(this, "AddDoor", d);
+		Logger.finishedModel(this, "AddDoor", d);
 	}
 
 	/**
@@ -425,9 +432,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param d Az eltávolítandó ajtó.
 	 */
 	public void RemoveDoor(DoorSide d){
-		Logger.started(this, "RemoveDoor", d);
+		Logger.startedModel(this, "RemoveDoor", d);
 		doors.remove(d);
-		Logger.finished(this, "RemoveDoor", d);
+		Logger.finishedModel(this, "RemoveDoor", d);
 	}
 
 	/**
@@ -436,8 +443,8 @@ public class Room implements IRoom, IVRoom {
 	 * @return A Room doors listája.
 	 * */
 	public ArrayList<DoorSide> GetDoors() {
-		Logger.started(this, "GetDoors");
-		Logger.finished(this, "GetDoors");
+		Logger.startedModel(this, "GetDoors");
+		Logger.finishedModel(this, "GetDoors");
 		return doors;
 	}
 
@@ -448,12 +455,12 @@ public class Room implements IRoom, IVRoom {
 	 * @param i A hozzáadandó Instructor.
 	 * */
 	public void AddInstructor(Instructor i) {
-		Logger.started(this, "AddInstructor", i);
+		Logger.startedModel(this, "AddInstructor", i);
 		i.SetRoom(this);
 		currentCapacity++;
 		numberOfPeopleBeenToRoom++;
 		instructors.add(i);
-		Logger.finished(this, "AddInstructor", i);
+		Logger.finishedModel(this, "AddInstructor", i);
 	}
 
 	/**
@@ -462,11 +469,11 @@ public class Room implements IRoom, IVRoom {
 	 * @param i Az eltávolítandó Instructor.
 	 * */
 	public void RemoveInstructor(Instructor i) {
-		Logger.started(this, "RemoveInstructor", i);
+		Logger.startedModel(this, "RemoveInstructor", i);
 		i.SetRoom(null);
 		instructors.remove(i);
 		currentCapacity--;
-		Logger.finished(this, "RemoveInstructor", i);
+		Logger.finishedModel(this, "RemoveInstructor", i);
 	}
 
 	/**
@@ -476,14 +483,14 @@ public class Room implements IRoom, IVRoom {
 	 * @param s A hozzáadandó Student.
 	 * */
 	public void AddStudent(Student s) {
-		Logger.started(this, "AddStudent", s);
+		Logger.startedModel(this, "AddStudent", s);
 		s.SetRoom(this);
 		currentCapacity++;
 		numberOfPeopleBeenToRoom++;
 		if(numberOfPeopleBeenToRoom >= 5)
 			SetIsSticky(true);
 		students.add(s);
-		Logger.finished(this, "AddStudent", s);
+		Logger.finishedModel(this, "AddStudent", s);
 	}
 
 	/**
@@ -492,11 +499,11 @@ public class Room implements IRoom, IVRoom {
 	 * @param s Az eltávolítandó Student.
 	 * */
 	public void RemoveStudent(Student s) {
-		Logger.started(this, "RemoveStudent", s);
+		Logger.startedModel(this, "RemoveStudent", s);
 		s.SetRoom(null);
 		students.remove(s);
 		currentCapacity--;
-		Logger.finished(this, "RemoveStudent", s);
+		Logger.finishedModel(this, "RemoveStudent", s);
 	}
 
 	/**
@@ -509,11 +516,11 @@ public class Room implements IRoom, IVRoom {
 	 * @param j A hozzáadandó Janitor.
 	 * */
 	public void AddJanitor(Janitor j) {
-		Logger.started(this, "AddJanitor", j);
+		Logger.startedModel(this, "AddJanitor", j);
 		j.SetRoom(this);
 		currentCapacity++;
 		janitors.add(j);
-		Logger.finished(this, "AddJanitor", j);
+		Logger.finishedModel(this, "AddJanitor", j);
 	}
 
 	/**
@@ -523,11 +530,11 @@ public class Room implements IRoom, IVRoom {
 	 * @param j Az eltávolítandó Janitor.
 	 * */
 	public void RemoveJanitor(Janitor j) {
-		Logger.started(this, "RemoveJanitor", j);
+		Logger.startedModel(this, "RemoveJanitor", j);
 		j.SetRoom(null);
 		janitors.remove(j);
 		currentCapacity--;
-		Logger.finished(this, "RemoveJanitor", j);
+		Logger.finishedModel(this, "RemoveJanitor", j);
 	}
 
 	/**
@@ -538,14 +545,15 @@ public class Room implements IRoom, IVRoom {
 	 * @return Egy random boolean érték.
 	 * */
 	public boolean RandomBool() {
-		Logger.started(this, "RandomBool");
-		Logger.finished(this, "RandomBool");
+		Logger.startedModel(this, "RandomBool");
 
 		if(isDeterministic){
+			Logger.finishedModel(this, "RandomBool");
 			return true;
 		}
 
 		Random rand = new Random();
+		Logger.finishedModel(this, "RandomBool");
 		return rand.nextBoolean();
 	}
 
@@ -556,18 +564,19 @@ public class Room implements IRoom, IVRoom {
 	 * @return A véletlenszerűen kiválasztott Room
 	 * */
 	public Room SelectRoom(ArrayList<Room> r) {
-		Logger.started(this, "SelectRoom", r);
-		Logger.finished(this, "SelectRoom", r);
+		Logger.startedModel(this, "SelectRoom", r);
 		if(r.isEmpty()){
 			throw  new IllegalArgumentException("Error: Üres lista lett megadva!");
 		}
 		// Ha a játék determinisztikus akkor mindig az első szobát adja vissza.
 		if(isDeterministic){
+			Logger.finishedModel(this, "SelectRoom", r);
 			return r.get(0);
 		}
 
 		// Ha a játék nem determinisztikus akkor véletlenszerűen kiválaszt egy DoorSide -ot
 		Random randInt = new Random();
+		Logger.finishedModel(this, "SelectRoom", r);
 		return r.get(randInt.nextInt(r.size()));
 	}
 
@@ -576,7 +585,7 @@ public class Room implements IRoom, IVRoom {
 	 * és fordítva (csak elátkozott szobákban fut le, minden kör végén egyszer)
 	 * */
 	public void ToggleDoorsVisible() {
-		Logger.started(this, "ToggleDoorsVisible");
+		Logger.startedModel(this, "ToggleDoorsVisible");
 		if(isCursed){
 			// Ha a játék determinisztikus akkor mindig az első ajtót adja vissza.
 			if(isDeterministic){
@@ -589,7 +598,7 @@ public class Room implements IRoom, IVRoom {
 			randomDoor.SetIsVisible(!randomDoor.GetIsVisible());
 
 		}
-		Logger.finished(this, "ToggleDoorsVisible");
+		Logger.finishedModel(this, "ToggleDoorsVisible");
 	}
 
 	/**
@@ -598,9 +607,9 @@ public class Room implements IRoom, IVRoom {
 	 * @param isc Az isCursed változó leendő értéke.
 	 * */
 	public void SetIsCursed(boolean isc) {
-		Logger.started(this, "SetIsCursed", isc);
+		Logger.startedModel(this, "SetIsCursed", isc);
 		isCursed = isc;
-		Logger.finished(this, "SetIsCursed", isc);
+		Logger.finishedModel(this, "SetIsCursed", isc);
 	}
 
 	/**
@@ -610,8 +619,10 @@ public class Room implements IRoom, IVRoom {
 	 */
 	@Override
 	public String GetID() {
-		return id;
-	}
+        Logger.startedModel(this, "GetID");
+        Logger.finishedModel(this, "GetID");
+        return this.id;
+    }
 
 	/**
 	 * Ezen metódus visszaadja, hogy a szoba elátkozott-e.
@@ -619,13 +630,15 @@ public class Room implements IRoom, IVRoom {
 	 * @return Az isCursed változó értéke.
 	 * */
 	public boolean GetIsCursed() {
-		Logger.started(this, "GetIsCursed");
-		Logger.finished(this, "GetIsCursed");
+		Logger.startedModel(this, "GetIsCursed");
+		Logger.finishedModel(this, "GetIsCursed");
 		return isCursed;
 	}
 
 	@Override
 	public VRoom GetVRoom(){
+		Logger.startedModel(this, "GetVRoom");
+		Logger.finishedModel(this, "GetVRoom");
 		return ivRoomUpdate.GetVRoom();
 	}
 

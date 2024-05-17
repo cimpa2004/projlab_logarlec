@@ -15,7 +15,7 @@ public class InstructosInventoryGetsFullTheGameEnds {
     private static Transistor t2;
     private static TVSZ tv1;
     private static TVSZ tv2;
-    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
     private static Room r;
 
     private static void Init(){

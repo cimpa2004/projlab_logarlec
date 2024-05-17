@@ -1,6 +1,7 @@
 package view;
 
 
+import util.Logger;
 import viewmodel.ICRoom;
 import viewmodel.IVRoom;
 
@@ -19,12 +20,18 @@ public class GamePanel extends JPanel implements ICRoom {
     }
 
     public void AddVPerson(VPerson _new){
+        Logger.startedView(this, "AddVPerson", _new);
         people.add(_new);
+        Logger.finishedView(this, "AddVPerson", _new);
     }
     public void AddVRoom(VRoom _new){
+        Logger.startedView(this, "AddVRoom", _new);
         rooms.add(_new);
+        Logger.finishedView(this, "AddVRoom", _new);
     }
     public ArrayList<VRoom> GetRooms(){
+        Logger.startedView(this, "GetRooms");
+        Logger.finishedView(this, "GetRooms");
         return rooms;
     }
 
@@ -32,9 +39,11 @@ public class GamePanel extends JPanel implements ICRoom {
      * Változás esetén érdemes meghívni, újra rajzolja a szobát
      */
     public void Redraw(){
+        Logger.startedView(this, "Redraw");
         if (currentRoom != null){
             Draw(currentRoom);
         }
+        Logger.finishedView(this, "Redraw");
     }
 
     /**
@@ -43,11 +52,13 @@ public class GamePanel extends JPanel implements ICRoom {
      */
 
     public void Draw(VRoom room){
+        Logger.startedView(this, "Draw", room);
         if (room == null){
             throw new RuntimeException("Null roomot nem lehet kirajzolni");
         }
         currentRoom = room;
         currentRoom.Draw(this);
+        Logger.finishedView(this, "Draw", room);
     }
 
     //TODO:az itemek és az emberek lehet nem jól lesznek átrakva
@@ -59,8 +70,10 @@ public class GamePanel extends JPanel implements ICRoom {
      */
     @Override
     public void Split(IVRoom ivRoom, IVRoom _new) {
+        Logger.startedView(this, "Split", ivRoom, _new);
         VRoom newRoom = new VRoom(_new);
         rooms.add(newRoom);
+        Logger.finishedView(this, "Split", ivRoom, _new);
     }
 
     /**
@@ -70,6 +83,8 @@ public class GamePanel extends JPanel implements ICRoom {
      */
     @Override
     public void Merge(IVRoom ivRoom1, IVRoom ivRoom2) {
+        Logger.startedView(this, "Merge", ivRoom1, ivRoom2);
         rooms.remove(ivRoom2.GetVRoom());
+        Logger.finishedView(this, "Merge", ivRoom1, ivRoom2);
     }
 }
