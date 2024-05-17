@@ -16,11 +16,6 @@ import java.util.UUID;
  * Továbbá meg tudja állapítani egy TVSZ -ről, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
 public class TVSZ extends Item implements Defendable, IVTVSZ {
-
-	@Override
-	public String GetID() {
-		return id;
-	}
 	/**
 	 *  Ez az integer typusú változó tárolja, hogy hány alkalommal tudja még a Student életét megmenteni.
 	 * */
@@ -59,8 +54,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * */
 	@Override
 	public boolean GetIsFake() {
-		return isFake;
-	}
+        Logger.startedModel(this, "GetIsFake");
+        Logger.finishedModel(this, "GetIsFake");
+        return isFake;
+    }
 
 	/**
 	 * Ezen metódussal le lehet kérdezni, hogy egy TVSZ példány aktív-e.
@@ -69,6 +66,8 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 */
 	@Override
 	public boolean GetIsActive() {
+		Logger.startedModel(this, "GetIsActive");
+		Logger.finishedModel(this, "GetIsActive");
 		return false;
 	}
 
@@ -80,6 +79,8 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 */
 	@Override
 	public Transistor GetPair() {
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return null;
 	}
 
@@ -89,7 +90,9 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param b Az isFake leendő értéke.
 	 * */
 	public void SetIsFake(boolean b){
+		Logger.startedModel(this, "SetIsFake", b);
 		isFake = b;
+		Logger.finishedModel(this, "SetIsFake", b);
 	}
 
 	/**
@@ -99,9 +102,9 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * */
 	@Override
 	public void Decrement() {
-		Logger.started(this, "Decrement");
+		Logger.startedModel(this, "Decrement");
 		if (usesLeft > 0) usesLeft = usesLeft - 1;
-		Logger.finished(this, "Decrement");
+		Logger.finishedModel(this, "Decrement");
 	}
 
 	/**
@@ -111,6 +114,8 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 */
 	@Override
 	public int GetDurability() {
+		Logger.startedModel(this, "GetDurability");
+		Logger.finishedModel(this, "GetDurability");
 		return usesLeft;
 	}
 
@@ -121,7 +126,9 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * */
 	@Override
 	public void SetDurability(int durability) {
+		Logger.startedModel(this, "SetDurability", durability);
 		this.usesLeft = durability;
+		Logger.finishedModel(this, "SetDurability", durability);
 	}
 
 	/**
@@ -135,7 +142,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpStudent(Student st) {
-		Logger.started(this, "PickedUpStudent", st);
+		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
@@ -143,7 +150,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		if(isAdded && usesLeft > 0){
 			st.AddTVSZ(this);
 		}
-		Logger.finished(this, "PickedUpStudent", st);
+		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
@@ -158,12 +165,12 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpInstructor(Instructor i) {
-		Logger.started(this, "PickedUpInstructor", i);
+		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
-		Logger.finished(this, "PickedUpInstructor", i);
+		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
@@ -176,13 +183,13 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
 	public void Thrown(Person p) {
-		Logger.started(this, "Thrown", p);
+		Logger.startedModel(this, "Thrown", p);
 		p.RemoveTVSZ(this);
 		p.RemoveFromInventory(this);
 		if(ivItemUpdate != null){
 			ivItemUpdate.ThrownUpdate();
 		}
-		Logger.finished(this, "Thrown", p);
+		Logger.finishedModel(this, "Thrown", p);
 	}
 
 	/**
@@ -191,7 +198,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param s Azon Student, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByStudent(Student s) {}
+	public void UsedByStudent(Student s) {
+		Logger.startedModel(this, "UsedByStudent");
+		Logger.finishedModel(this, "UsedByStudent");
+	}
 
 	/**
 	 * Egy SlideRule -t nem lehet használni, ezért ez egy üres metódus.
@@ -199,7 +209,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * @param i Azon Instructor, aki használná az adott tárgyat.
 	 */
 	@Override
-	public void UsedByInstructor(Instructor i) {}
+	public void UsedByInstructor(Instructor i) {
+		Logger.startedModel(this, "UsedByInstructor");
+		Logger.finishedModel(this, "UsedByInstructor");
+	}
 
 	/**
 	 * Ez a metódus megállapítja, hogy az adott TVSZ
@@ -211,14 +224,16 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * */
 	@Override
 	public boolean CanDefend() {
-		Logger.started(this, "CanDefend");
-		Logger.finished(this, "CanDefend");
+		Logger.startedModel(this, "CanDefend");
+		Logger.finishedModel(this, "CanDefend");
 		if(isFake) return false;
 		return usesLeft > 0;
 	}
 	
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 }

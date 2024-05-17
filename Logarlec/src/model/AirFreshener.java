@@ -52,6 +52,8 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      * */
     @Override
     public boolean GetIsFake() {
+        Logger.startedModel(this, "GetIsFake");
+        Logger.finishedModel(this, "GetIsFake");
         return false;
     }
 
@@ -65,8 +67,8 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      * */
     @Override
     public boolean Activate() {
-        Logger.started(this, "Activate");
-        Logger.finished(this, "Activate");
+        Logger.startedModel(this, "Activate");
+        Logger.finishedModel(this, "Activate");
         if(isActivated){
             return false;
         }else{
@@ -81,7 +83,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      * @param isActivated Az isActivated értékét erre az értékre állítja.
      * */
     public void SetIsActivated(boolean isActivated) {
+        Logger.startedModel(this, "SetIsActivated", isActivated);
         this.isActivated = isActivated;
+        Logger.finishedModel(this, "SetIsActivated", isActivated);
     }
 
 
@@ -91,6 +95,8 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      */
     @Override
     public boolean GetIsActive() {
+        Logger.startedModel(this, "GetIsActive");
+        Logger.finishedModel(this, "GetIsActive");
         return isActivated;
     }
 
@@ -117,12 +123,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      */
     @Override
     public boolean PickedUpStudent(Student st) {
-        Logger.started(this, "PickedUpStudent", st);
+        Logger.startedModel(this, "PickedUpStudent", st);
         boolean isAdded = st.AddToInventory(this);
-        if (isAdded && ivItemUpdate != null){
-            ivItemUpdate.PickedUpUpdate();
-        }
-        Logger.finished(this, "PickedUpStudent", st);
+        Logger.finishedModel(this, "PickedUpStudent", st);
         return isAdded;
     }
 
@@ -138,12 +141,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      */
     @Override
     public boolean PickedUpInstructor(Instructor i) {
-        Logger.started(this, "PickedUpInstructor", i);
+        Logger.startedModel(this, "PickedUpInstructor", i);
         boolean isAdded = i.AddToInventory(this);
-        if (isAdded && ivItemUpdate != null){
-            ivItemUpdate.PickedUpUpdate();
-        }
-        Logger.finished(this, "PickedUpInstructor", i);
+        Logger.finishedModel(this, "PickedUpInstructor", i);
         return isAdded;
     }
 
@@ -157,12 +157,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      */
     @Override
     public void Thrown(Person p) {
-        Logger.started(this, "Thrown", p);
+        Logger.startedModel(this, "Thrown", p);
         p.RemoveFromInventory(this);
-        if(ivItemUpdate != null) {
-            ivItemUpdate.ThrownUpdate();
-        }
-        Logger.finished(this, "Thrown", p);
+        Logger.finishedModel(this, "Thrown", p);
     }
 
     /**
@@ -177,14 +174,14 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      */
     @Override
     public void UsedByStudent(Student s) {
-        Logger.started(this, "UsedByStudent", s);
+        Logger.startedModel(this, "UsedByStudent", s);
         if(Activate()){
             s.GetRoom().SetPoisonDuration(0);
             if(ivItemUpdate != null){
                 ivItemUpdate.UsedUpdate();
             }
         }
-        Logger.finished(this, "UsedByStudent", s);
+        Logger.finishedModel(this, "UsedByStudent", s);
     }
 
     /**
@@ -199,25 +196,22 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      */
     @Override
     public void UsedByInstructor(Instructor i) {
-        Logger.started(this, "UsedByInstructor", i);
+        Logger.startedModel(this, "UsedByInstructor", i);
         if(Activate()){
             i.GetRoom().SetPoisonDuration(0);
             if(ivItemUpdate != null) {
                 ivItemUpdate.UsedUpdate();
             }
         }
-        Logger.finished(this, "UsedByInstructor", i);
+        Logger.finishedModel(this, "UsedByInstructor", i);
     }
 
 
     @Override
-    public String GetID() {
-        return id;
+    public IVRoom GetIVRoom() {
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
     }
-
-    @Override
-	public IVRoom GetIVRoom() {
-		return room;
-	}
 }
 

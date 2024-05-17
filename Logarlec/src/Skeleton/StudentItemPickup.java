@@ -13,7 +13,7 @@ public class StudentItemPickup {
     private static FFP2Mask ffp2;
     private static TVSZ tvsz2;
     private static Room r;
-    private static Game game = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+    private static Game game = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
 
     public static void Init(){
         r = new Room();

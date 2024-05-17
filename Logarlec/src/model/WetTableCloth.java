@@ -16,11 +16,6 @@ import java.util.UUID;
  * Továbbá meg tudja állapítani egy WetTableCloth -ról, hogy képes -e megvédeni egy Student-t egy Instructor -tól.
  * */
 public class WetTableCloth extends Item implements Usable, Defendable, IVWetTableCloth {
-
-	@Override
-	public String GetID() {
-		return id;
-	}
 	/**
 	 * Ez az integer típusú változó eltárolja, hogy még hány körig képes a
 	 * WetTableCloth megvédeni a Studentet, akihez tartozik
@@ -68,6 +63,8 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	@Override
 	public boolean GetIsFake() {
+		Logger.startedModel(this, "GetIsFake");
+		Logger.finishedModel(this, "GetIsFake");
 		return false;
 	}
 
@@ -80,8 +77,8 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @return Igaz ha sikerült aktiválni és hamis ha nem.
 	 * */
 	public boolean Activate() {
-		Logger.started(this, "Activate");
-		Logger.finished(this, "Activate");
+		Logger.startedModel(this, "Activate");
+		Logger.finishedModel(this, "Activate");
 		if(isActivated){
 			return false;
 		}else{
@@ -97,8 +94,10 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 */
 	@Override
 	public boolean GetIsActive() {
-		return isActivated;
-	}
+        Logger.startedModel(this, "GetIsActive");
+        Logger.finishedModel(this, "GetIsActive");
+        return isActivated;
+    }
 
 	/**
 	 * Ezen metódussal le lehet kérdezni, hogy az
@@ -108,6 +107,8 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 */
 	@Override
 	public Transistor GetPair() {
+		Logger.startedModel(this, "GetPair");
+		Logger.finishedModel(this, "GetPair");
 		return null;
 	}
 
@@ -120,12 +121,12 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	@Override
 	public void Decrement() {
-		Logger.started(this, "Decrement");
+		Logger.startedModel(this, "Decrement");
 		if(isActivated){
 			if(effectDuration>0) effectDuration = effectDuration - 1;
 			else isActivated = false;
 		}
-		Logger.finished(this, "Decrement");
+		Logger.finishedModel(this, "Decrement");
 	}
 
 	/**
@@ -135,8 +136,11 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 */
 	@Override
 	public int GetDurability() {
+		Logger.startedModel(this, "GetDurability");
+		Logger.finishedModel(this, "GetDurability");
 		return effectDuration;
 	}
+
 
 	/**
 	 * Az effectDuration értékét a paraméterben kapott értékre állítja.
@@ -145,7 +149,9 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 */
 	@Override
 	public void SetDurability(int durability) {
+		Logger.startedModel(this, "SetDurability", durability);
 		this.effectDuration = durability;
+		Logger.finishedModel(this, "SetDurability", durability);
 	}
 
 	/**
@@ -159,12 +165,12 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpStudent(Student st) {
-		Logger.started(this, "PickedUpStudent", st);
+		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
-		Logger.finished(this, "PickedUpStudent", st);
+		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
 	}
 
@@ -179,12 +185,12 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @return Igaz, ha sikerült felvenni és hamis ha nem.
 	 */
 	public boolean PickedUpInstructor(Instructor i) {
-		Logger.started(this, "PickedUpInstructor", i);
+		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
-		Logger.finished(this, "PickedUpInstructor", i);
+		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
 	}
 
@@ -194,7 +200,9 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @param isActivated Az isActivated értékét erre az értékre állítja.
 	 * */
 	public void SetIsActivated(boolean isActivated) {
+		Logger.startedModel(this, "SetIsActivated", isActivated);
 		this.isActivated = isActivated;
+		Logger.finishedModel(this, "SetIsActivated", isActivated);
 	}
 
 	/**
@@ -207,13 +215,13 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @param p	Azon Person, aki eldobta az adott tárgyat.
 	 * */
 	public void Thrown(Person p) {
-		Logger.started(this, "Thrown", p);
+		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFromInventory(this);
 		p.RemoveWetTableCloth(this);
 		if(ivItemUpdate != null){
 			ivItemUpdate.ThrownUpdate();
 		}
-		Logger.finished(this, "Thrown", p);
+		Logger.finishedModel(this, "Thrown", p);
 	}
 
 	/**
@@ -226,12 +234,12 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @param s Az a Student, aki használni szeretné a WetTableCloth -ot.
 	 * */
 	public void UsedByStudent(Student s) {
-		Logger.started(this, "UsedByStudent", s);
+		Logger.startedModel(this, "UsedByStudent", s);
 		Activate();
 		if (isActivated) {
 			s.AddWetTableCloth(this);
 		}
-		Logger.finished(this, "UsedByStudent", s);
+		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
 
@@ -243,8 +251,8 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * @param i Az a Instructor, aki használni szeretné a WetTableCloth -ot.
 	 * */
 	public void UsedByInstructor(Instructor i) {
-		Logger.started(this, "UsedByInstructor", i);
-		Logger.finished(this, "UsedByInstructor", i);
+		Logger.startedModel(this, "UsedByInstructor", i);
+		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 
 	/**
@@ -257,13 +265,15 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	@Override
 	public boolean CanDefend() {
-		Logger.started(this, "CanDefend");
-		Logger.finished(this, "CanDefend");
+		Logger.startedModel(this, "CanDefend");
+		Logger.finishedModel(this, "CanDefend");
 		return isActivated && effectDuration > 0;
 	}
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 }

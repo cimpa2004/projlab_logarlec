@@ -5,7 +5,8 @@ package util;
 public class Logger {
     public enum LogLevel {
         DISABLED,
-        CALL_FLOWS,
+        CALL_FLOWS_MODEL,
+        CALL_FLOWS_VIEW,
         INPUT_HANDLER,
         ALL
     }
@@ -27,20 +28,40 @@ public class Logger {
         if (logLevel == LogLevel.INPUT_HANDLER || logLevel == LogLevel.ALL) System.out.println(message);
     }
 
-    public static void started(Object obj, String methodName, Object... params) {
-        if(logLevel == LogLevel.CALL_FLOWS || logLevel == LogLevel.ALL){
-            String indent = generateIndent();
-            System.out.println(indent + "STARTED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
-            indentLevel++;
+    private static void started(Object obj, String methodName, Object... params) {
+        String indent = generateIndent();
+        System.out.println(indent + "STARTED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
+        indentLevel++;
+    }
+
+    private static void finished(Object obj, String methodName, Object... params) {
+        indentLevel--;
+        String indent = generateIndent();
+        System.out.println(indent + "FINISHED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
+        if(indent.isEmpty()) System.out.println();
+    }
+
+    public static void startedModel(Object obj, String methodName, Object... params) {
+        if(logLevel == LogLevel.CALL_FLOWS_MODEL || logLevel == LogLevel.ALL){
+            started(obj, methodName, params);
         }
     }
 
-    public static void finished(Object obj, String methodName, Object... params) {
-        if(logLevel == LogLevel.CALL_FLOWS || logLevel == LogLevel.ALL){
-            indentLevel--;
-            String indent = generateIndent();
-            System.out.println(indent + "FINISHED: " + obj + "." + methodName + "(" + arrayToString(params) + ")");
-            if(indent.length() == 0) System.out.println();
+    public static void finishedModel(Object obj, String methodName, Object... params) {
+        if(logLevel == LogLevel.CALL_FLOWS_MODEL || logLevel == LogLevel.ALL){
+            finished(obj, methodName, params);
+        }
+    }
+
+    public static void startedView(Object obj, String methodName, Object... params) {
+        if(logLevel == LogLevel.CALL_FLOWS_VIEW || logLevel == LogLevel.ALL){
+            started(obj, methodName, params);
+        }
+    }
+
+    public static void finishedView(Object obj, String methodName, Object... params) {
+        if(logLevel == LogLevel.CALL_FLOWS_VIEW || logLevel == LogLevel.ALL){
+            finished(obj, methodName, params);
         }
     }
 
@@ -75,8 +96,11 @@ public class Logger {
             case "INPUT_HANDLER":
                 logLevel = LogLevel.INPUT_HANDLER;
                 break;
-            case "CALL_FLOWS":
-                logLevel = LogLevel.CALL_FLOWS;
+            case "CALL_FLOWS_MODEL":
+                logLevel = LogLevel.CALL_FLOWS_MODEL;
+                break;
+            case "CALL_FLOWS_VIEW":
+                logLevel = LogLevel.CALL_FLOWS_VIEW;
                 break;
             case "ALL":
                 logLevel = LogLevel.ALL;

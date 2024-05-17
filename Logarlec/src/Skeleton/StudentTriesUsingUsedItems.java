@@ -16,7 +16,7 @@ public class StudentTriesUsingUsedItems {
 
 
     private static void initTest(){
-        game = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+        game = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
         s = new Student(game);
         c = new Camembert();
         f = new FFP2Mask();

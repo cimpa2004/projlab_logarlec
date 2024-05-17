@@ -14,7 +14,7 @@ public class StudentUsesWetTableClothOnInstructor {
     private static DoorSide d1, d2;
     private static Room r1, r2;
     private static Instructor i;
-    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+    private static Game g = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
 
 
     private static void initTest(){

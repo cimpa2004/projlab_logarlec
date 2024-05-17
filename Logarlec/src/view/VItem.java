@@ -1,5 +1,6 @@
 package view;
 
+import util.Logger;
 import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
@@ -10,6 +11,8 @@ public abstract class VItem implements IVItemUpdate {
     private String ID;
     private VRoom room;
     public String GetID(){
+        Logger.startedModel(this, "GetID");
+        Logger.finishedModel(this, "GetID");
         return ID;
     }
     public abstract void PickedUp();
@@ -23,6 +26,8 @@ public abstract class VItem implements IVItemUpdate {
     public abstract void SetClickedT(VTransistor t);
     @Override
     public void ThrownUpdate() {
+        Logger.startedView(this, "ThrownUpdate");
+        Logger.finishedView(this, "ThrownUpdate");
         // TODO: implement
         // Általános:
         // Ha currentStudent dobta el ne rajzolódjon ki az inventoryban
@@ -32,6 +37,16 @@ public abstract class VItem implements IVItemUpdate {
 
     @Override
     public void PickedUpUpdate() {
+        Logger.startedView(this, "PickedUpUpdate");
+        Logger.finishedView(this, "PickedUpUpdate");
+        // TODO: implement
+        throw new UnsupportedOperationException("Unimplemented method 'PickedUpUpdate'");
+    }
+
+    @Override
+    public void UsedUpdate() {
+        Logger.startedView(this, "UsedUpdated");
+        Logger.finishedView(this, "UsedUpdated");
         // TODO:
         // Általános:
         // Ne rajzolódjon ki a szobában, szoba redraw (ha az a megjelenített szoba?)
@@ -39,12 +54,4 @@ public abstract class VItem implements IVItemUpdate {
         // SlideRule?? --> ez már jelezve van szerintem, itt nem kell kitérni rá
     }
 
-    @Override
-    public void UsedUpdate() {
-        // TODO: implement
-        // Általános:
-        // Nem csinál semmit igazából
-        // AirFreshener?? --> szoba redraw
-        // Camembert?? --> szoba redraw
-    }
 }

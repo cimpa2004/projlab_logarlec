@@ -36,7 +36,7 @@ public class Instructor extends Person implements IVInstructor {
 	 *  @param  r  Az a szoba ahol megjelenik az Oktató
 	 */
 	public boolean AppearInRoom(Room r) {
-		Logger.started(this, "AppearInRoom", r);
+		Logger.startedModel(this, "AppearInRoom", r);
 		int currentC = r.GetCurrentCapacity();
 		int maxC = r.GetMaxCapacity();
 		if(currentC < maxC) {
@@ -65,9 +65,10 @@ public class Instructor extends Person implements IVInstructor {
 			}*///Nem szükséges a teszteléshez
 
 		} else {
+			Logger.finishedModel(this, "AppearInRoom", r);
 			return false;
 		}
-		Logger.finished(this, "AppearInRoom", r);
+		Logger.finishedModel(this, "AppearInRoom", r);
 		return true;
 	}
 
@@ -77,13 +78,13 @@ public class Instructor extends Person implements IVInstructor {
 	 *  @param  st  Az a Hallgató akit az Oktató megöl
 	 */
 	public void StealSoul(Student st) {
-		Logger.started(this, "StealSoul", st);
+		Logger.startedModel(this, "StealSoul", st);
 		if(!isFainted && !(stunDuration > 0)){
 			if (!st.DefendFromKill(this)){
 				st.Die();
 			}
 		}
-		Logger.finished(this, "StealSoul", st);
+		Logger.finishedModel(this, "StealSoul", st);
 	}
 
 	/**
@@ -92,20 +93,20 @@ public class Instructor extends Person implements IVInstructor {
 	 * @param  duration  A bénulás időtartama.
 	 * */
 	public void Stun(int duration) {
-		Logger.started(this, "Stun", duration);
+		Logger.startedModel(this, "Stun", duration);
 		stunDuration = duration;
-		Logger.finished(this, "Stun", duration);
+		Logger.finishedModel(this, "Stun", duration);
 	}
 
 	/**
 	 * Csökkenti az Oktatón található bénulás időtartamát.
 	 * */
 	public void DecrementStun() {
-		Logger.started(this, "DecrementStun");
+		Logger.startedModel(this, "DecrementStun");
 		if(stunDuration > 0){
 			stunDuration = stunDuration - 1;
 		}
-		Logger.finished(this, "DecrementStun");
+		Logger.finishedModel(this, "DecrementStun");
 	}
 
 	/**
@@ -113,12 +114,13 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public void StartTurn() {
+		Logger.startedModel(this, "StartTurn");
 		if (isFainted || stunDuration > 0){
 			this.EndTurn();
+			Logger.finishedModel(this, "StartTurn");
 			return;
 		}
 
-		Logger.started(this, "StartTurn");
 		activeTurn = true;
 		// ha kor kezdetekor gazos szobaban van akkor elkabul
 		if(room.GetPoisonDuration() > 0){
@@ -140,6 +142,7 @@ public class Instructor extends Person implements IVInstructor {
 		// ha az oktato meg van benulva vagy el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
 		if(stunDuration > 0 || isFainted){
 			EndTurn();
+			Logger.finishedModel(this, "StartTurn");
 			return;
 		}
 
@@ -173,20 +176,20 @@ public class Instructor extends Person implements IVInstructor {
 //		}
 
 		EndTurn();
-		Logger.finished(this, "StartTurn");
+		Logger.finishedModel(this, "StartTurn");
 	}
 
 	/**
 	 * Az Oktató ezzel a függvénnyel jelzi, hogy a köre véget ért. Ekkor az activeTurn false értéket vesz fel.
 	 */
 	public void EndTurn() {
-		Logger.started(this, "EndTurn");
+		Logger.startedModel(this, "EndTurn");
 		if (this.stunDuration > 0)
 			stunDuration--;
 		this.activeTurn = false;
 
 		game.NextTurn();
-		Logger.finished(this, "EndTurn");
+		Logger.finishedModel(this, "EndTurn");
 	}
 
 	/**
@@ -195,6 +198,8 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public boolean GetIsFainted() {
+		Logger.startedModel(this, "GetIsFainted");
+		Logger.finishedModel(this, "GetIsFainted");
 		return isFainted;
 	}
 
@@ -204,6 +209,8 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public boolean GetIsStunned() {
+		Logger.startedModel(this, "GetIsStunned");
+		Logger.finishedModel(this, "GetIsStunned");
 		return stunDuration > 0;
 	}
 
@@ -213,11 +220,15 @@ public class Instructor extends Person implements IVInstructor {
 	 */
 	@Override
 	public boolean GetIsActiveTurn() {
+		Logger.startedModel(this, "GetIsActiveTurn");
+		Logger.finishedModel(this, "GetIsActiveTurn");
 		return activeTurn;
 	}
 
 	@Override
 	public boolean GetIsAlive() {
+		Logger.startedModel(this, "GetIsAlive");
+		Logger.finishedModel(this, "GetIsAlive");
 		return true;
 	}
 
@@ -234,9 +245,9 @@ public class Instructor extends Person implements IVInstructor {
 	 *  @param  i  Item amit az Oktató használni fog
 	 */
 	public void UseItem(Item i) {
-		Logger.started(this, "UseItem", i);
+		Logger.startedModel(this, "UseItem", i);
 		if(inventory.contains(i)) i.UsedByInstructor(this);
-		Logger.finished(this, "UseItem", i);
+		Logger.finishedModel(this, "UseItem", i);
 	}
 
 	/**
@@ -248,9 +259,9 @@ public class Instructor extends Person implements IVInstructor {
 	 * */
 	@Override
 	public boolean Pickup(Item i) {
-		Logger.started(this, "Pickup", i);
+		Logger.startedModel(this, "Pickup", i);
 		boolean isPickedUp = i.PickedUpInstructor(this);
-		Logger.finished(this, "Pickup", i);
+		Logger.finishedModel(this, "Pickup", i);
 		return isPickedUp;
 	}
 
@@ -264,22 +275,26 @@ public class Instructor extends Person implements IVInstructor {
 	public boolean Move(DoorSide d) {
 		//már tudjuk hogy be lehet lépni
 		if (!room.GetDoors().contains(d)) return false;
-		Logger.started(this, "Move", d);
+		Logger.startedModel(this, "Move", d);
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		boolean isAppeared = AppearInRoom(r2);
-		Logger.finished(this, "Move", d);
+		Logger.finishedModel(this, "Move", d);
 		return isAppeared;
 	}
 
 	@Override
 	public IVRoom GetIVRoom() {
-		return room;
-	}
+        Logger.startedModel(this, "GetIVRoom");
+        Logger.finishedModel(this, "GetIVRoom");
+        return this.room;
+    }
 
 	@Override
 	public void SetIVInstructorUpdate(IVInstructorUpdate ivInstructorUpdate) {
+		Logger.startedModel(this, "SetIVInstructorUpdate", ivInstructorUpdate);
 		this.ivInstructorUpdate = ivInstructorUpdate;
+		Logger.finishedModel(this, "SetIVInstructorUpdate", ivInstructorUpdate);
 	}
 
 }

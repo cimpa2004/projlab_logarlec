@@ -16,7 +16,7 @@ public class StudentGetsStuckInARoom {
     private static Game g;
     private static TVSZ tv;
     private static Room r0;
-    private static Game game = new Game(true,  Logger.LogLevel.CALL_FLOWS);
+    private static Game game = new Game(true,  Logger.LogLevel.CALL_FLOWS_MODEL);
 
 
     private static void Init(){
