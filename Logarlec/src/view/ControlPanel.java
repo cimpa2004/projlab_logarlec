@@ -37,7 +37,7 @@ public class ControlPanel extends JPanel implements IControl {
         UpdateCurrentStudent();
 
         //Rendes függvény
-        //TODO: ha minden kész ezt komentteleníteni az alatta lévőt meg törölni
+        //TODO: maybe it will work
         if(currentStudent != null && currentStudent.getItems() != null){
             for (VItem item: currentStudent.getItems()){
                 item.DrawInInventory(itemsPanel, currentStudent);
@@ -90,7 +90,7 @@ public class ControlPanel extends JPanel implements IControl {
      * Újra rajzolja az inventory-t és a gamePanelt
      */
     private void Update() {
-        //TODO: uncomment this
+        //TODO: maybe it will work
         if (currentStudent != null){
             if(currentStudent.getItems() != null){
                 for(VItem item: currentStudent.getItems()){
