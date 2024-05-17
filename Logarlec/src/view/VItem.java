@@ -1,5 +1,6 @@
 package view;
 
+import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
 import javax.swing.*;
@@ -7,9 +8,7 @@ import javax.swing.*;
 
 public abstract class VItem implements IVItemUpdate {
     private String ID;
-
     private VRoom room;
-
     public String GetID(){
         return ID;
     }

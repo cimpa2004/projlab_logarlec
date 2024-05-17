@@ -141,7 +141,7 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		if (isAdded){
+		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
 		Logger.finished(this, "PickedUpStudent", st);
@@ -162,7 +162,7 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		if (isAdded){
+		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
 		Logger.finished(this, "PickedUpInstructor", i);
@@ -191,7 +191,9 @@ public class Transistor extends Item implements Usable, IVTransistor {
 			pair.Activate();
 			p.RemoveFromInventory(this);
 			p.AppearInRoom(pair.GetRoom());
-			ivItemUpdate.ThrownUpdate();
+			if(ivItemUpdate != null){
+				ivItemUpdate.ThrownUpdate();
+			}
 		}else{
 			p.RemoveFromInventory(this);
 			ivItemUpdate.ThrownUpdate();

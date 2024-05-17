@@ -187,7 +187,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	public boolean PickedUpStudent(Student st) {
 		Logger.started(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		if (isAdded){
+		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
 		Logger.finished(this, "PickedUpStudent", st);
@@ -207,7 +207,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.started(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		if (isAdded){
+		if (isAdded && ivItemUpdate != null){
 			ivItemUpdate.PickedUpUpdate();
 		}
 		// ha az oktato felvesz egy FFP2Maskot akkor egybol aktivalja
@@ -231,7 +231,9 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		Logger.started(this, "Thrown", p);
 		p.RemoveFFP2Mask(this);
 		p.RemoveFromInventory(this);
-		ivItemUpdate.ThrownUpdate();
+		if(ivItemUpdate != null){
+			ivItemUpdate.ThrownUpdate();
+		}
 		Logger.finished(this, "Thrown", p);
 	}
 
