@@ -23,19 +23,6 @@ public class GamePanel extends JPanel implements ICRoom {
     //private JPanel buttonsPanel;
 
     public GamePanel(){
-        /*buttonsPanel = new JPanel() {
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                for(RectPanel rect : rects) {
-                    rect.draw(g);
-                }
-                for(MapCirclePanel circle : circles) {
-                    circle.draw(g);
-                }
-            }
-        };
-        buttonsPanel.setLayout(null);
-        add(buttonsPanel);*/
         setLayout(null);
     }
 
