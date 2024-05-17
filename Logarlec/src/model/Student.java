@@ -19,7 +19,6 @@ public class Student extends Person implements IVStudent {
 
 	private IVStudentUpdate ivStudentUpdate;
 
-
 	public Student(String id, Game g){
 		super(id);
 		this.game = g;

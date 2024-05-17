@@ -13,7 +13,7 @@ janitors: [Janitor1]
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
 message: A megadott Student1 személy részletei a többi mezőben.
-room: Room2
+room: Room1
 inventory: []
 wetTableClothes: []
 tvszs: []
@@ -31,10 +31,10 @@ neighbors: [Room1]
 isCursed: false
 isSticky: false
 poisonDuration: 0
-currentCapacity: 2
+currentCapacity: 1
 maxCapacity: 10
 numberOfPeopleBeenToRoom: 0
-students: [Student1]
+students: []
 instructors: []
 janitors: [Janitor1]
 

@@ -3,9 +3,7 @@ package model;
 
 import util.Logger;
 import view.VRoom;
-import viewmodel.IRoom;
-import viewmodel.IVRoom;
-import viewmodel.IVRoomUpdate;
+import viewmodel.*;
 
 import java.util.*;
 
@@ -246,6 +244,15 @@ public class Room implements IRoom, IVRoom {
 		return items;
 	}
 
+	public ArrayList<IVItem> GetIVItems() {
+		Logger.startedModel(this, "GetIVItems");
+		Logger.finishedModel(this, "GetIVItems");
+		ArrayList<IVItem> ivItems = new ArrayList<IVItem>();
+		for(Item i : items)
+			ivItems.add((IVItem) i);
+		return ivItems;
+	}
+
 	/**
 	 * Hozzáad egy szomszédot a szobához.
 	 *
@@ -281,6 +288,20 @@ public class Room implements IRoom, IVRoom {
 	}
 
 	/**
+	 * Visszaadja a szobában tartózkodó hallgatókat interface típusban.
+	 *
+	 * @return A Room students listája.
+	 * */
+	public ArrayList<IVStudent> GetIVStudents() {
+		Logger.startedModel(this, "GetIVStudents");
+		Logger.finishedModel(this, "GetIVStudents");
+		ArrayList<IVStudent> ivStudents = new ArrayList<IVStudent>();
+		for(Student s : students)
+			ivStudents.add((IVStudent) s);
+		return ivStudents;
+	}
+
+	/**
 	 * Visszaadja a szobában tartózkodó oktatokat.
 	 *
 	 * @return A Room instructors listája.
@@ -292,6 +313,20 @@ public class Room implements IRoom, IVRoom {
 	}
 
 	/**
+	 * Visszaadja a szobában tartózkodó hallgatókat interface típusban.
+	 *
+	 * @return A Room students listája.
+	 * */
+	public ArrayList<IVInstructor> GetIVInstructors() {
+		Logger.startedModel(this, "GetIVInstructors");
+		Logger.finishedModel(this, "GetIVInstructors");
+		ArrayList<IVInstructor> ivInstructors = new ArrayList<IVInstructor>();
+		for(Instructor i : instructors)
+			ivInstructors.add((IVInstructor) i);
+		return ivInstructors;
+	}
+
+	/**
 	 * Visszaadja a szobában tartózkodó takaritokat.
 	 *
 	 * @return A Room janitors listája.
@@ -300,6 +335,20 @@ public class Room implements IRoom, IVRoom {
 		Logger.startedModel(this, "GetJanitors");
 		Logger.finishedModel(this, "GetJanitors");
 		return janitors;
+	}
+
+	/**
+	 * Visszaadja a szobában tartózkodó hallgatókat interface típusban.
+	 *
+	 * @return A Room students listája.
+	 * */
+	public ArrayList<IVJanitor> GetIVJanitors() {
+		Logger.startedModel(this, "GetIVJanitors");
+		Logger.finishedModel(this, "GetIVJanitors");
+		ArrayList<IVJanitor> ivJanitors = new ArrayList<IVJanitor>();
+		for(Janitor j : janitors)
+			ivJanitors.add((IVJanitor) j);
+		return ivJanitors;
 	}
 
 	/**
@@ -446,6 +495,15 @@ public class Room implements IRoom, IVRoom {
 		Logger.startedModel(this, "GetDoors");
 		Logger.finishedModel(this, "GetDoors");
 		return doors;
+	}
+
+	public ArrayList<IVDoorSide> GetIVDoors() {
+		Logger.startedModel(this, "GetIVDoors");
+		Logger.finishedModel(this, "GetIVDoors");
+		ArrayList<IVDoorSide> ivDoors = new ArrayList<IVDoorSide>();
+		for(IVDoorSide d : doors)
+			ivDoors.add((IVDoorSide) d);
+		return ivDoors;
 	}
 
 	/**

@@ -12,8 +12,6 @@ janitors: []
 
 message: A személynek sikerült felvenni a tárgyat amely már megtalálható az inventoryjában
 
-message: A személynek sikerült használnia a tárgyat.
-
 message: A személynek sikerült belépnie az ajtón és megjelennie a másik szobában.
 
 message: A megadott Instructor1 személy részletei a többi mezőben.

@@ -5,6 +5,7 @@ import util.Logger;
 import viewmodel.IVTVSZ;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -45,6 +46,14 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	public TVSZ(){
 		super(UUID.randomUUID().toString());
 		usesLeft = 3;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(242, 70, 38);
 	}
 
 	/**

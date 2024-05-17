@@ -5,6 +5,7 @@ import util.Logger;
 import viewmodel.IVWetTableCloth;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -52,6 +53,14 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		super(UUID.randomUUID().toString());
 		isActivated = false;
 		effectDuration = 3;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(100, 45, 179);
 	}
 
 	/**

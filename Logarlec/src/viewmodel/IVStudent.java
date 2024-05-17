@@ -9,4 +9,7 @@ public interface IVStudent {
     public void EndTurn();
     public String GetID();
     public Room GetRoom();
+    public boolean GetIsActiveTurn();
+    public boolean GetIsAlive();
+    public boolean GetIsFainted();
 }

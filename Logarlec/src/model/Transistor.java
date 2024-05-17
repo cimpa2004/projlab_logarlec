@@ -4,6 +4,7 @@ import util.Logger;
 import viewmodel.IVTransistor;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -50,6 +51,14 @@ public class Transistor extends Item implements Usable, IVTransistor {
 		super(UUID.randomUUID().toString());
 		isActive = false;
 		pair = null;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(26, 26, 26);
 	}
 
 	/**

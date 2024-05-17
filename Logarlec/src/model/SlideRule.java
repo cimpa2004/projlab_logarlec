@@ -4,6 +4,7 @@ import util.*;
 import viewmodel.IVSlideRule;
 import viewmodel.IVRoom;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -35,6 +36,14 @@ public class SlideRule extends Item implements IVSlideRule {
 	public SlideRule(String id, Game game) {
 		super(id);
 		this.game = game;
+	}
+
+	/**
+	 * Visszaadja a tárgy színét.
+	 * */
+	@Override
+	public Color GetColor() {
+		return new Color(144, 209, 79);
 	}
 
 	/**
