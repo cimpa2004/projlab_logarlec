@@ -3,6 +3,7 @@ package model;
 import controller.Game;
 import util.Logger;
 
+import view.VStudent;
 import viewmodel.*;
 
 import java.util.ArrayList;
@@ -281,4 +282,7 @@ public class Student extends Person implements IVStudent {
         return this.room;
     }
 
+	public VStudent GetIVStudentUpdate(){
+		return (VStudent) ivStudentUpdate;
+	}
 }

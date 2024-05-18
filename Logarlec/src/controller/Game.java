@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import util.Logger;
+import view.*;
 import viewmodel.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -205,6 +206,11 @@ public class Game implements IVInit {
 		Student newStudent = new Student(personID,this);
 		rooms.get(0).AddStudent(newStudent);
 		if (icInit != null) icInit.CreateVStudent(newStudent, inputHandler);
+
+		//TODO TEST
+		FillUpInventory(newStudent);
+		//TODO TEST
+
 		AddToGame(newStudent);
 		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID + "\n");
 		Logger.finishedModel(this, "AddStudent", personID);
@@ -583,5 +589,45 @@ public class Game implements IVInit {
 			}
 		}
 		return null;
+	}
+
+	//TODO JUST A TEST METHOD
+	public void FillUpInventory(Student student){
+		Room defaultRoom = new Room();
+
+		AirFreshener af = new AirFreshener("TestAirFreshener");
+		af.SetRoom(defaultRoom);
+		VAirFreshener vaf = new VAirFreshener(af);
+		vaf.SetOwner(student.GetIVStudentUpdate());
+		af.SetIVItemUpdate(vaf);
+		student.AddToInventory(af);
+
+		Transistor t = new Transistor("TestTransistor");
+		t.SetRoom(defaultRoom);
+		VTransistor vt = new VTransistor(t);
+		vt.SetOwner(student.GetIVStudentUpdate());
+		t.SetIVItemUpdate(vt);
+		student.AddToInventory(t);
+
+		WetTableCloth wtc = new WetTableCloth("TestWTC");
+		wtc.SetRoom(defaultRoom);
+		VWetTableCloth vwtc = new VWetTableCloth(wtc);
+		vwtc.SetOwner(student.GetIVStudentUpdate());
+		wtc.SetIVItemUpdate(vwtc);
+		student.AddToInventory(wtc);
+
+		HolyBeerCup hbc = new HolyBeerCup("TestHBC");
+		hbc.SetRoom(defaultRoom);
+		VHolyBeerCup vhbc = new VHolyBeerCup(hbc);
+		vhbc.SetOwner(student.GetIVStudentUpdate());
+		hbc.SetIVItemUpdate(vhbc);
+		student.AddToInventory(hbc);
+
+		TVSZ tvsz = new TVSZ("TestTVSZ");
+		tvsz.SetRoom(defaultRoom);
+		VTVSZ vtvsz = new VTVSZ(tvsz);
+		vtvsz.SetOwner(student.GetIVStudentUpdate());
+		tvsz.SetIVItemUpdate(vtvsz);
+		student.AddToInventory(tvsz);
 	}
 }

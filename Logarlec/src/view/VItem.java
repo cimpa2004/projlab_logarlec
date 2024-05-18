@@ -32,7 +32,7 @@ public abstract class VItem implements IVItemUpdate {
     @Override
     public void ThrownUpdate(IVItem item) {
         Logger.startedView(this, "ThrownUpdate");
-        owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.");
+        owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
         owner.GetControlPanel().Update();
         Logger.finishedView(this, "ThrownUpdate");
     }
@@ -40,7 +40,7 @@ public abstract class VItem implements IVItemUpdate {
     @Override
     public void PickedUpUpdate(IVItem item) {
         Logger.startedView(this, "PickedUpUpdate");
-        owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.");
+        owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
         owner.GetControlPanel().Update();
         Logger.finishedView(this, "PickedUpUpdate");
     }
@@ -48,9 +48,12 @@ public abstract class VItem implements IVItemUpdate {
     @Override
     public void UsedUpdate(IVItem item) {
         Logger.startedView(this, "UsedUpdated");
-        owner.GetControlPanel().LogEvent(owner.GetID() + " használta a " + item.GetID() + " tárgyat.");
+        owner.GetControlPanel().LogEvent(owner.GetID() + " használta a " + item.GetID() + " tárgyat.\n");
         owner.GetControlPanel().Update();
         Logger.finishedView(this, "UsedUpdated");
     }
 
+    public void SetOwner(VStudent vst){
+        owner = vst;
+    }
 }

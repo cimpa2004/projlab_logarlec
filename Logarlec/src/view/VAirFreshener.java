@@ -45,7 +45,8 @@ public class VAirFreshener extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,255), true, false, this, "Air Freshener");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                new Color(0,0,255), true, false, this, "Légfrissítő");
 
         panel.add(itemPanel);
     }
