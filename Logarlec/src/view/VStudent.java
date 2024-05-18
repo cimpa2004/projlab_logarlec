@@ -60,12 +60,12 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         return ivStudent.GetID();
     }
 
-    public VStudent(IVStudent ivStudent,ControlPanel controlPanel, ICInput input){
-        this.controlPanel = controlPanel;
-        this.input = input;
-        //NE töröld
-        this.controlPanel.AddVStudent(this);
-        this.ivStudent = ivStudent;
+    public VStudent(IVStudent ivS,ControlPanel cP, ICInput in){
+        controlPanel = cP;
+        input = in;
+        controlPanel.AddVStudent(this);
+        ivStudent = ivS;
+        ivStudent.SetIVStudentUpdate(this);
     }
 
     public Room GetRoom(){
@@ -90,7 +90,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
      */
     @Override
     public void Died() {
-        controlPanel.LogEvent(GetID() + " játékost megölte egy oktató!\n"); //TODO nem hívódik meg?
+        controlPanel.LogEvent(GetID() + " játékost megölte egy oktató!\n");
         controlPanel.Update();
     }
 }

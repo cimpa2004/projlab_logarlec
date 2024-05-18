@@ -10,9 +10,9 @@ public class VTVSZ extends VItem {
     IVTVSZ ivTVSZ;
     VStudent owner;
 
-    public VTVSZ(IVTVSZ ivTVSZ) {
-        this.ivTVSZ = ivTVSZ;
-        this.ivTVSZ.SetIVItemUpdate(this);
+    public VTVSZ(IVTVSZ ivtvsz) {
+        ivTVSZ = ivtvsz;
+        ivTVSZ.SetIVItemUpdate(this);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class VTVSZ extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,0,0), false, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,0,0), false, false, this, "TVSZ");
 
         panel.add(itemPanel);
     }

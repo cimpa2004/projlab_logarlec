@@ -9,9 +9,9 @@ import java.awt.*;
 public class VFFP2Mask extends VItem{
     IVFFP2Mask ivFFP2Mask;
     VStudent owner;
-    public VFFP2Mask(IVFFP2Mask ivffp2Mask){
-        this.ivFFP2Mask = ivffp2Mask;
-        this.ivFFP2Mask.SetIVItemUpdate(this);
+    public VFFP2Mask(IVFFP2Mask ivFFP2){
+        ivFFP2Mask = ivFFP2;
+        ivFFP2Mask.SetIVItemUpdate(this);
     }
 
     /**
@@ -43,7 +43,7 @@ public class VFFP2Mask extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this, "FFP2 Mask");
 
         panel.add(itemPanel);
     }

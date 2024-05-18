@@ -13,9 +13,9 @@ public class VTransistor extends VItem{
     IVTransistor ivTransistor;
     VStudent owner;
 
-    public VTransistor(IVTransistor ivTransistor){
-        this.ivTransistor = ivTransistor;
-        this.ivTransistor.SetIVItemUpdate(this);
+    public VTransistor(IVTransistor ivT){
+        ivTransistor = ivT;
+        ivTransistor.SetIVItemUpdate(this);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class VTransistor extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,0), true, true, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,0), true, true, this, "Transistor");
 
         panel.add(itemPanel);
     }

@@ -1,5 +1,6 @@
 package view;
 
+import model.*;
 import util.Logger;
 import viewmodel.IControl;
 
@@ -135,6 +136,27 @@ public class ControlPanel extends JPanel implements IControl {
                     item.DrawInInventory(itemsPanel, currentStudent);
                 }
             }
+
+            // TODO Ezzel lehet tesztelni az itemspanel kinézetét
+            // TODO DELETE TEST
+            itemsPanel.removeAll();
+            AirFreshener af = new AirFreshener();
+            VAirFreshener vaf = new VAirFreshener(af);
+            vaf.DrawInInventory(itemsPanel, currentStudent);
+            Transistor t = new Transistor();
+            VTransistor vt = new VTransistor(t);
+            vt.DrawInInventory(itemsPanel, currentStudent);
+            FFP2Mask mask = new FFP2Mask();
+            VFFP2Mask vmask = new VFFP2Mask(mask);
+            vmask.DrawInInventory(itemsPanel, currentStudent);
+            HolyBeerCup hbc = new HolyBeerCup();
+            VHolyBeerCup vhbc = new VHolyBeerCup(hbc);
+            vhbc.DrawInInventory(itemsPanel, currentStudent);
+            TVSZ tvsz = new TVSZ();
+            VTVSZ vtvsz = new VTVSZ(tvsz);
+            vtvsz.DrawInInventory(itemsPanel, currentStudent);
+            // TODO DELETE TEST
+
             nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
             roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID());

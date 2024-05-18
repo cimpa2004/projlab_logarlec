@@ -11,9 +11,9 @@ public class VCamembert extends VItem{
 
     VStudent owner;
 
-    public VCamembert(IVCamembert ivCamembert){
-        this.ivCamembert = ivCamembert;
-        this.ivCamembert.SetIVItemUpdate(this);
+    public VCamembert(IVCamembert ivC){
+        ivCamembert = ivC;
+        ivCamembert.SetIVItemUpdate(this);
     }
 
     /**
@@ -45,7 +45,7 @@ public class VCamembert extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,0), true, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,0), true, false, this, "Camembert");
 
         panel.add(itemPanel);
     }

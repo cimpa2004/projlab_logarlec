@@ -10,8 +10,8 @@ public class VWetTableCloth extends VItem {
     IVWetTableCloth ivWetTableCloth;
     VStudent owner;
 
-    public VWetTableCloth(IVWetTableCloth ivWetTableCloth) {
-        this.ivWetTableCloth = ivWetTableCloth;
+    public VWetTableCloth(IVWetTableCloth ivWTC) {
+        ivWetTableCloth = ivWTC;
         ivWetTableCloth.SetIVItemUpdate(this);
     }
 
@@ -44,7 +44,7 @@ public class VWetTableCloth extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(153,0,153), true, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(153,0,153), true, false, this, "Wet Table Cloth");
 
         panel.add(itemPanel);
     }

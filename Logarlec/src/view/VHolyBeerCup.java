@@ -10,9 +10,9 @@ public class VHolyBeerCup extends VItem {
     IVHolyBeerCup ivHolyBeerCup;
     VStudent owner;
 
-    public VHolyBeerCup(IVHolyBeerCup ivHolyBeerCup) {
-        this.ivHolyBeerCup = ivHolyBeerCup;
-        this.ivHolyBeerCup.SetIVItemUpdate(this);
+    public VHolyBeerCup(IVHolyBeerCup ivHBC) {
+        ivHolyBeerCup = ivHBC;
+        ivHolyBeerCup.SetIVItemUpdate(this);
     }
 
     /**
@@ -44,7 +44,7 @@ public class VHolyBeerCup extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(153,0,76), true, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(153,0,76), true, false, this, "Holy Beer Cup");
 
         panel.add(itemPanel);
     }
