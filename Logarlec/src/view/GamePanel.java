@@ -64,16 +64,8 @@ public class GamePanel extends JPanel implements ICRoom {
             throw new RuntimeException("Null roomot nem lehet kirajzolni");
         }
         currentRoom = room;
-        ResetRoom();
         currentRoom.Draw(this);
         Logger.finishedView(this, "Draw", room);
-    }
-
-    private void ResetRoom(){
-        Logger.startedView(this, "ResetMap");
-        this.rects.clear();
-        this.circles.clear();
-        Logger.finishedView(this, "ResetMap");
     }
 
     protected void paintComponent(Graphics g) {

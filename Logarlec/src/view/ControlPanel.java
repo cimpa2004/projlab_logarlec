@@ -127,7 +127,6 @@ public class ControlPanel extends JPanel implements IControl {
     @Override
     public void InstructorWin() {
         Logger.startedView(this, "InstructorWin");
-        gamePanel.Redraw();
         infoLabel.setText("A játék véget ért, az oktatók nyertek!");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
@@ -137,7 +136,6 @@ public class ControlPanel extends JPanel implements IControl {
     @Override
     public void StudentWin() {
         Logger.startedView(this, "StudentWin");
-        gamePanel.Redraw();
         infoLabel.setText("A játék véget ért, a hallgatók nyertek!");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
@@ -150,7 +148,7 @@ public class ControlPanel extends JPanel implements IControl {
             Logger.startedView(this, "EndTurnButtonListener.actionPerformed", e);
             if (currentStudent != null){
                 currentStudent.EndTurn();
-                //UpdateCurrentStudent();
+                UpdateCurrentStudent();
             }
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }
