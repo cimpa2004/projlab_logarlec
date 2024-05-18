@@ -70,9 +70,9 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.add(Box.createVerticalStrut(10));
 
         // log stuff - remove later
-        for(int i = 0; i < 20; i++) {
+        /*for(int i = 0; i < 20; i++) {
             LogEvent("PlaceHolder\n"); //TODO remove, majd rendes hívások kellenek, ha történik valami
-        }
+        }*/
         // Create info pane
         infoPane.setContentType("text/plain");
         infoPane.setText(text);
@@ -134,8 +134,9 @@ public class ControlPanel extends JPanel implements IControl {
             }
             nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
-            roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID().toString());
+            roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID());
             roomLabel.setBorder(new EmptyBorder(10,10,10,10));
+            infoPane.setText(text);
             gamePanel.ClearAll();
             gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }

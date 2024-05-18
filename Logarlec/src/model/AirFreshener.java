@@ -187,7 +187,7 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
         if(Activate()){
             s.GetRoom().SetPoisonDuration(0);
             if(ivItemUpdate != null){
-                ivItemUpdate.UsedUpdate();
+                ivItemUpdate.UsedUpdate(this);
             }
         }
         Logger.finishedModel(this, "UsedByStudent", s);
@@ -209,7 +209,7 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
         if(Activate()){
             i.GetRoom().SetPoisonDuration(0);
             if(ivItemUpdate != null) {
-                ivItemUpdate.UsedUpdate();
+                ivItemUpdate.UsedUpdate(this);
             }
         }
         Logger.finishedModel(this, "UsedByInstructor", i);

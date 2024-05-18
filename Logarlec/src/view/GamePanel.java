@@ -174,6 +174,10 @@ public class GamePanel extends JPanel implements ICRoom, ActionListener {
             IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
             if(controlPanel.GetCurrentStudent().Move(doorRef)) {
                 currentRoom = doorRef.GetIVPair().GetIVRoom().GetVRoom();
+                controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
+                        " átlépett a " + currentRoom.GetIVRoom().GetID() + " szobába.\n");
+                controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
+                        " köre véget ért!\n");
                 controlPanel.GetCurrentStudent().EndTurn();
             }
         }
