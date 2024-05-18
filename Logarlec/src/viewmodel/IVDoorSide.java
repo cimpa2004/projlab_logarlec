@@ -5,4 +5,5 @@ public interface IVDoorSide {
     public IVRoom GetIVRoom();
     public boolean GetIsVisible();
     public boolean GetCanBeOpened();
+    public IVDoorSide GetIVPair();
 }

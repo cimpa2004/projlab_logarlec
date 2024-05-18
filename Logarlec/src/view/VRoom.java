@@ -47,6 +47,13 @@ public class VRoom extends JPanel implements IVRoomUpdate {
             else
                 panelToDrawOn.setBackground(new Color(128, 128, 128));
 
+        for(IVItem item : ivRoom.GetIVItems()) {
+            Dimension drawPos = GetRandomRoomPos(panelToDrawOn,50);
+            Color color = item.GetColor();
+            panelToDrawOn.AddCircle(new MapCirclePanel(color,
+                    drawPos, 50, panelToDrawOn));
+        }
+
         for(IVStudent student : ivRoom.GetIVStudents()) {
             Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
             panelToDrawOn.AddRect(new RectPanel(new Color(144, 209, 79),
@@ -80,13 +87,6 @@ public class VRoom extends JPanel implements IVRoomUpdate {
                     drawPos, new Dimension(50, 50)));
         }
 
-        for(IVItem item : ivRoom.GetIVItems()) {
-            Dimension drawPos = GetRandomRoomPos(panelToDrawOn,50);
-            Color color = item.GetColor();
-            panelToDrawOn.AddCircle(new MapCirclePanel(color,
-                    drawPos, 50, panelToDrawOn));
-        }
-
         int doorsCount = ivRoom.GetIVDoors().size();
         System.out.println("DOORS COUNT: " + doorsCount + " -------------------------------------------------------------------------");
         ArrayList<Boolean> isHorizontalDoors = GetDoorPositions(panelToDrawOn, doorsCount);
@@ -102,14 +102,14 @@ public class VRoom extends JPanel implements IVRoomUpdate {
             }
             if(!doorSide.GetCanBeOpened())
                 if(!doorSide.GetIsVisible())
-                    panelToDrawOn.AddRect(new RectPanel(new Color(218, 0, 99), drawPos, doorDim, panelToDrawOn));
+                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(218, 0, 99), drawPos, doorDim, panelToDrawOn, doorSide));
                 else
-                    panelToDrawOn.AddRect(new RectPanel(new Color(242, 70, 38), drawPos, doorDim, panelToDrawOn));
+                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(242, 70, 38), drawPos, doorDim, panelToDrawOn, doorSide));
             else
                 if(!doorSide.GetIsVisible())
-                    panelToDrawOn.AddRect(new RectPanel(new Color(255, 255, 255), drawPos, doorDim, panelToDrawOn));
+                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 255), drawPos, doorDim, panelToDrawOn, doorSide));
                 else
-                    panelToDrawOn.AddRect(new RectPanel(new Color(26, 26, 26), drawPos, doorDim, panelToDrawOn));
+                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(26, 26, 26), drawPos, doorDim, panelToDrawOn, doorSide));
             counter++;
         }
     }
@@ -123,7 +123,6 @@ public class VRoom extends JPanel implements IVRoomUpdate {
         doorPositions = new ArrayList<>();
         int height = p.getPreferredSize().height;
         int width = p.getPreferredSize().width;
-        System.out.println("SIZE: WIDTH: " + width + " HEIGHT: " + height + " -------------------------------------------------------------------------");
         ArrayList<Boolean> isHorizontalDoors = new ArrayList<>();
         int perimeter = 2 * width + 2 * height;
         int startPoint = (int) (0.5 * height);

@@ -3,6 +3,7 @@ package view;
 import util.Logger;
 import viewmodel.IControl;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -83,6 +84,10 @@ public class ControlPanel extends JPanel implements IControl {
         Logger.finishedView(this, "UpdateCurrentStudent");
     }
 
+    public VStudent GetCurrentStudent() {
+        return currentStudent;
+    }
+
     /**
      * beállítja a kiválasztott tárgyat
      * @param item a kiválasztott tárgy
@@ -148,6 +153,7 @@ public class ControlPanel extends JPanel implements IControl {
             Logger.startedView(this, "EndTurnButtonListener.actionPerformed", e);
             if (currentStudent != null){
                 currentStudent.EndTurn();
+                gamePanel.Redraw();
                 UpdateCurrentStudent();
             }
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);

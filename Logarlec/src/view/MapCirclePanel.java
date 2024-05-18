@@ -23,6 +23,7 @@ public class MapCirclePanel extends JPanel {
         addBtn.setBounds(coords.width, coords.height, rad, rad);
         addBtn.setForeground(color);
         addBtn.setBackground(new Color(128, 128, 128));
+        addBtn.addActionListener(p);
         p.add(addBtn);
         p.AddItemButton(addBtn);
     }

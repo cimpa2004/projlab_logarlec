@@ -2,10 +2,7 @@ package view;
 
 import model.Room;
 import util.Logger;
-import viewmodel.ICInput;
-import viewmodel.IVItem;
-import viewmodel.IVStudent;
-import viewmodel.IVStudentUpdate;
+import viewmodel.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +37,11 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         Logger.startedView(this, "EndTurn");
         ivStudent.EndTurn();
         Logger.finishedView(this, "EndTurn");
+    }
+    public boolean Move(IVDoorSide d) {
+        Logger.startedView(this, "Move");
+        Logger.finishedView(this, "Move");
+        return ivStudent.IVMove(d);
     }
 
     /**

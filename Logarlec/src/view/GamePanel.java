@@ -1,29 +1,43 @@
 package view;
 
 
+import org.w3c.dom.css.Rect;
 import util.Logger;
 import viewmodel.ICRoom;
+import viewmodel.IVDoorSide;
 import viewmodel.IVRoom;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
  * A pálya részét jelenítetti meg a játéknak
  */
-public class GamePanel extends JPanel implements ICRoom {
+public class GamePanel extends JPanel implements ICRoom, ActionListener {
     private ArrayList<VRoom> rooms = new ArrayList<>();
     private ArrayList<VPerson> people = new ArrayList<>();
     private VRoom currentRoom;
     private ArrayList<RectPanel> rects = new ArrayList<>();
+    private ArrayList<RectPanel> doorRects = new ArrayList<>();
     private ArrayList<MapCirclePanel> circles = new ArrayList<>();
     private ArrayList<JButton> itemButtons = new ArrayList<>();
     private ArrayList<JButton> doorButtons = new ArrayList<>();
     //private JPanel buttonsPanel;
+    private ControlPanel controlPanel;
 
     public GamePanel(){
         setLayout(null);
+    }
+
+    public void SetControlPanel(ControlPanel cp) {
+        controlPanel = cp;
+    }
+
+    public VRoom GetCurrentRoom() {
+        return currentRoom;
     }
 
     public void AddVPerson(VPerson _new){
@@ -48,6 +62,7 @@ public class GamePanel extends JPanel implements ICRoom {
     public void Redraw(){
         Logger.startedView(this, "Redraw");
         if (currentRoom != null){
+            ClearAll();
             Draw(currentRoom);
         }
         Logger.finishedView(this, "Redraw");
@@ -73,6 +88,9 @@ public class GamePanel extends JPanel implements ICRoom {
         for(RectPanel rect : rects) {
             rect.draw(g);
         }
+        for(RectPanel rect : doorRects) {
+            rect.draw(g);
+        }
         for(MapCirclePanel circle : circles) {
             circle.draw(g);
         }
@@ -95,32 +113,46 @@ public class GamePanel extends JPanel implements ICRoom {
 
     public void AddRect(RectPanel rect) { rects.add(rect); }
 
-    public void RemoveRect(RectPanel rect) {
-        rects.remove(rect);
+    public void ClearRect() {
+        rects.clear();
+    }
+
+    public void AddDoorRect(RectPanel rect) { doorRects.add(rect); }
+
+    public void ClearDoorRect() {
+        doorRects.clear();
     }
 
     public void AddCircle(MapCirclePanel circle) {
         circles.add(circle);
     }
 
-    public void RemoveCircle(MapCirclePanel circle) {
-        circles.remove(circle);
+    public void ClearCircle() {
+        circles.clear();
     }
 
     public void AddDoorButton(JButton button) { doorButtons.add(button); }
 
-    public void RemoveDoorButton(JButton button) {
-        doorButtons.remove(button);
+    public void ClearDoorButton() {
+        doorButtons.clear();
     }
 
     public void AddItemButton(JButton button) { itemButtons.add(button); }
 
-    public void RemoveItemButton(JButton button) {
-        itemButtons.remove(button);
+    public void ClearItemButton() {
+        itemButtons.clear();
     }
     /*public JPanel GetButtonsPanel() {
         return buttonsPanel;
     }*/
+    public void ClearAll() {
+        ClearRect();
+        ClearDoorRect();
+        ClearCircle();
+        ClearDoorButton();
+        ClearItemButton();
+        removeAll();
+    }
 
     /**
      * Osszeolvasztja a ket szobat, pontosabban az ivRoom2-t olvasztja bele az ivRoom1-be. Igy az ivRoom2 megszunik.
@@ -132,5 +164,19 @@ public class GamePanel extends JPanel implements ICRoom {
         Logger.startedView(this, "Merge", ivRoom1, ivRoom2);
         rooms.remove(ivRoom2.GetVRoom());
         Logger.finishedView(this, "Merge", ivRoom1, ivRoom2);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(doorButtons.contains((JButton)e.getSource())) {
+            JButton dButton = (JButton)e.getSource();
+            int doorIndex = doorButtons.indexOf(dButton);
+            IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
+            if(controlPanel.GetCurrentStudent().Move(doorRef)) {
+                currentRoom = doorRef.GetIVPair().GetIVRoom().GetVRoom();
+                Redraw();
+                controlPanel.GetCurrentStudent().EndTurn();
+            }
+        }
     }
 }

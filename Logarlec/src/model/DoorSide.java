@@ -79,6 +79,12 @@ public class DoorSide implements IVDoorSide {
 		return pair;
 	}
 
+	public IVDoorSide GetIVPair() {
+		Logger.startedModel(this, "GetIVPair");
+		Logger.finishedModel(this, "GetIVPair");
+		return (IVDoorSide)pair;
+	}
+
 	/**
 	 * Beállítja az ajtó-oldal párját. A szobák egyesülésénél/osztódásánál hívódik meg.
 	 * */
