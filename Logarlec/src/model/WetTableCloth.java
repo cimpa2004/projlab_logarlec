@@ -177,7 +177,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
-			ivItemUpdate.PickedUpUpdate();
+			ivItemUpdate.PickedUpUpdate(this);
 		}
 		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
@@ -197,7 +197,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
-			ivItemUpdate.PickedUpUpdate();
+			ivItemUpdate.PickedUpUpdate(this);
 		}
 		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
@@ -228,7 +228,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		p.RemoveFromInventory(this);
 		p.RemoveWetTableCloth(this);
 		if(ivItemUpdate != null){
-			ivItemUpdate.ThrownUpdate();
+			ivItemUpdate.ThrownUpdate(this);
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}

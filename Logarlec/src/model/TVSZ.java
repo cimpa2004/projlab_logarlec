@@ -154,7 +154,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
-			ivItemUpdate.PickedUpUpdate();
+			ivItemUpdate.PickedUpUpdate(this);
 		}
 		if(isAdded && usesLeft > 0){
 			st.AddTVSZ(this);
@@ -177,7 +177,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
 		if (isAdded && ivItemUpdate != null){
-			ivItemUpdate.PickedUpUpdate();
+			ivItemUpdate.PickedUpUpdate(this);
 		}
 		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;
@@ -196,7 +196,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		p.RemoveTVSZ(this);
 		p.RemoveFromInventory(this);
 		if(ivItemUpdate != null){
-			ivItemUpdate.ThrownUpdate();
+			ivItemUpdate.ThrownUpdate(this);
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}

@@ -86,10 +86,11 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     }
 
     /**
-     * amikor die következik be xd
+     * amikor die következik be
      */
     @Override
     public void Died() {
+        //controlPanel.LogEvent(GetID() + " játékost megölte egy oktató!\n"); TODO nem hívódik meg?
         controlPanel.Update();
     }
 }
