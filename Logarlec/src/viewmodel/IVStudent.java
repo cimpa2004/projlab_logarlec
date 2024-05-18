@@ -12,4 +12,5 @@ public interface IVStudent {
     public boolean GetIsActiveTurn();
     public boolean GetIsAlive();
     public boolean GetIsFainted();
+    public boolean IVMove(IVDoorSide d);
 }

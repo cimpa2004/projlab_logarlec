@@ -3,6 +3,7 @@ package view;
 import util.Logger;
 import viewmodel.IControl;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -18,12 +19,16 @@ public class ControlPanel extends JPanel implements IControl {
     private JButton EndTurnButton = new JButton("Kör vége");
     private JButton PickUpButton = new JButton("Kijelölt tárgy felvétele");
     private JLabel infoLabel = new JLabel();
+    private JEditorPane infoPane = new JEditorPane();
     private JLabel nameLabel = new JLabel();
+    private JLabel roomLabel = new JLabel();
     private VItem selectedItem;
     private VStudent currentStudent;
     private JPanel itemsPanel = new JPanel();
     private GamePanel gamePanel;
+    private JPanel namepanel = new JPanel();
 
+    private String text = "";
 
     public void AddVStudent(VStudent new_){
         students.add(new_);
@@ -62,9 +67,27 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.add(PickUpButton);
         buttonsPanel.add(Box.createVerticalStrut(10));
         buttonsPanel.add(infoLabel);
+        buttonsPanel.add(Box.createVerticalStrut(10));
+
+        // log stuff - remove later
+        for(int i = 0; i < 20; i++) {
+            LogEvent("PlaceHolder\n"); //TODO remove, majd rendes hívások kellenek, ha történik valami
+        }
+        // Create info pane
+        infoPane.setContentType("text/plain");
+        infoPane.setText(text);
+        infoPane.setEditable(false);
+        JScrollPane jScrollPane = new JScrollPane(infoPane);
+        buttonsPanel.add(jScrollPane);
+
+        // Display student name and room name
+        namepanel.setLayout(new BoxLayout(namepanel, BoxLayout.Y_AXIS));
+        namepanel.add(nameLabel);
+        namepanel.add(roomLabel);
+
 
         // Add panels to the main panel
-        add(nameLabel, BorderLayout.NORTH);
+        add(namepanel, BorderLayout.NORTH);
         add(itemsPanel, BorderLayout.WEST);
         add(buttonsPanel, BorderLayout.EAST);
     }
@@ -81,6 +104,10 @@ public class ControlPanel extends JPanel implements IControl {
             }
         }
         Logger.finishedView(this, "UpdateCurrentStudent");
+    }
+
+    public VStudent GetCurrentStudent() {
+        return currentStudent;
     }
 
     /**
@@ -107,6 +134,9 @@ public class ControlPanel extends JPanel implements IControl {
             }
             nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
+            roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID().toString());
+            roomLabel.setBorder(new EmptyBorder(10,10,10,10));
+            gamePanel.ClearAll();
             gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
         else nameLabel.setText("Senki köre");
@@ -142,12 +172,17 @@ public class ControlPanel extends JPanel implements IControl {
         Logger.finishedView(this, "StudentWin");
     }
 
+    public void LogEvent(String event){
+        text += event;
+    }
+
     private class EndTurnButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "EndTurnButtonListener.actionPerformed", e);
             if (currentStudent != null){
                 currentStudent.EndTurn();
+                gamePanel.Redraw();
                 UpdateCurrentStudent();
             }
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);

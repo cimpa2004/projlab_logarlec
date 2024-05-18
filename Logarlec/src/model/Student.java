@@ -68,8 +68,8 @@ public class Student extends Person implements IVStudent {
 		Logger.finishedModel(this, "AppearInRoom", r);
 		return true;
 	}
-	
-	/** 
+
+	/**
 	 * Ezt a függvény hívja meg a Game a Studenten amikor jelzi neki, hogy a köre megkeződik. A játékos
 	 * ezen belül adhatja meg a lépéseit. Ekkor az activeTurn true értékre változik.
 	*/
@@ -252,6 +252,10 @@ public class Student extends Person implements IVStudent {
 		boolean isAppeared = AppearInRoom(r2);
 		Logger.finishedModel(this, "Move", d);
 		return isAppeared;
+	}
+
+	public boolean IVMove(IVDoorSide d) {
+		return Move((DoorSide) d);
 	}
 
 
