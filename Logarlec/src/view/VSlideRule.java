@@ -45,7 +45,8 @@ public class VSlideRule extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,255,0), false, false, this, "Slide Rule");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                new Color(0,255,0), false, false, this, "Logarléc");
 
         panel.add(itemPanel);
     }

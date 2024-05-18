@@ -2,6 +2,7 @@ package model;
 
 
 import util.Logger;
+import view.VItem;
 import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
@@ -202,5 +203,9 @@ public abstract class Item implements IVItem {
 		Logger.startedModel(this, "SetIVItemUpdate", ivItemUpdate);
 		Logger.finishedModel(this, "SetIVItemUpdate", ivItemUpdate);
 		this.ivItemUpdate = ivItemUpdate;
+	}
+
+	public VItem GetIVItemUpdate(){
+		return (VItem) ivItemUpdate;
 	}
 }

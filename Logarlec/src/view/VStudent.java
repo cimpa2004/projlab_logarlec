@@ -22,7 +22,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         List<VItem> vItems = new ArrayList<>();
 
         for(IVItem item : ivItems){
-            vItems.add((VItem) item);
+            vItems.add(item.GetIVItemUpdate());
         }
 
         return vItems;

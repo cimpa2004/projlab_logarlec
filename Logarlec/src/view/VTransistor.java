@@ -38,7 +38,8 @@ public class VTransistor extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,0), true, true, this, "Transistor");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                new Color(0,0,0), true, true, this, "Tranzisztor");
 
         panel.add(itemPanel);
     }

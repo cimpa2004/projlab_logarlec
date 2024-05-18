@@ -43,6 +43,7 @@ public class InventoryItemPanel extends JPanel {
         useButton.setMargin(new Insets(0,67,0,67));
         connectButton.setMargin(new Insets(0,54,0,54));
 
+        add(Box.createVerticalStrut(2));
         add(nameLabel);
         add(circlePanel);
         throwButton.addActionListener(new ThrowButtonListener());
@@ -55,6 +56,7 @@ public class InventoryItemPanel extends JPanel {
             connectButton.addActionListener(new ConnectButtonListener());
             add(connectButton);
         }
+        add(Box.createVerticalStrut(7));
 
     }
 
@@ -63,6 +65,7 @@ public class InventoryItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e){
             Logger.startedView(this, "ThrowButtonListener.actionPerformed", e);
             item.Thrown();
+            item.owner.GetControlPanel().Update();
             Logger.finishedView(this, "ThrowButtonListener.actionPerformed", e);
         }
     }

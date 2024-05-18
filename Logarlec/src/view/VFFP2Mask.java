@@ -43,7 +43,7 @@ public class VFFP2Mask extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this, "FFP2 Mask");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this, "FFP2 maszk");
 
         panel.add(itemPanel);
     }

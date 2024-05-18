@@ -45,7 +45,7 @@ public class VCamembert extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,0), true, false, this, "Camembert");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,0), true, false, this, "Dobozolt Camembert");
 
         panel.add(itemPanel);
     }

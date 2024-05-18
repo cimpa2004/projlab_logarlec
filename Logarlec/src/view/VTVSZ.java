@@ -35,7 +35,8 @@ public class VTVSZ extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,0,0), false, false, this, "TVSZ");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                new Color(255,0,0), false, false, this, "TVSZ");
 
         panel.add(itemPanel);
     }

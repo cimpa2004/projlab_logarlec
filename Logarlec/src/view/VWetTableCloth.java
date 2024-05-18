@@ -44,7 +44,8 @@ public class VWetTableCloth extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(153,0,153), true, false, this, "Wet Table Cloth");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                new Color(153,0,153), true, false, this, "Nedves táblatörlő rongy");
 
         panel.add(itemPanel);
     }

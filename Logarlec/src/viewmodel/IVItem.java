@@ -1,6 +1,8 @@
 package viewmodel;
 
 
+import view.VItem;
+
 import java.awt.*;
 
 public interface IVItem {
@@ -8,4 +10,6 @@ public interface IVItem {
     public IVRoom GetIVRoom();
     public void SetIVItemUpdate(IVItemUpdate ivItemUpdate);
     public Color GetColor();
+
+    VItem GetIVItemUpdate();
 }
