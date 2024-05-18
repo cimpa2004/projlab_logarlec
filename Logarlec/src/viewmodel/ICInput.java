@@ -39,4 +39,6 @@ public interface ICInput {
     public void Connect(String personID, IVTransistor t1, IVTransistor t2);
 
     List<IVItem> GetInventory(String personId);
+
+    int GetGameTimer();
 }

@@ -27,6 +27,7 @@ public class ControlPanel extends JPanel implements IControl {
     private JPanel itemsPanel = new JPanel();
     private GamePanel gamePanel;
     private JPanel namepanel = new JPanel();
+    private JLabel remainingTurnsLabel = new JLabel();
 
     private String text = "";
 
@@ -84,6 +85,8 @@ public class ControlPanel extends JPanel implements IControl {
         namepanel.setLayout(new BoxLayout(namepanel, BoxLayout.Y_AXIS));
         namepanel.add(nameLabel);
         namepanel.add(roomLabel);
+        namepanel.add(remainingTurnsLabel);
+
 
 
         // Add panels to the main panel
@@ -136,6 +139,8 @@ public class ControlPanel extends JPanel implements IControl {
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
             roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID());
             roomLabel.setBorder(new EmptyBorder(10,10,10,10));
+            remainingTurnsLabel.setText("A hátralévő körök száma: " + currentStudent.input.GetGameTimer());
+            remainingTurnsLabel.setBorder(new EmptyBorder(10,10,10,10));
             infoPane.setText(text);
             gamePanel.ClearAll();
             gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
@@ -159,6 +164,7 @@ public class ControlPanel extends JPanel implements IControl {
     public void InstructorWin() {
         Logger.startedView(this, "InstructorWin");
         infoLabel.setText("A játék véget ért, az oktatók nyertek!");
+        remainingTurnsLabel.setText("A hátralévő körök száma: 0");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
         Logger.finishedView(this, "InstructorWin");
@@ -168,6 +174,7 @@ public class ControlPanel extends JPanel implements IControl {
     public void StudentWin() {
         Logger.startedView(this, "StudentWin");
         infoLabel.setText("A játék véget ért, a hallgatók nyertek!");
+        remainingTurnsLabel.setText("A hátralévő körök száma: 0");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
         Logger.finishedView(this, "StudentWin");
@@ -182,6 +189,7 @@ public class ControlPanel extends JPanel implements IControl {
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "EndTurnButtonListener.actionPerformed", e);
             if (currentStudent != null){
+                LogEvent(currentStudent.GetID() + " köre véget ért!\n");
                 currentStudent.EndTurn();
                 gamePanel.Redraw();
                 UpdateCurrentStudent();

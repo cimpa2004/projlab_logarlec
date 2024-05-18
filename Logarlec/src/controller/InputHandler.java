@@ -1255,5 +1255,13 @@ public class InputHandler implements ICInput {
 
         return paramPerson.GetIVItems();
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public int GetGameTimer() {
+        return game.GetGameTimer();
+    }
 }
 
