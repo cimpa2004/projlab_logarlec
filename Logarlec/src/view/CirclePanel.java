@@ -13,9 +13,9 @@ public class CirclePanel extends JPanel {
 
     public void paintComponent(Graphics g){
         Logger.startedView(this, "paintComponent", g);
-        g.drawOval(0, 0, 25,25);
+        g.drawOval(35, 10, 130,130);
         g.setColor(color);
-        g.fillOval(0, 0, 25,25);
+        g.fillOval(35, 10, 130,130);
         Logger.finishedView(this, "paintComponent", g);
     }
 }

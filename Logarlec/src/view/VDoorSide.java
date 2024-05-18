@@ -7,7 +7,7 @@ import javax.swing.*;
 public class VDoorSide extends JButton {
     IVDoorSide ivDoorSide;
 
-    public VDoorSide(IVDoorSide ivDoorSide){
-        this.ivDoorSide = ivDoorSide;
+    public VDoorSide(IVDoorSide ivDS){
+        ivDoorSide = ivDS;
     }
 }

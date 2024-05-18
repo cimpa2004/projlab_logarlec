@@ -11,9 +11,9 @@ public class VSlideRule extends VItem {
     VStudent owner;
 
     //ezt a konstruktort használd Roomban megírtam onnan lehet példát venni
-    public VSlideRule(IVSlideRule ivSlideRule){
-        this.ivSlideRule = ivSlideRule;
-        this.ivSlideRule.SetIVItemUpdate(this);
+    public VSlideRule(IVSlideRule ivSR){
+        ivSlideRule = ivSR;
+        ivSlideRule.SetIVItemUpdate(this);
     }
 
     /**
@@ -45,7 +45,7 @@ public class VSlideRule extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,255,0), false, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,255,0), false, false, this, "Slide Rule");
 
         panel.add(itemPanel);
     }

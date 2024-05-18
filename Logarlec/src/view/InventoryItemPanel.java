@@ -9,22 +9,41 @@ import java.awt.event.ActionListener;
 
 public class InventoryItemPanel extends JPanel {
     VItem item;
-
+    JLabel nameLabel;
+    JButton throwButton;
+    JButton useButton;
     JButton connectButton;
-    public InventoryItemPanel(Color circleColor, boolean use, boolean connect, VItem i){
+    CirclePanel circlePanel;
+    public InventoryItemPanel(Color circleColor, boolean use, boolean connect, VItem i, String name){
         item = i;
-        setPreferredSize(new Dimension(100, 50)); // Set preferred size
+        setPreferredSize(new Dimension(200, 250)); // Set preferred size
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
 
         BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(boxlayout);
 
-        CirclePanel circlePanel = new CirclePanel(circleColor);
+        nameLabel = new JLabel(name);
+        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton throwButton = new JButton();
-        JButton useButton = new JButton();
-        connectButton = new JButton();
+        circlePanel = new CirclePanel(circleColor);
 
+        throwButton = new JButton("Throw");
+        useButton = new JButton("Use");
+        connectButton = new JButton("Connect");
+
+        throwButton.setPreferredSize(new Dimension(200, 25));
+        useButton.setPreferredSize(new Dimension(200, 25));
+        connectButton.setPreferredSize(new Dimension(200, 25));
+
+        throwButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        useButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        connectButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        throwButton.setMargin(new Insets(0,60,0,60));
+        useButton.setMargin(new Insets(0,67,0,67));
+        connectButton.setMargin(new Insets(0,54,0,54));
+
+        add(nameLabel);
         add(circlePanel);
         throwButton.addActionListener(new ThrowButtonListener());
         add(throwButton);

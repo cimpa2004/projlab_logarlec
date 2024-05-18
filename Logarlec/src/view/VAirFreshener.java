@@ -11,9 +11,9 @@ public class VAirFreshener extends VItem {
 
     VStudent owner;
 
-    public VAirFreshener(IVAirFreshener ivAirFreshener) {
-        this.ivAirFreshener = ivAirFreshener;
-        this.ivAirFreshener.SetIVItemUpdate(this);
+    public VAirFreshener(IVAirFreshener ivAF) {
+        ivAirFreshener = ivAF;
+        ivAirFreshener.SetIVItemUpdate(this);
     }
 
     /**
@@ -45,7 +45,7 @@ public class VAirFreshener extends VItem {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,255), true, false, this);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(0,0,255), true, false, this, "Air Freshener");
 
         panel.add(itemPanel);
     }

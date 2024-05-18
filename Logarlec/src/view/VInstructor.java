@@ -7,8 +7,9 @@ import viewmodel.IVInstructorUpdate;
 public class VInstructor extends VPerson implements IVInstructorUpdate {
     IVInstructor ivInstructor;
 
-    public VInstructor(IVInstructor ivInstructor){
-        this.ivInstructor = ivInstructor;
+    public VInstructor(IVInstructor ivI){
+        ivInstructor = ivI;
+        ivInstructor.SetIVInstructorUpdate(this);
     }
 
     @Override

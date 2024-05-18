@@ -7,8 +7,9 @@ import viewmodel.IVJanitorUpdate;
 public class VJanitor extends VPerson implements IVJanitorUpdate {
     IVJanitor ivJanitor;
 
-    public VJanitor(IVJanitor ivJanitor){
-        this.ivJanitor = ivJanitor;
+    public VJanitor(IVJanitor ivJ){
+        ivJanitor = ivJ;
+        ivJanitor.SetIVJanitorUpdate(this);
     }
 
     @Override
