@@ -112,6 +112,7 @@ public class ControlPanel extends JPanel implements IControl {
             }
             nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
+            gamePanel.ClearAll();
             gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
         else nameLabel.setText("Senki köre");

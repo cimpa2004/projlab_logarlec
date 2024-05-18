@@ -80,7 +80,8 @@ public class Janitor extends Person implements IVJanitor {
                                 }
                         }
                     }
-                    for(Instructor ins : this.GetRoom().GetInstructors()){
+                    ArrayList<Instructor> instructorCopy = new ArrayList<>(this.GetRoom().GetInstructors());
+                    for(Instructor ins : instructorCopy){
                         for (DoorSide dr : doorsCopy){
                                 if (dr.IsDoorUseable()){
                                     ins.Move(dr);//a keresett ajtón átmegy
@@ -98,7 +99,8 @@ public class Janitor extends Person implements IVJanitor {
                         }
                     }
                 }
-                for(Instructor ins : this.GetRoom().GetInstructors()){
+                ArrayList<Instructor> instructorCopy = new ArrayList<>(this.GetRoom().GetInstructors());
+                for(Instructor ins : instructorCopy){
                     for (DoorSide dr : this.GetRoom().GetDoors()){
                         if (dr.IsDoorUseable()){
                             ins.Move(dr);//a keresett ajtón átmegy
