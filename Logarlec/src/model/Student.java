@@ -90,8 +90,10 @@ public class Student extends Person implements IVStudent {
 				}else{
 					SetIsFainted(true);
 				}
-			}// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
-		}else{
+			}else{
+				SetIsFainted(true);
+			}
+		}else{ // ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
 			SetIsFainted(false);
 		}
 		// ha el van kabulva akkor egybol veget er a kore, semmit nem tud csinalni
@@ -133,6 +135,23 @@ public class Student extends Person implements IVStudent {
 			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
 			if(!h.CanDefend()) this.wetTableClothes.remove(h);
 		}
+
+		// Ha gázos szobában marad a kör végére és nincs nála FFP2Mask akkor elájul
+		if(room.GetPoisonDuration() > 0){
+			if(!ffp2Masks.isEmpty()){
+				Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+				if(ffp2Mask != null){
+					ffp2Mask.Decrement();
+					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+					if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+				}else{
+					SetIsFainted(true);
+				}
+			}else{
+				SetIsFainted(true);
+			}
+			// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
+		} // TODO TEST
 
 		activeTurn = false;
 		game.NextTurn();
