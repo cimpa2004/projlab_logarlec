@@ -168,6 +168,9 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     public void Thrown(Person p) {
         Logger.startedModel(this, "Thrown", p);
         p.RemoveFromInventory(this);
+        if(ivItemUpdate != null){
+            ivItemUpdate.ThrownUpdate(this);
+        }
         Logger.finishedModel(this, "Thrown", p);
     }
 

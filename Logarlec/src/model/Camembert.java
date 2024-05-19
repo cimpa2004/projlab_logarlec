@@ -173,6 +173,9 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public void Thrown(Person p) {
 		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFromInventory(this);
+		if(ivItemUpdate != null){
+			ivItemUpdate.ThrownUpdate(this);
+		}
 		Logger.finishedModel(this, "Thrown", p);
 	}
 
