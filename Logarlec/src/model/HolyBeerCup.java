@@ -244,8 +244,16 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 * */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		Activate();
-		if(isActivated)	s.AddHolyBeerCup(this);
+		if(Activate()){
+			s.AddHolyBeerCup(this);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else{
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
+			}
+		}
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
@@ -259,6 +267,9 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 * */
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate(this, false);
+		}
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

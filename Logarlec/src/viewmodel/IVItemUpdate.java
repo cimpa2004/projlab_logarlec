@@ -14,5 +14,5 @@ public interface IVItemUpdate {
     /**
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt hasznaltak
      */
-    public void UsedUpdate(IVItem item);
+    public void UsedUpdate(IVItem item, boolean success);
 }

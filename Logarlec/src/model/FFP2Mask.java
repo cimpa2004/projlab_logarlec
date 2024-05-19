@@ -3,6 +3,7 @@ package model;
 import util.Logger;
 import viewmodel.IVFFP2Mask;
 import viewmodel.IVRoom;
+import viewmodel.IVStudentUpdate;
 
 import java.awt.*;
 import java.util.UUID;
@@ -266,8 +267,16 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		Activate();
-		if (isActivated) s.AddFFP2Mask(this);
+		if (Activate()) {
+			s.AddFFP2Mask(this);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else{
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
+			}
+		}
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
@@ -282,8 +291,16 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
-		Activate();
-		if (isActivated) i.AddFFP2Mask(this);
+		if (Activate()) {
+			i.AddFFP2Mask(this);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else{
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
+			}
+		}
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

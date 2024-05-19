@@ -75,6 +75,7 @@ public class InventoryItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e){
             Logger.startedView(this, "UseButtonListener.actionPerformed", e);
             item.Used();
+            item.owner.GetControlPanel().Update();
             Logger.finishedView(this, "UseButtonListener.actionPerformed", e);
         }
     }
@@ -85,9 +86,11 @@ public class InventoryItemPanel extends JPanel {
             Logger.startedView(this, "ConnectButtonListener.actionPerformed", e);
             if(item.GetClickedT() == null){
                 item.SetClickedT((VTransistor)item);
+                item.owner.GetControlPanel().Update();
                 connectButton.setEnabled(false);
             }else{
                 item.Connected();
+                item.owner.GetControlPanel().Update();
             }
             Logger.finishedView(this, "ConnectButtonListener.actionPerformed", e);
         }

@@ -191,7 +191,11 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		if(Activate()) {
 			s.GetRoom().SetPoisonDuration(5);
 			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this);
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else{
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
 			}
 		}
 		Logger.finishedModel(this, "UsedByStudent", s);
@@ -209,10 +213,17 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
-		if(Activate()) i.GetRoom().SetPoisonDuration(5);
-		if(ivItemUpdate != null){
-			ivItemUpdate.UsedUpdate(this);
+		if(Activate()) {
+			i.GetRoom().SetPoisonDuration(5);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else {
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
+			}
 		}
+
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

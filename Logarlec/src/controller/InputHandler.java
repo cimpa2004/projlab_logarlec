@@ -1061,8 +1061,10 @@ public class InputHandler implements ICInput {
         if (!paramPerson.GetInventory().contains(paramItem)){
             return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy nincs benne az inventoryjában.";
         }
-        if (paramItem.GetIsActive()){
-            return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.";
+        if(game.GetIsDeterministic()){
+            if (paramItem.GetIsActive()){
+                return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.";
+            }
         }
         paramPerson.UseItem(paramItem);
 
