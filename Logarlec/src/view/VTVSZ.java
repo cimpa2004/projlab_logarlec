@@ -31,12 +31,12 @@ public class VTVSZ extends VItem {
     }
 
     @Override
-    public void DrawInInventory(JPanel panel, VStudent student) {
+    public void DrawInInventory(JPanel panel, VStudent student, boolean buttons) {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(255,0,0), false, false, this, "TVSZ");
+                new Color(255,0,0), false, false, this, "TVSZ", buttons);
 
         panel.add(itemPanel);
     }

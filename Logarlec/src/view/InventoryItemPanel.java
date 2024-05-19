@@ -14,7 +14,7 @@ public class InventoryItemPanel extends JPanel {
     JButton useButton;
     JButton connectButton;
     CirclePanel circlePanel;
-    public InventoryItemPanel(Color circleColor, boolean use, boolean connect, VItem i, String name){
+    public InventoryItemPanel(Color circleColor, boolean use, boolean connect, VItem i, String name, boolean buttons){
         item = i;
         setPreferredSize(new Dimension(200, 250)); // Set preferred size
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for visualization
@@ -58,6 +58,15 @@ public class InventoryItemPanel extends JPanel {
         }
         add(Box.createVerticalStrut(7));
 
+        if(buttons){
+            DisableButtons();
+        }
+    }
+
+    public void DisableButtons(){
+        throwButton.setEnabled(false);
+        useButton.setEnabled(false);
+        connectButton.setEnabled(false);
     }
 
     private class ThrowButtonListener implements ActionListener{
