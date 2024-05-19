@@ -31,7 +31,7 @@
         "holyBeerCups": [
 {
             "durability": 0,
-"isActivated": true,
+            "isActivated": true,
             "id" : "HolyBeerCup1"
           }
         ],

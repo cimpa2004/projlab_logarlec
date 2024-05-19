@@ -244,7 +244,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 * */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		if(Activate())	{
+		if(Activate()){
 			s.AddHolyBeerCup(this);
 			if(ivItemUpdate != null){
 				ivItemUpdate.UsedUpdate(this, true);
