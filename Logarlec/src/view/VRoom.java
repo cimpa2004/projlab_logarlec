@@ -51,7 +51,7 @@ public class VRoom extends JPanel implements IVRoomUpdate {
             Dimension drawPos = GetRandomRoomPos(panelToDrawOn,50);
             Color color = item.GetColor();
             panelToDrawOn.AddCircle(new MapCirclePanel(color,
-                    drawPos, 50, panelToDrawOn));
+                    drawPos, 50, panelToDrawOn, item));
         }
 
         for(IVStudent student : ivRoom.GetIVStudents()) {
