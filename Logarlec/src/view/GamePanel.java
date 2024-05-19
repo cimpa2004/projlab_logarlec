@@ -1,7 +1,6 @@
 package view;
 
 
-import org.w3c.dom.css.Rect;
 import util.Logger;
 import viewmodel.ICRoom;
 import viewmodel.IVDoorSide;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 /**
  * A pálya részét jelenítetti meg a játéknak
  */
-public class GamePanel extends JPanel implements ICRoom, ActionListener {
+public class GamePanel extends JPanel implements ICRoom {
     private ArrayList<VRoom> rooms = new ArrayList<>();
     private ArrayList<VPerson> people = new ArrayList<>();
     private VRoom currentRoom;
@@ -27,6 +26,7 @@ public class GamePanel extends JPanel implements ICRoom, ActionListener {
     private ArrayList<JButton> doorButtons = new ArrayList<>();
     //private JPanel buttonsPanel;
     private ControlPanel controlPanel;
+    private VItem selectedItem;
 
     public GamePanel(){
         setLayout(null);
@@ -131,13 +131,18 @@ public class GamePanel extends JPanel implements ICRoom, ActionListener {
         circles.clear();
     }
 
-    public void AddDoorButton(JButton button) { doorButtons.add(button); }
+    public void AddDoorButton(JButton button) {
+        button.addActionListener(new DoorButtonListener());
+        doorButtons.add(button);
+    }
 
     public void ClearDoorButton() {
         doorButtons.clear();
     }
 
-    public void AddItemButton(JButton button) { itemButtons.add(button); }
+    public void AddItemButton(JButton button) {
+        itemButtons.add(button);
+    }
 
     public void ClearItemButton() {
         itemButtons.clear();
@@ -166,9 +171,41 @@ public class GamePanel extends JPanel implements ICRoom, ActionListener {
         Logger.finishedView(this, "Merge", ivRoom1, ivRoom2);
     }
 
-    @Override
+    public VItem GetSelectedItem() {
+        return selectedItem;
+    }
+
+    public void SetSelectedItem(VItem item) {
+        selectedItem = item;
+    }
+
+    public ControlPanel GetControlPanel() {
+        return controlPanel;
+    }
+
+    private class DoorButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(doorButtons.contains((JButton)e.getSource())) { // TODO ebbe tuti van bug szerintem -- Bug #4
+                JButton dButton = (JButton)e.getSource();
+                int doorIndex = doorButtons.indexOf(dButton);
+                IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
+                if(controlPanel.GetCurrentStudent().Move(doorRef)) {
+                    currentRoom = doorRef.GetIVPair().GetIVRoom().GetVRoom();
+                    controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
+                            " átlépett a " + currentRoom.GetIVRoom().GetID() + " szobába.\n");
+                    controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
+                            " köre véget ért!\n");
+                    controlPanel.GetCurrentStudent().EndTurn();
+                }
+            }
+        }
+    }
+
+    /*@Override
     public void actionPerformed(ActionEvent e) {
-        if(doorButtons.contains((JButton)e.getSource())) {
+        if(doorButtons.contains((JButton)e.getSource())) { // TODO már felesleges, remove a végén
             JButton dButton = (JButton)e.getSource();
             int doorIndex = doorButtons.indexOf(dButton);
             IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
@@ -181,5 +218,5 @@ public class GamePanel extends JPanel implements ICRoom, ActionListener {
                 controlPanel.GetCurrentStudent().EndTurn();
             }
         }
-    }
+    }*/
 }

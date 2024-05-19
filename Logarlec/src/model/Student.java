@@ -136,22 +136,25 @@ public class Student extends Person implements IVStudent {
 			if(!h.CanDefend()) this.wetTableClothes.remove(h);
 		}
 
+		// Ha még életben van
 		// Ha gázos szobában marad a kör végére és nincs nála FFP2Mask akkor elájul
-		if(room.GetPoisonDuration() > 0){
-			if(!ffp2Masks.isEmpty()){
-				Defendable ffp2Mask = GetRandomActive(ffp2Masks);
-				if(ffp2Mask != null){
-					ffp2Mask.Decrement();
-					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
-					if(!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
-				}else{
+		if(room != null){
+			if (room.GetPoisonDuration() > 0) {
+				if (!ffp2Masks.isEmpty()) {
+					Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+					if (ffp2Mask != null) {
+						ffp2Mask.Decrement();
+						// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+						if (!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+					} else {
+						SetIsFainted(true);
+					}
+				} else {
 					SetIsFainted(true);
 				}
-			}else{
-				SetIsFainted(true);
+				// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
 			}
-			// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
-		} // TODO TEST
+		}
 
 		activeTurn = false;
 		game.NextTurn();

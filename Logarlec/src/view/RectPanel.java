@@ -29,7 +29,6 @@ public class RectPanel extends JPanel {
         JButton addBtn = new JButton();
         addBtn.setBackground(color);
         addBtn.setBounds(coords.width - size.width / 2,coords.height - size.height / 2,size.width,size.height);
-        addBtn.addActionListener(p);
         p.add(addBtn);
         p.AddDoorButton(addBtn);
     }
