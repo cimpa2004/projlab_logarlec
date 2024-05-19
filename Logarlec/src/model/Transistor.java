@@ -226,7 +226,15 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		this.Activate();
+		if(Activate()){
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else{
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
+			}
+		}
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
@@ -240,6 +248,9 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate(this, false);
+		}
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

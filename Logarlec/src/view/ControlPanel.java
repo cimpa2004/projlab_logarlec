@@ -72,6 +72,7 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.add(Box.createVerticalStrut(10));
 
         // Create info pane
+        infoPane.setPreferredSize(new Dimension(425,150));
         infoPane.setContentType("text/plain");
         infoPane.setText(text);
         infoPane.setEditable(false);
@@ -125,9 +126,9 @@ public class ControlPanel extends JPanel implements IControl {
      */
     public void Update() {
         Logger.startedView(this, "Update");
-        //TODO: maybe it will work
+
         itemsPanel.removeAll();
-        itemsPanel.revalidate(); // nehogy kiszedd!! ez megoldotta a throw anomáliát
+        itemsPanel.revalidate();
 
         if (currentStudent != null){
             if(currentStudent.GetItems() != null){

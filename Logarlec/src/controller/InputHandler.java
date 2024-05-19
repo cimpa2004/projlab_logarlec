@@ -1062,7 +1062,7 @@ public class InputHandler implements ICInput {
             return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy nincs benne az inventoryjában.";
         }
         if (paramItem.GetIsActive()){
-            return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.";
+            //TODO return  "message: A személynek nem sikerült használnia a tárgyat, mert a tárgy már el van használva.";
         }
         paramPerson.UseItem(paramItem);
 

@@ -244,9 +244,15 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		Activate();
-		if (isActivated) {
+		if (Activate()) {
 			s.AddWetTableCloth(this);
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, true);
+			}
+		}else{
+			if(ivItemUpdate != null){
+				ivItemUpdate.UsedUpdate(this, false);
+			}
 		}
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
@@ -261,6 +267,9 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate(this, false);
+		}
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

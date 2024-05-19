@@ -165,6 +165,9 @@ public class SlideRule extends Item implements IVSlideRule {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent");
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate(this, false);
+		}
 		Logger.finishedModel(this, "UsedByStudent");
 	}
 
@@ -176,6 +179,9 @@ public class SlideRule extends Item implements IVSlideRule {
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor");
+		if(ivItemUpdate != null){
+			ivItemUpdate.UsedUpdate(this, false);
+		}
 		Logger.finishedModel(this, "UsedByInstructor");
 	}
 

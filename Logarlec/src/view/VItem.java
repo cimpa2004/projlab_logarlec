@@ -46,10 +46,14 @@ public abstract class VItem implements IVItemUpdate {
     }
 
     @Override
-    public void UsedUpdate(IVItem item) {
+    public void UsedUpdate(IVItem item, boolean success) {
         Logger.startedView(this, "UsedUpdated");
-        owner.GetControlPanel().LogEvent(owner.GetID() + " használta a " + item.GetID() + " tárgyat.\n");
-        owner.GetControlPanel().Update();
+        if(success){
+            owner.GetControlPanel().LogEvent(owner.GetID() + " használta a " + item.GetID() + " tárgyat.\n");
+            owner.GetControlPanel().Update();
+        }else{
+            owner.GetControlPanel().LogEvent(owner.GetID() + " megpróbálta használni a " + item.GetID() + " tárgyat, de nem sikerült.\n");
+        }
         Logger.finishedView(this, "UsedUpdated");
     }
 

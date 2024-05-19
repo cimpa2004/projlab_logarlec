@@ -609,25 +609,39 @@ public class Game implements IVInit {
 		t.SetIVItemUpdate(vt);
 		student.AddToInventory(t);
 
-		WetTableCloth wtc = new WetTableCloth("TestWTC");
-		wtc.SetRoom(defaultRoom);
-		VWetTableCloth vwtc = new VWetTableCloth(wtc);
-		vwtc.SetOwner(student.GetIVStudentUpdate());
-		wtc.SetIVItemUpdate(vwtc);
-		student.AddToInventory(wtc);
+		Transistor t2 = new Transistor("TestTransistor2");
+		t2.SetRoom(defaultRoom);
+		VTransistor vt2 = new VTransistor(t2);
+		vt2.SetOwner(student.GetIVStudentUpdate());
+		t2.SetIVItemUpdate(vt2);
+		student.AddToInventory(t2);
 
-		HolyBeerCup hbc = new HolyBeerCup("TestHBC");
+		FFP2Mask mask = new FFP2Mask("TestMask");
+		mask.SetRoom(defaultRoom);
+		VFFP2Mask vmask = new VFFP2Mask(mask);
+		vmask.SetOwner(student.GetIVStudentUpdate());
+		mask.SetIVItemUpdate(vmask);
+		student.AddToInventory(mask);
+
+		/*HolyBeerCup hbc = new HolyBeerCup("TestHBC");
 		hbc.SetRoom(defaultRoom);
 		VHolyBeerCup vhbc = new VHolyBeerCup(hbc);
 		vhbc.SetOwner(student.GetIVStudentUpdate());
 		hbc.SetIVItemUpdate(vhbc);
-		student.AddToInventory(hbc);
+		student.AddToInventory(hbc);*/
 
-		TVSZ tvsz = new TVSZ("TestTVSZ");
+		Camembert cam = new Camembert(("TestCamembert"));
+		cam.SetRoom(defaultRoom);
+		VCamembert vcam = new VCamembert(cam);
+		vcam.SetOwner(student.GetIVStudentUpdate());
+		cam.SetIVItemUpdate(vcam);
+		student.AddToInventory(cam);
+
+		/*TVSZ tvsz = new TVSZ("TestTVSZ");
 		tvsz.SetRoom(defaultRoom);
 		VTVSZ vtvsz = new VTVSZ(tvsz);
 		vtvsz.SetOwner(student.GetIVStudentUpdate());
 		tvsz.SetIVItemUpdate(vtvsz);
-		student.AddToInventory(tvsz);
+		student.AddToInventory(tvsz);*/
 	}
 }
