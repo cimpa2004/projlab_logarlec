@@ -41,12 +41,12 @@ public class VAirFreshener extends VItem {
      * @param panel
      */
     @Override
-    public void DrawInInventory(JPanel panel, VStudent student) {
+    public void DrawInInventory(JPanel panel, VStudent student, boolean buttons) {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(0,0,255), true, false, this, "Légfrissítő");
+                new Color(0,0,255), true, false, this, "Légfrissítő", buttons);
 
         panel.add(itemPanel);
     }

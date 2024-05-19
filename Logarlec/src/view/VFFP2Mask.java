@@ -39,11 +39,11 @@ public class VFFP2Mask extends VItem{
      * @param panel
      */
     @Override
-    public void DrawInInventory(JPanel panel, VStudent student) {
+    public void DrawInInventory(JPanel panel, VStudent student, boolean buttons) {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this, "FFP2 maszk");
+        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this, "FFP2 maszk", buttons);
 
         panel.add(itemPanel);
     }

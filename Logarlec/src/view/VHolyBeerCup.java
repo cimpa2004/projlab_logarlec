@@ -40,12 +40,12 @@ public class VHolyBeerCup extends VItem {
      * @param panel
      */
     @Override
-    public void DrawInInventory(JPanel panel, VStudent student) {
+    public void DrawInInventory(JPanel panel, VStudent student, boolean buttons) {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(153,0,76), true, false, this, "Szent Söröspohár");
+                new Color(153,0,76), true, false, this, "Szent Söröspohár", buttons);
 
         panel.add(itemPanel);
     }

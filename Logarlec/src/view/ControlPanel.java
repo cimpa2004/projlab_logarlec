@@ -45,11 +45,9 @@ public class ControlPanel extends JPanel implements IControl {
 
         UpdateCurrentStudent();
 
-        //Rendes függvény
-        //TODO: maybe it will work
         if(currentStudent != null && currentStudent.GetItems() != null){
             for (VItem item: currentStudent.GetItems()){
-                item.DrawInInventory(itemsPanel, currentStudent);
+                item.DrawInInventory(itemsPanel, currentStudent, false);
             }
         }
 
@@ -133,7 +131,7 @@ public class ControlPanel extends JPanel implements IControl {
         if (currentStudent != null){
             if(currentStudent.GetItems() != null){
                 for(VItem item: currentStudent.GetItems()){
-                    item.DrawInInventory(itemsPanel, currentStudent);
+                    item.DrawInInventory(itemsPanel, currentStudent, false);
                 }
             }
 
@@ -169,6 +167,14 @@ public class ControlPanel extends JPanel implements IControl {
         remainingTurnsLabel.setText("A hátralévő körök száma: 0");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
+
+        itemsPanel.removeAll();
+        itemsPanel.revalidate();
+        if(currentStudent != null && currentStudent.GetItems() != null){
+            for (VItem item: currentStudent.GetItems()){
+                item.DrawInInventory(itemsPanel, currentStudent, true);
+            }
+        }
         Logger.finishedView(this, "InstructorWin");
     }
 
@@ -179,6 +185,14 @@ public class ControlPanel extends JPanel implements IControl {
         remainingTurnsLabel.setText("A hátralévő körök száma: 0");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
+
+        itemsPanel.removeAll();
+        itemsPanel.revalidate();
+        if(currentStudent != null && currentStudent.GetItems() != null){
+            for (VItem item: currentStudent.GetItems()){
+                item.DrawInInventory(itemsPanel, currentStudent, true);
+            }
+        }
         Logger.finishedView(this, "StudentWin");
     }
 
@@ -206,7 +220,7 @@ public class ControlPanel extends JPanel implements IControl {
             if(selectedItem != null){
                 currentStudent.Pickup(selectedItem);
                 selectedItem = null;
-                gamePanel.Redraw();//eltűnjön a felvett tárgy
+                gamePanel.Redraw();
             }
             Logger.finishedView(this, "PickupButtonListener.actionPerformed", e);
         }
