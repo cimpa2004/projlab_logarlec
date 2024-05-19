@@ -23,7 +23,6 @@ public class ControlPanel extends JPanel implements IControl {
     private JEditorPane infoPane = new JEditorPane();
     private JLabel nameLabel = new JLabel();
     private JLabel roomLabel = new JLabel();
-    private VItem selectedItem;
     private VStudent currentStudent;
     private JPanel itemsPanel = new JPanel();
     private GamePanel gamePanel;
@@ -107,16 +106,6 @@ public class ControlPanel extends JPanel implements IControl {
 
     public VStudent GetCurrentStudent() {
         return currentStudent;
-    }
-
-    /**
-     * beállítja a kiválasztott tárgyat
-     * @param item a kiválasztott tárgy
-     */
-    public void SetSelectedItem(VItem item){
-        Logger.startedView(this, "SetSelectedItem", item);
-        this.selectedItem = item;
-        Logger.finishedView(this, "SetSelectedItem", item);
     }
 
     /**
@@ -213,13 +202,13 @@ public class ControlPanel extends JPanel implements IControl {
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }
     }
-    private class PickupButtonListener implements ActionListener {
+    private class PickupButtonListener implements ActionListener { // TODO implement and test item pickup here !
         @Override
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "PickupButtonListener.actionPerformed", e);
-            if(selectedItem != null){
-                currentStudent.Pickup(selectedItem);
-                selectedItem = null;
+            if(gamePanel.GetSelectedItem() != null){
+                currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem());
+                gamePanel.SetSelectedItem(null);
                 gamePanel.Redraw();
             }
             Logger.finishedView(this, "PickupButtonListener.actionPerformed", e);

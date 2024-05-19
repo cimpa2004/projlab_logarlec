@@ -4,6 +4,7 @@ package view;
 import util.Logger;
 import viewmodel.ICRoom;
 import viewmodel.IVDoorSide;
+import viewmodel.IVItem;
 import viewmodel.IVRoom;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel implements ICRoom {
     private ArrayList<JButton> doorButtons = new ArrayList<>();
     //private JPanel buttonsPanel;
     private ControlPanel controlPanel;
-    private VItem selectedItem;
+    private IVItem selectedItem;
 
     public GamePanel(){
         setLayout(null);
@@ -171,11 +172,15 @@ public class GamePanel extends JPanel implements ICRoom {
         Logger.finishedView(this, "Merge", ivRoom1, ivRoom2);
     }
 
-    public VItem GetSelectedItem() {
+    public IVItem GetSelectedItem() {
         return selectedItem;
     }
 
-    public void SetSelectedItem(VItem item) {
+    /**
+     * beállítja a kiválasztott tárgyat
+     * @param item a kiválasztott tárgy
+     */
+    public void SetSelectedItem(IVItem item) {
         selectedItem = item;
     }
 

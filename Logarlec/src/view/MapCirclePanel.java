@@ -13,8 +13,7 @@ public class MapCirclePanel extends JPanel {
     private Dimension coords;
     private Color color;
     private int rad;
-    private VItem item;
-
+    private IVItem item;
     private GamePanel gamePanel;
     protected void draw(Graphics g) {
         g.setColor(color);
@@ -25,7 +24,7 @@ public class MapCirclePanel extends JPanel {
         this.coords = coords;
         this.color = color;
         this.rad = rad;
-        this.item = item.GetIVItemUpdate();
+        this.item = item;
         this.gamePanel = p;
         JButton addBtn = new JButton();
         addBtn.setBorder(new RoundedBorder(rad));
@@ -67,15 +66,13 @@ public class MapCirclePanel extends JPanel {
     private class ItemButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(gamePanel.GetSelectedItem() == null){
-                gamePanel.SetSelectedItem(item);
-                VStudent currentStudent = gamePanel.GetControlPanel().GetCurrentStudent();
-                gamePanel.GetControlPanel().LogEvent(
-                        currentStudent.GetID() + " kiválasztotta a " + item.GetID() + " tárgyat.\n");
-                gamePanel.GetControlPanel().Update();
-            }else{
-                // TODO implement item pickup here
-            }
+            // TODO ne lehessen ugyanazt az itemet újra kiválasztani
+            gamePanel.SetSelectedItem(item);
+            VStudent currentStudent = gamePanel.GetControlPanel().GetCurrentStudent();
+            gamePanel.GetControlPanel().LogEvent(
+                    currentStudent.GetID() + " kiválasztotta a " + item.GetID() + " tárgyat.\n");
+            gamePanel.GetControlPanel().Update();
+
         }
     }
 }
