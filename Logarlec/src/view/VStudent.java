@@ -14,23 +14,6 @@ public class VStudent extends VPerson implements IVStudentUpdate {
 
     public ICInput input;
 
-    private Dimension position;
-
-    /**
-     * Vissza adja a VStudent poziciojat a jelenlegi szobaban
-     * @return a pozicioja
-     */
-    public Dimension GetPosition(){
-        return this.position;
-    }
-
-    /**
-     * Beallithato a VStudent pozioja a szobaban
-     * @param position az uj pozicio
-     */
-    public void SetPosition(Dimension position){
-        this.position = position;
-    }
 
     public List<VItem> GetItems(){
         Logger.startedView(this, "GetItems");

@@ -26,4 +26,9 @@ public class VJanitor extends VPerson implements IVJanitorUpdate {
     public ControlPanel GetControlPanel() {
         return null;
     }
+
+    @Override
+    public void Moved() {
+        this.position = null;
+    }
 }

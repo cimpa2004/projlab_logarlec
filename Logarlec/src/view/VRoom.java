@@ -77,21 +77,29 @@ public class VRoom extends JPanel implements IVRoomUpdate {
         }
 
         for(IVInstructor instructor : ivRoom.GetIVInstructors()) {
-            Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
+            VInstructor vInstructor = instructor.GetIVInstructorUpdate();
+            if (vInstructor.GetPosition() == null){
+                Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
+                vInstructor.SetPosition(drawPos);
+            }
             panelToDrawOn.AddRect(new RectPanel(new Color(242, 70, 38),
-                    drawPos, new Dimension(50, 50)));
+                    vInstructor.GetPosition(), new Dimension(50, 50)));
             if(instructor.GetIsStunned())
                 panelToDrawOn.AddRect(new RectPanel(new Color(218, 0, 99),
-                        drawPos, new Dimension(20, 20)));
+                        vInstructor.GetPosition(), new Dimension(20, 20)));
             else if(instructor.GetIsFainted())
                 panelToDrawOn.AddRect(new RectPanel(new Color(16, 167, 137),
-                        drawPos, new Dimension(20, 20)));
+                        vInstructor.GetPosition(), new Dimension(20, 20)));
         }
 
         for(IVJanitor janitor : ivRoom.GetIVJanitors()) {
-            Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
+            VJanitor vJanitor = janitor.GetIVJanitorUpdate();
+            if (vJanitor.GetPosition() == null){
+                Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
+                vJanitor.SetPosition(drawPos);
+            }
             panelToDrawOn.AddRect(new RectPanel(new Color(45, 156, 240),
-                    drawPos, new Dimension(50, 50)));
+                    vJanitor.GetPosition(), new Dimension(50, 50)));
         }
 
         int doorsCount = ivRoom.GetIVDoors().size();

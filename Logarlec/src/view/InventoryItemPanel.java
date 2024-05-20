@@ -99,8 +99,9 @@ public class InventoryItemPanel extends JPanel {
                 item.owner.GetControlPanel().UpdateAll();
                 connectButton.setEnabled(false);
             }else{
+                String clickedID = item.GetClickedT().GetID();
                 item.Connected();
-                item.owner.GetControlPanel().LogEvent((item.GetClickedT().GetID() + " párosítva a " + item.GetID() + " tranzisztorral.\n"));
+                item.owner.GetControlPanel().LogEvent((clickedID + " párosítva a " + item.GetID() + " tranzisztorral.\n"));
                 item.owner.GetControlPanel().UpdateAll();
             }
             Logger.finishedView(this, "ConnectButtonListener.actionPerformed", e);

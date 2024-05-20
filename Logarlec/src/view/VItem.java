@@ -12,6 +12,7 @@ public abstract class VItem implements IVItemUpdate {
     private Dimension position;
     private VRoom room;
     VPerson owner;
+    private ControlPanel controlPanel;
     public abstract String GetID();
     public abstract void PickedUp(VStudent owner);
     public abstract void DrawInInventory(JPanel panel, VStudent student, boolean buttons);
