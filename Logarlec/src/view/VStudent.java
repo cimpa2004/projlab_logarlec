@@ -19,7 +19,6 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         Logger.startedView(this, "GetItems");
         Logger.finishedView(this, "GetItems");
 
-        // TODO ez jó?
         List<IVItem> ivItems = input.GetInventory(GetID());
         List<VItem> vItems = new ArrayList<>();
 
