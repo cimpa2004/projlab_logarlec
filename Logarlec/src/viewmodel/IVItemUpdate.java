@@ -1,5 +1,7 @@
 package viewmodel;
 
+import view.VStudent;
+
 public interface IVItemUpdate {
     /**
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt eldobtak
@@ -15,4 +17,6 @@ public interface IVItemUpdate {
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt hasznaltak
      */
     public void UsedUpdate(IVItem item, boolean success);
+
+    public void SetOwner(VStudent vst);
 }
