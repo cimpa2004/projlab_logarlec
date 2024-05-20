@@ -102,6 +102,15 @@ public class VRoom extends JPanel implements IVRoomUpdate {
                     vJanitor.GetPosition(), new Dimension(50, 50)));
         }
 
+        // find current active student
+        IVStudent currentStudent = null;
+        for(IVStudent student : ivRoom.GetIVStudents()) {
+            if (student.GetIsActiveTurn()){
+                currentStudent = student;
+                break;
+            }
+        }
+
         int doorsCount = ivRoom.GetIVDoors().size();
         System.out.println("DOORS COUNT: " + doorsCount + " -------------------------------------------------------------------------");
         ArrayList<Boolean> isHorizontalDoors = GetDoorPositions(panelToDrawOn, doorsCount);
@@ -125,8 +134,14 @@ public class VRoom extends JPanel implements IVRoomUpdate {
                     panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 255), drawPos, doorDim, panelToDrawOn, doorSide));
                 else
                     panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 0), drawPos, doorDim, panelToDrawOn, doorSide));
+
+            if(currentStudent != null && currentStudent.GetIVStudentUpdate().GetDoorFromInNewRoom() == doorSide){
+                Dimension doorMarkerDim = new Dimension(20, 20);
+                panelToDrawOn.AddDoorRect(new RectPanel(new Color(218, 0, 0), drawPos, doorMarkerDim, panelToDrawOn, doorSide));
+            }
             counter++;
         }
+
     }
 
     private Dimension GetRandomRoomPos(JPanel p, int border) {

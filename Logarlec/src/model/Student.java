@@ -273,6 +273,7 @@ public class Student extends Person implements IVStudent {
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		boolean isAppeared = AppearInRoom(r2);
+		if (isAppeared) ivStudentUpdate.Moved(d.GetPair());
 		Logger.finishedModel(this, "Move", d);
 		return isAppeared;
 	}

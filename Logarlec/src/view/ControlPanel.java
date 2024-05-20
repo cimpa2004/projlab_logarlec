@@ -242,7 +242,7 @@ public class ControlPanel extends JPanel implements IControl {
                 LogEvent(currentStudent.GetID() + " köre véget ért!\n");
                 currentStudent.EndTurn();
                 gamePanel.Redraw();
-                UpdateCurrentStudent();
+                //UpdateCurrentStudent();
             }
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }

@@ -2,13 +2,17 @@ package model;
 
 
 import util.Logger;
+import view.VDoorSide;
 import viewmodel.IVDoorSide;
+import viewmodel.IVDoorSideUpdate;
 import viewmodel.IVRoom;
 
 import java.util.UUID;
 
 /** */
 public class DoorSide implements IVDoorSide {
+	private IVDoorSideUpdate ivDoorSideUpdate;
+
 	/**
 	 * Az adott DoorSidet egyertelmuen azonositja
 	 */
@@ -83,6 +87,16 @@ public class DoorSide implements IVDoorSide {
 		Logger.startedModel(this, "GetIVPair");
 		Logger.finishedModel(this, "GetIVPair");
 		return (IVDoorSide)pair;
+	}
+
+	@Override
+	public void SetIVDoorSideUpdate(IVDoorSideUpdate ivDoorSide) {
+		this.ivDoorSideUpdate = ivDoorSide;
+	}
+
+	@Override
+	public IVDoorSideUpdate GetIVDoorSideUpdate() {
+		return this.ivDoorSideUpdate;
 	}
 
 	/**
