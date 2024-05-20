@@ -1,5 +1,6 @@
 package view;
 
+import model.DoorSide;
 import model.Room;
 import util.Logger;
 import viewmodel.*;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public class VStudent extends VPerson implements IVStudentUpdate {
     private IVStudent ivStudent;
-    private ControlPanel controlPanel;
 
     public ICInput input;
+    private IVDoorSide doorFromInNewRoom;
 
 
     public List<VItem> GetItems(){
@@ -27,6 +28,14 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         }
 
         return vItems;
+    }
+
+    /**
+     * Vissz adja azt az ajtot amin bejott a szobaba
+     * @return az ajto ahol bejott
+     */
+    public IVDoorSide GetDoorFromInNewRoom(){
+        return this.doorFromInNewRoom;
     }
     public boolean GetIsActiveTurn(){
         Logger.startedView(this, "GetIsActiveTurn");
@@ -64,7 +73,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     }
 
     public VStudent(IVStudent ivS,ControlPanel cP, ICInput in){
-        controlPanel = cP;
+        super(cP);
         input = in;
         controlPanel.AddVStudent(this);
         ivStudent = ivS;
@@ -82,10 +91,6 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         Logger.startedView(this, "GetID");
         Logger.finishedView(this, "GetID");
         return ivStudent.GetID();
-    }
-
-    public ControlPanel GetControlPanel(){
-        return controlPanel;
     }
 
     /**
@@ -108,6 +113,12 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         // Igy ki tudjuk rajzolni ott ahol meghalt, mert ekkor mar Studentnek nincs szobaja ha meghal
         controlPanel.UpdateAll(controlPanel.GetCurrentRoom());
     }
+
+    @Override
+    public void Moved(IVDoorSide doorFromInNewRoom) {
+        this.doorFromInNewRoom = doorFromInNewRoom;
+    }
+
     private boolean GetIsAlive(){
         return ivStudent.GetIsAlive();
     }

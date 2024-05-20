@@ -40,7 +40,7 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	 * Az id-t beállítja egy random értékre.
 	 */
 	public Camembert(){
-		super(UUID.randomUUID().toString());
+		super("Camembert-"+UUID.randomUUID());
 		isActivated = false;
 	}
 

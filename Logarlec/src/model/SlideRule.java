@@ -44,7 +44,7 @@ public class SlideRule extends Item implements IVSlideRule {
 	 * Az id-t beállítja egy random értékre.
 	 */
 	public SlideRule() {
-		super(UUID.randomUUID().toString());
+		super("SlideRule-"+UUID.randomUUID());
 	}
 
 	/**

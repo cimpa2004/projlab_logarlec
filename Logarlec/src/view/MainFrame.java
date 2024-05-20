@@ -115,7 +115,7 @@ public class MainFrame extends JFrame implements ICInit {
     @Override
     public void CreateVJanitor(IVJanitor ivJanitor) {
         Logger.startedView(this, "CreateVJanitor", ivJanitor);
-        gamePanel.AddVPerson(new VJanitor(ivJanitor));
+        gamePanel.AddVPerson(new VJanitor(ivJanitor, controlPanel));
         Logger.finishedView(this, "CreateVJanitor", ivJanitor);
     }
 

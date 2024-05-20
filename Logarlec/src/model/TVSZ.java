@@ -44,7 +44,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	 * Az id-t beállítja egy random értékre.
 	 */
 	public TVSZ(){
-		super(UUID.randomUUID().toString());
+		super("TVSZ-"+UUID.randomUUID());
 		usesLeft = 3;
 	}
 
@@ -105,7 +105,10 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 	@Override
 	public void Decrement() {
 		Logger.startedModel(this, "Decrement");
-		if (usesLeft > 0) usesLeft = usesLeft - 1;
+		if (usesLeft > 0) {
+			usesLeft = usesLeft - 1;
+			if (ivItemUpdate != null) ivItemUpdate.Decremented(this, usesLeft);
+		}
 		Logger.finishedModel(this, "Decrement");
 	}
 

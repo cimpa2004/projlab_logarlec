@@ -8,6 +8,12 @@ public abstract class VPerson {
 
     protected Dimension position;
 
+    protected ControlPanel controlPanel;
+
+    public VPerson(ControlPanel cP){
+        this.controlPanel = cP;
+    }
+
     /**
      * Vissza adja a VPerson poziciojat a jelenlegi szobaban
      * @return a pozicioja
@@ -25,5 +31,7 @@ public abstract class VPerson {
     }
 
     public abstract String GetID();
-    public abstract ControlPanel GetControlPanel();
+    public ControlPanel GetControlPanel(){
+        return this.controlPanel;
+    }
 }

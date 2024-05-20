@@ -73,7 +73,7 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.add(Box.createVerticalStrut(10));
 
         // Create info pane
-        infoPane.setPreferredSize(new Dimension(425,150));
+        infoPane.setPreferredSize(new Dimension(625,150));
         infoPane.setContentType("text/plain");
         infoPane.setText(text);
         infoPane.setEditable(false);
@@ -137,7 +137,6 @@ public class ControlPanel extends JPanel implements IControl {
             roomLabel.setBorder(new EmptyBorder(10,10,10,10));
             remainingTurnsLabel.setText("A hátralévő körök száma: " + currentStudent.input.GetGameTimer());
             remainingTurnsLabel.setBorder(new EmptyBorder(10,10,10,10));
-            infoPane.setText(text);
         }
         else nameLabel.setText("Senki köre");
         Logger.finishedView(this, "Update");
@@ -177,6 +176,7 @@ public class ControlPanel extends JPanel implements IControl {
         Logger.startedView(this, "StudentStartedTurn");
         UpdateCurrentStudent();
         UpdateAll(null);
+        LogEvent(currentStudent.GetID()+" hallgató megkezdte a körét." + "\n");
         Logger.finishedView(this, "StudentStartedTurn");
     }
 
@@ -232,6 +232,7 @@ public class ControlPanel extends JPanel implements IControl {
 
     public void LogEvent(String event){
         text += event;
+        infoPane.setText(text);
     }
 
     private class EndTurnButtonListener implements ActionListener {
@@ -242,7 +243,7 @@ public class ControlPanel extends JPanel implements IControl {
                 LogEvent(currentStudent.GetID() + " köre véget ért!\n");
                 currentStudent.EndTurn();
                 gamePanel.Redraw();
-                UpdateCurrentStudent();
+                //UpdateCurrentStudent();
             }
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }

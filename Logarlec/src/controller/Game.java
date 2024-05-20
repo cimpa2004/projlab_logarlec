@@ -6,6 +6,7 @@ import view.*;
 import viewmodel.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.UUID;
 
 /** */
@@ -322,11 +323,47 @@ public class Game implements IVInit {
 			NextTurn();
 			return;
 		}
+
+		if (!isGameDeterministic){
+			RandomSeperateRooms();
+			RandomMergeRooms();
+		}
+
 		currentTurn.StartTurn();
 
-
-
 		Logger.finishedModel(this, "NextTurn");
+	}
+
+	/**
+	 * 25% esellyel megprobal szetvalasztani egy szobat
+	 */
+	public void RandomSeperateRooms(){
+		Random rnd = new Random();
+		int rndNum = rnd.nextInt(4);
+		if (rndNum == 1){
+			for(IRoom room : this.rooms){
+				boolean isSeparated = SeparateRoom((Room) room);
+				if (isSeparated) return;
+			}
+		}
+	}
+
+	/**
+	 * 25% esellyel megprobal osszeolvasztani egy szobat
+	 */
+	public void RandomMergeRooms(){
+		Random rnd = new Random();
+		int rndNum = rnd.nextInt(4);
+		if (rndNum == 1){
+			for(IRoom room : this.rooms){
+				for(DoorSide doorSide : room.GetDoors()){
+					if(doorSide.GetPair() != null && doorSide.GetPair().GetRoom() != null){
+						boolean isMerged = MergeRooms((Room) room, doorSide.GetPair().GetRoom());
+						if (isMerged) return;
+					}
+				}
+			}
+		}
 	}
 	
 	/** 
@@ -354,20 +391,20 @@ public class Game implements IVInit {
 		// A Room csak akkor tud osztódni ha nincs egy személy se benne.
 		if(r1.GetCurrentCapacity() == 0)
 		{
-			Room r2 = new Room("Room2");
+			Room r2 = new Room();
 			r2.CloneAttributes(r1);
 			for (DoorSide d : r1.GetDoors())
 			{
-				DoorSide dCopy = new DoorSide(UUID.randomUUID().toString());
+				DoorSide dCopy = new DoorSide();
 				dCopy.CloneAttributes(d);
 				DoorSide d2 = d.GetPair();
-				DoorSide d2Copy = new DoorSide(UUID.randomUUID().toString());
+				DoorSide d2Copy = new DoorSide();
 				d2Copy.CloneAttributes(d2);
 				dCopy.ConnectDoors(d2Copy);
 			}
 
-			DoorSide dConnect1 = new DoorSide("Door1");
-			DoorSide dConnect2 = new DoorSide("Door2");
+			DoorSide dConnect1 = new DoorSide();
+			DoorSide dConnect2 = new DoorSide();
 			dConnect2.SetPair(dConnect1);
 			dConnect1.SetPair(dConnect2);
 			r1.AddDoor(dConnect1);
@@ -439,10 +476,11 @@ public class Game implements IVInit {
 			// Iterátort érdemes használnunk, mivel a ciklus futása közben szeretnénk
 			// változtatni a listán.
 
-			Iterator<DoorSide> iter = r2.GetDoors().iterator();
+			ArrayList<DoorSide> r2DoorsCopy = new ArrayList<>(r2.GetDoors());
+			Iterator<DoorSide> r2DoorsCopyIter = r2DoorsCopy.iterator();
 
-			while(iter.hasNext()){
-				DoorSide doorSide = iter.next();
+			while(r2DoorsCopyIter.hasNext()){
+				DoorSide doorSide = r2DoorsCopyIter.next();
 
 				// Ha egy DoorSide az r1 -el köti össze az r2 -t, akkor
 				// már nem lesz szükség ezekre a félajtókra, hiszen az r2 -t
@@ -451,19 +489,20 @@ public class Game implements IVInit {
 					r1.RemoveDoor(doorSide.GetPair());
 					doorSide.SetRoom(null);
 					doorSide.SetRoom(null);
-					iter.remove();
+					r2DoorsCopyIter.remove();
 				}else{
 					// Ha egy DoorSide egy másik szobával köti össze az r2 -t,
 					// akkor azt át kell alakítanunk, hogy a másik szoba az r1 -el
 					// legyen összeköttetésben
 					doorSide.SetRoom(r1);
-					iter.remove();
+					r2DoorsCopyIter.remove();
 				}
 				r1.RemoveNeighbor(r2);
 			}
+			RemoveRoom(r2);
 
-			Logger.finishedModel(this, "MergeRooms", r2);
 			if (icRoom != null) icRoom.Merge(r1, r2);
+			Logger.finishedModel(this, "MergeRooms", r2);
 			return true;
 		}
 
@@ -503,9 +542,10 @@ public class Game implements IVInit {
 	 * */
 	public void AddRoom(Room r) {
 		Logger.startedModel(this, "AddRoom", r);
-		if (r != null)
+		if (r != null){
 			r.SetIsDeterministic(isGameDeterministic);
 			this.rooms.add(r);
+		}
 		Logger.finishedModel(this, "AddRoom", r);
 	}
 	

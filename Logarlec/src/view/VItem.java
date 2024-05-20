@@ -47,8 +47,8 @@ public abstract class VItem implements IVItemUpdate {
     @Override
     public void ThrownUpdate(IVItem item, boolean teleport) {
         Logger.startedView(this, "ThrownUpdate");
+        owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
         if(teleport){
-            owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
             owner.GetControlPanel().LogEvent(owner.GetID() + " teleportált a "
                     + owner.GetControlPanel().GetCurrentStudent().GetRoom().GetID() + " szobába.\n");
         }
@@ -69,6 +69,11 @@ public abstract class VItem implements IVItemUpdate {
         }
 
         Logger.finishedView(this, "PickedUpUpdate");
+    }
+
+    @Override
+    public void Decremented(IVItem itemDecremented, int currentAvailability){
+        owner.GetControlPanel().LogEvent(owner.GetID() + "-nál lévő " +itemDecremented.GetID() + " tárgynak csökkent a hatásossága egyel. Jelenlegi hatásosság: " + currentAvailability + "\n");
     }
 
     @Override

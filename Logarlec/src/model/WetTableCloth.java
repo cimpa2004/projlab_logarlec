@@ -50,7 +50,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * Az id-t beállítja egy random értékre.
 	 */
 	public WetTableCloth(){
-		super(UUID.randomUUID().toString());
+		super("WetTableCloth-"+UUID.randomUUID());
 		isActivated = false;
 		effectDuration = 3;
 	}
@@ -124,7 +124,10 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	public void Decrement() {
 		Logger.startedModel(this, "Decrement");
 		if(isActivated){
-			if(effectDuration>0) effectDuration = effectDuration - 1;
+			if(effectDuration>0){
+				effectDuration = effectDuration - 1;
+				if (ivItemUpdate != null) ivItemUpdate.Decremented(this, effectDuration);
+			}
 			else isActivated = false;
 		}
 		Logger.finishedModel(this, "Decrement");

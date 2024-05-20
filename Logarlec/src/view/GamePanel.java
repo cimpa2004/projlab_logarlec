@@ -202,9 +202,9 @@ public class GamePanel extends JPanel implements ICRoom {
                 int doorIndex = doorButtons.indexOf(dButton);
                 IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
                 boolean isMoved = controlPanel.GetCurrentStudent().Move(doorRef);
-                if (isMoved && controlPanel.GetIsInstructorWin()){
-                    Redraw();
-                }
+//                if (isMoved && controlPanel.GetIsInstructorWin()){
+//                    Redraw();
+//                }
                 if(isMoved) {
                     currentRoom = doorRef.GetIVPair().GetIVRoom().GetVRoom();
                     controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +

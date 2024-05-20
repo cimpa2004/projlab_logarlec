@@ -20,4 +20,5 @@ public interface IVItemUpdate {
     public void UsedUpdate(IVItem item, boolean success);
 
     public void SetOwner(VPerson vP);
+    public void Decremented(IVItem itemDecremented, int currentAvailability);
 }

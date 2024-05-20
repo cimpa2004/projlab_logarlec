@@ -121,7 +121,7 @@ public class Room implements IRoom, IVRoom {
 	 * Továbbá létrehozza a neighbors, items, doors, janitors, students és az instructors listákat.
 	 */
 	public Room(){
-		this.id = UUID.randomUUID().toString();
+		this.id = "Room-"+UUID.randomUUID();
 		neighbors = new ArrayList<>();
 		items = new ArrayList<>();
 		doors = new ArrayList<>();
