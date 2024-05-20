@@ -153,6 +153,9 @@ public class ControlPanel extends JPanel implements IControl {
 
         Logger.finishedView(this, "UpdateAll");
     }
+    public void SetCurrentStudent(VStudent st){
+        currentStudent = st;
+    }
 
     /**
      *Frissíti az éppen körön lévő játékost és kirajzolja az új inventory-t
