@@ -6,12 +6,18 @@ import viewmodel.IVInstructorUpdate;
 
 public class VInstructor extends VPerson implements IVInstructorUpdate {
     IVInstructor ivInstructor;
+    private ControlPanel controlPanel;
 
-    public VInstructor(IVInstructor ivI){
+    public VInstructor(IVInstructor ivI, ControlPanel cP){
+
         ivInstructor = ivI;
         ivInstructor.SetIVInstructorUpdate(this);
     }
 
+
+    public ControlPanel GetControlPanel() {
+        return controlPanel;
+    }
     @Override
     public String GetID() {
         Logger.startedView(this, "GetID");

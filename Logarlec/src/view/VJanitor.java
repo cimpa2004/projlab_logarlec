@@ -18,4 +18,12 @@ public class VJanitor extends VPerson implements IVJanitorUpdate {
         Logger.finishedView(this, "GetID");
         return ivJanitor.GetID();
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public ControlPanel GetControlPanel() {
+        return null;
+    }
 }

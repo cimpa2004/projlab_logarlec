@@ -188,8 +188,13 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	public boolean PickedUpStudent(Student st) {
 		Logger.startedModel(this, "PickedUpStudent", st);
 		boolean isAdded = st.AddToInventory(this);
-		if (isAdded && ivItemUpdate != null){
-			ivItemUpdate.PickedUpUpdate(this);
+		if(ivItemUpdate != null){
+			if (isAdded){
+				ivItemUpdate.SetOwner(st.GetIVStudentUpdate());
+				ivItemUpdate.PickedUpUpdate(this, true);
+			}else{
+				ivItemUpdate.PickedUpUpdate(this, false);
+			}
 		}
 		Logger.finishedModel(this, "PickedUpStudent", st);
 		return isAdded;
@@ -208,8 +213,13 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	public boolean PickedUpInstructor(Instructor i) {
 		Logger.startedModel(this, "PickedUpInstructor", i);
 		boolean isAdded = i.AddToInventory(this);
-		if (isAdded && ivItemUpdate != null){
-			ivItemUpdate.PickedUpUpdate(this);
+		if(ivItemUpdate != null){
+			if (isAdded){
+				ivItemUpdate.SetOwner(i.GetIVInstructorUpdate());
+				ivItemUpdate.PickedUpUpdate(this, true);
+			}else{
+				ivItemUpdate.PickedUpUpdate(this, false);
+			}
 		}
 		Logger.finishedModel(this, "PickedUpInstructor", i);
 		return isAdded;

@@ -10,7 +10,7 @@ import javax.swing.*;
 public abstract class VItem implements IVItemUpdate {
     private String ID;
     private VRoom room;
-    VStudent owner;
+    VPerson owner;
     public String GetID(){
         Logger.startedModel(this, "GetID");
         Logger.finishedModel(this, "GetID");
@@ -33,15 +33,21 @@ public abstract class VItem implements IVItemUpdate {
     public void ThrownUpdate(IVItem item) {
         Logger.startedView(this, "ThrownUpdate");
         owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
-        owner.GetControlPanel().Update();
+        owner.GetControlPanel().UpdateAll();
         Logger.finishedView(this, "ThrownUpdate");
     }
 
     @Override
-    public void PickedUpUpdate(IVItem item) {
+    public void PickedUpUpdate(IVItem item, boolean success) {
         Logger.startedView(this, "PickedUpUpdate");
-        owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
-        owner.GetControlPanel().Update();
+        if(success){
+            owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
+            owner.GetControlPanel().UpdateAll();
+        }else{
+            // TODO itt nincs owner, de kell a controlpanel
+            //owner.GetControlPanel().LogEvent(owner.GetID() + " nem tudta felvenni a " + item.GetID() + " tárgyat.\n");
+        }
+
         Logger.finishedView(this, "PickedUpUpdate");
     }
 
@@ -50,14 +56,14 @@ public abstract class VItem implements IVItemUpdate {
         Logger.startedView(this, "UsedUpdated");
         if(success){
             owner.GetControlPanel().LogEvent(owner.GetID() + " használta a " + item.GetID() + " tárgyat.\n");
-            owner.GetControlPanel().Update();
         }else{
             owner.GetControlPanel().LogEvent(owner.GetID() + " megpróbálta használni a " + item.GetID() + " tárgyat, de nem sikerült.\n");
         }
+        owner.GetControlPanel().UpdateAll();
         Logger.finishedView(this, "UsedUpdated");
     }
 
-    public void SetOwner(VStudent vst){
-        owner = vst;
+    public void SetOwner(VPerson vp){
+        owner = vp;
     }
 }

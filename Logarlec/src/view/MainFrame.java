@@ -131,7 +131,7 @@ public class MainFrame extends JFrame implements ICInit {
     @Override
     public void CreateVInstructor(IVInstructor ivInstructor) {
         Logger.startedView(this, "CreateVInstructor", ivInstructor);
-        gamePanel.AddVPerson(new VInstructor(ivInstructor));
+        gamePanel.AddVPerson(new VInstructor(ivInstructor, controlPanel));
         Logger.finishedView(this, "CreateVInstructor", ivInstructor);
     }
 }
