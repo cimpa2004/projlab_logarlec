@@ -28,16 +28,6 @@ public class VSlideRule extends VItem {
     }
 
     /**
-     *
-     */
-    @Override
-    public CirclePanel DrawOnMap() {
-        Logger.startedView(this, "DrawOnMap");
-        Logger.finishedView(this, "DrawOnMap");
-        return new CirclePanel(new Color(0,255,0));
-    }
-
-    /**
      * @param panel
      */
     @Override
@@ -46,7 +36,7 @@ public class VSlideRule extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(0,255,0), false, false, this, "Logarléc", buttons);
+                ivSlideRule.GetColor(), false, false, this, "Logarléc", buttons);
 
         panel.add(itemPanel);
     }

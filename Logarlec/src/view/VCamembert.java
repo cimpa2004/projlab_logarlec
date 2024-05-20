@@ -28,16 +28,6 @@ public class VCamembert extends VItem{
     }
 
     /**
-     *
-     */
-    @Override
-    public CirclePanel DrawOnMap() {
-        Logger.startedView(this, "DrawOnMap");
-        Logger.finishedView(this, "DrawOnMap");
-        return new CirclePanel(new Color(255,255,0));
-    }
-
-    /**
      * @param panel
      */
     @Override
@@ -45,7 +35,8 @@ public class VCamembert extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,0), true, false, this, "Dobozolt Camembert", buttons);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                ivCamembert.GetColor(), true, false, this, "Dobozolt Camembert", buttons);
 
         panel.add(itemPanel);
     }

@@ -27,16 +27,6 @@ public class VHolyBeerCup extends VItem {
     }
 
     /**
-     *
-     */
-    @Override
-    public CirclePanel DrawOnMap() {
-        Logger.startedView(this, "DrawOnMap");
-        Logger.finishedView(this, "DrawOnMap");
-        return new CirclePanel(new Color(153,0,76));
-    }
-
-    /**
      * @param panel
      */
     @Override
@@ -45,7 +35,7 @@ public class VHolyBeerCup extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(153,0,76), true, false, this, "Szent Söröspohár", buttons);
+                ivHolyBeerCup.GetColor(), true, false, this, "Szent Söröspohár", buttons);
 
         panel.add(itemPanel);
     }

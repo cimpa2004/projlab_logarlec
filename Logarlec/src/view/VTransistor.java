@@ -27,19 +27,12 @@ public class VTransistor extends VItem{
     }
 
     @Override
-    public CirclePanel DrawOnMap() {
-        Logger.startedView(this, "DrawOnMap");
-        Logger.finishedView(this, "DrawOnMap");
-        return new CirclePanel(new Color(0,0,0));
-    }
-
-    @Override
     public void DrawInInventory(JPanel panel, VStudent student, boolean buttons) {
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(0,0,0), true, true, this, "Tranzisztor", buttons);
+                ivTransistor.GetColor(), true, true, this, "Tranzisztor", buttons);
 
         panel.add(itemPanel);
     }

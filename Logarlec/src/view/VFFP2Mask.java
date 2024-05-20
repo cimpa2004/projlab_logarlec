@@ -26,16 +26,6 @@ public class VFFP2Mask extends VItem{
     }
 
     /**
-     *
-     */
-    @Override
-    public CirclePanel DrawOnMap() {
-        Logger.startedView(this, "DrawOnMap");
-        Logger.finishedView(this, "DrawOnMap");
-        return new CirclePanel(new Color(255,255,255));
-    }
-
-    /**
      * @param panel
      */
     @Override
@@ -43,7 +33,8 @@ public class VFFP2Mask extends VItem{
         Logger.startedView(this, "DrawInInventory", panel, student);
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
-        InventoryItemPanel itemPanel = new InventoryItemPanel(new Color(255,255,255), true, false, this, "FFP2 maszk", buttons);
+        InventoryItemPanel itemPanel = new InventoryItemPanel(
+                ivFFP2Mask.GetColor(), true, false, this, "FFP2 maszk", buttons);
 
         panel.add(itemPanel);
     }

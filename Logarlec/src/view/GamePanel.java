@@ -207,21 +207,4 @@ public class GamePanel extends JPanel implements ICRoom {
             }
         }
     }
-
-    /*@Override
-    public void actionPerformed(ActionEvent e) {
-        if(doorButtons.contains((JButton)e.getSource())) { // TODO már felesleges, remove a végén
-            JButton dButton = (JButton)e.getSource();
-            int doorIndex = doorButtons.indexOf(dButton);
-            IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
-            if(controlPanel.GetCurrentStudent().Move(doorRef)) {
-                currentRoom = doorRef.GetIVPair().GetIVRoom().GetVRoom();
-                controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
-                        " átlépett a " + currentRoom.GetIVRoom().GetID() + " szobába.\n");
-                controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
-                        " köre véget ért!\n");
-                controlPanel.GetCurrentStudent().EndTurn();
-            }
-        }
-    }*/
 }
