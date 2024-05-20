@@ -105,6 +105,9 @@ public class ControlPanel extends JPanel implements IControl {
     public VStudent GetCurrentStudent() {
         return currentStudent;
     }
+    public ArrayList<VStudent> GetStudents(){
+        return students;
+    }
 
     /**
      * Újra rajzolja az inventory-t
