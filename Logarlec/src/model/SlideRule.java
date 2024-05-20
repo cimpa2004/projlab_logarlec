@@ -152,7 +152,7 @@ public class SlideRule extends Item implements IVSlideRule {
 		Logger.startedModel(this, "Thrown", p);
 		p.RemoveFromInventory(this);
 		if(ivItemUpdate != null){
-			ivItemUpdate.ThrownUpdate(this);
+			ivItemUpdate.ThrownUpdate(this, false);
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}

@@ -232,7 +232,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		p.RemoveHolyBeerCup(this);
 		p.RemoveFromInventory(this);
 		if(ivItemUpdate != null){
-			ivItemUpdate.ThrownUpdate(this);
+			ivItemUpdate.ThrownUpdate(this, false);
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}

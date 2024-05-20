@@ -7,7 +7,7 @@ public interface IVItemUpdate {
     /**
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt eldobtak
      */
-    public void ThrownUpdate(IVItem item);
+    public void ThrownUpdate(IVItem item, boolean teleport);
 
     /**
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt felvettek
