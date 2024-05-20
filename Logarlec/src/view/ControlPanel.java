@@ -105,6 +105,9 @@ public class ControlPanel extends JPanel implements IControl {
     public VStudent GetCurrentStudent() {
         return currentStudent;
     }
+    public ArrayList<VStudent> GetStudents(){
+        return students;
+    }
 
     /**
      * Újra rajzolja az inventory-t
@@ -149,6 +152,9 @@ public class ControlPanel extends JPanel implements IControl {
         }
 
         Logger.finishedView(this, "UpdateAll");
+    }
+    public void SetCurrentStudent(VStudent st){
+        currentStudent = st;
     }
 
     /**
@@ -221,6 +227,7 @@ public class ControlPanel extends JPanel implements IControl {
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "PickupButtonListener.actionPerformed", e);
             if(gamePanel.GetSelectedItem() != null){
+                gamePanel.GetSelectedItem().SetControlPanel(ControlPanel.this);
                 currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem().GetIVItem());
                 gamePanel.SetSelectedItem(null);
                 UpdateAll();

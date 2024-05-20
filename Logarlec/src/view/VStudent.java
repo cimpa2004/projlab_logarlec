@@ -112,6 +112,19 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     @Override
     public void Died() {
         controlPanel.LogEvent(GetID() + " játékost megölte egy oktató!\n");
+        int count = 0;
+        for (VStudent student : controlPanel.GetStudents()){
+            if (student.GetIsAlive()){
+                count++;
+            }
+        }
+        if (count == 0){
+            controlPanel.InstructorWin();
+        }
+        controlPanel.SetCurrentStudent(null);
         controlPanel.UpdateAll();
+    }
+    private boolean GetIsAlive(){
+        return ivStudent.GetIsAlive();
     }
 }

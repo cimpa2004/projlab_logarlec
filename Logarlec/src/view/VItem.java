@@ -59,8 +59,8 @@ public abstract class VItem implements IVItemUpdate {
             owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
             owner.GetControlPanel().UpdateAll();
         }else{
-            // TODO itt nincs owner, de kell a controlpanel
-            //owner.GetControlPanel().LogEvent(owner.GetID() + " nem tudta felvenni a " + item.GetID() + " tárgyat.\n");
+            controlPanel.LogEvent("Nem sikerült felvenni a " + item.GetID() + " tárgyat, mivel megtelt az inventory.\n");
+            controlPanel.UpdateAll();
         }
 
         Logger.finishedView(this, "PickedUpUpdate");
@@ -81,4 +81,5 @@ public abstract class VItem implements IVItemUpdate {
     public void SetOwner(VPerson vp){
         owner = vp;
     }
+    public void SetControlPanel(ControlPanel cp){ controlPanel = cp; }
 }
