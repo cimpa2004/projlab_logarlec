@@ -230,7 +230,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		p.RemoveFromInventory(this);
 		p.RemoveWetTableCloth(this);
 		if(ivItemUpdate != null){
-			ivItemUpdate.ThrownUpdate(this);
+			ivItemUpdate.ThrownUpdate(this, false);
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}

@@ -199,7 +199,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		p.RemoveTVSZ(this);
 		p.RemoveFromInventory(this);
 		if(ivItemUpdate != null){
-			ivItemUpdate.ThrownUpdate(this);
+			ivItemUpdate.ThrownUpdate(this, false);
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}

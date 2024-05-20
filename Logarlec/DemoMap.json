@@ -107,19 +107,14 @@
             "instructors": [],
             "students": [],
             "janitors": [],
-            "slideRules": [],
-            "tvszs": [
+            "slideRules": [
               {
-                "id" : "TVSZ0",
-                "durability" : 3
+                "id" : "SlideRuleTest"
+
               }
             ],
-            "ffp2Masks": [
-              {
-                "id": "FFP2Mask0",
-                "fake" : false
-              }
-            ],
+            "tvszs": [],
+            "ffp2Masks": [],
             "wetTableClothes": [],
             "holyBeerCups": [
               {

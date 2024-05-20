@@ -45,10 +45,14 @@ public abstract class VItem implements IVItemUpdate {
      * Redraws control and game panel
      */
     @Override
-    public void ThrownUpdate(IVItem item) {
+    public void ThrownUpdate(IVItem item, boolean teleport) {
         Logger.startedView(this, "ThrownUpdate");
-        owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
-        owner.GetControlPanel().UpdateAll(null);
+        if(teleport){
+            owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
+            owner.GetControlPanel().LogEvent(owner.GetID() + " teleportált a "
+                    + owner.GetControlPanel().GetCurrentStudent().GetRoom().GetID() + " szobába.\n");
+        }
+        owner.GetControlPanel().UpdateAll();
         Logger.finishedView(this, "ThrownUpdate");
     }
 
