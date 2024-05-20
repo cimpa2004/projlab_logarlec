@@ -1,10 +1,11 @@
 package view;
 
 import viewmodel.ICInput;
+import viewmodel.IVPersonUpdate;
 
 import java.awt.*;
 
-public abstract class VPerson {
+public abstract class VPerson implements IVPersonUpdate {
 
     protected Dimension position;
 
@@ -33,5 +34,10 @@ public abstract class VPerson {
     public abstract String GetID();
     public ControlPanel GetControlPanel(){
         return this.controlPanel;
+    }
+
+    @Override
+    public void PersonGotFainted(String personID){
+        controlPanel.LogEvent(personID + " elkábult. \n");
     }
 }

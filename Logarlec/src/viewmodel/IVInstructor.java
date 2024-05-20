@@ -2,7 +2,7 @@ package viewmodel;
 
 import view.VInstructor;
 
-public interface IVInstructor {
+public interface IVInstructor extends IVPerson{
     public String GetID();
     public IVRoom GetIVRoom();
     public void SetIVInstructorUpdate(IVInstructorUpdate ivInstructorUpdate);

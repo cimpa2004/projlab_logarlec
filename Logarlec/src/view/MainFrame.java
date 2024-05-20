@@ -36,7 +36,7 @@ public class MainFrame extends JFrame implements ICInit {
     @Override
     public void CreateVRoom(IVRoom ivRoom) {
         Logger.startedView(this, "CreateVRoom", ivRoom);
-        gamePanel.AddVRoom(new VRoom(ivRoom));
+        gamePanel.AddVRoom(new VRoom(ivRoom, controlPanel));
         Logger.finishedView(this, "CreateVRoom", ivRoom);
     }
 

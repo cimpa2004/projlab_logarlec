@@ -205,6 +205,29 @@ public class Camembert extends Item implements Usable, IVCamembert {
 			if(ivItemUpdate != null){
 				ivItemUpdate.UsedUpdate(this, true);
 			}
+			// ajuljon el ha magara robbantotta es nem tudja megvedeni magat
+			if(!s.GetFFP2Masks().isEmpty()){
+				Defendable ffp2Mask = s.GetRandomActive(s.GetFFP2Masks());
+				if(ffp2Mask != null){
+					ffp2Mask.Decrement();
+					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+					if(!ffp2Mask.CanDefend()) s.RemoveFFP2Mask(ffp2Mask);
+				}else{
+					s.SetIsFainted(true);
+					if (s.GetIsActiveTurn()){
+						s.EndTurn();
+						Logger.finishedModel(this, "UsedByStudent", s);
+						return;
+					}
+				}
+			}else{
+				s.SetIsFainted(true);
+				if (s.GetIsActiveTurn()){
+					s.EndTurn();
+					Logger.finishedModel(this, "UsedByStudent", s);
+					return;
+				}
+			}
 		}else{
 			if(ivItemUpdate != null){
 				ivItemUpdate.UsedUpdate(this, false);
@@ -229,6 +252,29 @@ public class Camembert extends Item implements Usable, IVCamembert {
 			i.GetRoom().SetPoisonDuration(5);
 			if(ivItemUpdate != null){
 				ivItemUpdate.UsedUpdate(this, true);
+			}
+			// ajuljon el ha magara robbantotta es nem tudja megvedeni magat
+			if(!i.GetFFP2Masks().isEmpty()){
+				Defendable ffp2Mask = i.GetRandomActive(i.GetFFP2Masks());
+				if(ffp2Mask != null){
+					ffp2Mask.Decrement();
+					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+					if(!ffp2Mask.CanDefend()) i.RemoveFFP2Mask(ffp2Mask);
+				}else{
+					i.SetIsFainted(true);
+					if (i.GetIsActiveTurn()){
+						i.EndTurn();
+						Logger.finishedModel(this, "UsedByInstructor", i);
+						return;
+					}
+				}
+			}else{
+				i.SetIsFainted(true);
+				if (i.GetIsActiveTurn()){
+					i.EndTurn();
+					Logger.finishedModel(this, "UsedByInstructor", i);
+					return;
+				}
 			}
 		}else {
 			if(ivItemUpdate != null){

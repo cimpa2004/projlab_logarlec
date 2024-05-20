@@ -5,4 +5,5 @@ import java.util.ArrayList;
 public interface IVJanitorUpdate {
     public void Moved();
     public void MadeThemLeave(ArrayList<IPerson> studentsLeft, IVRoom fromIvRoom);
+    public void CleanedRoom(IVRoom cleanedRoom);
 }

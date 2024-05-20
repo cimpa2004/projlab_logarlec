@@ -459,6 +459,7 @@ public class Room implements IRoom, IVRoom {
 				boolean isPersonDefended = i.DefendFromGas();
 				if (!isPersonDefended) i.SetIsFainted(true);
 			}
+			if (ivRoomUpdate != null) ivRoomUpdate.RoomSetPoisonous(pd);
 		}
 		Logger.finishedModel(this, "SetPoisonDuration", pd);
 	}

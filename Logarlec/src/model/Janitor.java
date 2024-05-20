@@ -55,6 +55,7 @@ public class Janitor extends Person implements IVJanitor {
             //takarítás szellőztetés
             this.GetRoom().SetPoisonDuration(0);
             this.GetRoom().SetIsSticky(false);
+            if (ivJanitorUpdate != null) ivJanitorUpdate.CleanedRoom(this.GetRoom());
         } else{
             Logger.finishedModel(this, "AppearInRoom", r);
             return false;

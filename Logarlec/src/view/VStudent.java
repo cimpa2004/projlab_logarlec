@@ -78,6 +78,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         controlPanel.AddVStudent(this);
         ivStudent = ivS;
         ivStudent.SetIVStudentUpdate(this);
+        ivStudent.SetIVPersonUpdate(this);
     }
 
     public Room GetRoom(){

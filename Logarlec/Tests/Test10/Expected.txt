@@ -29,7 +29,7 @@ ffp2Masks: []
 isAlive: true
 isFainted: true
 isStunned: false
-activeTurn: true
+activeTurn: false
 
 message: A megadott Camembert1 részletei a többi mezőben.
 owner: None

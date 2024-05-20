@@ -4,8 +4,8 @@ package model;
 
 import controller.Game;
 import util.Logger;
-import viewmodel.IPerson;
-import viewmodel.IVItem;
+import view.VPerson;
+import viewmodel.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,9 @@ import java.util.UUID;
  * Ez egy abstract osztály ami játékban szereplő személyeket reprezentálja általánosan és 
  * összefoglalja azokat a funkciókat, attribútumokat amiket a Hallgatók és Oktatók is hordoznak.
 */
-public abstract class Person implements IPerson {
+public abstract class Person implements IPerson, IVPerson {
+	private IVPersonUpdate ivPersonUpdate;
+
 	/**
 	 * Tárolja a játékot, a teszteléshez van rá szükség
 	 */
@@ -107,6 +109,7 @@ public abstract class Person implements IPerson {
 		this.game = g;
 	}
 
+
 	public Person(String id){
 		this.id = id;
 		inventory = new ArrayList<>();
@@ -123,6 +126,13 @@ public abstract class Person implements IPerson {
 		tvszs = new ArrayList<>();
 		holyBeerCups = new ArrayList<>();
 		ffp2Masks = new ArrayList<>();
+	}
+
+	public void SetIVPersonUpdate(IVPersonUpdate ivPersonUpdate){
+		this.ivPersonUpdate = ivPersonUpdate;
+	}
+	public IVPersonUpdate GetIVPersonUpdate(){
+		return this.ivPersonUpdate;
 	}
 
 	/**
@@ -189,7 +199,7 @@ public abstract class Person implements IPerson {
 	 */
 	public void SetIsFainted(boolean b) {
 		Logger.startedModel(this, "SetIsFainted", b);
-
+		if (ivPersonUpdate != null && !isFainted && b) ivPersonUpdate.PersonGotFainted(GetID());
 		if(b){
 			ThrowAllItems();
 			isFainted = true;

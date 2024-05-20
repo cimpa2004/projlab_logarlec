@@ -12,6 +12,7 @@ public class VJanitor extends VPerson implements IVJanitorUpdate {
         super(cP);
         ivJanitor = ivJ;
         ivJanitor.SetIVJanitorUpdate(this);
+        ivJanitor.SetIVPersonUpdate(this);
     }
 
     @Override
@@ -35,5 +36,10 @@ public class VJanitor extends VPerson implements IVJanitorUpdate {
             if(person != personsLeft.get(personsLeft.size()-1)) strPersons.append(", ");
         }
         controlPanel.LogEvent(GetID() + " kitessékelte a " + ivRoom.GetID() + " szobából a következő személyeket: " + strPersons + "\n");
+    }
+
+    @Override
+    public void CleanedRoom(IVRoom cleanedRoom) {
+        controlPanel.LogEvent(GetID() + " kitakarította a " + cleanedRoom.GetID() + " szobát." + "\n");
     }
 }

@@ -13,18 +13,19 @@ public class VRoom extends JPanel implements IVRoomUpdate {
     private ArrayList<VItem> items = new ArrayList<>();
     private IVRoom ivRoom;
     private ArrayList<Dimension> doorPositions;
+    private ControlPanel controlPanel;
 
 
     /**
      * Inithez kell
      * @param ivRoom
      */
-    public VRoom(IVRoom ivRoom){
+    public VRoom(IVRoom ivRoom, ControlPanel cP){
+        this.controlPanel = cP;
         this.ivRoom = ivRoom;
         ivRoom.SetIVRoomUpdate(this);
     }
     public void AddDoorSide(VDoorSide vDoorSide){
-
     }
 
     /**
@@ -194,5 +195,14 @@ public class VRoom extends JPanel implements IVRoomUpdate {
     @Override
     public VRoom GetVRoom() {
         return this;
+    }
+
+    public String GetID(){
+        return ivRoom.GetID();
+    }
+
+    @Override
+    public void RoomSetPoisonous(int duration) {
+        controlPanel.LogEvent(GetID() + " szoba gázos lett ennyi körig: " + duration + "\n");
     }
 }

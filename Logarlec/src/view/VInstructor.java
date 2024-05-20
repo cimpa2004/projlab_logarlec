@@ -11,6 +11,7 @@ public class VInstructor extends VPerson implements IVInstructorUpdate {
         super(cP);
         ivInstructor = ivI;
         ivInstructor.SetIVInstructorUpdate(this);
+        ivInstructor.SetIVPersonUpdate(this);
     }
 
     @Override

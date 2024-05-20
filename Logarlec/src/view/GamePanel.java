@@ -111,7 +111,7 @@ public class GamePanel extends JPanel implements ICRoom {
     @Override
     public void Split(IVRoom ivRoom, IVRoom _new) {
         Logger.startedView(this, "Split", ivRoom, _new);
-        VRoom newRoom = new VRoom(_new);
+        VRoom newRoom = new VRoom(_new, controlPanel);
         rooms.add(newRoom);
         Logger.finishedView(this, "Split", ivRoom, _new);
     }
