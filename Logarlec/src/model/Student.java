@@ -290,7 +290,7 @@ public class Student extends Person implements IVStudent {
 	}
 
 	@Override
-	public void SetIVStudentUpdate(IVStudentUpdate ivStudentUpdate) { // TODO nem hívódik meg soha!!
+	public void SetIVStudentUpdate(IVStudentUpdate ivStudentUpdate) {
 		Logger.startedModel(this, "SetIVStudentUpdate", ivStudentUpdate);
 		this.ivStudentUpdate = ivStudentUpdate;
 		Logger.finishedModel(this, "SetIVStudentUpdate", ivStudentUpdate);
