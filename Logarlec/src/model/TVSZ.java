@@ -107,7 +107,7 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		Logger.startedModel(this, "Decrement");
 		if (usesLeft > 0) {
 			usesLeft = usesLeft - 1;
-			ivItemUpdate.Decremented(this, usesLeft);
+			if (ivItemUpdate != null) ivItemUpdate.Decremented(this, usesLeft);
 		}
 		Logger.finishedModel(this, "Decrement");
 	}

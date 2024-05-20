@@ -129,7 +129,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		if(isActivated){
 			if(effectDuration>0) {
 				effectDuration = effectDuration - 1;
-				ivItemUpdate.Decremented(this, effectDuration);
+				if (ivItemUpdate != null) ivItemUpdate.Decremented(this, effectDuration);
 			}
 			else isActivated = false;
 		}

@@ -169,7 +169,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		if(isActivated) {
 			if (durability > 0){
 				durability = durability - 1;
-				ivItemUpdate.Decremented(this, durability);
+				if (ivItemUpdate != null) ivItemUpdate.Decremented(this, durability);
 			}
 			else isActivated = false;
 		}

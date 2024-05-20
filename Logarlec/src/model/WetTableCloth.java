@@ -126,7 +126,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		if(isActivated){
 			if(effectDuration>0){
 				effectDuration = effectDuration - 1;
-				ivItemUpdate.Decremented(this, effectDuration);
+				if (ivItemUpdate != null) ivItemUpdate.Decremented(this, effectDuration);
 			}
 			else isActivated = false;
 		}
