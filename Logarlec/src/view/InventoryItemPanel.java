@@ -95,10 +95,12 @@ public class InventoryItemPanel extends JPanel {
             Logger.startedView(this, "ConnectButtonListener.actionPerformed", e);
             if(item.GetClickedT() == null){
                 item.SetClickedT((VTransistor)item);
+                item.owner.GetControlPanel().LogEvent("A " + item.GetID() + " párosításra kész.\n");
                 item.owner.GetControlPanel().UpdateAll();
                 connectButton.setEnabled(false);
             }else{
                 item.Connected();
+                item.owner.GetControlPanel().LogEvent((item.GetClickedT().GetID() + " párosítva a " + item.GetID() + " tranzisztorral.\n"));
                 item.owner.GetControlPanel().UpdateAll();
             }
             Logger.finishedView(this, "ConnectButtonListener.actionPerformed", e);
