@@ -47,26 +47,33 @@ public class VRoom extends JPanel implements IVRoomUpdate {
             else
                 panelToDrawOn.setBackground(new Color(128, 128, 128));
 
-        for(IVItem item : ivRoom.GetIVItems()) {
-            Dimension drawPos = GetRandomRoomPos(panelToDrawOn,50);
-            Color color = item.GetColor();
-            panelToDrawOn.AddCircle(new MapCirclePanel(color,
-                    drawPos, 50, panelToDrawOn, item));
+        for(IVItem ivItem : ivRoom.GetIVItems()) {
+            VItem vItem = ivItem.GetIVItemUpdate();
+            if (vItem.GetPosition() == null){
+                Dimension drawPos = GetRandomRoomPos(panelToDrawOn,50);
+                vItem.SetPosition(drawPos);
+            }
+            Color color = vItem.GetColor();
+            panelToDrawOn.AddCircle(new MapCirclePanel(color, 50, panelToDrawOn, vItem));
         }
 
         for(IVStudent student : ivRoom.GetIVStudents()) {
-            Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
+            VStudent vStudent = student.GetIVStudentUpdate();
+            if (vStudent.GetPosition() == null){
+                Dimension drawPos = GetRandomRoomPos(panelToDrawOn,10);
+                vStudent.SetPosition(drawPos);
+            }
             panelToDrawOn.AddRect(new RectPanel(new Color(144, 209, 79),
-                    drawPos, new Dimension(50, 50)));
+                    vStudent.GetPosition(), new Dimension(50, 50)));
             if(student.GetIsActiveTurn())
                 panelToDrawOn.AddRect(new RectPanel(new Color(242, 70, 38),
-                        drawPos, new Dimension(20, 20)));
+                        vStudent.GetPosition(), new Dimension(20, 20)));
             else if(!student.GetIsAlive())
                 panelToDrawOn.AddRect(new RectPanel(new Color(26, 26, 26),
-                        drawPos, new Dimension(20, 20)));
+                        vStudent.GetPosition(), new Dimension(20, 20)));
             else if(student.GetIsFainted())
                 panelToDrawOn.AddRect(new RectPanel(new Color(16, 167, 137),
-                        drawPos, new Dimension(20, 20)));
+                        vStudent.GetPosition(), new Dimension(20, 20)));
         }
 
         for(IVInstructor instructor : ivRoom.GetIVInstructors()) {

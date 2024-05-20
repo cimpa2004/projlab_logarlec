@@ -177,6 +177,7 @@ public class ControlPanel extends JPanel implements IControl {
                 item.DrawInInventory(itemsPanel, currentStudent, true);
             }
         }
+        gamePanel.Redraw();
         Logger.finishedView(this, "InstructorWin");
     }
 
@@ -220,7 +221,7 @@ public class ControlPanel extends JPanel implements IControl {
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "PickupButtonListener.actionPerformed", e);
             if(gamePanel.GetSelectedItem() != null){
-                currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem());
+                currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem().GetIVItem());
                 gamePanel.SetSelectedItem(null);
                 UpdateAll();
             }

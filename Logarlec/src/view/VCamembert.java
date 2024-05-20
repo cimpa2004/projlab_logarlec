@@ -2,6 +2,7 @@ package view;
 
 import util.Logger;
 import viewmodel.IVCamembert;
+import viewmodel.IVItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,25 @@ public class VCamembert extends VItem{
     public VCamembert(IVCamembert ivC){
         ivCamembert = ivC;
         ivCamembert.SetIVItemUpdate(this);
+    }
+
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(254, 244, 68);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivCamembert;
+    }
+
+    @Override
+    public String GetID() {
+        return ivCamembert.GetID();
     }
 
     /**
@@ -36,7 +56,7 @@ public class VCamembert extends VItem{
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivCamembert.GetColor(), true, false, this, "Dobozolt Camembert", buttons);
+                GetColor(), true, false, this, "Dobozolt Camembert", buttons);
 
         panel.add(itemPanel);
     }

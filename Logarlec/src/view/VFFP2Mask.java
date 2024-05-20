@@ -2,6 +2,7 @@ package view;
 
 import util.Logger;
 import viewmodel.IVFFP2Mask;
+import viewmodel.IVItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,24 @@ public class VFFP2Mask extends VItem{
     public VFFP2Mask(IVFFP2Mask ivFFP2){
         ivFFP2Mask = ivFFP2;
         ivFFP2Mask.SetIVItemUpdate(this);
+    }
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(255, 255, 255);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivFFP2Mask;
+    }
+
+    @Override
+    public String GetID() {
+        return ivFFP2Mask.GetID();
     }
 
     /**
@@ -34,7 +53,7 @@ public class VFFP2Mask extends VItem{
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivFFP2Mask.GetColor(), true, false, this, "FFP2 maszk", buttons);
+                GetColor(), true, false, this, "FFP2 maszk", buttons);
 
         panel.add(itemPanel);
     }

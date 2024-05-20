@@ -1,6 +1,7 @@
 package view;
 
 import util.Logger;
+import viewmodel.IVItem;
 import viewmodel.IVTVSZ;
 
 import javax.swing.*;
@@ -13,6 +14,24 @@ public class VTVSZ extends VItem {
     public VTVSZ(IVTVSZ ivtvsz) {
         ivTVSZ = ivtvsz;
         ivTVSZ.SetIVItemUpdate(this);
+    }
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(242, 70, 38);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivTVSZ;
+    }
+
+    @Override
+    public String GetID() {
+        return ivTVSZ.GetID();
     }
 
     @Override
@@ -29,7 +48,7 @@ public class VTVSZ extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivTVSZ.GetColor(), false, false, this, "TVSZ", buttons);
+                GetColor(), false, false, this, "TVSZ", buttons);
 
         panel.add(itemPanel);
     }

@@ -1,6 +1,7 @@
 package view;
 
 import util.Logger;
+import viewmodel.IVItem;
 import viewmodel.IVWetTableCloth;
 
 import javax.swing.*;
@@ -13,6 +14,24 @@ public class VWetTableCloth extends VItem {
     public VWetTableCloth(IVWetTableCloth ivWTC) {
         ivWetTableCloth = ivWTC;
         ivWetTableCloth.SetIVItemUpdate(this);
+    }
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(100, 45, 179);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivWetTableCloth;
+    }
+
+    @Override
+    public String GetID() {
+        return ivWetTableCloth.GetID();
     }
 
     /**
@@ -35,7 +54,7 @@ public class VWetTableCloth extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivWetTableCloth.GetColor(), true, false, this, "Nedves táblatörlő rongy", buttons);
+                GetColor(), true, false, this, "Nedves táblatörlő rongy", buttons);
 
         panel.add(itemPanel);
     }

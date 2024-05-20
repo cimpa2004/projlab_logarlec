@@ -54,14 +54,6 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	}
 
 	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(26, 26, 26);
-	}
-
-	/**
 	 * Visszaadja, hogy az adott Transistor hamis-e.
 	 * Egy Transistor nem lehet hamis, tehát
 	 * mindig hamisat fog visszaadni.

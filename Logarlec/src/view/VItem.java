@@ -5,17 +5,14 @@ import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public abstract class VItem implements IVItemUpdate {
-    private String ID;
+    private Dimension position;
     private VRoom room;
     VPerson owner;
-    public String GetID(){
-        Logger.startedModel(this, "GetID");
-        Logger.finishedModel(this, "GetID");
-        return ID;
-    }
+    public abstract String GetID();
     public abstract void PickedUp(VStudent owner);
     public abstract void DrawInInventory(JPanel panel, VStudent student, boolean buttons);
     public abstract boolean HasNullable();
@@ -24,6 +21,24 @@ public abstract class VItem implements IVItemUpdate {
     public abstract void Connected();
     public abstract VTransistor GetClickedT();
     public abstract void SetClickedT(VTransistor t);
+    public abstract Color GetColor();
+    public abstract IVItem GetIVItem();
+
+    /**
+     * Vissza adja a VItem poziciojat a jelenlegi szobaban
+     * @return a pozicioja
+     */
+    public Dimension GetPosition(){
+        return this.position;
+    }
+
+    /**
+     * Beallithato a VItem pozioja a szobaban
+     * @param position az uj pozicio
+     */
+    public void SetPosition(Dimension position){
+        this.position = position;
+    }
 
     /***
      * Redraws control and game panel
@@ -40,6 +55,7 @@ public abstract class VItem implements IVItemUpdate {
     public void PickedUpUpdate(IVItem item, boolean success) {
         Logger.startedView(this, "PickedUpUpdate");
         if(success){
+            this.position = null;
             owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
             owner.GetControlPanel().UpdateAll();
         }else{

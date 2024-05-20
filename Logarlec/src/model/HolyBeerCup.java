@@ -55,13 +55,6 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		effectDuration = 3;
 	}
 
-	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(218, 0, 99);
-	}
 
 	/**
 	 * Visszaadja, hogy az adott HolyBeerCup hamis-e.

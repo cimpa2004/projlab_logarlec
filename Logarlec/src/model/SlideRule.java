@@ -38,13 +38,6 @@ public class SlideRule extends Item implements IVSlideRule {
 		this.game = game;
 	}
 
-	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(144, 209, 79);
-	}
 
 	/**
 	 * A SlideRule osztály konstruktora.
