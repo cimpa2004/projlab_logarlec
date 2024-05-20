@@ -1,10 +1,8 @@
 package view;
 
-import model.*;
 import util.Logger;
 import viewmodel.IControl;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -109,9 +107,9 @@ public class ControlPanel extends JPanel implements IControl {
     }
 
     /**
-     * Újra rajzolja az inventory-t és a gamePanelt
+     * Újra rajzolja az inventory-t
      */
-    public void Update() {
+    public void Update(){
         Logger.startedView(this, "Update");
 
         itemsPanel.removeAll();
@@ -131,11 +129,26 @@ public class ControlPanel extends JPanel implements IControl {
             remainingTurnsLabel.setText("A hátralévő körök száma: " + currentStudent.input.GetGameTimer());
             remainingTurnsLabel.setBorder(new EmptyBorder(10,10,10,10));
             infoPane.setText(text);
-            gamePanel.ClearAll();
-            gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
         else nameLabel.setText("Senki köre");
         Logger.finishedView(this, "Update");
+    }
+
+
+    /**
+     * Újra rajzolja az inventory-t és a gamePanelt
+     */
+    public void UpdateAll() {
+        Logger.startedView(this, "UpdateAll");
+
+        Update();
+
+        if(currentStudent != null){
+            gamePanel.ClearAll();
+            gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
+        }
+
+        Logger.finishedView(this, "UpdateAll");
     }
 
     /**
@@ -145,7 +158,7 @@ public class ControlPanel extends JPanel implements IControl {
     public void StudentStartedTurn() {
         Logger.startedView(this, "StudentStartedTurn");
         UpdateCurrentStudent();
-        Update();
+        UpdateAll();
         Logger.finishedView(this, "StudentStartedTurn");
     }
 
@@ -202,15 +215,14 @@ public class ControlPanel extends JPanel implements IControl {
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }
     }
-    private class PickupButtonListener implements ActionListener { // TODO implement and test item pickup here !
+    private class PickupButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "PickupButtonListener.actionPerformed", e);
             if(gamePanel.GetSelectedItem() != null){
-                gamePanel.GetSelectedItem().GetIVItemUpdate().owner = currentStudent;
                 currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem());
                 gamePanel.SetSelectedItem(null);
-                Update();
+                UpdateAll();
             }
             Logger.finishedView(this, "PickupButtonListener.actionPerformed", e);
         }

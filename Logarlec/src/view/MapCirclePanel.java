@@ -66,12 +66,15 @@ public class MapCirclePanel extends JPanel {
     private class ItemButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO ne lehessen ugyanazt az itemet újra kiválasztani
-            gamePanel.SetSelectedItem(item);
-            VStudent currentStudent = gamePanel.GetControlPanel().GetCurrentStudent();
-            gamePanel.GetControlPanel().LogEvent(
-                    currentStudent.GetID() + " kiválasztotta a " + item.GetID() + " tárgyat.\n");
-            gamePanel.GetControlPanel().Update();
+            if(gamePanel.GetSelectedItem() == null ||
+                    (gamePanel.GetSelectedItem() != null && !item.GetID().equals(gamePanel.GetSelectedItem().GetID()))){
+                gamePanel.SetSelectedItem(item);
+                VStudent currentStudent = gamePanel.GetControlPanel().GetCurrentStudent();
+                gamePanel.GetControlPanel().LogEvent(
+                        currentStudent.GetID() + " kiválasztotta a " + item.GetID() + " tárgyat.\n");
+                gamePanel.GetControlPanel().Update();
+            }
+
         }
     }
 }

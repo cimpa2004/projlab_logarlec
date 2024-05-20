@@ -1,6 +1,8 @@
 package model;
 import controller.Game;
 import util.Logger;
+import view.VInstructor;
+import view.VStudent;
 import viewmodel.IVInstructor;
 import viewmodel.IVInstructorUpdate;
 import viewmodel.IVRoom;
@@ -297,4 +299,7 @@ public class Instructor extends Person implements IVInstructor {
 		Logger.finishedModel(this, "SetIVInstructorUpdate", ivInstructorUpdate);
 	}
 
+	public VInstructor GetIVInstructorUpdate(){
+		return (VInstructor) ivInstructorUpdate;
+	}
 }

@@ -1,5 +1,6 @@
 package viewmodel;
 
+import view.VPerson;
 import view.VStudent;
 
 public interface IVItemUpdate {
@@ -11,12 +12,12 @@ public interface IVItemUpdate {
     /**
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt felvettek
      */
-    public void PickedUpUpdate(IVItem item);
+    public void PickedUpUpdate(IVItem item, boolean success);
 
     /**
      * Ezzel jelez az Item a Modelbol a Viewnak, amikor azt hasznaltak
      */
     public void UsedUpdate(IVItem item, boolean success);
 
-    public void SetOwner(VStudent vst);
+    public void SetOwner(VPerson vP);
 }
