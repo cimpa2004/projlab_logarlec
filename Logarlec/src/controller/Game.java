@@ -328,10 +328,17 @@ public class Game implements IVInit {
 			RandomSeperateRooms();
 			RandomMergeRooms();
 		}
+		ToggleDoorForCursedRooms();
 
 		currentTurn.StartTurn();
 
 		Logger.finishedModel(this, "NextTurn");
+	}
+
+	public void ToggleDoorForCursedRooms(){
+		for(IRoom room : rooms){
+			if(room.GetIsCursed()) room.ToggleDoorsVisible();
+		}
 	}
 
 	/**
