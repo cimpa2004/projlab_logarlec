@@ -17,7 +17,6 @@ public abstract class VItem implements IVItemUpdate {
         return ID;
     }
     public abstract void PickedUp(VStudent owner);
-    public abstract CirclePanel DrawOnMap();
     public abstract void DrawInInventory(JPanel panel, VStudent student, boolean buttons);
     public abstract boolean HasNullable();
     public abstract void Used();

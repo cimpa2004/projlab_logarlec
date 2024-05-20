@@ -27,16 +27,6 @@ public class VWetTableCloth extends VItem {
     }
 
     /**
-     *
-     */
-    @Override
-    public CirclePanel DrawOnMap() {
-        Logger.startedView(this, "DrawOnMap");
-        Logger.finishedView(this, "DrawOnMap");
-        return new CirclePanel(new Color(153,0,153));
-    }
-
-    /**
      * @param panel
      */
     @Override
@@ -45,7 +35,7 @@ public class VWetTableCloth extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                new Color(153,0,153), true, false, this, "Nedves táblatörlő rongy", buttons);
+                ivWetTableCloth.GetColor(), true, false, this, "Nedves táblatörlő rongy", buttons);
 
         panel.add(itemPanel);
     }
