@@ -44,13 +44,6 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		isActivated = false;
 	}
 
-	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(254, 244, 68);
-	}
 
 	/**
 	 * 	Ezen metódus a paraméterként kapott értékre állítja a Camembert isActivated változóját.

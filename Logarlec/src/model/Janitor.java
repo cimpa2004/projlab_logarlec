@@ -2,6 +2,7 @@ package model;
 
 import controller.Game;
 import util.Logger;
+import view.VJanitor;
 import viewmodel.IVJanitor;
 import viewmodel.IVJanitorUpdate;
 import viewmodel.IVRoom;
@@ -252,5 +253,10 @@ public class Janitor extends Person implements IVJanitor {
         Logger.startedModel(this, "SetIVJanitorUpdate", ivJanitorUpdate);
         this.ivJanitorUpdate = ivJanitorUpdate;
         Logger.finishedModel(this, "SetIVJanitorUpdate", ivJanitorUpdate);
+    }
+
+    @Override
+    public VJanitor GetIVJanitorUpdate() {
+        return (VJanitor) ivJanitorUpdate;
     }
 }

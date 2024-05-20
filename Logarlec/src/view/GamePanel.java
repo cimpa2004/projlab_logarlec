@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements ICRoom {
     private ArrayList<JButton> doorButtons = new ArrayList<>();
     //private JPanel buttonsPanel;
     private ControlPanel controlPanel;
-    private IVItem selectedItem;
+    private VItem selectedItem;
 
     public GamePanel(){
         setLayout(null);
@@ -172,7 +172,7 @@ public class GamePanel extends JPanel implements ICRoom {
         Logger.finishedView(this, "Merge", ivRoom1, ivRoom2);
     }
 
-    public IVItem GetSelectedItem() {
+    public VItem GetSelectedItem() {
         return selectedItem;
     }
 
@@ -180,7 +180,7 @@ public class GamePanel extends JPanel implements ICRoom {
      * beállítja a kiválasztott tárgyat
      * @param item a kiválasztott tárgy
      */
-    public void SetSelectedItem(IVItem item) {
+    public void SetSelectedItem(VItem item) {
         selectedItem = item;
     }
 

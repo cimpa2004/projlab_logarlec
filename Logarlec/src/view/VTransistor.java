@@ -2,6 +2,7 @@ package view;
 
 import model.Transistor;
 import util.Logger;
+import viewmodel.IVItem;
 import viewmodel.IVTransistor;
 
 import javax.swing.*;
@@ -18,6 +19,24 @@ public class VTransistor extends VItem{
         ivTransistor.SetIVItemUpdate(this);
     }
 
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(26, 26, 26);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivTransistor;
+    }
+
+    @Override
+    public String GetID() {
+        return ivTransistor.GetID();
+    }
+
     @Override
     public void PickedUp(VStudent st) {
         Logger.startedView(this, "PickedUp");
@@ -32,7 +51,7 @@ public class VTransistor extends VItem{
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivTransistor.GetColor(), true, true, this, "Tranzisztor", buttons);
+                GetColor(), true, true, this, "Tranzisztor", buttons);
 
         panel.add(itemPanel);
     }

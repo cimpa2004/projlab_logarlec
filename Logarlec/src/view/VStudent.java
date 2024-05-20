@@ -4,6 +4,7 @@ import model.Room;
 import util.Logger;
 import viewmodel.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     private ControlPanel controlPanel;
 
     public ICInput input;
+
 
     public List<VItem> GetItems(){
         Logger.startedView(this, "GetItems");
@@ -41,7 +43,9 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     public boolean Move(IVDoorSide d) {
         Logger.startedView(this, "Move");
         Logger.finishedView(this, "Move");
-        return ivStudent.IVMove(d);
+        boolean isMoved = ivStudent.IVMove(d);
+        if (isMoved) this.position = null;
+        return isMoved;
     }
 
     /**

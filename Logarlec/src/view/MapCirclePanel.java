@@ -13,15 +13,15 @@ public class MapCirclePanel extends JPanel {
     private Dimension coords;
     private Color color;
     private int rad;
-    private IVItem item;
+    private VItem item;
     private GamePanel gamePanel;
     protected void draw(Graphics g) {
         g.setColor(color);
         g.fillOval(coords.width,coords.height,rad,rad);
     }
 
-    public MapCirclePanel(Color color, Dimension coords, int rad, GamePanel p, IVItem item) {
-        this.coords = coords;
+    public MapCirclePanel(Color color, int rad, GamePanel p, VItem item) {
+        this.coords = item.GetPosition();
         this.color = color;
         this.rad = rad;
         this.item = item;

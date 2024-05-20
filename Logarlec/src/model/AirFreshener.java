@@ -34,13 +34,6 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
         isActivated = false;
     }
 
-    /**
-     * Visszaadja a tárgy színét.
-     * */
-    @Override
-    public Color GetColor() {
-        return new Color(45, 156, 240);
-    }
 
     /**
      * Az AirFreshener osztály konstruktora.

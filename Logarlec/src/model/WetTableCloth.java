@@ -56,14 +56,6 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	}
 
 	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(100, 45, 179);
-	}
-
-	/**
 	 * Visszaadja, hogy az adott WetTableCloth hamis-e.
 	 * Egy WetTableCloth nem lehet hamis, tehát
 	 * mindig hamisat fog visszaadni.

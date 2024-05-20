@@ -2,6 +2,7 @@ package view;
 
 import util.Logger;
 import viewmodel.IVAirFreshener;
+import viewmodel.IVItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,24 @@ public class VAirFreshener extends VItem {
     public VAirFreshener(IVAirFreshener ivAF) {
         ivAirFreshener = ivAF;
         ivAirFreshener.SetIVItemUpdate(this);
+    }
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(45, 156, 240);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivAirFreshener;
+    }
+
+    @Override
+    public String GetID() {
+        return ivAirFreshener.GetID();
     }
 
     /**
@@ -36,7 +55,7 @@ public class VAirFreshener extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivAirFreshener.GetColor(), true, false, this, "Légfrissítő", buttons);
+                GetColor(), true, false, this, "Légfrissítő", buttons);
 
         panel.add(itemPanel);
     }

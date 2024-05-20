@@ -24,4 +24,9 @@ public class VInstructor extends VPerson implements IVInstructorUpdate {
         Logger.finishedView(this, "GetID");
         return ivInstructor.GetID();
     }
+
+    @Override
+    public void Moved() {
+        this.position = null;
+    }
 }

@@ -48,13 +48,6 @@ public class TVSZ extends Item implements Defendable, IVTVSZ {
 		usesLeft = 3;
 	}
 
-	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(242, 70, 38);
-	}
 
 	/**
 	 * Visszaadja, hogy az adott TVSZ hamis-e.

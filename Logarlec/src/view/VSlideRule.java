@@ -1,6 +1,7 @@
 package view;
 
 import util.Logger;
+import viewmodel.IVItem;
 import viewmodel.IVSlideRule;
 
 import javax.swing.*;
@@ -14,6 +15,24 @@ public class VSlideRule extends VItem {
     public VSlideRule(IVSlideRule ivSR){
         ivSlideRule = ivSR;
         ivSlideRule.SetIVItemUpdate(this);
+    }
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(144, 209, 79);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivSlideRule;
+    }
+
+    @Override
+    public String GetID() {
+        return ivSlideRule.GetID();
     }
 
     /**
@@ -36,7 +55,7 @@ public class VSlideRule extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivSlideRule.GetColor(), false, false, this, "Logarléc", buttons);
+                GetColor(), false, false, this, "Logarléc", buttons);
 
         panel.add(itemPanel);
     }

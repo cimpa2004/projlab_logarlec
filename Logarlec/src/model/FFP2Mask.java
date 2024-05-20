@@ -63,13 +63,6 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		durability = 3;
 	}
 
-	/**
-	 * Visszaadja a tárgy színét.
-	 * */
-	@Override
-	public Color GetColor() {
-		return new Color(255, 255, 255);
-	}
 
 	/**
 	 * Visszaadja, hogy az adott FFP2Mask hamis-e.

@@ -281,6 +281,7 @@ public class Instructor extends Person implements IVInstructor {
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		boolean isAppeared = AppearInRoom(r2);
+		if (ivInstructorUpdate != null) ivInstructorUpdate.Moved();
 		Logger.finishedModel(this, "Move", d);
 		return isAppeared;
 	}

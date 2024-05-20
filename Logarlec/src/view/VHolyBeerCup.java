@@ -2,6 +2,7 @@ package view;
 
 import util.Logger;
 import viewmodel.IVHolyBeerCup;
+import viewmodel.IVItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,25 @@ public class VHolyBeerCup extends VItem {
     public VHolyBeerCup(IVHolyBeerCup ivHBC) {
         ivHolyBeerCup = ivHBC;
         ivHolyBeerCup.SetIVItemUpdate(this);
+    }
+
+
+    /**
+     * Visszaadja a tárgy színét.
+     * */
+    @Override
+    public Color GetColor() {
+        return new Color(218, 0, 99);
+    }
+
+    @Override
+    public IVItem GetIVItem() {
+        return ivHolyBeerCup;
+    }
+
+    @Override
+    public String GetID() {
+        return ivHolyBeerCup.GetID();
     }
 
     /**
@@ -35,7 +55,7 @@ public class VHolyBeerCup extends VItem {
         Logger.finishedView(this, "DrawInInventory", panel, student);
         owner = student;
         InventoryItemPanel itemPanel = new InventoryItemPanel(
-                ivHolyBeerCup.GetColor(), true, false, this, "Szent Söröspohár", buttons);
+                GetColor(), true, false, this, "Szent Söröspohár", buttons);
 
         panel.add(itemPanel);
     }
