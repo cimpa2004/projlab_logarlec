@@ -48,7 +48,7 @@ public abstract class VItem implements IVItemUpdate {
     public void ThrownUpdate(IVItem item) {
         Logger.startedView(this, "ThrownUpdate");
         owner.GetControlPanel().LogEvent(owner.GetID() + " eldobta a " + item.GetID() + " tárgyat.\n");
-        owner.GetControlPanel().UpdateAll();
+        owner.GetControlPanel().UpdateAll(null);
         Logger.finishedView(this, "ThrownUpdate");
     }
 
@@ -58,10 +58,10 @@ public abstract class VItem implements IVItemUpdate {
         if(success){
             this.position = null;
             owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
-            owner.GetControlPanel().UpdateAll();
+            owner.GetControlPanel().UpdateAll(null);
         }else{
             controlPanel.LogEvent("Nem sikerült felvenni a " + item.GetID() + " tárgyat, mivel megtelt az inventory.\n");
-            controlPanel.UpdateAll();
+            controlPanel.UpdateAll(null);
         }
 
         Logger.finishedView(this, "PickedUpUpdate");
@@ -75,7 +75,7 @@ public abstract class VItem implements IVItemUpdate {
         }else{
             owner.GetControlPanel().LogEvent(owner.GetID() + " megpróbálta használni a " + item.GetID() + " tárgyat, de nem sikerült.\n");
         }
-        owner.GetControlPanel().UpdateAll();
+        owner.GetControlPanel().UpdateAll(null);
         Logger.finishedView(this, "UsedUpdated");
     }
 

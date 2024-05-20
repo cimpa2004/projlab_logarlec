@@ -83,7 +83,8 @@ public class Instructor extends Person implements IVInstructor {
 		Logger.startedModel(this, "StealSoul", st);
 		if(!isFainted && !(stunDuration > 0)){
 			if (!st.DefendFromKill(this)){
-				st.Die();
+				boolean isAlive = st.Die();
+				if(!isAlive && game.GetIControl() != null) game.GetIControl().InstructorKills(this);
 			}
 		}
 		Logger.finishedModel(this, "StealSoul", st);

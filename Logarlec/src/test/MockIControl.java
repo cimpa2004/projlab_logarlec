@@ -1,6 +1,7 @@
 package test;
 
 import viewmodel.IControl;
+import viewmodel.IVInstructor;
 
 public class MockIControl implements IControl {
 
@@ -17,5 +18,10 @@ public class MockIControl implements IControl {
     @Override
     public void StudentWin() {
         System.out.println("StudentWin");
+    }
+
+    @Override
+    public void InstructorKills(IVInstructor instructor) {
+
     }
 }

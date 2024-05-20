@@ -95,17 +95,19 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     @Override
     public void Died() {
         controlPanel.LogEvent(GetID() + " játékost megölte egy oktató!\n");
-        int count = 0;
-        for (VStudent student : controlPanel.GetStudents()){
-            if (student.GetIsAlive()){
-                count++;
-            }
-        }
-        if (count == 0){
-            controlPanel.InstructorWin();
-        }
+//        int count = 0;
+//        for (VStudent student : controlPanel.GetStudents()){
+//            if (student.GetIsAlive()){
+//                count++;
+//            }
+//        }
+//        if (count == 0){
+//            controlPanel.InstructorWin();
+//        }
         controlPanel.SetCurrentStudent(null);
-        controlPanel.UpdateAll();
+        // instructor ezelott beallitotta a control panelben a current roomjat a Studentnek, ahol azt ot megolte.
+        // Igy ki tudjuk rajzolni ott ahol meghalt, mert ekkor mar Studentnek nincs szobaja ha meghal
+        controlPanel.UpdateAll(controlPanel.GetCurrentRoom());
     }
     private boolean GetIsAlive(){
         return ivStudent.GetIsAlive();

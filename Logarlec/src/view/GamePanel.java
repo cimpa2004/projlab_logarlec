@@ -41,6 +41,10 @@ public class GamePanel extends JPanel implements ICRoom {
         return currentRoom;
     }
 
+    public void SetCurrentRoom(VRoom vCurrentRoom){
+        this.currentRoom = vCurrentRoom;
+    }
+
     public void AddVPerson(VPerson _new){
         Logger.startedView(this, "AddVPerson", _new);
         people.add(_new);
@@ -136,7 +140,7 @@ public class GamePanel extends JPanel implements ICRoom {
         button.addActionListener(new DoorButtonListener());
         doorButtons.add(button);
     }
-
+//lefut a move es akor csekkolni az isInstructor win valtozot
     public void ClearDoorButton() {
         doorButtons.clear();
     }
@@ -192,11 +196,16 @@ public class GamePanel extends JPanel implements ICRoom {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            Logger.startedView(this, "DoorButtonListener.actionPerformed", e);
             if(doorButtons.contains((JButton)e.getSource())) { // TODO ebbe tuti van bug szerintem -- Bug #4
                 JButton dButton = (JButton)e.getSource();
                 int doorIndex = doorButtons.indexOf(dButton);
                 IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
-                if(controlPanel.GetCurrentStudent().Move(doorRef)) {
+                boolean isMoved = controlPanel.GetCurrentStudent().Move(doorRef);
+                if (isMoved && controlPanel.GetIsInstructorWin()){
+                    Redraw();
+                }
+                if(isMoved) {
                     currentRoom = doorRef.GetIVPair().GetIVRoom().GetVRoom();
                     controlPanel.LogEvent(controlPanel.GetCurrentStudent().GetID() +
                             " átlépett a " + currentRoom.GetIVRoom().GetID() + " szobába.\n");
@@ -205,6 +214,7 @@ public class GamePanel extends JPanel implements ICRoom {
                     controlPanel.GetCurrentStudent().EndTurn();
                 }
             }
+            Logger.finishedView(this, "DoorButtonListener.actionPerformed", e);
         }
     }
 }
