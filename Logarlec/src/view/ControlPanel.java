@@ -256,7 +256,7 @@ public class ControlPanel extends JPanel implements IControl {
                 currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem().GetIVItem());
                 gamePanel.SetSelectedItem(null);
                 if(!gameEnd){
-                    UpdateAll();
+                    UpdateAll(null);
                 }
             }
 

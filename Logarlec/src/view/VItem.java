@@ -52,7 +52,7 @@ public abstract class VItem implements IVItemUpdate {
             owner.GetControlPanel().LogEvent(owner.GetID() + " teleportált a "
                     + owner.GetControlPanel().GetCurrentStudent().GetRoom().GetID() + " szobába.\n");
         }
-        owner.GetControlPanel().UpdateAll();
+        owner.GetControlPanel().UpdateAll(null);
         Logger.finishedView(this, "ThrownUpdate");
     }
 
