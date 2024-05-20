@@ -72,7 +72,6 @@ public class MapCirclePanel extends JPanel {
             gamePanel.GetControlPanel().LogEvent(
                     currentStudent.GetID() + " kiválasztotta a " + item.GetID() + " tárgyat.\n");
             gamePanel.GetControlPanel().Update();
-
         }
     }
 }
