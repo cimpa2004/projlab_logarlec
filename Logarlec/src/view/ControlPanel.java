@@ -2,6 +2,7 @@ package view;
 
 import util.Logger;
 import viewmodel.IControl;
+import viewmodel.IVInstructor;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  */
 public class ControlPanel extends JPanel implements IControl {
     private ArrayList<VStudent> students = new ArrayList<>();
+    private boolean IsInstructorWin;
     private JButton EndTurnButton = new JButton("Kör vége");
     private JButton PickUpButton = new JButton("Kijelölt tárgy felvétele");
     private JLabel infoLabel = new JLabel();
@@ -28,6 +30,10 @@ public class ControlPanel extends JPanel implements IControl {
     private JLabel remainingTurnsLabel = new JLabel();
     private boolean gameEnd = false;
     private String text = "";
+
+    public boolean GetIsInstructorWin(){
+        return this.IsInstructorWin;
+    }
 
     public void AddVStudent(VStudent new_){
         students.add(new_);
@@ -141,14 +147,15 @@ public class ControlPanel extends JPanel implements IControl {
     /**
      * Újra rajzolja az inventory-t és a gamePanelt
      */
-    public void UpdateAll() {
+    public void UpdateAll(VRoom vRoomOverride) {
         Logger.startedView(this, "UpdateAll");
 
         Update();
 
         if(currentStudent != null){
             gamePanel.ClearAll();
-            gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
+            if (vRoomOverride != null) gamePanel.Draw(vRoomOverride);
+            else gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
 
         Logger.finishedView(this, "UpdateAll");
@@ -157,6 +164,11 @@ public class ControlPanel extends JPanel implements IControl {
         currentStudent = st;
     }
 
+    public VRoom GetCurrentRoom(){
+        return gamePanel.GetCurrentRoom();
+    }
+
+
     /**
      *Frissíti az éppen körön lévő játékost és kirajzolja az új inventory-t
      */
@@ -164,7 +176,7 @@ public class ControlPanel extends JPanel implements IControl {
     public void StudentStartedTurn() {
         Logger.startedView(this, "StudentStartedTurn");
         UpdateCurrentStudent();
-        UpdateAll();
+        UpdateAll(null);
         Logger.finishedView(this, "StudentStartedTurn");
     }
 
@@ -185,7 +197,9 @@ public class ControlPanel extends JPanel implements IControl {
                 item.DrawInInventory(itemsPanel, currentStudent, true);
             }
         }
-        gamePanel.Redraw();
+        if(gamePanel.GetCurrentRoom() == null) gamePanel.Draw(gamePanel.GetRooms().get(0)); // abban az esetben ha instructorok az elso korben vhogy nyernek
+        else gamePanel.Redraw();
+        this.IsInstructorWin = true;
         Logger.finishedView(this, "InstructorWin");
     }
 
@@ -206,7 +220,14 @@ public class ControlPanel extends JPanel implements IControl {
                 item.DrawInInventory(itemsPanel, currentStudent, true);
             }
         }
+        if(gamePanel.GetCurrentRoom() == null) gamePanel.Draw(gamePanel.GetRooms().get(0));
+        else gamePanel.Redraw();
         Logger.finishedView(this, "StudentWin");
+    }
+
+    @Override
+    public void InstructorKills(IVInstructor ivInstructor) {
+        gamePanel.SetCurrentRoom(ivInstructor.GetIVRoom().GetVRoom());
     }
 
     public void LogEvent(String event){
@@ -235,7 +256,7 @@ public class ControlPanel extends JPanel implements IControl {
                 currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem().GetIVItem());
                 gamePanel.SetSelectedItem(null);
                 if(!gameEnd){
-                    UpdateAll();
+                    UpdateAll(null);
                 }
             }
 

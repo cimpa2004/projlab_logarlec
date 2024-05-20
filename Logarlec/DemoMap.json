@@ -116,7 +116,11 @@
             "tvszs": [],
             "ffp2Masks": [],
             "wetTableClothes": [],
-            "holyBeerCups": [],
+            "holyBeerCups": [
+              {
+                "id":"HolyBeerCup0"
+              }
+            ],
             "airFresheners": [],
             "camemberts": [],
             "transistors": [],
@@ -124,10 +128,18 @@
           },
       {
         "id": "Room1",
-        "instructors": [],
+        "instructors": [
+          {
+            "id" : "Instructor0"
+          }
+        ],
         "students": [],
         "janitors": [],
-        "slideRules": [],
+        "slideRules": [
+          {
+            "id" : "SlideRule0"
+          }
+        ],
         "tvszs": [
             {
                 "id" : "TVSZ1",

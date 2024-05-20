@@ -211,7 +211,8 @@ public class Game implements IVInit {
 		FillUpInventory(newStudent);
 		//TODO TEST
 
-		AddToGame(newStudent);
+		turnOrder.add(0, newStudent);
+		currentTurn = newStudent;
 		Logger.commandLog("message: Hallgato hozza lett adva a jatekhoz a kovetkezo ID-vel " + personID + "\n");
 		Logger.finishedModel(this, "AddStudent", personID);
 
@@ -294,7 +295,7 @@ public class Game implements IVInit {
 			return;
 		}
 		if(turnOrder.isEmpty()) System.err.println("Error: nincs hozza adva szemely a jatekhoz.");
-		else if (currentTurn == null) currentTurn = turnOrder.get(turnOrder.size()-1);
+		else if (currentTurn == null) currentTurn = turnOrder.get(0);
 
 		boolean anyStudentsAlive = AnyStudentsAlive();
 		if(!anyStudentsAlive){
@@ -322,6 +323,7 @@ public class Game implements IVInit {
 			return;
 		}
 		currentTurn.StartTurn();
+
 
 
 		Logger.finishedModel(this, "NextTurn");

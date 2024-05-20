@@ -74,7 +74,7 @@ public class InventoryItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e){
             Logger.startedView(this, "ThrowButtonListener.actionPerformed", e);
             item.Thrown();
-            item.owner.GetControlPanel().UpdateAll();
+            item.owner.GetControlPanel().UpdateAll(null);
             Logger.finishedView(this, "ThrowButtonListener.actionPerformed", e);
         }
     }
@@ -84,7 +84,7 @@ public class InventoryItemPanel extends JPanel {
         public void actionPerformed(ActionEvent e){
             Logger.startedView(this, "UseButtonListener.actionPerformed", e);
             item.Used();
-            item.owner.GetControlPanel().UpdateAll();
+            item.owner.GetControlPanel().UpdateAll(null);
             Logger.finishedView(this, "UseButtonListener.actionPerformed", e);
         }
     }
@@ -96,13 +96,13 @@ public class InventoryItemPanel extends JPanel {
             if(item.GetClickedT() == null){
                 item.SetClickedT((VTransistor)item);
                 item.owner.GetControlPanel().LogEvent("A " + item.GetID() + " párosításra kész.\n");
-                item.owner.GetControlPanel().UpdateAll();
+                item.owner.GetControlPanel().UpdateAll(null);
                 connectButton.setEnabled(false);
             }else{
                 String clickedID = item.GetClickedT().GetID();
                 item.Connected();
                 item.owner.GetControlPanel().LogEvent((clickedID + " párosítva a " + item.GetID() + " tranzisztorral.\n"));
-                item.owner.GetControlPanel().UpdateAll();
+                item.owner.GetControlPanel().UpdateAll(null);
             }
             Logger.finishedView(this, "ConnectButtonListener.actionPerformed", e);
         }

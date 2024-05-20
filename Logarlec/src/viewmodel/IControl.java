@@ -15,4 +15,10 @@ public interface IControl {
      * Ezt a fuggvenyt a View-n hivja meg a Controller, amiben jelzi, hogy az studentek nyertek
      */
     public void StudentWin();
+
+    /**
+     * Instructor jelzi hogy megolt epp egy jatekost
+     * @param instructor az az instruktor aki megolt epp egy jatekost
+     */
+    public void InstructorKills(IVInstructor instructor);
 }
