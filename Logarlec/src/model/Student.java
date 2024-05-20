@@ -192,6 +192,10 @@ public class Student extends Person implements IVStudent {
 	*/
 	public boolean Die() {
 		Logger.startedModel(this, "Die");
+		if(!isAlive){
+			Logger.finishedModel(this, "Die");
+			return false;
+		}
 		isAlive = false;
 		game.NotifyStudentDied();
 		if(IsActiveTurn()) EndTurn();
