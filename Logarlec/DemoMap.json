@@ -107,7 +107,12 @@
             "instructors": [],
             "students": [],
             "janitors": [],
-            "slideRules": [],
+            "slideRules": [
+              {
+                "id" : "SlideRuleTest"
+
+              }
+            ],
             "tvszs": [],
             "ffp2Masks": [],
             "wetTableClothes": [],

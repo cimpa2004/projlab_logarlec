@@ -26,7 +26,7 @@ public class ControlPanel extends JPanel implements IControl {
     private GamePanel gamePanel;
     private JPanel namepanel = new JPanel();
     private JLabel remainingTurnsLabel = new JLabel();
-
+    private boolean gameEnd = false;
     private String text = "";
 
     public void AddVStudent(VStudent new_){
@@ -176,6 +176,8 @@ public class ControlPanel extends JPanel implements IControl {
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
 
+        gameEnd = true;
+
         itemsPanel.removeAll();
         itemsPanel.revalidate();
         if(currentStudent != null && currentStudent.GetItems() != null){
@@ -194,6 +196,8 @@ public class ControlPanel extends JPanel implements IControl {
         remainingTurnsLabel.setText("A hátralévő körök száma: 0");
         EndTurnButton.setEnabled(false);
         PickUpButton.setEnabled(false);
+
+        gameEnd = true;
 
         itemsPanel.removeAll();
         itemsPanel.revalidate();
@@ -230,8 +234,11 @@ public class ControlPanel extends JPanel implements IControl {
                 gamePanel.GetSelectedItem().SetControlPanel(ControlPanel.this);
                 currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem().GetIVItem());
                 gamePanel.SetSelectedItem(null);
-                UpdateAll();
+                if(!gameEnd){
+                    UpdateAll();
+                }
             }
+
             Logger.finishedView(this, "PickupButtonListener.actionPerformed", e);
         }
     }
