@@ -197,7 +197,7 @@ public class GamePanel extends JPanel implements ICRoom {
         @Override
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "DoorButtonListener.actionPerformed", e);
-            if(doorButtons.contains((JButton)e.getSource())) { // TODO ebbe tuti van bug szerintem -- Bug #4
+            if(doorButtons.contains((JButton)e.getSource())) {
                 JButton dButton = (JButton)e.getSource();
                 int doorIndex = doorButtons.indexOf(dButton);
                 IVDoorSide doorRef = doorRects.get(doorIndex).GetDoorRef();
