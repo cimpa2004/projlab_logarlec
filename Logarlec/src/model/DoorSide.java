@@ -47,7 +47,7 @@ public class DoorSide implements IVDoorSide {
 	}
 
 	public DoorSide(){
-		this.id = UUID.randomUUID().toString();
+		this.id = "DoorSide-"+UUID.randomUUID();
 		isVisible = true;
 	}
 

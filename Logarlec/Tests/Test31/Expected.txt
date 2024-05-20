@@ -54,3 +54,5 @@ students: []
 instructors: []
 janitors: []
 
+message: A megadott szoba Room2 nem létezik.
+

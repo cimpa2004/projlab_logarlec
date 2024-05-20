@@ -3,6 +3,7 @@ package model;
 import controller.Game;
 import util.Logger;
 import view.VJanitor;
+import viewmodel.IPerson;
 import viewmodel.IVJanitor;
 import viewmodel.IVJanitorUpdate;
 import viewmodel.IVRoom;
@@ -17,7 +18,6 @@ public class Janitor extends Person implements IVJanitor {
      * @param id - azonosíto teszteléshez
      */
     public Janitor(String id) {
-
         super(id);
     }
     public Janitor(String id, Game game) {
@@ -29,7 +29,7 @@ public class Janitor extends Person implements IVJanitor {
      * Nem teszteléshez használt konstruktor
      */
     public Janitor(Game game) {
-        super(UUID.randomUUID().toString());
+        super("Janitor-"+UUID.randomUUID());
         this.game = game;
     }
 
@@ -68,6 +68,7 @@ public class Janitor extends Person implements IVJanitor {
      */
     private void MakeThemLeave(){
         Logger.startedModel(this, "MakeThemLeave");
+        ArrayList<IPerson> personsLeft = new ArrayList<>();
         if(game!=null) {
             if (!game.GetIsDeterministic()){
                 final List<DoorSide> doorsCopy = new ArrayList<>(this.GetRoom().GetDoors());
@@ -76,8 +77,9 @@ public class Janitor extends Person implements IVJanitor {
                     for(Student st : studentsCopy){
                         for (DoorSide dr : doorsCopy){
                                 if (dr.IsDoorUseable()){
-                                    st.Move(dr);//a keresett ajtón átmegy
-                                break;
+                                    boolean isLeft = st.Move(dr);//a keresett ajtón átmegy
+                                    if(isLeft) personsLeft.add(st);
+                                    break;
                                 }
                         }
                     }
@@ -85,7 +87,8 @@ public class Janitor extends Person implements IVJanitor {
                     for(Instructor ins : instructorCopy){
                         for (DoorSide dr : doorsCopy){
                                 if (dr.IsDoorUseable()){
-                                    ins.Move(dr);//a keresett ajtón átmegy
+                                    boolean isLeft = ins.Move(dr);//a keresett ajtón átmegy
+                                    if(isLeft) personsLeft.add(ins);
                                     break;
                                 }
                         }
@@ -95,7 +98,8 @@ public class Janitor extends Person implements IVJanitor {
                 for(Student st : studentsCopy){
                     for (DoorSide dr : this.GetRoom().GetDoors()){
                         if (dr.IsDoorUseable()){
-                            st.Move(dr);//a keresett ajtón átmegy
+                            boolean isLeft = st.Move(dr);//a keresett ajtón átmegy
+                            if(isLeft) personsLeft.add(st);
                             break;
                         }
                     }
@@ -104,12 +108,14 @@ public class Janitor extends Person implements IVJanitor {
                 for(Instructor ins : instructorCopy){
                     for (DoorSide dr : this.GetRoom().GetDoors()){
                         if (dr.IsDoorUseable()){
-                            ins.Move(dr);//a keresett ajtón átmegy
+                            boolean isLeft = ins.Move(dr);//a keresett ajtón átmegy
+                            if(isLeft) personsLeft.add(ins);
                             break;
                         }
                     }
                 }
             }
+            if (ivJanitorUpdate != null && !personsLeft.isEmpty()) ivJanitorUpdate.MadeThemLeave(personsLeft, room);
         }
         Logger.finishedModel(this, "MakeThemLeave");
     }

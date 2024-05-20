@@ -48,7 +48,7 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	 * Az id-t beállítja egy random értékre.
 	 */
 	public Transistor(){
-		super(UUID.randomUUID().toString());
+		super("Transistor-"+UUID.randomUUID());
 		isActive = false;
 		pair = null;
 	}

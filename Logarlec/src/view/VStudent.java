@@ -11,7 +11,6 @@ import java.util.List;
 
 public class VStudent extends VPerson implements IVStudentUpdate {
     private IVStudent ivStudent;
-    private ControlPanel controlPanel;
 
     public ICInput input;
     private IVDoorSide doorFromInNewRoom;
@@ -75,7 +74,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
     }
 
     public VStudent(IVStudent ivS,ControlPanel cP, ICInput in){
-        controlPanel = cP;
+        super(cP);
         input = in;
         controlPanel.AddVStudent(this);
         ivStudent = ivS;
@@ -93,10 +92,6 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         Logger.startedView(this, "GetID");
         Logger.finishedView(this, "GetID");
         return ivStudent.GetID();
-    }
-
-    public ControlPanel GetControlPanel(){
-        return controlPanel;
     }
 
     /**

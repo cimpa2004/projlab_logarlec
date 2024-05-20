@@ -27,7 +27,7 @@ public class Instructor extends Person implements IVInstructor {
 	}
 
 	public Instructor(Game g) {
-		super(UUID.randomUUID().toString());
+		super("Instructor-"+UUID.randomUUID());
 		this.game = g;
 	}
 
@@ -98,6 +98,7 @@ public class Instructor extends Person implements IVInstructor {
 	public void Stun(int duration) {
 		Logger.startedModel(this, "Stun", duration);
 		stunDuration = duration;
+		if(ivInstructorUpdate != null) ivInstructorUpdate.Stunned(duration);
 		Logger.finishedModel(this, "Stun", duration);
 	}
 
@@ -282,7 +283,7 @@ public class Instructor extends Person implements IVInstructor {
 		DoorSide d2 = d.GetPair();
 		Room r2 = d2.GetRoom();
 		boolean isAppeared = AppearInRoom(r2);
-		if (ivInstructorUpdate != null) ivInstructorUpdate.Moved();
+		if (isAppeared && ivInstructorUpdate != null) ivInstructorUpdate.Moved();
 		Logger.finishedModel(this, "Move", d);
 		return isAppeared;
 	}

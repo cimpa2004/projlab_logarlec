@@ -117,7 +117,7 @@ public abstract class Person implements IPerson {
 	}
 
 	public Person(){
-		this.id = UUID.randomUUID().toString();
+		this.id = "Person-"+UUID.randomUUID();
 		inventory = new ArrayList<>();
 		wetTableClothes = new ArrayList<>();;
 		tvszs = new ArrayList<>();
@@ -325,6 +325,10 @@ public abstract class Person implements IPerson {
 		Logger.startedModel(this, "DefendFromKill");
 		if(hasWetTableCloth) {
 			Defendable wtc = GetRandomActive(wetTableClothes);
+			if(wtc == null) {
+				Logger.finishedModel(this, "DefendFromKill");
+				return false;
+			}
 			instructor.Stun(3);
 			Logger.finishedModel(this, "DefendFromKill");
 			return true;
@@ -344,7 +348,10 @@ public abstract class Person implements IPerson {
 		}
 		else if(hasTVSZ) {
 			Defendable tvsz = GetRandomActive(tvszs);
-			if(tvsz==null) return false;
+			if(tvsz==null){
+				Logger.finishedModel(this, "DefendFromKill");
+				return false;
+			}
 			tvsz.Decrement();
 			Logger.finishedModel(this, "DefendFromKill");
 			return true;

@@ -41,7 +41,7 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
      * Az id-t beállítja egy random értékre.
      */
     public AirFreshener(){
-        super(UUID.randomUUID().toString());
+        super("AirFreshener-"+UUID.randomUUID());
         isActivated = false;
     }
 

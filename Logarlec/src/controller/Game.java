@@ -324,8 +324,10 @@ public class Game implements IVInit {
 			return;
 		}
 
-		RandomSeperateRooms();
-		RandomMergeRooms();
+		if (!isGameDeterministic){
+			RandomSeperateRooms();
+			RandomMergeRooms();
+		}
 
 		currentTurn.StartTurn();
 
@@ -393,10 +395,10 @@ public class Game implements IVInit {
 			r2.CloneAttributes(r1);
 			for (DoorSide d : r1.GetDoors())
 			{
-				DoorSide dCopy = new DoorSide(UUID.randomUUID().toString());
+				DoorSide dCopy = new DoorSide();
 				dCopy.CloneAttributes(d);
 				DoorSide d2 = d.GetPair();
-				DoorSide d2Copy = new DoorSide(UUID.randomUUID().toString());
+				DoorSide d2Copy = new DoorSide();
 				d2Copy.CloneAttributes(d2);
 				dCopy.ConnectDoors(d2Copy);
 			}
@@ -497,9 +499,10 @@ public class Game implements IVInit {
 				}
 				r1.RemoveNeighbor(r2);
 			}
+			RemoveRoom(r2);
 
-			Logger.finishedModel(this, "MergeRooms", r2);
 			if (icRoom != null) icRoom.Merge(r1, r2);
+			Logger.finishedModel(this, "MergeRooms", r2);
 			return true;
 		}
 
@@ -539,9 +542,10 @@ public class Game implements IVInit {
 	 * */
 	public void AddRoom(Room r) {
 		Logger.startedModel(this, "AddRoom", r);
-		if (r != null)
+		if (r != null){
 			r.SetIsDeterministic(isGameDeterministic);
 			this.rooms.add(r);
+		}
 		Logger.finishedModel(this, "AddRoom", r);
 	}
 	

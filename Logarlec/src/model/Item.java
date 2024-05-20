@@ -49,7 +49,7 @@ public abstract class Item implements IVItem {
 	 * Az id-t beállítja egy random értékre.
 	 * */
 	public Item(){
-		this.id = UUID.randomUUID().toString();
+		this.id = "Item-"+UUID.randomUUID();
 	}
 
 	/**

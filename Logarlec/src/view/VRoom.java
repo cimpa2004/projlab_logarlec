@@ -136,7 +136,7 @@ public class VRoom extends JPanel implements IVRoomUpdate {
                     panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 0), drawPos, doorDim, panelToDrawOn, doorSide));
 
             if(currentStudent != null && currentStudent.GetIVStudentUpdate().GetDoorFromInNewRoom() == doorSide){
-                Dimension doorMarkerDim = new Dimension(20, 20);
+                Dimension doorMarkerDim = new Dimension(30, 30);
                 panelToDrawOn.AddDoorRect(new RectPanel(new Color(218, 0, 0), drawPos, doorMarkerDim, panelToDrawOn, doorSide));
             }
             counter++;

@@ -58,7 +58,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 * Az id-t beállítja egy random értékre.
 	 */
 	public FFP2Mask(){
-		super(UUID.randomUUID().toString());
+		super("FFP2Mask-"+UUID.randomUUID());
 		isActivated = false;
 		durability = 3;
 	}
@@ -167,7 +167,10 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	public void Decrement() {
 		Logger.startedModel(this, "Decrement");
 		if(isActivated) {
-			if (durability > 0) durability = durability - 1;
+			if (durability > 0){
+				durability = durability - 1;
+				ivItemUpdate.Decremented(this, durability);
+			}
 			else isActivated = false;
 		}
 		Logger.finishedModel(this, "Decrement");
