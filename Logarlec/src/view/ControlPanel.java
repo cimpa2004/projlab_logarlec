@@ -226,6 +226,7 @@ public class ControlPanel extends JPanel implements IControl {
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "PickupButtonListener.actionPerformed", e);
             if(gamePanel.GetSelectedItem() != null){
+                gamePanel.GetSelectedItem().GetIVItemUpdate().SetControlPanel(ControlPanel.this);
                 currentStudent.input.PickupItem(currentStudent.GetID(), gamePanel.GetSelectedItem());
                 gamePanel.SetSelectedItem(null);
                 UpdateAll();

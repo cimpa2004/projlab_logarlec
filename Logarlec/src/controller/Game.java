@@ -602,19 +602,20 @@ public class Game implements IVInit {
 		af.SetIVItemUpdate(vaf);
 		student.AddToInventory(af);*/
 
-		/*Transistor t = new Transistor("TestTransistor");
+		Transistor t = new Transistor("TestTransistor");
 		t.SetRoom(defaultRoom);
 		VTransistor vt = new VTransistor(t);
 		vt.SetOwner(student.GetIVStudentUpdate());
 		t.SetIVItemUpdate(vt);
-		student.AddToInventory(t);*/
+		student.AddToInventory(t);
 
-		/*Transistor t2 = new Transistor("TestTransistor2");
+
+		Transistor t2 = new Transistor("TestTransistor2");
 		t2.SetRoom(defaultRoom);
 		VTransistor vt2 = new VTransistor(t2);
 		vt2.SetOwner(student.GetIVStudentUpdate());
 		t2.SetIVItemUpdate(vt2);
-		student.AddToInventory(t2);*/
+		student.AddToInventory(t2);
 
 		/*FFP2Mask mask = new FFP2Mask("TestMask");
 		mask.SetRoom(defaultRoom);
@@ -623,12 +624,12 @@ public class Game implements IVInit {
 		mask.SetIVItemUpdate(vmask);
 		student.AddToInventory(mask);*/
 
-		HolyBeerCup hbc = new HolyBeerCup("TestHBC");
+		/*HolyBeerCup hbc = new HolyBeerCup("TestHBC");
 		hbc.SetRoom(defaultRoom);
 		VHolyBeerCup vhbc = new VHolyBeerCup(hbc);
 		vhbc.SetOwner(student.GetIVStudentUpdate());
 		hbc.SetIVItemUpdate(vhbc);
-		student.AddToInventory(hbc);
+		student.AddToInventory(hbc);*/
 
 		/*Camembert cam = new Camembert(("TestCamembert"));
 		cam.SetRoom(defaultRoom);
@@ -637,12 +638,12 @@ public class Game implements IVInit {
 		cam.SetIVItemUpdate(vcam);
 		student.AddToInventory(cam);*/
 
-		TVSZ tvsz = new TVSZ("TestTVSZ");
+		/*TVSZ tvsz = new TVSZ("TestTVSZ");
 		tvsz.SetRoom(defaultRoom);
 		VTVSZ vtvsz = new VTVSZ(tvsz);
 		vtvsz.SetOwner(student.GetIVStudentUpdate());
 		tvsz.SetIVItemUpdate(vtvsz);
-		student.AddToInventory(tvsz);
+		student.AddToInventory(tvsz);*/
 
 		WetTableCloth wtc = new WetTableCloth("TestWTC");
 		wtc.SetRoom(defaultRoom);
@@ -651,12 +652,12 @@ public class Game implements IVInit {
 		wtc.SetIVItemUpdate(vwtc);
 		student.AddToInventory(wtc);
 
-		SlideRule sr = new SlideRule("TestFakeSlideRule", this);
+		/*SlideRule sr = new SlideRule("TestFakeSlideRule", this);
 		sr.SetRoom(defaultRoom);
 		sr.SetIsFake(true);
 		VSlideRule vsr = new VSlideRule(sr);
 		vsr.SetOwner(student.GetIVStudentUpdate());
 		sr.SetIVItemUpdate(vsr);
-		student.AddToInventory(sr);
+		student.AddToInventory(sr);*/
 	}
 }
