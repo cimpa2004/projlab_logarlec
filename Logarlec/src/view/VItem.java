@@ -64,7 +64,7 @@ public abstract class VItem implements IVItemUpdate {
             owner.GetControlPanel().LogEvent(owner.GetID() + " felvette a " + item.GetID() + " tárgyat.\n");
             owner.GetControlPanel().UpdateAll(null);
         }else{
-            controlPanel.LogEvent("Nem sikerült felvenni a " + item.GetID() + " tárgyat, mivel megtelt az inventory.\n");
+            controlPanel.LogEvent("Nem sikerült felvenni a " + item.GetID() + " tárgyat, mivel megtelt az inventory vagy ragadós a szoba.\n");
             controlPanel.UpdateAll(null);
         }
 
