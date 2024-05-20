@@ -100,6 +100,7 @@ public class VStudent extends VPerson implements IVStudentUpdate {
         if (count == 0){
             controlPanel.InstructorWin();
         }
+        controlPanel.SetCurrentStudent(null);
         controlPanel.UpdateAll();
     }
     private boolean GetIsAlive(){
