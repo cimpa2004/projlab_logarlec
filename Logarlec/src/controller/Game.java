@@ -12,7 +12,7 @@ import java.util.UUID;
 /** */
 public class Game implements IVInit {
 
-	final int gameTime = 15; //A játék hosszát itt kell átállítani
+	final int gameTime = 10; //A játék hosszát itt kell átállítani
 
 	/**
 	 * Tarol egy ICInitet amivel letretud hozni V objektumokat a Viewban.
