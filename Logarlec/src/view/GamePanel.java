@@ -197,6 +197,7 @@ public class GamePanel extends JPanel implements ICRoom {
         @Override
         public void actionPerformed(ActionEvent e) {
             Logger.startedView(this, "DoorButtonListener.actionPerformed", e);
+            if (controlPanel.GetCurrentStudent() != null){
             if(doorButtons.contains((JButton)e.getSource())) {
                 JButton dButton = (JButton)e.getSource();
                 int doorIndex = doorButtons.indexOf(dButton);
@@ -215,6 +216,6 @@ public class GamePanel extends JPanel implements ICRoom {
                 }
             }
             Logger.finishedView(this, "DoorButtonListener.actionPerformed", e);
-        }
+        }}
     }
 }

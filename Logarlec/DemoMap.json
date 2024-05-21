@@ -142,7 +142,12 @@
                 "fake" : true
             }
         ],
-        "wetTableClothes": [],
+        "wetTableClothes": [
+          {
+            "id" : "NedvesTáblaTörlőRongy2",
+            "durability" : 5
+          }
+        ],
         "holyBeerCups": [],
         "airFresheners": [],
         "camemberts": [],
@@ -170,7 +175,7 @@
         "wetTableClothes": [
             {
                 "id" : "NedvesTáblaTörlőRongy1",
-                "durability" : 3
+                "durability" : 5
             }
         ],
         "holyBeerCups": [],
