@@ -97,7 +97,7 @@ public class ControlPanel extends JPanel implements IControl {
     /**
      * frissiti az aktiv körön lévő hallgatót (privát)
      */
-    private void UpdateCurrentStudent(){
+    public void UpdateCurrentStudent(){
         Logger.startedView(this, "UpdateCurrentStudent");
         for (VStudent student : students){
             if (student.GetIsActiveTurn()){
@@ -158,7 +158,7 @@ public class ControlPanel extends JPanel implements IControl {
         Logger.startedView(this, "UpdateAll");
 
         Update();
-
+   
         if(currentStudent != null){
             gamePanel.ClearAll();
             if (vRoomOverride != null) gamePanel.Draw(vRoomOverride);

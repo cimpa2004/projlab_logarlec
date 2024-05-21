@@ -122,37 +122,39 @@ public class Student extends Person implements IVStudent {
 	*/
 	public void EndTurn() {
 		Logger.startedModel(this, "EndTurn");
-		ArrayList<Defendable> holyBeerCupsCopy = new ArrayList<>(this.holyBeerCups);
-		for (Defendable h : holyBeerCupsCopy) {
-			h.Decrement();
-			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
-			if(!h.CanDefend()) this.holyBeerCups.remove(h);
-		}
+		if(isAlive){
+			ArrayList<Defendable> holyBeerCupsCopy = new ArrayList<>(this.holyBeerCups);
+			for (Defendable h : holyBeerCupsCopy) {
+				h.Decrement();
+				// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
+				if(!h.CanDefend()) this.holyBeerCups.remove(h);
+			}
 
-		ArrayList<Defendable> wetTableClothesCopy = new ArrayList<>(this.wetTableClothes);
-		for (Defendable h : wetTableClothesCopy) {
-			h.Decrement();
-			// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
-			if(!h.CanDefend()) this.wetTableClothes.remove(h);
-		}
+			ArrayList<Defendable> wetTableClothesCopy = new ArrayList<>(this.wetTableClothes);
+			for (Defendable h : wetTableClothesCopy) {
+				h.Decrement();
+				// ha Decrement utan mar nem tudna vedeni akkor lejart a holyBeerCup, kivesszuk a listabol
+				if(!h.CanDefend()) this.wetTableClothes.remove(h);
+			}
 
-		// Ha még életben van
-		// Ha gázos szobában marad a kör végére és nincs nála FFP2Mask akkor elájul
-		if(room != null){
-			if (room.GetPoisonDuration() > 0) {
-				if (!ffp2Masks.isEmpty()) {
-					Defendable ffp2Mask = GetRandomActive(ffp2Masks);
-					if (ffp2Mask != null) {
-						ffp2Mask.Decrement();
-						// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
-						if (!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+			// Ha még életben van
+			// Ha gázos szobában marad a kör végére és nincs nála FFP2Mask akkor elájul
+			if(room != null){
+				if (room.GetPoisonDuration() > 0) {
+					if (!ffp2Masks.isEmpty()) {
+						Defendable ffp2Mask = GetRandomActive(ffp2Masks);
+						if (ffp2Mask != null) {
+							ffp2Mask.Decrement();
+							// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
+							if (!ffp2Mask.CanDefend()) RemoveFFP2Mask(ffp2Mask);
+						} else {
+							SetIsFainted(true);
+						}
 					} else {
 						SetIsFainted(true);
 					}
-				} else {
-					SetIsFainted(true);
+					// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
 				}
-				// ha nincs gazos szobaban kor elejen akkor vissza nyeri eszmeletet
 			}
 		}
 
@@ -198,11 +200,11 @@ public class Student extends Person implements IVStudent {
 		}
 		isAlive = false;
 		game.NotifyStudentDied();
-		if(IsActiveTurn()) EndTurn();
 		if(ivStudentUpdate != null){
 			ivStudentUpdate.Died();
 		}
 		room.RemoveStudent(this);
+		if(IsActiveTurn()) EndTurn();
 		Logger.finishedModel(this, "Die");
 		return isAlive;
 	}

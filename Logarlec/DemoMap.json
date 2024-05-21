@@ -113,7 +113,11 @@
             "wetTableClothes": [],
             "holyBeerCups": [],
             "airFresheners": [],
-            "camemberts": [],
+            "camemberts": [
+              {
+                "id": "Camembert2"
+              }
+            ],
             "transistors": [
               {
                 "id" : "Tranzisztor1"
