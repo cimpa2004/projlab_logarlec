@@ -73,7 +73,7 @@ public class ControlPanel extends JPanel implements IControl {
         buttonsPanel.add(Box.createVerticalStrut(10));
 
         // Create info pane
-        infoPane.setPreferredSize(new Dimension(625,150));
+        infoPane.setPreferredSize(new Dimension(300,200));
         infoPane.setContentType("text/plain");
         infoPane.setText(text);
         infoPane.setEditable(false);
