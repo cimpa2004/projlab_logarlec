@@ -2,6 +2,7 @@ package model;
 import controller.Game;
 import util.*;
 import viewmodel.IVSlideRule;
+import viewmodel.ActivateResult;
 import viewmodel.IVRoom;
 
 import java.awt.*;
@@ -165,9 +166,7 @@ public class SlideRule extends Item implements IVSlideRule {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent");
-		if(ivItemUpdate != null){
-			ivItemUpdate.UsedUpdate(this, false);
-		}
+		if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.CANNOT_BE_ACTIVATED);
 		Logger.finishedModel(this, "UsedByStudent");
 	}
 
@@ -179,9 +178,7 @@ public class SlideRule extends Item implements IVSlideRule {
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor");
-		if(ivItemUpdate != null){
-			ivItemUpdate.UsedUpdate(this, false);
-		}
+		if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.CANNOT_BE_ACTIVATED);
 		Logger.finishedModel(this, "UsedByInstructor");
 	}
 
