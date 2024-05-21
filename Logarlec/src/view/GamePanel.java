@@ -191,7 +191,14 @@ public class GamePanel extends JPanel implements ICRoom {
     public ControlPanel GetControlPanel() {
         return controlPanel;
     }
-
+    public void DisableButtons(){
+        for(JButton button : itemButtons){
+            button.setEnabled(false);
+        }
+        for(JButton button : doorButtons){
+            button.setEnabled(false);
+        }
+    }
     private class DoorButtonListener implements ActionListener{
 
         @Override
