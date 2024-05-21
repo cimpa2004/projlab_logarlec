@@ -136,8 +136,8 @@ public class ControlPanel extends JPanel implements IControl {
             roomLabel.setText("A jelenlegi szoba:         " + currentStudent.GetRoom().GetID()
                     + "            Férőhelyek száma: " + currentStudent.GetRoom().GetMaxCapacity()
                     + "            Szobában tartózkodók száma: " + currentStudent.GetRoom().GetCurrentCapacity()
-                    + "            A szobában járt személyek száma: " +
-                            (currentStudent.GetRoom().GetNumberOfPeopleBeenToRoom())
+                    + "            A szobában járt személyek száma: "
+                    +              (currentStudent.GetRoom().GetNumberOfPeopleBeenToRoom())
                     + "            Ragadós?    " + (currentStudent.GetRoom().GetIsSticky() ? "Igen" : "Nem")
                     + "            Gázos?    " + (currentStudent.GetRoom().GetPoisonDuration() > 0 ? "Igen" : "Nem")
                     + "            Átkozott?    " + (currentStudent.GetRoom().GetIsCursed() ? "Igen" : "Nem")
