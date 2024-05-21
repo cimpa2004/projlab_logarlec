@@ -191,7 +191,6 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}
-
 	/**
 	 * Ezen metódus akkor hívódik meg, ha egy Student szeretne használni egy
 	 * az inventoryában lévő Camembertet. Ekkor először aktiválja, tehát meghívja az Activate metódust.
@@ -204,32 +203,7 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		if(Activate()) {
-			s.GetRoom().SetPoisonDuration(5);
-			// ajuljon el ha magara robbantotta es nem tudja megvedeni magat
-			if(!s.GetFFP2Masks().isEmpty()){
-				Defendable ffp2Mask = s.GetRandomActive(s.GetFFP2Masks());
-				if(ffp2Mask != null){
-					ffp2Mask.Decrement();
-					// ha mar a vedes utan tobbet nem tud vedeni, akkor kiszedjuk a listabol
-					if(!ffp2Mask.CanDefend()) s.RemoveFFP2Mask(ffp2Mask);
-				}else{
-					s.SetIsFainted(true);
-					if (s.GetIsActiveTurn()){
-						s.EndTurn();
-						Logger.finishedModel(this, "UsedByStudent", s);
-						return;
-					}
-				}
-			}else{
-				s.SetIsFainted(true);
-				if (s.GetIsActiveTurn()){
-					s.EndTurn();
-					Logger.finishedModel(this, "UsedByStudent", s);
-					return;
-				}
-			}
-		}
+		if(Activate()) s.GetRoom().SetPoisonDuration(5);
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
