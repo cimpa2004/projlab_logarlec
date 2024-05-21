@@ -646,14 +646,14 @@ public class Game implements IVInit {
 	public void FillUpInventory(Student student){
 		Room defaultRoom = new Room();
 
-		AirFreshener af = new AirFreshener("TestAirFreshener");
+		AirFreshener af = new AirFreshener();
 		af.SetRoom(defaultRoom);
 		VAirFreshener vaf = new VAirFreshener(af);
 		vaf.SetOwner(student.GetIVStudentUpdate());
 		af.SetIVItemUpdate(vaf);
 		student.AddToInventory(af);
 
-		Transistor t = new Transistor("TestTransistor");
+		Transistor t = new Transistor();
 		t.SetRoom(defaultRoom);
 		VTransistor vt = new VTransistor(t);
 		vt.SetOwner(student.GetIVStudentUpdate());
@@ -661,14 +661,14 @@ public class Game implements IVInit {
 		student.AddToInventory(t);
 
 
-		Transistor t2 = new Transistor("TestTransistor2");
+		Transistor t2 = new Transistor();
 		t2.SetRoom(defaultRoom);
 		VTransistor vt2 = new VTransistor(t2);
 		vt2.SetOwner(student.GetIVStudentUpdate());
 		t2.SetIVItemUpdate(vt2);
 		student.AddToInventory(t2);
 
-		FFP2Mask mask = new FFP2Mask("TestMask");
+		FFP2Mask mask = new FFP2Mask();
 		mask.SetRoom(defaultRoom);
 		VFFP2Mask vmask = new VFFP2Mask(mask);
 		vmask.SetOwner(student.GetIVStudentUpdate());
@@ -696,7 +696,7 @@ public class Game implements IVInit {
 		tvsz.SetIVItemUpdate(vtvsz);
 		student.AddToInventory(tvsz);*/
 
-		WetTableCloth wtc = new WetTableCloth("TestWTC");
+		WetTableCloth wtc = new WetTableCloth();
 		wtc.SetRoom(defaultRoom);
 		VWetTableCloth vwtc = new VWetTableCloth(wtc);
 		vwtc.SetOwner(student.GetIVStudentUpdate());
