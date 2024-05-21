@@ -12,6 +12,8 @@ import java.util.UUID;
 /** */
 public class Game implements IVInit {
 
+	final int gameTime = 15; //A játék hosszát itt kell átállítani
+
 	/**
 	 * Tarol egy ICInitet amivel letretud hozni V objektumokat a Viewban.
 	 * */
@@ -80,7 +82,7 @@ public class Game implements IVInit {
 	public Game(){
 		isGameDeterministic = false;
 		isEndGame = false;
-		gameTimer = 10;
+		gameTimer = gameTime;
 
 		this.rooms = new ArrayList<>();
 		this.turnOrder = new ArrayList<>();
@@ -90,7 +92,7 @@ public class Game implements IVInit {
 	public Game(boolean isGameDeterministic){
 		this.isGameDeterministic = isGameDeterministic;
 		isEndGame = false;
-		gameTimer = 10;
+		gameTimer = gameTime;
 
 		this.rooms = new ArrayList<>();
 		this.turnOrder = new ArrayList<>();
@@ -101,7 +103,7 @@ public class Game implements IVInit {
 		this.logLevel = logLevel;
 		Logger.setLogLevel(this.logLevel);
 		isEndGame = false;
-		gameTimer = 10;
+		gameTimer = gameTime;
 
 		this.rooms = new ArrayList<>();
 		this.turnOrder = new ArrayList<>();
@@ -234,7 +236,7 @@ public class Game implements IVInit {
 	public void StartGame() {
 		Logger.startedModel(this, "StartGame");
 		isEndGame = false;
-		gameTimer = 10;
+		gameTimer = gameTime;
 		numberOfAliveStudents = 0;
 		for(IRoom room : rooms) {
 			for(Student student : room.GetStudents()){
