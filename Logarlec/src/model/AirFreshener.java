@@ -2,6 +2,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVRoom;
+import viewmodel.ActivateResult;
 import viewmodel.IVAirFreshener;
 
 import java.awt.*;
@@ -72,10 +73,12 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
         Logger.startedModel(this, "Activate");
         Logger.finishedModel(this, "Activate");
         if(isActivated){
+            if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.ALREADY_ACTIVATED);
             return false;
         }else{
+            if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_ACTIVATED);
             isActivated = true;
-            return  true;
+            return true;
         }
     }
 
@@ -196,16 +199,7 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     @Override
     public void UsedByStudent(Student s) {
         Logger.startedModel(this, "UsedByStudent", s);
-        if(Activate()){
-            s.GetRoom().SetPoisonDuration(0);
-            if(ivItemUpdate != null){
-                ivItemUpdate.UsedUpdate(this, true);
-            }
-        }else{
-            if(ivItemUpdate != null){
-                ivItemUpdate.UsedUpdate(this, false);
-            }
-        }
+        if(Activate()) s.GetRoom().SetPoisonDuration(0);
         Logger.finishedModel(this, "UsedByStudent", s);
     }
 
@@ -222,16 +216,7 @@ public class AirFreshener extends Item implements Usable, IVAirFreshener {
     @Override
     public void UsedByInstructor(Instructor i) {
         Logger.startedModel(this, "UsedByInstructor", i);
-        if(Activate()){
-            i.GetRoom().SetPoisonDuration(0);
-            if(ivItemUpdate != null) {
-                ivItemUpdate.UsedUpdate(this, true);
-            }
-        }else{
-            if(ivItemUpdate != null) {
-                ivItemUpdate.UsedUpdate(this, false);
-            }
-        }
+        if(Activate()) i.GetRoom().SetPoisonDuration(0);
         Logger.finishedModel(this, "UsedByInstructor", i);
     }
 

@@ -2,6 +2,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVTransistor;
+import viewmodel.ActivateResult;
 import viewmodel.IVRoom;
 
 import java.awt.*;
@@ -75,10 +76,14 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	@Override
 	public boolean Activate() {
 		Logger.startedModel(this, "Activate");
-		if(!isActive && this.GetPair() != null)
+		if(!isActive && this.GetPair() != null){
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_ACTIVATED);
 			isActive = true;
-		else
+		} else{
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_DEACTIVATED);
 			isActive = false;
+		}
+			
 		Logger.finishedModel(this, "Activate");
 		return isActive;
 	}
@@ -228,31 +233,21 @@ public class Transistor extends Item implements Usable, IVTransistor {
 	@Override
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		if(Activate()){
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
-		}else{
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
-		}
+		Activate();
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
 	/**
 	 *  Ezen metódus akkor hívódik meg, ha egy Instructor szeretne
 	 *  használni egy az inventoryában lévő Transistor -t.
-	 *  Instructor nem képes a Transistor használatára, ezért e metódus egyből hamissal tér vissza.
+	 *  Instructor nem képes a T§ransistor használatára, ezért e metódus egyből hamissal tér vissza.
 	 *
 	 * @param i A Transistor használni kívánó oktató
 	 */
 	@Override
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
-		if(ivItemUpdate != null){
-			ivItemUpdate.UsedUpdate(this, false);
-		}
+		if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.ALREADY_ACTIVATED);
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

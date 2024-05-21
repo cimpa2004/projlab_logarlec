@@ -3,6 +3,7 @@ package model;
 
 import util.Logger;
 import viewmodel.IVWetTableCloth;
+import viewmodel.ActivateResult;
 import viewmodel.IVRoom;
 
 import java.awt.*;
@@ -81,8 +82,10 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 		Logger.startedModel(this, "Activate");
 		Logger.finishedModel(this, "Activate");
 		if(isActivated){
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.ALREADY_ACTIVATED);
 			return false;
 		}else{
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_ACTIVATED);
 			isActivated = true;
 			return true;
 		}
@@ -249,16 +252,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		if (Activate()) {
-			s.AddWetTableCloth(this);
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
-		}else{
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
-		}
+		if (Activate()) s.AddWetTableCloth(this);
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
@@ -272,9 +266,7 @@ public class WetTableCloth extends Item implements Usable, Defendable, IVWetTabl
 	 * */
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
-		if(ivItemUpdate != null){
-			ivItemUpdate.UsedUpdate(this, false);
-		}
+		if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.CANNOT_BE_ACTIVATED);
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

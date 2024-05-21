@@ -116,4 +116,5 @@ public class VWetTableCloth extends VItem {
         Logger.startedView(this, "SetClickedT", t);
         Logger.finishedView(this, "SetClickedT", t);
     }
+
 }
