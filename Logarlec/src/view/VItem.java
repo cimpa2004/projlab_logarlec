@@ -1,6 +1,7 @@
 package view;
 
 import util.Logger;
+import viewmodel.ActivateResult;
 import viewmodel.IVItem;
 import viewmodel.IVItemUpdate;
 
@@ -86,6 +87,34 @@ public abstract class VItem implements IVItemUpdate {
         }
         owner.GetControlPanel().UpdateAll(null);
         Logger.finishedView(this, "UsedUpdated");
+    }
+
+    @Override
+    public void Activated(IVItem ivItem, ActivateResult result) {
+        Logger.startedView(this, "Activated", ivItem, result);
+        owner.controlPanel.LogEvent(owner.GetID() + " használta a " + ivItem.GetID() + " tárgyat: ");
+        switch (result){
+            case SUCCESSFULLY_ACTIVATED:
+                owner.controlPanel.LogEvent("sikeresen aktiválta a tárgyat.\n");
+                break;
+            case SUCCESSFULLY_DEACTIVATED:
+                owner.controlPanel.LogEvent("sikeresen deaktiválta a tárgyat.\n");
+                break;
+            case FAKE:
+                owner.controlPanel.LogEvent("a tárgy hamis, így nem volt hatása.\n");
+                break;
+            case ALREADY_ACTIVATED:
+                owner.controlPanel.LogEvent("nem sikerült aktiválni, mert már aktiválva volt.\n");
+                break;
+            case CANNOT_BE_ACTIVATED:
+                owner.controlPanel.LogEvent("a tárgyat nem lehet külön használni.\n");
+                break;
+            default:
+                owner.controlPanel.LogEvent("a tárgy használata során nem várt működés történt.\n");
+                break;
+        }
+
+        Logger.finishedView(this, "Activated", ivItem, result);
     }
 
     public void SetOwner(VPerson vp){

@@ -1,6 +1,7 @@
 package model;
 
 import util.Logger;
+import viewmodel.ActivateResult;
 import viewmodel.IVHolyBeerCup;
 import viewmodel.IVRoom;
 
@@ -83,8 +84,10 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 		Logger.startedModel(this, "Activate");
 		Logger.finishedModel(this, "Activate");
 		if(isActivated){
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.ALREADY_ACTIVATED);
 			return false;
 		}else{
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_ACTIVATED);
 			isActivated = true;
 			return  true;
 		}
@@ -250,16 +253,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 * */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		if(Activate()){
-			s.AddHolyBeerCup(this);
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
-		}else{
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
-		}
+		if(Activate()) s.AddHolyBeerCup(this);
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
@@ -273,9 +267,7 @@ public class HolyBeerCup extends Item implements Usable, Defendable, IVHolyBeerC
 	 * */
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
-		if(ivItemUpdate != null){
-			ivItemUpdate.UsedUpdate(this, false);
-		}
+		if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.CANNOT_BE_ACTIVATED);
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

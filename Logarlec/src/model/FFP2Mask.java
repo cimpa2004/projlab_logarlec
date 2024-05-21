@@ -1,6 +1,7 @@
 package model;
 
 import util.Logger;
+import viewmodel.ActivateResult;
 import viewmodel.IVFFP2Mask;
 import viewmodel.IVRoom;
 import viewmodel.IVStudentUpdate;
@@ -122,12 +123,17 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 		Logger.startedModel(this, "Activate");
 		Logger.finishedModel(this, "Activate");
 
-		if(isFake) return false;
+		if(isFake) {
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.FAKE);
+			return false;
+		}
 
 		if(!isActivated && durability > 0){
 			isActivated = true;
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_ACTIVATED);
 			return true;
 		}else {
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.ALREADY_ACTIVATED);
 			return false;
 		}
 	}
@@ -273,16 +279,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
-		if (Activate()) {
-			s.AddFFP2Mask(this);
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
-		}else{
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
-		}
+		if (Activate()) s.AddFFP2Mask(this);
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
@@ -297,16 +294,7 @@ public class FFP2Mask extends Item implements Usable, Defendable, IVFFP2Mask {
 	 */
 	public void UsedByInstructor(Instructor i) {
 		Logger.startedModel(this, "UsedByInstructor", i);
-		if (Activate()) {
-			i.AddFFP2Mask(this);
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
-		}else{
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
-		}
+		if (Activate()) i.AddFFP2Mask(this);
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 

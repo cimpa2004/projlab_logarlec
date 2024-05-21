@@ -1,5 +1,6 @@
 package model;
 import util.Logger;
+import viewmodel.ActivateResult;
 import viewmodel.IVCamembert;
 import viewmodel.IVRoom;
 
@@ -82,14 +83,17 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	@Override
 	public boolean Activate() {
 		Logger.startedModel(this, "Activate");
-
-		Logger.finishedModel(this, "Activate");
 		if(isActivated){
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.ALREADY_ACTIVATED);
+			Logger.finishedModel(this, "Activate");
 			return false;
 		}else{
+			if(ivItemUpdate!=null) ivItemUpdate.Activated(this, ActivateResult.SUCCESSFULLY_ACTIVATED);
 			isActivated = true;
-			return  true;
+			Logger.finishedModel(this, "Activate");
+			return true;
 		}
+		
 	}
 
 
@@ -202,9 +206,6 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		Logger.startedModel(this, "UsedByStudent", s);
 		if(Activate()) {
 			s.GetRoom().SetPoisonDuration(5);
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
 			// ajuljon el ha magara robbantotta es nem tudja megvedeni magat
 			if(!s.GetFFP2Masks().isEmpty()){
 				Defendable ffp2Mask = s.GetRandomActive(s.GetFFP2Masks());
@@ -228,10 +229,6 @@ public class Camembert extends Item implements Usable, IVCamembert {
 					return;
 				}
 			}
-		}else{
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
 		}
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
@@ -250,9 +247,6 @@ public class Camembert extends Item implements Usable, IVCamembert {
 		Logger.startedModel(this, "UsedByInstructor", i);
 		if(Activate()) {
 			i.GetRoom().SetPoisonDuration(5);
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, true);
-			}
 			// ajuljon el ha magara robbantotta es nem tudja megvedeni magat
 			if(!i.GetFFP2Masks().isEmpty()){
 				Defendable ffp2Mask = i.GetRandomActive(i.GetFFP2Masks());
@@ -276,12 +270,7 @@ public class Camembert extends Item implements Usable, IVCamembert {
 					return;
 				}
 			}
-		}else {
-			if(ivItemUpdate != null){
-				ivItemUpdate.UsedUpdate(this, false);
-			}
 		}
-
 		Logger.finishedModel(this, "UsedByInstructor", i);
 	}
 
