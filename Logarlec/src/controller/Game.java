@@ -646,64 +646,64 @@ public class Game implements IVInit {
 	public void FillUpInventory(Student student){
 		Room defaultRoom = new Room();
 
-		AirFreshener af = new AirFreshener("TestAirFreshener");
+		AirFreshener af = new AirFreshener();
 		af.SetRoom(defaultRoom);
 		VAirFreshener vaf = new VAirFreshener(af);
 		vaf.SetOwner(student.GetIVStudentUpdate());
 		af.SetIVItemUpdate(vaf);
 		student.AddToInventory(af);
 
-		Transistor t = new Transistor("TestTransistor");
+		/*Transistor t = new Transistor();
 		t.SetRoom(defaultRoom);
 		VTransistor vt = new VTransistor(t);
 		vt.SetOwner(student.GetIVStudentUpdate());
 		t.SetIVItemUpdate(vt);
-		student.AddToInventory(t);
+		student.AddToInventory(t);*/
 
 
-		Transistor t2 = new Transistor("TestTransistor2");
+		/*Transistor t2 = new Transistor();
 		t2.SetRoom(defaultRoom);
 		VTransistor vt2 = new VTransistor(t2);
 		vt2.SetOwner(student.GetIVStudentUpdate());
 		t2.SetIVItemUpdate(vt2);
-		student.AddToInventory(t2);
+		student.AddToInventory(t2);*/
 
-		FFP2Mask mask = new FFP2Mask("TestMask");
+		FFP2Mask mask = new FFP2Mask();
 		mask.SetRoom(defaultRoom);
 		VFFP2Mask vmask = new VFFP2Mask(mask);
 		vmask.SetOwner(student.GetIVStudentUpdate());
 		mask.SetIVItemUpdate(vmask);
 		student.AddToInventory(mask);
 
-		/*HolyBeerCup hbc = new HolyBeerCup("TestHBC");
+		/*HolyBeerCup hbc = new HolyBeerCup();
 		hbc.SetRoom(defaultRoom);
 		VHolyBeerCup vhbc = new VHolyBeerCup(hbc);
 		vhbc.SetOwner(student.GetIVStudentUpdate());
 		hbc.SetIVItemUpdate(vhbc);
 		student.AddToInventory(hbc);*/
 
-		/*Camembert cam = new Camembert(("TestCamembert"));
+		Camembert cam = new Camembert();
 		cam.SetRoom(defaultRoom);
 		VCamembert vcam = new VCamembert(cam);
 		vcam.SetOwner(student.GetIVStudentUpdate());
 		cam.SetIVItemUpdate(vcam);
-		student.AddToInventory(cam);*/
+		student.AddToInventory(cam);
 
-		/*TVSZ tvsz = new TVSZ("TestTVSZ");
+		/*TVSZ tvsz = new TVSZ();
 		tvsz.SetRoom(defaultRoom);
 		VTVSZ vtvsz = new VTVSZ(tvsz);
 		vtvsz.SetOwner(student.GetIVStudentUpdate());
 		tvsz.SetIVItemUpdate(vtvsz);
 		student.AddToInventory(tvsz);*/
 
-		WetTableCloth wtc = new WetTableCloth("TestWTC");
+		WetTableCloth wtc = new WetTableCloth();
 		wtc.SetRoom(defaultRoom);
 		VWetTableCloth vwtc = new VWetTableCloth(wtc);
 		vwtc.SetOwner(student.GetIVStudentUpdate());
 		wtc.SetIVItemUpdate(vwtc);
 		student.AddToInventory(wtc);
 
-		/*SlideRule sr = new SlideRule("TestFakeSlideRule", this);
+		/*SlideRule sr = new SlideRule(, this);
 		sr.SetRoom(defaultRoom);
 		sr.SetIsFake(true);
 		VSlideRule vsr = new VSlideRule(sr);
