@@ -644,12 +644,12 @@ public class Game implements IVInit {
 	public void FillUpInventory(Student student){
 		Room defaultRoom = new Room();
 
-		/*AirFreshener af = new AirFreshener("TestAirFreshener");
+		AirFreshener af = new AirFreshener("TestAirFreshener");
 		af.SetRoom(defaultRoom);
 		VAirFreshener vaf = new VAirFreshener(af);
 		vaf.SetOwner(student.GetIVStudentUpdate());
 		af.SetIVItemUpdate(vaf);
-		student.AddToInventory(af);*/
+		student.AddToInventory(af);
 
 		Transistor t = new Transistor("TestTransistor");
 		t.SetRoom(defaultRoom);
@@ -666,12 +666,12 @@ public class Game implements IVInit {
 		t2.SetIVItemUpdate(vt2);
 		student.AddToInventory(t2);
 
-		/*FFP2Mask mask = new FFP2Mask("TestMask");
+		FFP2Mask mask = new FFP2Mask("TestMask");
 		mask.SetRoom(defaultRoom);
 		VFFP2Mask vmask = new VFFP2Mask(mask);
 		vmask.SetOwner(student.GetIVStudentUpdate());
 		mask.SetIVItemUpdate(vmask);
-		student.AddToInventory(mask);*/
+		student.AddToInventory(mask);
 
 		/*HolyBeerCup hbc = new HolyBeerCup("TestHBC");
 		hbc.SetRoom(defaultRoom);
