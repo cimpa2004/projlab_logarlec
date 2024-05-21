@@ -33,7 +33,7 @@ public class VRoom extends JPanel implements IVRoomUpdate {
      * @param panelToDrawOn a panel amire rajzolja magát
      */
     public void Draw(GamePanel panelToDrawOn){
-        panelToDrawOn.setPreferredSize(new Dimension(1000, 400));
+        panelToDrawOn.setPreferredSize(new Dimension(1530, 400));
         panelToDrawOn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5, true)); // Add border for visualization
 
         //set room color
