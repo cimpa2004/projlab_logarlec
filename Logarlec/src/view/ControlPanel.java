@@ -133,7 +133,15 @@ public class ControlPanel extends JPanel implements IControl {
 
             nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
-            roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID());
+            roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID()
+                    + "                Férőhelyek száma: " + currentStudent.GetRoom().GetMaxCapacity()
+                    + "                Szobában tartózkodók száma: " + currentStudent.GetRoom().GetCurrentCapacity()
+                    + "                A szobában járt személyek száma: " +
+                            (currentStudent.GetRoom().GetNumberOfPeopleBeenToRoom())
+                    + "                Ragadós?    " + (currentStudent.GetRoom().GetIsSticky() ? "Igen" : "Nem")
+                    + "                Gázos?    " + (currentStudent.GetRoom().GetPoisonDuration() > 0 ? "Igen" : "Nem")
+                    + "                Átkozott?    " + (currentStudent.GetRoom().GetIsCursed() ? "Igen" : "Nem")
+                    );
             roomLabel.setBorder(new EmptyBorder(10,10,10,10));
             remainingTurnsLabel.setText("A hátralévő körök száma: " + currentStudent.input.GetGameTimer());
             remainingTurnsLabel.setBorder(new EmptyBorder(10,10,10,10));
