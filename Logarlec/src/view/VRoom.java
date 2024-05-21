@@ -33,7 +33,8 @@ public class VRoom extends JPanel implements IVRoomUpdate {
      * @param panelToDrawOn a panel amire rajzolja magát
      */
     public void Draw(GamePanel panelToDrawOn){
-        panelToDrawOn.setPreferredSize(new Dimension(1530, 400));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        panelToDrawOn.setPreferredSize(new Dimension(screenSize.width, 400));
         panelToDrawOn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5, true)); // Add border for visualization
 
         //set room color
@@ -125,17 +126,12 @@ public class VRoom extends JPanel implements IVRoomUpdate {
             else {
                 doorDim = new Dimension(20, 80);
             }
-            if(!doorSide.GetCanBeOpened())
-                if(!doorSide.GetIsVisible())
-                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(218, 0, 99), drawPos, doorDim, panelToDrawOn, doorSide));
-                else
-                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(242, 70, 38), drawPos, doorDim, panelToDrawOn, doorSide));
-            else
-                if(!doorSide.GetIsVisible())
-                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 255), drawPos, doorDim, panelToDrawOn, doorSide));
-                else
-                    panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 0), drawPos, doorDim, panelToDrawOn, doorSide));
-
+            if(!doorSide.GetCanBeOpened()){
+                if(doorSide.GetIsVisible()) panelToDrawOn.AddDoorRect(new RectPanel(new Color(242, 70, 38), drawPos, doorDim, panelToDrawOn, doorSide));
+            } else{
+                if(doorSide.GetIsVisible()) panelToDrawOn.AddDoorRect(new RectPanel(new Color(255, 255, 0), drawPos, doorDim, panelToDrawOn, doorSide));
+            }
+        
             if(currentStudent != null && currentStudent.GetIVStudentUpdate().GetDoorFromInNewRoom() == doorSide){
                 Dimension doorMarkerDim = new Dimension(30, 30);
                 panelToDrawOn.AddDoorRect(new RectPanel(new Color(218, 0, 0), drawPos, doorMarkerDim, panelToDrawOn, doorSide));
