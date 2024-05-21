@@ -451,13 +451,19 @@ public class Room implements IRoom, IVRoom {
 		Logger.startedModel(this, "SetPoisonDuration", pd);
 		poisonDuration = pd;
 		if(poisonDuration > 0){
-			for (Student s : students) {
+			ArrayList<Student> studentsCopy = new ArrayList<>(students);
+			for (Student s : studentsCopy) {
 				boolean isPersonDefended = s.DefendFromGas();
-				if (!isPersonDefended) s.SetIsFainted(true);
+				if (!isPersonDefended){
+					s.SetIsFainted(true);
+				} 
 			}
-			for (Instructor i : instructors) {
+			ArrayList<Instructor> instructorsCopy = new ArrayList<>(instructors);
+			for (Instructor i : instructorsCopy) {
 				boolean isPersonDefended = i.DefendFromGas();
-				if (!isPersonDefended) i.SetIsFainted(true);
+				if (!isPersonDefended){
+					i.SetIsFainted(true);
+				} 
 			}
 			if (ivRoomUpdate != null) ivRoomUpdate.RoomSetPoisonous(pd);
 		}

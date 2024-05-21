@@ -204,6 +204,7 @@ public class Camembert extends Item implements Usable, IVCamembert {
 	public void UsedByStudent(Student s) {
 		Logger.startedModel(this, "UsedByStudent", s);
 		if(Activate()) s.GetRoom().SetPoisonDuration(5);
+		if(s.GetIsActiveTurn() && s.GetIsFainted()) s.EndTurn();
 		Logger.finishedModel(this, "UsedByStudent", s);
 	}
 
