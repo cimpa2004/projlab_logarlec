@@ -133,14 +133,14 @@ public class ControlPanel extends JPanel implements IControl {
 
             nameLabel.setText("A körön lévő játékos:          " + currentStudent.toString());
             nameLabel.setBorder(new EmptyBorder(10,10,10,10));
-            roomLabel.setText("A jelenlegi szoba:             " + currentStudent.GetRoom().GetID()
-                    + "                Férőhelyek száma: " + currentStudent.GetRoom().GetMaxCapacity()
-                    + "                Szobában tartózkodók száma: " + currentStudent.GetRoom().GetCurrentCapacity()
-                    + "                A szobában járt személyek száma: " +
+            roomLabel.setText("A jelenlegi szoba:         " + currentStudent.GetRoom().GetID()
+                    + "            Férőhelyek száma: " + currentStudent.GetRoom().GetMaxCapacity()
+                    + "            Szobában tartózkodók száma: " + currentStudent.GetRoom().GetCurrentCapacity()
+                    + "            A szobában járt személyek száma: " +
                             (currentStudent.GetRoom().GetNumberOfPeopleBeenToRoom())
-                    + "                Ragadós?    " + (currentStudent.GetRoom().GetIsSticky() ? "Igen" : "Nem")
-                    + "                Gázos?    " + (currentStudent.GetRoom().GetPoisonDuration() > 0 ? "Igen" : "Nem")
-                    + "                Átkozott?    " + (currentStudent.GetRoom().GetIsCursed() ? "Igen" : "Nem")
+                    + "            Ragadós?    " + (currentStudent.GetRoom().GetIsSticky() ? "Igen" : "Nem")
+                    + "            Gázos?    " + (currentStudent.GetRoom().GetPoisonDuration() > 0 ? "Igen" : "Nem")
+                    + "            Átkozott?    " + (currentStudent.GetRoom().GetIsCursed() ? "Igen" : "Nem")
                     );
             roomLabel.setBorder(new EmptyBorder(10,10,10,10));
             remainingTurnsLabel.setText("A hátralévő körök száma: " + currentStudent.input.GetGameTimer());
@@ -164,7 +164,6 @@ public class ControlPanel extends JPanel implements IControl {
             if (vRoomOverride != null) gamePanel.Draw(vRoomOverride);
             else gamePanel.Draw(currentStudent.GetRoom().GetVRoom());
         }
-
         Logger.finishedView(this, "UpdateAll");
     }
     public void SetCurrentStudent(VStudent st){
@@ -205,8 +204,12 @@ public class ControlPanel extends JPanel implements IControl {
                 item.DrawInInventory(itemsPanel, currentStudent, true);
             }
         }
-        if(gamePanel.GetCurrentRoom() == null) gamePanel.Draw(gamePanel.GetRooms().get(0)); // abban az esetben ha instructorok az elso korben vhogy nyernek
-        else gamePanel.Redraw();
+        if(gamePanel.GetCurrentRoom() == null) {
+            gamePanel.Draw(gamePanel.GetRooms().get(0)); // abban az esetben ha instructorok az elso korben vhogy nyernek
+        }else{
+            gamePanel.Redraw();
+        }
+        gamePanel.DisableButtons();
         this.IsInstructorWin = true;
         Logger.finishedView(this, "InstructorWin");
     }
@@ -228,14 +231,19 @@ public class ControlPanel extends JPanel implements IControl {
                 item.DrawInInventory(itemsPanel, currentStudent, true);
             }
         }
-        if(gamePanel.GetCurrentRoom() == null) gamePanel.Draw(gamePanel.GetRooms().get(0));
-        else gamePanel.Redraw();
+        if(gamePanel.GetCurrentRoom() == null) {
+            gamePanel.Draw(gamePanel.GetRooms().get(0));
+        } else {
+            gamePanel.Redraw();
+        }
+        gamePanel.DisableButtons();
         Logger.finishedView(this, "StudentWin");
     }
 
     @Override
     public void InstructorKills(IVInstructor ivInstructor) {
         gamePanel.SetCurrentRoom(ivInstructor.GetIVRoom().GetVRoom());
+        gamePanel.DisableButtons();
     }
 
     public void LogEvent(String event){
@@ -251,7 +259,9 @@ public class ControlPanel extends JPanel implements IControl {
                 LogEvent(currentStudent.GetID() + " köre véget ért!\n");
                 currentStudent.EndTurn();
                 gamePanel.Redraw();
-                //UpdateCurrentStudent();
+                if(gameEnd){
+                    gamePanel.DisableButtons();
+                }
             }
             Logger.finishedView(this, "EndTurnButtonListener.actionPerformed", e);
         }
