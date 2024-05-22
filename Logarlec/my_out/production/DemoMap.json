@@ -243,6 +243,7 @@
         "airFresheners": [],
         "camemberts": [],
         "transistors": [],
+        "isCursed": true,
         "doors": ["Door12", "Door14", "Door15"]
       },
       {
