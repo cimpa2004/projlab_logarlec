@@ -222,6 +222,7 @@ public class Transistor extends Item implements Usable, IVTransistor {
 		}
 		Logger.finishedModel(this, "Thrown", p);
 	}
+	
 
 	/**
 	 * Ezen metódus akkor hívódik meg, ha egy Student szeretne
